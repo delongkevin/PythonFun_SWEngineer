@@ -170,11 +170,15 @@ class TestTrace32Interface(unittest.TestCase):
         with patch.object(t32_mod, "platform") as mock_plat:
             mock_plat.system.return_value = "Windows"
             # isdir: True for install_dir and bin subdir, False for others
+
             def _isdir(path):
                 return "T32" in path
+
             # isfile: True for the exe and config
+
             def _isfile(path):
                 return path.endswith(".exe") or path.endswith(".t32")
+
             with patch("interfaces.trace32_interface.os.path.isdir", side_effect=_isdir):
                 with patch("interfaces.trace32_interface.os.path.isfile", side_effect=_isfile):
                     result = Trace32Interface.detect_installation(drives=["C"])
