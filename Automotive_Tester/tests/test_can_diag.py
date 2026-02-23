@@ -8,7 +8,9 @@ packages to be installed.
 """
 from __future__ import annotations
 
+import os as _os
 import sys
+import tempfile as _tempfile
 import types
 import unittest
 from unittest.mock import MagicMock
@@ -43,8 +45,11 @@ for _attr in ("END", "NORMAL", "DISABLED", "HORIZONTAL", "X", "BOTH", "Y",
 class _FakeStringVar:
     def __init__(self, value=""):
         self._v = value
+
     def get(self): return self._v
+
     def set(self, v): self._v = v
+
     def trace(self, *a, **kw): pass
 
 
@@ -66,6 +71,7 @@ class _FakeWidget:
     def get(self): return ""
     def see(self, *a): pass
     def winfo_toplevel(self): return self
+
     def after(self, ms, fn=None, *a):
         if fn:
             fn(*a)
@@ -154,14 +160,10 @@ _stub("cantools.database")
 # ---------------------------------------------------------------------------
 # Now import the module under test
 # ---------------------------------------------------------------------------
-import os as _os
-import sys as _sys
-
-_sys.path.insert(0, _os.path.join(_os.path.dirname(__file__), ".."))
+sys.path.insert(0, _os.path.join(_os.path.dirname(__file__), ".."))
 
 # Patch _CONFIG_FILE so tests don't write to the repo directory
-import tempfile as _tempfile
-import core.can_diag as _can_diag_mod
+import core.can_diag as _can_diag_mod  # noqa: E402
 _can_diag_mod._CONFIG_FILE = _os.path.join(
     _tempfile.gettempdir(), "test_can_diag_config.json"
 )
@@ -175,7 +177,6 @@ from core.can_diag import CanDiagPanel  # noqa: E402
 
 def _make_panel() -> CanDiagPanel:
     """Create a CanDiagPanel with a fake parent widget."""
-    parent = _FakeWidget()
     panel = CanDiagPanel.__new__(CanDiagPanel)
     # Initialise only the data attributes, skip GUI construction
     panel.buses = []
@@ -183,7 +184,6 @@ def _make_panel() -> CanDiagPanel:
     panel.is_connected = False
     panel.is_script_running = False
     panel.dbs = {0: None, 1: None}
-    import datetime
     panel.log_filename = _os.path.join(_tempfile.gettempdir(), "test_can_log.txt")
     panel.config = {
         "bitrate": "500000",

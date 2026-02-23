@@ -89,20 +89,17 @@ def build_exe(dev: bool = False) -> None:
 def print_summary() -> None:
     """Print a summary of the built artefacts."""
     exe_name = "AutomotiveTester.exe" if sys.platform == "win32" else "AutomotiveTester"
-    exe_path = DIST_DIR / exe_name
+    # onedir build: executable lives inside dist/AutomotiveTester/
+    exe_path = DIST_DIR / "AutomotiveTester" / exe_name
+    dist_dir = DIST_DIR / "AutomotiveTester"
 
     print("\n" + "=" * 60)
     if exe_path.exists():
         size_mb = exe_path.stat().st_size / (1024 * 1024)
         print("[build.py] Build SUCCESSFUL")
-        print(f"  Output : {exe_path}")
-        print(f"  Size   : {size_mb:.1f} MB")
-        if size_mb > 500:
-            print(
-                "  WARNING: Executable exceeds 500 MB.\n"
-                "           Consider removing large optional dependencies\n"
-                "           (e.g. opencv-python) and rebuilding."
-            )
+        print(f"  Output dir : {dist_dir}")
+        print(f"  Executable : {exe_path}")
+        print(f"  Launcher   : {size_mb:.1f} MB  (dependencies in _internal/)")
     else:
         print(f"[build.py] WARNING: expected output not found at {exe_path}")
     print("=" * 60)

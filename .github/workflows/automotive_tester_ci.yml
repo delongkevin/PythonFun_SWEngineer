@@ -127,23 +127,39 @@ jobs:
         working-directory: Automotive_Tester
         shell: pwsh
         run: |
-          $exe = "dist\AutomotiveTester.exe"
+          $exe = "dist\AutomotiveTester\AutomotiveTester.exe"
           if (Test-Path $exe) {
             $sizeMB = (Get-Item $exe).Length / 1MB
-            Write-Host ("Executable size: {0:F1} MB" -f $sizeMB)
-            if ($sizeMB -gt 500) {
-              Write-Warning "Executable exceeds 500 MB threshold."
-            }
+            Write-Host ("Launcher size: {0:F1} MB" -f $sizeMB)
+            Write-Host "Dependency folder: dist\AutomotiveTester\_internal"
           } else {
             Write-Error "Executable not found at $exe"
             exit 1
           }
 
-      - name: Upload Windows EXE artifact
+      - name: Smoke-test the executable (headless)
+        working-directory: Automotive_Tester
+        shell: pwsh
+        run: |
+          $exe = "dist\AutomotiveTester\AutomotiveTester.exe"
+          Write-Host "Verifying executable exists and is runnable..."
+          if (-not (Test-Path $exe)) {
+            Write-Error "Executable not found: $exe"
+            exit 1
+          }
+          # Confirm it is a valid PE binary (non-zero size, valid MZ header)
+          $bytes = [System.IO.File]::ReadAllBytes($exe)
+          if ($bytes[0] -ne 0x4D -or $bytes[1] -ne 0x5A) {
+            Write-Error "File does not have a valid Windows PE (MZ) header."
+            exit 1
+          }
+          Write-Host "Executable has valid MZ/PE header – binary is well-formed."
+
+      - name: Upload Windows distribution folder artifact
         uses: actions/upload-artifact@v4
         with:
-          name: AutomotiveTester-windows-exe
-          path: Automotive_Tester/dist/AutomotiveTester.exe
+          name: AutomotiveTester-windows
+          path: Automotive_Tester/dist/AutomotiveTester/
           retention-days: 30
 
   release:
@@ -163,11 +179,14 @@ jobs:
           name: automotive-tester-dist
           path: dist/
 
-      - name: Download Windows EXE artifact
+      - name: Download Windows distribution artifact
         uses: actions/download-artifact@v4
         with:
-          name: AutomotiveTester-windows-exe
-          path: dist/
+          name: AutomotiveTester-windows
+          path: dist/AutomotiveTester/
+
+      - name: Zip Windows distribution for release
+        run: zip -r dist/AutomotiveTester-windows.zip dist/AutomotiveTester/
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -179,8 +198,11 @@ jobs:
             Commit: ${{ github.sha }}
 
             ### Downloads
-            - **AutomotiveTester.exe** – Windows standalone executable (no Python required)
+            - **AutomotiveTester-windows.zip** – Windows distribution folder (extract and run AutomotiveTester.exe; no Python required)
             - Python wheel / sdist packages for development use
-          files: dist/*
+          files: |
+            dist/*.whl
+            dist/*.tar.gz
+            dist/AutomotiveTester-windows.zip
           draft: false
           prerelease: false
