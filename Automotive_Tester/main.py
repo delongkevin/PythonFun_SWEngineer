@@ -9,6 +9,7 @@ Provides a tkinter-based UI for:
   - Camera preview
   - Power supply status
   - Debug / script editing for failing tests
+  - Vector CAN/CAN-FD diagnostic automation & sequencer (CAN/Diag tab)
 """
 from __future__ import annotations
 
@@ -30,6 +31,7 @@ if _ROOT not in sys.path:
 from core.debugger import DebugPanel, ScriptEditor  # noqa: E402
 from core.logger import Logger  # noqa: E402
 from core.test_runner import TestItem, TestResult, TestRunner, TestStatus, TestType  # noqa: E402
+from core.can_diag import CanDiagPanel  # noqa: E402
 from interfaces.camera_interface import CameraInterface  # noqa: E402
 from interfaces.canoe_interface import CANoeInterface  # noqa: E402
 from interfaces.power_supply_interface import PowerSupplyInterface  # noqa: E402
@@ -249,8 +251,26 @@ class MainApp:
 
     def _build_ui(self) -> None:
         self._build_toolbar()
+
+        # Top-level notebook: Tab 1 = Automotive Tester, Tab 2 = CAN/Diag
+        notebook = ttk.Notebook(self.root)
+        notebook.pack(fill=tk.BOTH, expand=True)
+
+        # --- Tab 1: Automotive Tester ---
+        auto_tab = tk.Frame(notebook)
+        notebook.add(auto_tab, text="🧪  Automotive Tester")
+        self._build_auto_tester_tab(auto_tab)
+
+        # --- Tab 2: CAN / Diag Tester ---
+        can_tab = CanDiagPanel(notebook)
+        notebook.add(can_tab, text="🔌  CAN / Diag Tester")
+
+        self._build_status_bar()
+
+    def _build_auto_tester_tab(self, parent: tk.Widget) -> None:
+        """Builds the Automotive Tester content inside *parent*."""
         # Horizontal paned: left = tests+debug, right = status panels
-        paned = tk.PanedWindow(self.root, orient=tk.HORIZONTAL, sashrelief=tk.RAISED)
+        paned = tk.PanedWindow(parent, orient=tk.HORIZONTAL, sashrelief=tk.RAISED)
         paned.pack(fill=tk.BOTH, expand=True)
 
         left_frame = tk.Frame(paned)
@@ -263,8 +283,6 @@ class MainApp:
         self._build_debug_panel(left_frame)
         self._build_log_panel(left_frame)
         self._build_right_panels(right_frame)
-
-        self._build_status_bar()
 
     def _build_toolbar(self) -> None:
         toolbar = tk.Frame(self.root, bd=1, relief=tk.RAISED, bg="#343a40")
