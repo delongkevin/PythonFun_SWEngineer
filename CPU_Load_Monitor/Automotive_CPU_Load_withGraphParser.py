@@ -1200,7 +1200,7 @@ class CPULoadApp:
 
     # ── UI build ──────────────────────────────────────────────────────────────
     def _setup_ui(self):
-        self.root.title("CPU Load Test Tool – Magna")
+        self.root.title("CPU Load Test Tool – Kevin")
         win_size = config.get('window_size', '1300x800')
         self.root.geometry(win_size)
         self.root.minsize(900, 600)
@@ -1253,7 +1253,7 @@ class CPULoadApp:
 
         tk.Label(title_frame, text="CPU Load Test Tool",
                  font=("Segoe UI", ts, "bold"), bg=bg, fg="white").pack(anchor="w")
-        tk.Label(title_frame, text="CPU Load Testing Application – Magna",
+        tk.Label(title_frame, text="CPU Load Testing Application – Kevin",
                  font=("Segoe UI", 9), bg=bg, fg="#BDC3C7").pack(anchor="w")
 
         status_frame = tk.Frame(header, bg=bg)
@@ -1840,7 +1840,7 @@ class CPULoadApp:
             "Supports multi-core CPU load testing (MCU1_0, MCU2_0, MCU2_1, A72),\n"
             "serial communication, custom script execution, queue-based testing,\n"
             "and integrated graph parsing / report generation.\n\n"
-            "© Magna International. All rights reserved.")
+            "© Kevin . All rights reserved.")
         txt.config(state=tk.DISABLED)
 
         ttk.Button(win, text="Close", command=win.destroy).pack(pady=8)

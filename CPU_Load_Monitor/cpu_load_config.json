@@ -1,0 +1,22 @@
+{
+    "trace32_path": "C:/T32/bin/windows64/t32marm.exe",
+    "cmm_directory": "CMM",
+    "cert_directory": "certs",
+    "com_port": "COM33",
+    "baud_rate": 115200,
+    "timeout": 600,
+    "serial_timeout": 1,
+    "ui_density": "Normal",
+    "show_startup_info": true,
+    "custom_tasks": {},
+    "graph_parser": {
+        "default_input_file": "",
+        "default_output_folder": "graph_output",
+        "default_search_strings": [
+            "Idle",
+            "CPU Load"
+        ],
+        "include_cpu_load": true,
+        "show_labels": true
+    }
+}
