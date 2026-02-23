@@ -97,7 +97,6 @@ excludes = [
     "pydoc",
     "xml",
     "xmlrpc",
-    "email",
     "html",
     "http",
     "ftplib",
