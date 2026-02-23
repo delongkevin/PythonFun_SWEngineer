@@ -15,11 +15,9 @@ from __future__ import annotations
 import json
 import logging
 import os
-import queue
 import sys
-import threading
 import tkinter as tk
-from tkinter import filedialog, messagebox, scrolledtext, simpledialog, ttk
+from tkinter import filedialog, messagebox, scrolledtext, ttk
 from typing import Any, Dict, List, Optional
 
 # ---------------------------------------------------------------------------
@@ -29,14 +27,14 @@ _ROOT = os.path.dirname(os.path.abspath(__file__))
 if _ROOT not in sys.path:
     sys.path.insert(0, _ROOT)
 
-from core.debugger import DebugPanel, ScriptEditor
-from core.logger import Logger
-from core.test_runner import TestItem, TestResult, TestRunner, TestStatus, TestType
-from interfaces.camera_interface import CameraInterface
-from interfaces.canoe_interface import CANoeInterface
-from interfaces.power_supply_interface import PowerSupplyInterface
-from interfaces.serial_interface import SerialInterface
-from interfaces.trace32_interface import Trace32Interface
+from core.debugger import DebugPanel, ScriptEditor  # noqa: E402
+from core.logger import Logger  # noqa: E402
+from core.test_runner import TestItem, TestResult, TestRunner, TestStatus, TestType  # noqa: E402
+from interfaces.camera_interface import CameraInterface  # noqa: E402
+from interfaces.canoe_interface import CANoeInterface  # noqa: E402
+from interfaces.power_supply_interface import PowerSupplyInterface  # noqa: E402
+from interfaces.serial_interface import SerialInterface  # noqa: E402
+from interfaces.trace32_interface import Trace32Interface  # noqa: E402
 
 logger = logging.getLogger("automotive_tester.main")
 
@@ -550,7 +548,6 @@ class MainApp:
 
     def _connect_serial(self, name: str, cfg: Dict[str, Any]) -> None:
         ok = self._serial.connect_port(name, cfg["port"], cfg["baud_rate"])
-        colour = "#28a745" if ok else "#dc3545"
         text = f"●  {cfg['port']} @ {cfg['baud_rate']}" if ok else "●  Failed"
         var = self._ser_status_vars.get(name)
         if var:

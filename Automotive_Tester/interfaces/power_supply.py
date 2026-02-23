@@ -10,13 +10,13 @@ import serial
 import time
 import threading
 import logging
-from typing import Optional, Tuple
+from typing import Optional
 
 
 class BKPrecision1687B:
     """
     Controls the BK Precision 1687B programmable DC power supply.
-    
+
     Key capabilities:
       - Set/get voltage and current limits
       - Enable/disable output

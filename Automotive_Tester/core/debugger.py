@@ -9,11 +9,9 @@ from __future__ import annotations
 
 import logging
 import os
-import subprocess
-import sys
 import tkinter as tk
-from tkinter import messagebox, scrolledtext, ttk
-from typing import Callable, Optional
+from tkinter import messagebox, scrolledtext
+from typing import Any, Callable, Optional
 
 logger = logging.getLogger(__name__)
 

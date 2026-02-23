@@ -9,11 +9,12 @@ from __future__ import annotations
 import sys
 import types
 import unittest
-from unittest.mock import MagicMock, patch, PropertyMock
+from unittest.mock import MagicMock, patch
 
 # ---------------------------------------------------------------------------
 # Stub heavy optional packages before importing project modules
 # ---------------------------------------------------------------------------
+
 
 def _make_lauterbach_stub() -> None:
     """Insert a minimal lauterbach.trace32.rcl stub into sys.modules."""
@@ -71,14 +72,14 @@ _make_win32com_stub()
 # ---------------------------------------------------------------------------
 # Now import project code
 # ---------------------------------------------------------------------------
-import sys, os
+import os  # noqa: E402
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from interfaces.trace32_interface import Trace32Interface
-from interfaces.power_supply_interface import PowerSupplyInterface
-from interfaces.camera_interface import CameraInterface
-from interfaces.serial_interface import SerialInterface, SerialPort
-from interfaces.canoe_interface import CANoeInterface
+from interfaces.trace32_interface import Trace32Interface  # noqa: E402
+from interfaces.power_supply_interface import PowerSupplyInterface  # noqa: E402
+from interfaces.camera_interface import CameraInterface  # noqa: E402
+from interfaces.serial_interface import SerialInterface, SerialPort  # noqa: E402
+from interfaces.canoe_interface import CANoeInterface  # noqa: E402
 
 
 # ===========================================================================
@@ -115,7 +116,8 @@ class TestTrace32Interface(unittest.TestCase):
 
     def test_run_cmm_success(self, tmp_path=None) -> None:
         import lauterbach.trace32.rcl as rcl
-        import tempfile, os
+        import tempfile
+        import os
         mock_dbg = MagicMock()
         mock_dbg.fnc.return_value = ""          # no error message
         rcl.connect = MagicMock(return_value=mock_dbg)
@@ -361,7 +363,9 @@ class TestSerialInterface(unittest.TestCase):
         self.assertFalse(ok)
 
     def test_start_stop_logging(self) -> None:
-        import tempfile, os, time
+        import tempfile
+        import os
+        import time
         si = SerialInterface()
         mock_ser = self._mock_serial()
         with patch("interfaces.serial_interface.serial.Serial", return_value=mock_ser):
@@ -425,7 +429,8 @@ class TestCANoeInterface(unittest.TestCase):
         self.assertFalse(coe.run_script("/no/such/file.can"))
 
     def test_run_script_success(self) -> None:
-        import tempfile, os
+        import tempfile
+        import os
         coe = self._connected_canoe()
         with tempfile.NamedTemporaryFile(suffix=".can", delete=False) as tf:
             tf.write(b"// canoe test")

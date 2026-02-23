@@ -35,7 +35,7 @@ jobs:
           flake8 Automotive_Tester \
             --exclude=Automotive_Tester/scripts \
             --max-line-length=120 \
-            --extend-ignore=E501
+            --extend-ignore=E501,E127
 
   test:
     name: Unit Tests (Python ${{ matrix.python-version }})

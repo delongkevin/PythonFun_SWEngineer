@@ -4,12 +4,10 @@ Handles ordering, execution, retry logic, and status tracking for test scripts.
 Supports: Python scripts, Vector CANoe scripts, Lauterbach .cmm scripts
 """
 
-import queue
 import threading
 import time
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from pathlib import Path
 from typing import Callable, Optional
 import traceback
 
@@ -159,7 +157,7 @@ class TestQueueManager:
                 self._run_canoe(item)
             elif item.test_type == TestType.CMM:
                 self._run_cmm(item)
-        except Exception as e:
+        except Exception:
             item.result_message = traceback.format_exc()
             item.status = TestStatus.FAILED
             self.logger.error(f"✘ FAILED: {item.name}\n{item.result_message}")
