@@ -122,10 +122,54 @@ jobs:
           path: Automotive_Tester/dist/
           retention-days: 30
 
+  build-exe:
+    name: Build Windows EXE (PyInstaller)
+    runs-on: windows-latest
+    needs: test
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install deps and build executable
+        working-directory: Automotive_Tester
+        run: python build.py --clean
+        env:
+          PYTHONUNBUFFERED: "1"
+
+      - name: Check executable size
+        working-directory: Automotive_Tester
+        shell: pwsh
+        run: |
+          $exe = "dist\AutomotiveTester.exe"
+          if (Test-Path $exe) {
+            $sizeMB = (Get-Item $exe).Length / 1MB
+            Write-Host ("Executable size: {0:F1} MB" -f $sizeMB)
+            if ($sizeMB -gt 500) {
+              Write-Warning "Executable exceeds 500 MB threshold."
+            }
+          } else {
+            Write-Error "Executable not found at $exe"
+            exit 1
+          }
+
+      - name: Upload Windows EXE artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AutomotiveTester-windows-exe
+          path: Automotive_Tester/dist/AutomotiveTester.exe
+          retention-days: 30
+
   release:
     name: GitHub Release
     runs-on: ubuntu-latest
-    needs: build-package
+    needs: [build-package, build-exe]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     permissions:
       contents: write
@@ -133,10 +177,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download build artifact
+      - name: Download Python package artifact
         uses: actions/download-artifact@v4
         with:
           name: automotive-tester-dist
+          path: dist/
+
+      - name: Download Windows EXE artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: AutomotiveTester-windows-exe
           path: dist/
 
       - name: Create Release
@@ -147,6 +197,10 @@ jobs:
           body: |
             Automated release from CI pipeline.
             Commit: ${{ github.sha }}
+
+            ### Downloads
+            - **AutomotiveTester.exe** – Windows standalone executable (no Python required)
+            - Python wheel / sdist packages for development use
           files: dist/*
           draft: false
           prerelease: false
