@@ -66,6 +66,7 @@ class Trace32Interface:
         port: int = 20000,
         t32_exe: Optional[str] = None,
         config_file: Optional[str] = None,
+        **_kwargs: Any,
     ) -> None:
         self._host = host
         self._port = port
