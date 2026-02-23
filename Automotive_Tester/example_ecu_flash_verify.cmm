@@ -1,0 +1,57 @@
+; ============================================================
+; Example TRACE32 / Lauterbach CMM Script
+; ECU Flash Verification Test
+;
+; Usage: DO ecu_flash_verify.cmm [expected_crc]
+; ENTRY &expected_crc
+; ============================================================
+
+ENTRY &expected_crc
+
+; Default CRC if not provided
+IF "&expected_crc"==""
+(
+  &expected_crc=0xDEADBEEF
+)
+
+PRINT "=== ECU Flash Verification ==="
+PRINT "Expected CRC: &expected_crc"
+
+; Attach to target
+SYStem.RESet
+SYStem.CPU CortexM4
+SYStem.Up
+
+; Halt CPU
+Break.direct
+
+; Read flash region (example: 0x08000000 to 0x0807FFFF = 512KB)
+&flash_start=0x08000000
+&flash_size=0x80000
+
+PRINT "Reading flash @ 0x" FORMAT.HEX(8.,&flash_start) " size: " FORMAT.HEX(8.,&flash_size)
+
+; Compute CRC32 using TRACE32 built-in
+&actual_crc=CRC.CRC32(SD:&flash_start++(&flash_size-1))
+PRINT "Actual CRC32: 0x" FORMAT.HEX(8.,&actual_crc)
+
+; Compare
+IF &actual_crc==&expected_crc
+(
+  PRINT "RESULT: PASS - CRC matches"
+  ; Write result variable for Python to read
+  Var.Set \result="PASS"
+)
+ELSE
+(
+  PRINT "RESULT: FAIL - CRC mismatch!"
+  PRINT "  Expected: 0x" FORMAT.HEX(8.,&expected_crc)
+  PRINT "  Actual:   0x" FORMAT.HEX(8.,&actual_crc)
+  Var.Set \result="FAIL"
+  STOP "CRC verification failed"
+)
+
+; Resume target
+Go
+
+ENDDO
