@@ -162,7 +162,7 @@ class DebugConsole:
             mod = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(mod)
             return {"valid": True, "dry_run": "PASS", "has_run": hasattr(mod, "run")}
-        except Exception as e:
+        except Exception:
             return {"valid": False, "dry_run": "FAIL", "error": traceback.format_exc()}
 
     # ── Log Viewer ──────────────────────────────────────────────────────────

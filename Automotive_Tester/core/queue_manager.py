@@ -157,7 +157,7 @@ class TestQueueManager:
                 self._run_canoe(item)
             elif item.test_type == TestType.CMM:
                 self._run_cmm(item)
-        except Exception as e:
+        except Exception:
             item.result_message = traceback.format_exc()
             item.status = TestStatus.FAILED
             self.logger.error(f"✘ FAILED: {item.name}\n{item.result_message}")

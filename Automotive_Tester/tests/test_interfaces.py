@@ -72,7 +72,7 @@ _make_win32com_stub()
 # ---------------------------------------------------------------------------
 # Now import project code
 # ---------------------------------------------------------------------------
-import os
+import os  # noqa: E402
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from interfaces.trace32_interface import Trace32Interface  # noqa: E402

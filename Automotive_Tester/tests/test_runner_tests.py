@@ -21,6 +21,7 @@ def _stub(name: str) -> None:
     if name not in sys.modules:
         sys.modules[name] = types.ModuleType(name)
 
+
 for _pkg in ("lauterbach", "lauterbach.trace32", "lauterbach.trace32.rcl",
              "cv2", "PIL", "PIL.Image", "PIL.ImageTk",
              "win32com", "win32com.client"):
@@ -29,8 +30,8 @@ for _pkg in ("lauterbach", "lauterbach.trace32", "lauterbach.trace32.rcl",
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
-from core.logger import Logger
-from core.test_runner import TestItem, TestRunner, TestStatus, TestType
+from core.logger import Logger  # noqa: E402
+from core.test_runner import TestItem, TestRunner, TestStatus, TestType  # noqa: E402
 
 
 # ===========================================================================

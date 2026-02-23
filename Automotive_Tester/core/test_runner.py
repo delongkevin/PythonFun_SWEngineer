@@ -308,7 +308,7 @@ class TestRunner:
         except AssertionError as exc:
             result.status = TestStatus.FAILED
             result.message = f"Assertion failed: {exc}"
-        except Exception as exc:
+        except Exception:
             result.status = TestStatus.ERROR
             result.message = traceback.format_exc()
         return result
