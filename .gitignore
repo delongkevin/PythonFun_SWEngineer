@@ -8,8 +8,6 @@ build/
 logs/
 *.log
 test-results.xml
-Automotive_Tester/pyproject.toml
-
 # PyInstaller build artefacts
 *.spec.bak
 Automotive_Tester/build/
