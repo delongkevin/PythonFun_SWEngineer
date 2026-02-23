@@ -1,5 +1,10 @@
 {
-  "trace32": {"host": "localhost", "port": 20000},
+  "trace32": {
+    "host": "localhost",
+    "port": 20000,
+    "install_drives": ["C", "D"],
+    "connection_type": "USB3"
+  },
   "power_supply": {"port": "COM3", "baud_rate": 9600, "timeout": 2},
   "camera": {"index": 0},
   "serial_ports": [
