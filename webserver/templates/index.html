@@ -1,0 +1,710 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Engineering Dashboard – PythonFun SW Engineer</title>
+  <style>
+    /* ── Reset / base ─────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --accent:    #3a86ff;
+      --accent2:   #06d6a0;
+      --card-bg:   #161b22;
+      --nav-bg:    #0d1117;
+      --body-bg:   #0d1117;
+      --text:      #c9d1d9;
+      --text-muted:#8b949e;
+      --border:    #21262d;
+    }
+    html { font-size: 16px; }
+    body {
+      background: var(--body-bg);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul, ol { padding-left: 1.25rem; }
+    code {
+      font-family: 'Cascadia Code', 'Consolas', monospace;
+      background: #21262d;
+      border-radius: 4px;
+      padding: .1rem .35rem;
+      font-size: .82em;
+      color: var(--accent2);
+    }
+    pre {
+      font-family: 'Cascadia Code', 'Consolas', monospace;
+      background: #0d1117;
+      color: #3fb950;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-size: .85rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      border: 1px solid var(--border);
+    }
+    button { cursor: pointer; font-family: inherit; }
+    img { max-width: 100%; }
+
+    /* ── Layout helpers ───────────────────────────────────────────────────── */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+    .flex       { display: flex; }
+    .flex-col   { flex-direction: column; }
+    .items-center  { align-items: center; }
+    .items-start   { align-items: flex-start; }
+    .justify-between { justify-content: space-between; }
+    .gap-1  { gap: .25rem; }
+    .gap-2  { gap: .5rem; }
+    .gap-3  { gap: .75rem; }
+    .gap-4  { gap: 1rem; }
+    .gap-5  { gap: 1.5rem; }
+    .flex-wrap { flex-wrap: wrap; }
+    .grow  { flex-grow: 1; }
+    .shrink-0 { flex-shrink: 0; }
+    .ms-auto { margin-left: auto; }
+    .mt-1 { margin-top: .25rem; }
+    .mt-2 { margin-top: .5rem; }
+    .mt-3 { margin-top: .75rem; }
+    .mb-1 { margin-bottom: .25rem; }
+    .mb-2 { margin-bottom: .5rem; }
+    .mb-3 { margin-bottom: .75rem; }
+    .mb-4 { margin-bottom: 1rem; }
+    .py-5 { padding-top: 3rem; padding-bottom: 3rem; }
+    .text-sm   { font-size: .85rem; }
+    .text-xs   { font-size: .75rem; }
+    .fw-bold   { font-weight: 700; }
+    .fw-semi   { font-weight: 600; }
+    .text-muted { color: var(--text-muted); }
+    .text-accent  { color: var(--accent); }
+    .text-accent2 { color: var(--accent2); }
+    .text-warn  { color: #f0a500; }
+    .text-light { color: #e6edf3; }
+    .mono { font-family: 'Cascadia Code', 'Consolas', monospace; }
+    .min-w-0 { min-width: 0; }
+    .rounded { border-radius: .5rem; }
+    .w-full { width: 100%; }
+
+    /* ── Navbar ───────────────────────────────────────────────────────────── */
+    .navbar {
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .navbar .container {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px; gap: 1rem;
+    }
+    .navbar-brand {
+      font-weight: 700; font-size: 1.05rem; letter-spacing: .03em;
+      display: flex; align-items: center; gap: .5rem; color: var(--text);
+    }
+    .navbar-brand svg { color: var(--accent); }
+    .navbar-right { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+
+    /* ── Hero ─────────────────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #0d1117 0%, #161b27 60%, #0d2447 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 3rem 0 2.5rem;
+    }
+    .hero h1 {
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      display: flex; align-items: center; gap: .55rem;
+      margin-bottom: .6rem;
+    }
+    .hero p { color: var(--text-muted); max-width: 640px; }
+
+    /* ── Status bar ───────────────────────────────────────────────────────── */
+    .status-bar {
+      background: #161b22;
+      border-bottom: 1px solid var(--border);
+      font-size: .82rem; padding: .55rem 0;
+    }
+    .status-bar .container {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem;
+    }
+    .dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      display: inline-block; margin-right: 5px; flex-shrink: 0;
+    }
+    .dot-ok      { background: #3fb950; box-shadow: 0 0 6px #3fb950; }
+    .dot-warn    { background: #d29922; box-shadow: 0 0 6px #d29922; }
+    .dot-pending { background: #58a6ff; box-shadow: 0 0 6px #58a6ff;
+                   animation: pulse 1.4s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.35} }
+
+    /* ── Main grid ────────────────────────────────────────────────────────── */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 2rem;
+      padding: 2.5rem 0;
+    }
+    @media (max-width: 900px) {
+      .main-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── Section heading ─────────────────────────────────────────────────── */
+    .section-heading {
+      font-size: .75rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .1em;
+      color: var(--text-muted); margin-bottom: .9rem;
+      display: flex; align-items: center; gap: .4rem;
+    }
+
+    /* ── App cards ────────────────────────────────────────────────────────── */
+    .card-list { display: flex; flex-direction: column; gap: .85rem; }
+    .app-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: .75rem;
+      padding: 1.35rem 1.5rem;
+      transition: border-color .2s, transform .18s, box-shadow .18s;
+    }
+    .app-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(58,134,255,.16);
+    }
+    .app-icon {
+      width: 52px; height: 52px; border-radius: .55rem; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #1c2b4a, #1a2f55);
+      color: var(--accent); font-size: 1.5rem;
+    }
+    .app-icon svg { width: 28px; height: 28px; }
+    .card-title { font-size: 1rem; font-weight: 600; }
+    .card-desc  { font-size: .86rem; color: var(--text-muted); line-height: 1.55; margin: .35rem 0 .75rem; }
+    .tag-row    { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .85rem; }
+    .tag {
+      font-size: .72rem; padding: .2rem .5rem;
+      border-radius: 20px; background: #21262d;
+      color: var(--text-muted); border: 1px solid #30363d;
+    }
+    .card-footer-row {
+      display: flex; flex-wrap: wrap; align-items: center; gap: .6rem;
+    }
+    .entry-path { font-size: .78rem; color: var(--text-muted); font-family: 'Consolas', monospace; }
+
+    /* ── Badges ──────────────────────────────────────────────────────────── */
+    .badge {
+      font-size: .7rem; font-weight: 600; padding: .18rem .55rem;
+      border-radius: 20px; display: inline-block;
+    }
+    .badge-primary { background: #1f4080; color: #79b8ff; border: 1px solid #2d5ba0; }
+    .badge-success { background: #1a3a2a; color: #3fb950; border: 1px solid #2d6a40; }
+    .badge-ok      { background: #1a3a2a; color: #3fb950; }
+    .badge-warn    { background: #3a2a00; color: #f0a500; }
+
+    /* ── Buttons ─────────────────────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; gap: .35rem;
+      padding: .38rem .85rem; border-radius: .45rem;
+      font-size: .82rem; font-weight: 500;
+      border: 1px solid transparent; transition: background .15s, color .15s, border-color .15s;
+    }
+    .btn-outline {
+      background: transparent; border-color: var(--accent); color: var(--accent);
+    }
+    .btn-outline:hover { background: var(--accent); color: #fff; }
+    .btn-ghost {
+      background: transparent; border-color: #30363d; color: var(--text-muted);
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+    .btn-primary:hover { background: #2070e8; }
+    .btn:disabled { opacity: .55; cursor: not-allowed; }
+
+    /* ── Sidebar panels ──────────────────────────────────────────────────── */
+    .panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: .75rem;
+      padding: 1.35rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .panel:last-child { margin-bottom: 0; }
+    .panel-title {
+      font-size: .9rem; font-weight: 600;
+      display: flex; align-items: center; gap: .45rem;
+      margin-bottom: 1rem; color: var(--text);
+    }
+    .panel-title svg { color: var(--accent); }
+    .info-row { margin-bottom: .9rem; }
+    .info-row:last-child { margin-bottom: 0; }
+    .info-label {
+      font-size: .72rem; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--text-muted); margin-bottom: .2rem;
+    }
+    .quick-list { list-style: decimal; }
+    .quick-list li { font-size: .85rem; color: var(--text-muted); padding: .22rem 0; line-height: 1.6; }
+
+    /* ── Modal overlay ───────────────────────────────────────────────────── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,.7); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: #161b22; border: 1px solid var(--border);
+      border-radius: .9rem; width: min(480px, 94vw);
+      padding: 1.75rem; position: relative;
+      animation: slideUp .18s ease-out;
+    }
+    @keyframes slideUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .modal-title { font-size: 1rem; font-weight: 600; display: flex; align-items: center; gap: .45rem; }
+    .modal-close {
+      background: none; border: none; color: var(--text-muted);
+      font-size: 1.3rem; line-height: 1; padding: .2rem .4rem; border-radius: 4px;
+    }
+    .modal-close:hover { color: var(--text); background: #21262d; }
+
+    /* ── Toast notifications ─────────────────────────────────────────────── */
+    #toast-container {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 300;
+      display: flex; flex-direction: column; gap: .5rem; max-width: 340px;
+    }
+    .toast {
+      display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+      padding: .7rem 1rem; border-radius: .55rem; font-size: .85rem; font-weight: 500;
+      animation: toastIn .2s ease-out;
+    }
+    @keyframes toastIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:none} }
+    .toast-success { background: #1a3a2a; color: #3fb950; border: 1px solid #2d6a40; }
+    .toast-warn    { background: #3a2a00; color: #f0a500; border: 1px solid #5a4200; }
+    .toast-danger  { background: #3a1a1a; color: #f85149; border: 1px solid #6a2a2a; }
+    .toast-close { background: none; border: none; color: inherit; opacity: .7; font-size: 1.1rem; cursor: pointer; line-height: 1; }
+
+    /* ── Spinner ─────────────────────────────────────────────────────────── */
+    .spinner {
+      display: inline-block; width: 14px; height: 14px;
+      border: 2px solid currentColor; border-top-color: transparent;
+      border-radius: 50%; animation: spin .7s linear infinite; flex-shrink: 0;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Footer ──────────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      font-size: .8rem; color: var(--text-muted); padding: 1.25rem 0;
+    }
+    footer .container {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 1rem;
+      justify-content: space-between;
+    }
+
+    /* ── SVG icon helper ─────────────────────────────────────────────────── */
+    .icon { display:inline-block; vertical-align:middle; flex-shrink:0; }
+  </style>
+</head>
+<body>
+
+<!-- ── Inline SVG icon sprites ──────────────────────────────────────────────── -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="i-grid" viewBox="0 0 16 16">
+    <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm8 0A1.5 1.5 0 0 1 10.5 9h3A1.5 1.5 0 0 1 15 10.5v3A1.5 1.5 0 0 1 13.5 15h-3A1.5 1.5 0 0 1 9 13.5v-3z"/>
+  </symbol>
+  <symbol id="i-cpu" viewBox="0 0 16 16">
+    <path d="M5 0a.5.5 0 0 1 .5.5V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2h1V.5a.5.5 0 0 1 1 0V2A2.5 2.5 0 0 1 14 4.5h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14v1h1.5a.5.5 0 0 1 0 1H14a2.5 2.5 0 0 1-2.5 2.5v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14h-1v1.5a.5.5 0 0 1-1 0V14A2.5 2.5 0 0 1 2 11.5H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2v-1H.5a.5.5 0 0 1 0-1H2A2.5 2.5 0 0 1 4.5 2V.5A.5.5 0 0 1 5 0zm-.5 3A1.5 1.5 0 0 0 3 4.5v7A1.5 1.5 0 0 0 4.5 13h7a1.5 1.5 0 0 0 1.5-1.5v-7A1.5 1.5 0 0 0 11.5 3h-7zM5 6.5A1.5 1.5 0 0 1 6.5 5h3A1.5 1.5 0 0 1 11 6.5v3A1.5 1.5 0 0 1 9.5 11h-3A1.5 1.5 0 0 1 5 9.5v-3z"/>
+  </symbol>
+  <symbol id="i-diagram" viewBox="0 0 16 16">
+    <path d="M6 3.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-2zm-5 3a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-2zm0 5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-2zm7-5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+    <path d="M1.5 4.5A2.5 2.5 0 0 0 4 7h1v1.5H4A3.5 3.5 0 0 1 .5 5V4.5h1z"/>
+    <path d="M1.5 4.5A2.5 2.5 0 0 1 4 2h1V.5H4A3.5 3.5 0 0 0 .5 4v.5h1z"/>
+  </symbol>
+  <symbol id="i-bar-chart" viewBox="0 0 16 16">
+    <path d="M4 11H2v3h2v-3zm5-4H7v7h2V7zm5-5v12h-2V2h2zm-2-1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1h-2zM6 7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7zm-5 4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1v-3z"/>
+  </symbol>
+  <symbol id="i-terminal" viewBox="0 0 16 16">
+    <path d="M6 9a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3A.5.5 0 0 1 6 9zM3.854 4.146a.5.5 0 1 0-.708.708L4.793 6.5 3.146 8.146a.5.5 0 1 0 .708.708l2-2a.5.5 0 0 0 0-.708l-2-2z"/>
+    <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2zm12 1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1h12z"/>
+  </symbol>
+  <symbol id="i-tools" viewBox="0 0 16 16">
+    <path d="M1 0 0 1l2.2 3.081a1 1 0 0 0 .815.419h.07a1 1 0 0 1 .708.293l2.675 2.675-2.617 2.654A3.003 3.003 0 0 0 0 13a3 3 0 1 0 5.878-.851l2.654-2.617.968.968-.305.914a1 1 0 0 0 .242 1.023l3.27 3.27a.997.997 0 0 0 1.414 0l1.586-1.586a.997.997 0 0 0 0-1.414l-3.27-3.27a1 1 0 0 0-1.023-.242L10.5 9.5l-.96-.96 2.68-2.643A3.005 3.005 0 0 0 16 3c0-.269-.035-.53-.102-.777l-3.14 3.142-1.648-.82-.82-1.646 3.14-3.142A3.0 3.0 0 0 0 13 0c-1.657 0-3 1.343-3 3l-2.743 2.67-1.04-1.04.816-.816A1 1 0 0 0 7 3.5V3.43a1 1 0 0 0-.419-.814L3.5 0.38 3.5 0 1 0zM3 13a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+  </symbol>
+  <symbol id="i-git" viewBox="0 0 16 16">
+    <path d="M15.698 7.287 8.712.302a1.03 1.03 0 0 0-1.457 0l-1.45 1.45 1.84 1.84a1.223 1.223 0 0 1 1.55 1.56l1.773 1.774a1.224 1.224 0 0 1 1.267 2.025 1.226 1.226 0 0 1-2.002-1.334L8.58 5.963v4.353a1.226 1.226 0 1 1-1.008-.036V5.887a1.226 1.226 0 0 1-.666-1.608L5.093 2.465l-4.79 4.79a1.03 1.03 0 0 0 0 1.457l6.986 6.986a1.03 1.03 0 0 0 1.457 0l6.953-6.953a1.031 1.031 0 0 0-.001-1.458z"/>
+  </symbol>
+  <symbol id="i-check-circle" viewBox="0 0 16 16">
+    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+  </symbol>
+  <symbol id="i-cloud-download" viewBox="0 0 16 16">
+    <path d="M4.406 1.342A5.53 5.53 0 0 1 8 0c2.69 0 4.923 2 5.166 4.579C14.758 4.804 16 6.137 16 7.773 16 9.569 14.502 11 12.687 11H10a.5.5 0 0 1 0-1h2.688C13.979 10 15 8.988 15 7.773c0-1.216-1.02-2.228-2.313-2.228h-.5v-.5C12.188 2.825 10.328 1 8 1a4.53 4.53 0 0 0-2.941 1.1c-.757.652-1.153 1.438-1.153 2.055v.448l-.445.049C2.064 4.805 1 5.952 1 7.318 1 8.785 2.23 10 3.781 10H6a.5.5 0 0 1 0 1H3.781C1.708 11 0 9.366 0 7.318c0-1.763 1.266-3.223 2.942-3.593.143-.863.698-1.723 1.464-2.383z"/>
+    <path d="M7.646 15.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 14.293V5.5a.5.5 0 0 0-1 0v8.793l-2.146-2.147a.5.5 0 0 0-.708.708l3 3z"/>
+  </symbol>
+  <symbol id="i-refresh" viewBox="0 0 16 16">
+    <path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 0 0 1 .192-.41zm-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 0 0 0 .534 9z"/>
+    <path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 0 1 1-.771-.636A6.002 6.002 0 0 1 13.917 7H12.9A5.002 5.002 0 0 0 8 3zM3.1 9a5.002 5.002 0 0 0 8.757 2.182.5.5 0 1 1 .771.636A6.002 6.002 0 0 1 2.083 9H3.1z"/>
+  </symbol>
+  <symbol id="i-rocket" viewBox="0 0 16 16">
+    <path d="M8 2.016c-.268.14-.487.302-.674.475C6.138 3.498 5.5 5.13 5.5 7.5c0 .604.061 1.187.17 1.747L4.5 10.5v2l2.016-.672A6.04 6.04 0 0 0 8 12.5c.553 0 1.084-.082 1.583-.228L11.5 12.5v-2L10.33 9.247C10.44 8.687 10.5 8.104 10.5 7.5c0-2.37-.638-4.002-1.826-5.009A3.478 3.478 0 0 0 8 2.016zm0 1.21c.146.09.291.2.425.329.914.848 1.575 2.285 1.575 4.445 0 .54-.055 1.063-.155 1.556l-.12.593.52.26L11 11.125v.687l-1.093-.364-.413-.138-.362.213A5.032 5.032 0 0 1 8 11.75a5.032 5.032 0 0 1-1.132-.327l-.362-.213-.413.138L5 11.812v-.687l.755-.691.52-.26-.12-.593A7.634 7.634 0 0 1 6 8c0-2.16.661-3.597 1.575-4.445A2.47 2.47 0 0 1 8 3.226z"/>
+    <path d="M8 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm0 1a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1z"/>
+  </symbol>
+  <symbol id="i-shield" viewBox="0 0 16 16">
+    <path d="M8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+  </symbol>
+  <symbol id="i-clock" viewBox="0 0 16 16">
+    <path d="M8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z"/>
+  </symbol>
+  <symbol id="i-info" viewBox="0 0 16 16">
+    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588z"/>
+    <circle cx="8" cy="4.5" r="1"/>
+    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm0-1A7 7 0 1 1 8 1a7 7 0 0 1 0 14z"/>
+  </symbol>
+  <symbol id="i-file-text" viewBox="0 0 16 16">
+    <path d="M5 4a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm-.5 2.5A.5.5 0 0 1 5 6h6a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zM5 8a.5.5 0 0 0 0 1h6a.5.5 0 0 0 0-1H5zm0 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1H5z"/>
+    <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z"/>
+  </symbol>
+</svg>
+
+<!-- ── Navbar ──────────────────────────────────────────────────────────────── -->
+<nav class="navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <svg class="icon" width="20" height="20" fill="currentColor"><use href="#i-grid"/></svg>
+      Engineering Dashboard
+    </a>
+    <div class="navbar-right">
+      <span id="sse-indicator" style="display:flex;align-items:center;gap:.4rem;">
+        <span class="dot dot-pending" id="sse-dot"></span>
+        <span class="text-sm text-muted" id="sse-label">Connecting…</span>
+      </span>
+      <button class="btn btn-ghost" id="btn-refresh-git" title="Pull latest changes now">
+        <svg class="icon" width="15" height="15" fill="currentColor"><use href="#i-refresh"/></svg>
+        Sync
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────────────────────────────────── -->
+<section class="hero">
+  <div class="container">
+    <h1>
+      <svg class="icon" width="28" height="28" fill="currentColor" style="color:var(--accent)"><use href="#i-tools"/></svg>
+      PythonFun SW Engineer
+    </h1>
+    <p>
+      A local engineering portal that keeps all applications up to date.
+      The server continuously monitors the repository and pulls the latest
+      changes automatically — every colleague sees the same version.
+    </p>
+  </div>
+</section>
+
+<!-- ── Status bar ─────────────────────────────────────────────────────────── -->
+<div class="status-bar">
+  <div class="container">
+    <span style="display:flex;align-items:center;">
+      <span class="dot dot-ok"></span>
+      <strong class="text-light">{{ apps|length }}</strong>
+      <span class="text-muted" style="margin-left:.3rem;">application{{ 's' if apps|length != 1 else '' }} registered</span>
+    </span>
+    <span style="display:flex;align-items:center;gap:.3rem;">
+      <svg class="icon" width="13" height="13" fill="currentColor" style="color:var(--text-muted)"><use href="#i-git"/></svg>
+      <span class="text-muted">Branch:</span>
+      <strong class="text-warn" id="git-branch">{{ git_info.get('branch', '…') }}</strong>
+    </span>
+    <span style="display:flex;align-items:center;gap:.3rem;">
+      <svg class="icon" width="13" height="13" fill="currentColor" style="color:var(--text-muted)"><use href="#i-clock"/></svg>
+      <span class="text-muted">Last commit:</span>
+      <span class="text-light" id="git-commit-msg">{{ git_info.get('commit_message', '…') }}</span>
+    </span>
+    <span class="ms-auto" style="display:flex;align-items:center;gap:.3rem;">
+      <svg class="icon" width="13" height="13" fill="currentColor" style="color:var(--text-muted)"><use href="#i-refresh"/></svg>
+      <span class="text-muted">Auto-sync every 30 s</span>
+    </span>
+  </div>
+</div>
+
+<!-- ── Main ───────────────────────────────────────────────────────────────── -->
+<main class="container">
+  <div class="main-grid">
+
+    <!-- App cards -->
+    <div>
+      <div class="section-heading">
+        <svg class="icon" width="14" height="14" fill="currentColor"><use href="#i-grid"/></svg>
+        Applications
+      </div>
+      <div class="card-list">
+        {% for app in apps %}
+        <div class="app-card">
+          <div class="flex items-start gap-3">
+            <div class="app-icon">
+              {% if app.icon == 'bi-cpu' %}
+              <svg fill="currentColor" viewBox="0 0 16 16"><use href="#i-cpu"/></svg>
+              {% elif app.icon == 'bi-diagram-3' %}
+              <svg fill="currentColor" viewBox="0 0 16 16"><use href="#i-diagram"/></svg>
+              {% elif app.icon == 'bi-bar-chart-line' %}
+              <svg fill="currentColor" viewBox="0 0 16 16"><use href="#i-bar-chart"/></svg>
+              {% else %}
+              <svg fill="currentColor" viewBox="0 0 16 16"><use href="#i-terminal"/></svg>
+              {% endif %}
+            </div>
+            <div class="grow min-w-0">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="card-title">{{ app.name }}</span>
+                <span class="badge {% if app.badge_class == 'bg-primary' %}badge-primary{% else %}badge-success{% endif %}">
+                  {{ app.badge }}
+                </span>
+              </div>
+              <p class="card-desc">{{ app.description }}</p>
+              <div class="tag-row">
+                {% for tag in app.tags %}
+                <span class="tag">{{ tag }}</span>
+                {% endfor %}
+              </div>
+              <div class="card-footer-row">
+                <button class="btn btn-outline"
+                        onclick="showLaunchInfo('{{ app.path }}', '{{ app.entry }}')"
+                        title="Show launch instructions">
+                  <svg class="icon" width="14" height="14" fill="currentColor"><use href="#i-terminal"/></svg>
+                  How to launch
+                </button>
+                {% if app.readme %}
+                <a href="/api/readme/{{ app.id }}" target="_blank" class="btn btn-ghost" title="Open README">
+                  <svg class="icon" width="14" height="14" fill="currentColor"><use href="#i-file-text"/></svg>
+                  README
+                </a>
+                {% endif %}
+                <span class="entry-path ms-auto">{{ app.path }}/{{ app.entry }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div>
+      <div class="section-heading" style="margin-top:0;">
+        <svg class="icon" width="14" height="14" fill="currentColor"><use href="#i-git"/></svg>
+        Repository
+      </div>
+
+      <!-- Git panel -->
+      <div class="panel">
+        <div class="info-row">
+          <div class="info-label">Branch</div>
+          <strong class="text-warn" id="gb-branch">{{ git_info.get('branch','—') }}</strong>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Latest commit</div>
+          <div class="mono text-accent2" id="gb-hash">{{ git_info.get('commit_hash','—') }}</div>
+          <div class="text-sm text-light mt-1" id="gb-msg">{{ git_info.get('commit_message','—') }}</div>
+          <div class="text-sm text-muted mt-1" id="gb-author">{{ git_info.get('commit_author','—') }}</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Commit date</div>
+          <div class="text-sm" id="gb-date">{{ git_info.get('commit_date','—') }}</div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Remote updates</div>
+          <div id="gb-remote">
+            {% if git_info.get('remote_ahead') %}
+            <span class="badge badge-warn" style="display:inline-flex;align-items:center;gap:.3rem;">
+              <svg class="icon" width="13" height="13" fill="currentColor"><use href="#i-cloud-download"/></svg>
+              Updates available
+            </span>
+            {% else %}
+            <span class="badge badge-ok" style="display:inline-flex;align-items:center;gap:.3rem;">
+              <svg class="icon" width="13" height="13" fill="currentColor"><use href="#i-check-circle"/></svg>
+              Up to date
+            </span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="info-row">
+          <div class="info-label">Last synced</div>
+          <div class="text-sm text-muted" id="gb-checked">{{ git_info.get('last_checked','—') }}</div>
+        </div>
+      </div>
+
+      <!-- Quick start panel -->
+      <div class="panel">
+        <div class="panel-title">
+          <svg class="icon" width="16" height="16" fill="currentColor"><use href="#i-rocket"/></svg>
+          Quick Start
+        </div>
+        <ol class="quick-list">
+          <li>Clone the repo to the server machine</li>
+          <li>Install each app's <code>requirements.txt</code></li>
+          <li>Run <code>python server.py</code> from <code>webserver/</code></li>
+          <li>Share <code>http://&lt;server-ip&gt;:5000</code> with colleagues</li>
+          <li>Server auto-pulls updates every 30 s</li>
+        </ol>
+      </div>
+    </div>
+
+  </div><!-- /main-grid -->
+</main>
+
+<!-- ── Footer ─────────────────────────────────────────────────────────────── -->
+<footer>
+  <div class="container">
+    <span style="display:flex;align-items:center;gap:.4rem;">
+      <svg class="icon" width="14" height="14" fill="currentColor" style="color:var(--accent)"><use href="#i-grid"/></svg>
+      Engineering Dashboard
+    </span>
+    <span style="display:flex;align-items:center;gap:.35rem;">
+      <svg class="icon" width="13" height="13" fill="currentColor" style="color:#3fb950"><use href="#i-shield"/></svg>
+      Running locally — not exposed to the internet
+    </span>
+    <span id="footer-time" class="text-muted"></span>
+  </div>
+</footer>
+
+<!-- ── Launch modal ───────────────────────────────────────────────────────── -->
+<div class="modal-overlay" id="launchModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">
+        <svg class="icon" width="16" height="16" fill="currentColor" style="color:var(--accent)"><use href="#i-terminal"/></svg>
+        Launch Instructions
+      </div>
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+    </div>
+    <p class="text-sm text-muted mb-2">Run the following commands in a terminal:</p>
+    <pre id="launch-cmd"></pre>
+    <p class="text-sm text-muted mt-2" style="display:flex;align-items:center;gap:.35rem;">
+      <svg class="icon" width="13" height="13" fill="currentColor"><use href="#i-info"/></svg>
+      Ensure all dependencies are installed before launching.
+    </p>
+  </div>
+</div>
+
+<!-- ── Toasts ─────────────────────────────────────────────────────────────── -->
+<div id="toast-container"></div>
+
+<!-- ── Scripts ────────────────────────────────────────────────────────────── -->
+<script>
+/* ── Modal ── */
+function showLaunchInfo(path, entry) {
+  document.getElementById('launch-cmd').textContent =
+    'cd ' + path + '\npython ' + entry;
+  document.getElementById('launchModal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('launchModal').classList.remove('open');
+}
+document.getElementById('launchModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+
+/* ── Toasts ── */
+function showToast(message, type) {
+  type = type || 'success';
+  const id = 'toast-' + Date.now();
+  const cls = type === 'success' ? 'toast-success' : type === 'warn' ? 'toast-warn' : 'toast-danger';
+  const wrap = document.getElementById('toast-container');
+  const div = document.createElement('div');
+  div.id = id;
+  div.className = 'toast ' + cls;
+  div.innerHTML = '<span>' + message + '</span>'
+    + '<button class="toast-close" onclick="this.parentElement.remove()">&times;</button>';
+  wrap.appendChild(div);
+  setTimeout(function() { var el = document.getElementById(id); if (el) el.remove(); }, 4500);
+}
+
+/* ── Git panel update ── */
+function updateGitPanel(data) {
+  function set(id, val) { var e = document.getElementById(id); if (e && val != null) e.textContent = val; }
+  set('git-branch',     data.branch);
+  set('git-commit-msg', data.commit_message);
+  set('gb-branch',  data.branch);
+  set('gb-hash',    data.commit_hash);
+  set('gb-msg',     data.commit_message);
+  set('gb-author',  data.commit_author);
+  set('gb-date',    data.commit_date);
+  set('gb-checked', data.last_checked);
+
+  var remoteEl = document.getElementById('gb-remote');
+  if (remoteEl) {
+    if (data.remote_ahead) {
+      remoteEl.innerHTML = '<span class="badge badge-warn" style="display:inline-flex;align-items:center;gap:.3rem;">'
+        + '<svg class="icon" width="13" height="13" fill="currentColor"><use href="#i-cloud-download"/></svg>'
+        + 'Updates available</span>';
+    } else {
+      remoteEl.innerHTML = '<span class="badge badge-ok" style="display:inline-flex;align-items:center;gap:.3rem;">'
+        + '<svg class="icon" width="13" height="13" fill="currentColor"><use href="#i-check-circle"/></svg>'
+        + 'Up to date</span>';
+    }
+  }
+}
+
+/* ── SSE ── */
+var evtSource = null;
+function connectSSE() {
+  if (evtSource) evtSource.close();
+  evtSource = new EventSource('/stream');
+  evtSource.onopen = function() {
+    document.getElementById('sse-dot').className   = 'dot dot-ok';
+    document.getElementById('sse-label').textContent = 'Live';
+  };
+  evtSource.addEventListener('git_update', function(e) {
+    updateGitPanel(JSON.parse(e.data));
+  });
+  evtSource.addEventListener('notification', function(e) {
+    var d = JSON.parse(e.data);
+    showToast(d.message, d.type || 'success');
+  });
+  evtSource.onerror = function() {
+    document.getElementById('sse-dot').className   = 'dot dot-warn';
+    document.getElementById('sse-label').textContent = 'Reconnecting…';
+    evtSource.close();
+    setTimeout(connectSSE, 5000);
+  };
+}
+
+/* ── Sync button ── */
+document.getElementById('btn-refresh-git').addEventListener('click', function() {
+  var btn = this;
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Syncing…';
+  fetch('/api/git/refresh', { method: 'POST' })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (data.error) {
+        showToast('Sync error: ' + data.error, 'danger');
+      } else {
+        var msg = data.pull_output || 'Repository is up to date.';
+        showToast(msg.length > 80 ? msg.slice(0, 77) + '…' : msg, 'success');
+      }
+    })
+    .catch(function() { showToast('Network error – check server.', 'danger'); })
+    .finally(function() {
+      btn.disabled = false;
+      btn.innerHTML = '<svg class="icon" width="15" height="15" fill="currentColor"><use href="#i-refresh"/></svg> Sync';
+    });
+});
+
+/* ── Footer clock ── */
+function updateClock() {
+  var el = document.getElementById('footer-time');
+  if (el) el.textContent = new Date().toLocaleTimeString();
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+/* ── Init ── */
+connectSSE();
+</script>
+</body>
+</html>
