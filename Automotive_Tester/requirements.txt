@@ -1,0 +1,27 @@
+# Automotive ECU Tester - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Serial communication
+pyserial>=3.5
+
+# Image/Camera capture
+opencv-python>=4.8.0
+Pillow>=10.0.0
+
+# Lauterbach Trace32 Remote Control Library
+# Install from Lauterbach delivery or PyPI:
+# pip install lauterbach-trace32-rcl
+# lauterbach-trace32-rcl>=1.0.0   # uncomment when available
+
+# Windows COM automation for Vector CANoe (Windows only)
+# pip install pywin32
+# pywin32>=306   # uncomment on Windows
+
+# NumPy (used by OpenCV)
+numpy>=1.24.0
+
+# Optional: Excel report generation
+openpyxl>=3.1.0
+
+# Optional: prettier terminal output
+colorama>=0.4.6
