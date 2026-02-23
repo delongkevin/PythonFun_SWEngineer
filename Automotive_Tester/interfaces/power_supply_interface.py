@@ -10,9 +10,17 @@ import logging
 import time
 from typing import Optional, Tuple
 
-import serial  # pyserial
+try:
+    import serial  # pyserial
+    _SERIAL_AVAILABLE = True
+except ImportError:
+    serial = None  # type: ignore[assignment]
+    _SERIAL_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
+
+if not _SERIAL_AVAILABLE:
+    logger.warning("pyserial not available – power supply serial features disabled.")
 
 # Command strings ─────────────────────────────────────────────────────────────
 _CMD_IDN = b"*IDN?\r\n"
@@ -61,6 +69,9 @@ class PowerSupplyInterface:
         Returns:
             True on success, False on failure.
         """
+        if not _SERIAL_AVAILABLE:
+            logger.error("pyserial is not installed – cannot connect to power supply.")
+            return False
         try:
             self._serial = serial.Serial(
                 port=port,

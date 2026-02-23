@@ -42,8 +42,11 @@ hidden_imports = [
     "PIL.Image",
     "PIL.ImageTk",
     "PIL.ImageDraw",
-    # pyserial
+    # pyserial – include platform-specific backends to ensure full bundling
     "serial",
+    "serial.serialutil",
+    "serial.serialwin32",   # Windows serial backend
+    "serial.serialposix",   # Linux / macOS serial backend
     "serial.tools",
     "serial.tools.list_ports",
     # OpenCV (optional – camera support)

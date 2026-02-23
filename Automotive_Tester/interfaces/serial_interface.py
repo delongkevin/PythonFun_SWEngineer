@@ -10,13 +10,20 @@ import logging
 import os
 import threading
 import time
-from typing import Callable, Dict, List, Optional
+from typing import Callable, Dict, IO, List, Optional
 
-import serial  # pyserial
-import serial.tools.list_ports
-from typing import IO
+try:
+    import serial  # pyserial
+    import serial.tools.list_ports
+    _SERIAL_AVAILABLE = True
+except ImportError:
+    serial = None  # type: ignore[assignment]
+    _SERIAL_AVAILABLE = False
 
 logger = logging.getLogger(__name__)
+
+if not _SERIAL_AVAILABLE:
+    logger.warning("pyserial not available – serial port features disabled.")
 
 MAX_PORTS = 4
 _READ_INTERVAL = 0.05   # seconds between read attempts when no data
@@ -53,6 +60,9 @@ class SerialPort:
         Returns:
             True on success.
         """
+        if not _SERIAL_AVAILABLE:
+            logger.error("[%s] pyserial is not installed – cannot connect.", self.name)
+            return False
         try:
             self._serial = serial.Serial(
                 port=port,
@@ -256,4 +266,7 @@ class SerialInterface:
     @staticmethod
     def list_available_ports() -> List[str]:
         """Return a list of available serial port names on this system."""
+        if not _SERIAL_AVAILABLE:
+            logger.warning("pyserial not available – cannot list serial ports.")
+            return []
         return [p.device for p in serial.tools.list_ports.comports()]
