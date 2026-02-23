@@ -97,7 +97,6 @@ excludes = [
     "email",
     "html",
     "http",
-    "urllib",
     "ftplib",
     "smtplib",
     "imaplib",
