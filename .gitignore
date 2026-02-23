@@ -12,3 +12,5 @@ test-results.xml
 *.spec.bak
 Automotive_Tester/build/
 Automotive_Tester/dist/
+Trace32_Test_Framework/build/
+Trace32_Test_Framework/dist/
