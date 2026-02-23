@@ -8,7 +8,9 @@ from __future__ import annotations
 import logging
 import os
 import threading
-from typing import TYPE_CHECKING, Callable, Optional
+import time
+from pathlib import Path
+from typing import TYPE_CHECKING, Callable, Optional, Union
 
 if TYPE_CHECKING:
     import cv2 as _cv2_type
@@ -50,23 +52,38 @@ class CameraInterface:
         cam.disconnect()
     """
 
-    def __init__(self) -> None:
+    def __init__(self, snapshot_dir: "Optional[Union[str, Path]]" = None) -> None:
         self._cap: "Optional[_cv2_type.VideoCapture]" = None
         self._index: int = 0
         self._connected: bool = False
         self._streaming: bool = False
         self._stream_thread: Optional[threading.Thread] = None
         self._stop_event = threading.Event()
+        self._snapshot_dir = snapshot_dir
+
+    # ------------------------------------------------------------------
+    # device_index property
+    # ------------------------------------------------------------------
+
+    @property
+    def device_index(self) -> int:
+        """Camera device index used by :meth:`connect`."""
+        return self._index
+
+    @device_index.setter
+    def device_index(self, value: int) -> None:
+        self._index = int(value)
 
     # ------------------------------------------------------------------
     # Connection lifecycle
     # ------------------------------------------------------------------
 
-    def connect(self, index: int = 0) -> bool:
+    def connect(self, index: "Optional[int]" = None) -> bool:
         """Open the camera at the given device index.
 
         Args:
-            index: OpenCV camera index (0 = default camera).
+            index: OpenCV camera index (0 = default camera).  When *None*
+                the value of :attr:`device_index` is used.
 
         Returns:
             True on success, False if cv2 is unavailable or camera not found.
@@ -74,6 +91,8 @@ class CameraInterface:
         if not _CV2_AVAILABLE:
             logger.error("Cannot connect camera: cv2 is not installed.")
             return False
+        if index is None:
+            index = self._index
         try:
             cap = _cv2.VideoCapture(index)
             if not cap.isOpened():
@@ -151,6 +170,26 @@ class CameraInterface:
             logger.error("save_frame exception: %s", exc)
             return False
 
+    def snapshot(self, label: str = "snap") -> "Optional[str]":
+        """Capture a single frame and save it to :attr:`_snapshot_dir`.
+
+        Args:
+            label: Short label included in the file name.
+
+        Returns:
+            Saved file path on success, ``None`` on failure.
+        """
+        frame = self.capture_frame()
+        if frame is None:
+            logger.error("snapshot: no frame captured.")
+            return None
+        ts = time.strftime("%Y%m%d_%H%M%S")
+        snap_dir = self._snapshot_dir if self._snapshot_dir is not None else "snapshots"
+        path = os.path.join(str(snap_dir), f"{label}_{ts}.png")
+        if self.save_frame(path, frame):
+            return path
+        return None
+
     # ------------------------------------------------------------------
     # Streaming (background thread, push frames via callback)
     # ------------------------------------------------------------------
@@ -206,11 +245,19 @@ class CameraInterface:
     # ------------------------------------------------------------------
 
     @staticmethod
-    def frame_to_photoimage(frame: Frame) -> Optional[object]:
+    def frame_to_photoimage(
+        frame: Frame,
+        width: int = 0,
+        height: int = 0,
+    ) -> Optional[object]:
         """Convert an OpenCV BGR frame to a tkinter-compatible PhotoImage.
 
         Args:
-            frame: OpenCV ndarray (BGR).
+            frame:  OpenCV ndarray (BGR).
+            width:  Target width in pixels.  When both *width* and *height*
+                    are non-zero the image is resized to fit that rectangle
+                    before conversion.
+            height: Target height in pixels.
 
         Returns:
             A PIL.ImageTk.PhotoImage object, or None if PIL is unavailable.
@@ -220,6 +267,8 @@ class CameraInterface:
         try:
             rgb = _cv2.cvtColor(frame, _cv2.COLOR_BGR2RGB)  # type: ignore[attr-defined]
             img = _PILImage.fromarray(rgb)  # type: ignore[attr-defined]
+            if width > 0 and height > 0:
+                img = img.resize((width, height), _PILImage.LANCZOS)  # type: ignore[attr-defined]
             return _PILImageTk.PhotoImage(img)  # type: ignore[attr-defined]
         except Exception as exc:
             logger.warning("frame_to_photoimage failed: %s", exc)

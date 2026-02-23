@@ -138,6 +138,7 @@ class AutomotiveTesterApp:
             ("⏹ Stop", self._stop_queue, COLORS["error"]),
             ("🐛 Debug", self._show_debug, COLORS["warning"]),
             ("📸 Snapshot", self._take_snapshot, COLORS["info"]),
+            ("🎥 Camera Preview", self._open_camera_preview, COLORS["accent2"]),
             ("🔄 Power Cycle", self._power_cycle, COLORS["warning"]),
         ]
         for label, cmd, color in btns:
@@ -616,6 +617,72 @@ class AutomotiveTesterApp:
                 self._log(f"📸 Snapshot saved: {path}", "INFO")
         else:
             self._log("Camera not connected.", "WARN")
+
+    def _open_camera_preview(self):
+        """Open a detachable, resizable camera preview window.
+
+        The window streams live frames from the connected camera and scales
+        them to fit the current window size, so the full feed is always
+        visible regardless of the camera's native resolution.
+        """
+        if not self.camera.is_connected:
+            messagebox.showwarning(
+                "Camera Preview",
+                "Camera is not connected.\nUse 'Connect All' first.",
+            )
+            return
+
+        # Bring existing window to front instead of opening a duplicate.
+        if (
+            hasattr(self, "_cam_preview_win")
+            and self._cam_preview_win is not None
+            and self._cam_preview_win.winfo_exists()
+        ):
+            self._cam_preview_win.lift()
+            return
+
+        win = tk.Toplevel(self.root)
+        win.title("🎥 Camera Feed")
+        win.geometry("800x600")
+        win.configure(bg="black")
+        win.resizable(True, True)
+        self._cam_preview_win = win
+        self._cam_preview_photo = None  # prevent garbage-collection of PhotoImage
+
+        canvas = tk.Canvas(win, bg="black", highlightthickness=0)
+        canvas.pack(fill=tk.BOTH, expand=True)
+
+        status_lbl = tk.Label(
+            win, text="Streaming…",
+            bg=COLORS["surface"], fg=COLORS["text_dim"],
+            font=("Consolas", 9),
+        )
+        status_lbl.pack(fill=tk.X)
+
+        def _display_frame(frame):
+            """Scale frame to canvas dimensions and render it."""
+            if not win.winfo_exists():
+                return
+            w = max(canvas.winfo_width(), 1)
+            h = max(canvas.winfo_height(), 1)
+            photo = self.camera.frame_to_photoimage(frame, width=w, height=h)
+            if photo is None:
+                return
+            canvas.delete("all")
+            canvas.create_image(0, 0, anchor=tk.NW, image=photo)
+            self._cam_preview_photo = photo  # keep reference
+
+        def _on_frame(frame):
+            """Callback from camera stream thread – schedule UI update."""
+            self.root.after(0, lambda f=frame: _display_frame(f))
+
+        self.camera.start_stream(callback=_on_frame)
+
+        def _on_close():
+            self.camera.stop_stream()
+            win.destroy()
+
+        win.protocol("WM_DELETE_WINDOW", _on_close)
 
     def _power_cycle(self):
         if self.psu.is_connected:
