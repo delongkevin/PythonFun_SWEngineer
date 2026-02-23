@@ -1,157 +1,236 @@
 """
-USB Camera Interface
-Captures frames from USB camera for visual inspection / test evidence.
-Uses OpenCV (cv2). Falls back to PIL/Pillow for basic capture if cv2 unavailable.
+USB camera interface using OpenCV.
 
-Install: pip install opencv-python pillow
+Gracefully degrades when cv2 is not installed.
 """
+from __future__ import annotations
 
 import logging
-import time
+import os
 import threading
-from pathlib import Path
-from datetime import datetime
-from typing import Optional, Tuple
+from typing import TYPE_CHECKING, Callable, Optional
+
+if TYPE_CHECKING:
+    import cv2 as _cv2_type
+
+logger = logging.getLogger(__name__)
 
 try:
-    import cv2
-    import numpy as np
-    _HAS_CV2 = True
+    import cv2 as _cv2
+    _CV2_AVAILABLE = True
 except ImportError:
-    _HAS_CV2 = False
+    _cv2 = None  # type: ignore[assignment]
+    _CV2_AVAILABLE = False
+    logger.warning("cv2 (opencv-python) not available – camera features disabled.")
 
 try:
-    from PIL import Image, ImageGrab
-    _HAS_PIL = True
+    from PIL import Image as _PILImage, ImageTk as _PILImageTk
+    _PIL_AVAILABLE = True
 except ImportError:
-    _HAS_PIL = False
+    _PILImage = None    # type: ignore[assignment]
+    _PILImageTk = None  # type: ignore[assignment]
+    _PIL_AVAILABLE = False
+
+
+# Type alias for a raw OpenCV frame (numpy ndarray)
+Frame = "object"
 
 
 class CameraInterface:
+    """Manages a USB camera via OpenCV.
+
+    Usage::
+
+        cam = CameraInterface()
+        cam.connect(index=0)
+        frame = cam.capture_frame()
+        cam.save_frame("snapshot.png", frame)
+        cam.start_stream(callback=my_fn)
+        cam.stop_stream()
+        cam.disconnect()
     """
-    USB Camera capture interface.
-    
-    Features:
-      - Live preview thread
-      - Snapshot to file (timestamped)
-      - Record video clips (optional)
-      - Frame callback for UI integration
-    """
 
-    def __init__(self, device_index: int = 0, resolution: Tuple[int, int] = (1280, 720),
-                 snapshot_dir: Optional[Path] = None):
-        self.device_index = device_index
-        self.resolution = resolution
-        self.snapshot_dir = snapshot_dir or Path("logs/camera")
-        self.snapshot_dir.mkdir(parents=True, exist_ok=True)
-        self.logger = logging.getLogger("tester.camera")
-        self._cap = None
-        self._connected = False
-        self._preview_active = False
-        self._stop = threading.Event()
-        self._frame_callbacks = []
-        self._latest_frame = None
-        self._lock = threading.Lock()
-        self._video_writer = None
+    def __init__(self) -> None:
+        self._cap: "Optional[_cv2_type.VideoCapture]" = None
+        self._index: int = 0
+        self._connected: bool = False
+        self._streaming: bool = False
+        self._stream_thread: Optional[threading.Thread] = None
+        self._stop_event = threading.Event()
 
-    @staticmethod
-    def list_cameras() -> list[int]:
-        """Return indices of available cameras."""
-        available = []
-        if _HAS_CV2:
-            for i in range(8):
-                cap = cv2.VideoCapture(i)
-                if cap.isOpened():
-                    available.append(i)
-                    cap.release()
-        return available
+    # ------------------------------------------------------------------
+    # Connection lifecycle
+    # ------------------------------------------------------------------
 
-    def connect(self) -> bool:
-        if not _HAS_CV2:
-            self.logger.warning("OpenCV not installed; camera unavailable.")
+    def connect(self, index: int = 0) -> bool:
+        """Open the camera at the given device index.
+
+        Args:
+            index: OpenCV camera index (0 = default camera).
+
+        Returns:
+            True on success, False if cv2 is unavailable or camera not found.
+        """
+        if not _CV2_AVAILABLE:
+            logger.error("Cannot connect camera: cv2 is not installed.")
             return False
         try:
-            self._cap = cv2.VideoCapture(self.device_index)
-            if not self._cap.isOpened():
-                self.logger.error(f"Camera device {self.device_index} not found.")
+            cap = _cv2.VideoCapture(index)
+            if not cap.isOpened():
+                logger.error("Camera index %d could not be opened.", index)
                 return False
-            self._cap.set(cv2.CAP_PROP_FRAME_WIDTH, self.resolution[0])
-            self._cap.set(cv2.CAP_PROP_FRAME_HEIGHT, self.resolution[1])
+            self._cap = cap
+            self._index = index
             self._connected = True
-            self.logger.info(f"Camera connected: device {self.device_index} @ {self.resolution}")
-            # Start capture thread
-            self._stop.clear()
-            threading.Thread(target=self._capture_loop, daemon=True).start()
+            logger.info("Camera connected at index %d.", index)
             return True
-        except Exception as e:
-            self.logger.error(f"Camera connect error: {e}")
+        except Exception as exc:
+            logger.error("Camera connect exception: %s", exc)
             return False
 
-    def disconnect(self):
-        self._stop.set()
-        if self._video_writer:
-            self._video_writer.release()
-            self._video_writer = None
-        if self._cap:
-            self._cap.release()
-        self._connected = False
-        self.logger.info("Camera disconnected.")
+    def disconnect(self) -> None:
+        """Release the camera resource."""
+        self.stop_stream()
+        if self._cap is not None and _CV2_AVAILABLE:
+            try:
+                self._cap.release()  # type: ignore[attr-defined]
+            except Exception as exc:
+                logger.warning("Camera disconnect warning: %s", exc)
+            finally:
+                self._cap = None
+                self._connected = False
+                logger.info("Camera disconnected.")
+
+    # ------------------------------------------------------------------
+    # Frame capture
+    # ------------------------------------------------------------------
+
+    def capture_frame(self) -> Optional[Frame]:
+        """Grab a single frame from the camera.
+
+        Returns:
+            An OpenCV frame (numpy ndarray), or None on failure.
+        """
+        if not self._connected or self._cap is None:
+            logger.error("capture_frame called but camera is not connected.")
+            return None
+        try:
+            ret, frame = self._cap.read()  # type: ignore[attr-defined]
+            if not ret:
+                logger.warning("Camera failed to read a frame.")
+                return None
+            return frame
+        except Exception as exc:
+            logger.error("capture_frame exception: %s", exc)
+            return None
+
+    def save_frame(self, path: str, frame: Optional[Frame] = None) -> bool:
+        """Save a frame to disk as an image file.
+
+        Args:
+            path:  Destination file path (extension determines format).
+            frame: Frame to save; if None, a new frame is captured.
+
+        Returns:
+            True on success.
+        """
+        if not _CV2_AVAILABLE:
+            logger.error("Cannot save frame: cv2 is not installed.")
+            return False
+        if frame is None:
+            frame = self.capture_frame()
+        if frame is None:
+            logger.error("save_frame: no frame available.")
+            return False
+        try:
+            os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
+            _cv2.imwrite(path, frame)  # type: ignore[attr-defined]
+            logger.info("Frame saved to %s.", path)
+            return True
+        except Exception as exc:
+            logger.error("save_frame exception: %s", exc)
+            return False
+
+    # ------------------------------------------------------------------
+    # Streaming (background thread, push frames via callback)
+    # ------------------------------------------------------------------
+
+    def start_stream(self, callback: Optional[Callable[[Frame], None]] = None) -> bool:
+        """Start reading frames in a background thread.
+
+        Args:
+            callback: Optional callable invoked with each new frame.
+
+        Returns:
+            True if streaming was started.
+        """
+        if not self._connected:
+            logger.error("start_stream called but camera is not connected.")
+            return False
+        if self._streaming:
+            logger.warning("Stream already running.")
+            return True
+        self._stop_event.clear()
+        self._streaming = True
+        self._stream_thread = threading.Thread(
+            target=self._stream_loop,
+            args=(callback,),
+            daemon=True,
+            name="CameraStream",
+        )
+        self._stream_thread.start()
+        logger.info("Camera stream started.")
+        return True
+
+    def stop_stream(self) -> None:
+        """Signal the streaming thread to stop and wait for it to exit."""
+        if self._streaming:
+            self._stop_event.set()
+            if self._stream_thread is not None:
+                self._stream_thread.join(timeout=2.0)
+            self._streaming = False
+            logger.info("Camera stream stopped.")
+
+    def _stream_loop(self, callback: Optional[Callable[[Frame], None]]) -> None:
+        """Internal frame-grab loop executed in a daemon thread."""
+        while not self._stop_event.is_set():
+            frame = self.capture_frame()
+            if frame is not None and callback is not None:
+                try:
+                    callback(frame)
+                except Exception as exc:
+                    logger.warning("Camera stream callback raised: %s", exc)
+
+    # ------------------------------------------------------------------
+    # PIL / tkinter helper
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def frame_to_photoimage(frame: Frame) -> Optional[object]:
+        """Convert an OpenCV BGR frame to a tkinter-compatible PhotoImage.
+
+        Args:
+            frame: OpenCV ndarray (BGR).
+
+        Returns:
+            A PIL.ImageTk.PhotoImage object, or None if PIL is unavailable.
+        """
+        if not _PIL_AVAILABLE or not _CV2_AVAILABLE:
+            return None
+        try:
+            rgb = _cv2.cvtColor(frame, _cv2.COLOR_BGR2RGB)  # type: ignore[attr-defined]
+            img = _PILImage.fromarray(rgb)  # type: ignore[attr-defined]
+            return _PILImageTk.PhotoImage(img)  # type: ignore[attr-defined]
+        except Exception as exc:
+            logger.warning("frame_to_photoimage failed: %s", exc)
+            return None
 
     @property
     def is_connected(self) -> bool:
+        """True if camera device is open."""
         return self._connected
 
-    def snapshot(self, label: str = "") -> Optional[Path]:
-        """Capture a single frame and save to disk."""
-        with self._lock:
-            frame = self._latest_frame
-        if frame is None:
-            self.logger.warning("No frame available for snapshot.")
-            return None
-        ts = datetime.now().strftime("%Y%m%d_%H%M%S_%f")
-        name = f"{ts}_{label}.jpg" if label else f"{ts}.jpg"
-        path = self.snapshot_dir / name
-        cv2.imwrite(str(path), frame)
-        self.logger.info(f"Snapshot saved: {path}")
-        return path
-
-    def start_recording(self, filename: Optional[str] = None, fps: int = 15):
-        if not self._connected:
-            return
-        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-        fname = filename or f"video_{ts}.avi"
-        path = self.snapshot_dir / fname
-        fourcc = cv2.VideoWriter_fourcc(*"XVID")
-        w, h = self.resolution
-        self._video_writer = cv2.VideoWriter(str(path), fourcc, fps, (w, h))
-        self.logger.info(f"Recording started: {path}")
-
-    def stop_recording(self):
-        if self._video_writer:
-            self._video_writer.release()
-            self._video_writer = None
-            self.logger.info("Recording stopped.")
-
-    def add_frame_callback(self, cb):
-        """cb(frame: np.ndarray) called on each captured frame."""
-        self._frame_callbacks.append(cb)
-
-    def get_latest_frame(self):
-        with self._lock:
-            return self._latest_frame
-
-    def _capture_loop(self):
-        while not self._stop.is_set():
-            if self._cap and self._cap.isOpened():
-                ret, frame = self._cap.read()
-                if ret:
-                    with self._lock:
-                        self._latest_frame = frame
-                    if self._video_writer:
-                        self._video_writer.write(frame)
-                    for cb in self._frame_callbacks:
-                        try:
-                            cb(frame)
-                        except Exception:
-                            pass
-            time.sleep(0.033)  # ~30 fps
+    @property
+    def is_streaming(self) -> bool:
+        """True if background streaming is active."""
+        return self._streaming

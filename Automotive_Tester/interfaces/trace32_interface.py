@@ -1,188 +1,137 @@
 """
-Trace32 / Lauterbach Interface
-Communicates with TRACE32 via the official TRACE32 Python API (lauterbach.trace32)
-or via the legacy T32API DLL / socket interface.
+Lauterbach Trace32 interface using lauterbach.trace32.rcl.
 
-Installation:
-    pip install lauterbach-trace32-rcl   (Lauterbach Remote Control Library)
-
-Fallback: raw TCP socket API on port 20000 (TRACE32 default).
+Gracefully degrades if the lauterbach package is not installed.
 """
+from __future__ import annotations
 
 import logging
-import socket
-import time
-import subprocess
 import os
-from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
+logger = logging.getLogger(__name__)
 
-# ---------------------------------------------------------------------------
-# Try importing official Lauterbach library; fall back to raw socket mode
-# ---------------------------------------------------------------------------
 try:
-    import lauterbach.trace32.rcl as t32  # type: ignore
-    _HAS_RCL = True
+    from lauterbach.trace32 import rcl as _rcl
+    _TRACE32_AVAILABLE = True
 except ImportError:
-    _HAS_RCL = False
+    _rcl = None  # type: ignore[assignment]
+    _TRACE32_AVAILABLE = False
+    logger.warning("lauterbach.trace32 not available – Trace32 features disabled.")
 
 
 class Trace32Interface:
-    """
-    Wrapper for TRACE32 Remote Control.
-    Supports:
-      - Connecting to a running TRACE32 instance (TCP API)
-      - Running .cmm scripts with arguments
-      - Reading/writing memory and registers
-      - Querying practice variable results
-    """
+    """Manages a connection to a Lauterbach Trace32 debugger via RCL."""
 
-    def __init__(self, host: str = "localhost", port: int = 20000,
-                 t32_exe: Optional[str] = None, config_file: Optional[str] = None):
-        self.host = host
-        self.port = port
-        self.t32_exe = t32_exe  # path to T32MARM.exe or similar
-        self.config_file = config_file
-        self.logger = logging.getLogger("tester.trace32")
+    def __init__(self, host: str = "localhost", port: int = 20000) -> None:
+        self._host = host
+        self._port = port
+        self._dbg: Any = None
         self._connected = False
-        self._api = None  # rcl handle or None
-        self._process: Optional[subprocess.Popen] = None
 
-    # ── Connection ─────────────────────────────────────────────────────────
+    # ------------------------------------------------------------------
+    # Connection lifecycle
+    # ------------------------------------------------------------------
 
     def connect(self) -> bool:
-        """Connect to a running TRACE32 instance."""
-        if _HAS_RCL:
-            return self._connect_rcl()
-        return self._connect_socket_test()
+        """Open a connection to the Trace32 remote API.
 
-    def _connect_rcl(self) -> bool:
+        Returns:
+            True if the connection succeeded, False otherwise.
+        """
+        if not _TRACE32_AVAILABLE:
+            logger.error("Cannot connect: lauterbach.trace32 package is missing.")
+            return False
         try:
-            self._api = t32.connect(host=self.host, port=self.port, timeout=5)
+            self._dbg = _rcl.connect(node=self._host, port=self._port)
             self._connected = True
-            self.logger.info(f"Trace32 RCL connected @ {self.host}:{self.port}")
+            logger.info("Connected to Trace32 at %s:%d", self._host, self._port)
             return True
-        except Exception as e:
-            self.logger.error(f"Trace32 RCL connect failed: {e}")
+        except Exception as exc:
+            logger.error("Trace32 connect failed: %s", exc)
+            self._connected = False
             return False
 
-    def _connect_socket_test(self) -> bool:
-        """Minimal TCP ping to verify TRACE32 API is reachable."""
-        try:
-            with socket.create_connection((self.host, self.port), timeout=3):
-                self._connected = True
-                self.logger.info(f"Trace32 socket reachable @ {self.host}:{self.port}")
-                return True
-        except Exception as e:
-            self.logger.error(f"Trace32 socket connect failed: {e}")
-            return False
-
-    def launch(self) -> bool:
-        """Launch TRACE32 application if exe path provided."""
-        if not self.t32_exe:
-            self.logger.warning("No T32 exe path configured; skipping launch.")
-            return False
-        if not Path(self.t32_exe).exists():
-            self.logger.error(f"T32 executable not found: {self.t32_exe}")
-            return False
-        cmd = [self.t32_exe]
-        if self.config_file:
-            cmd += ["-c", self.config_file]
-        try:
-            self._process = subprocess.Popen(cmd)
-            self.logger.info(f"Launched Trace32: {' '.join(cmd)}")
-            time.sleep(5)  # Allow T32 to start
-            return self.connect()
-        except Exception as e:
-            self.logger.error(f"Failed to launch Trace32: {e}")
-            return False
-
-    def disconnect(self):
-        if self._api and _HAS_RCL:
+    def disconnect(self) -> None:
+        """Close the Trace32 connection."""
+        if self._connected and self._dbg is not None:
             try:
-                t32.disconnect(self._api)
-            except Exception:
-                pass
-        self._connected = False
-        self.logger.info("Trace32 disconnected.")
+                self._dbg.close()
+            except Exception as exc:
+                logger.warning("Trace32 disconnect warning: %s", exc)
+            finally:
+                self._dbg = None
+                self._connected = False
+                logger.info("Trace32 disconnected.")
+
+    # ------------------------------------------------------------------
+    # Script execution
+    # ------------------------------------------------------------------
+
+    def run_cmm(self, path: str) -> bool:
+        """Execute a CMM script on the connected Trace32 instance.
+
+        Args:
+            path: Absolute or relative path to the .cmm file.
+
+        Returns:
+            True if the script ran without reported errors, False otherwise.
+        """
+        if not self._connected or self._dbg is None:
+            logger.error("run_cmm called but Trace32 is not connected.")
+            return False
+        if not os.path.isfile(path):
+            logger.error("CMM script not found: %s", path)
+            return False
+        try:
+            self._dbg.cmm(path)
+            error = self.get_error()
+            if error:
+                logger.error("CMM script reported error: %s", error)
+                return False
+            logger.info("CMM script completed successfully: %s", path)
+            return True
+        except Exception as exc:
+            logger.error("CMM script execution exception: %s", exc)
+            return False
+
+    # ------------------------------------------------------------------
+    # Diagnostics
+    # ------------------------------------------------------------------
+
+    def get_error(self) -> str:
+        """Retrieve the last error message from Trace32.
+
+        Returns:
+            Error string, or empty string if none.
+        """
+        if not self._connected or self._dbg is None:
+            return ""
+        try:
+            return self._dbg.fnc("MESSAGE.ERROR()") or ""
+        except Exception as exc:
+            logger.warning("get_error exception: %s", exc)
+            return ""
+
+    def read_variable(self, name: str) -> Optional[Any]:
+        """Read a target variable value via Trace32.
+
+        Args:
+            name: Variable name as known to Trace32 (e.g. 'g_EngineRPM').
+
+        Returns:
+            The variable value, or None on failure.
+        """
+        if not self._connected or self._dbg is None:
+            logger.warning("read_variable called but Trace32 is not connected.")
+            return None
+        try:
+            return self._dbg.variable.read(name).value
+        except Exception as exc:
+            logger.warning("read_variable('%s') failed: %s", name, exc)
+            return None
 
     @property
     def is_connected(self) -> bool:
+        """True if currently connected to Trace32."""
         return self._connected
-
-    # ── Script Execution ────────────────────────────────────────────────────
-
-    def run_cmm(self, script_path: str, parameters: dict = None, timeout: int = 300):
-        """
-        Execute a .cmm script in TRACE32.
-        Parameters dict is expanded as ENTRY arguments if supported.
-        """
-        if not self._connected:
-            raise RuntimeError("Trace32 not connected.")
-        if not Path(script_path).exists():
-            raise FileNotFoundError(f"CMM script not found: {script_path}")
-
-        # Build argument string (PRACTICE ENTRY parameters)
-        args = ""
-        if parameters:
-            args = " ".join(str(v) for v in parameters.values())
-
-        cmd = f'DO "{script_path}" {args}'.strip()
-        self.logger.info(f"Running CMM: {cmd}")
-
-        if _HAS_RCL and self._api:
-            self._api.cmd(cmd)
-            # Poll for completion
-            deadline = time.time() + timeout
-            while time.time() < deadline:
-                state = self._api.fnc("PRACTICE.RUNNING()")
-                if state == "FALSE()":
-                    break
-                time.sleep(0.5)
-            else:
-                raise TimeoutError(f"CMM script timed out after {timeout}s: {script_path}")
-            # Check for PRACTICE error
-            err = self._api.fnc("PRACTICE.ERROR()")
-            if err and err.strip() not in ("", "FALSE()"):
-                raise RuntimeError(f"CMM script error: {err}")
-        else:
-            self.logger.warning("RCL not available – CMM execution is simulated.")
-
-    # ── Memory / Register Access ─────────────────────────────────────────────
-
-    def read_memory(self, address: int, length: int) -> Optional[bytes]:
-        if not (_HAS_RCL and self._api):
-            self.logger.warning("Memory read simulated.")
-            return b'\x00' * length
-        try:
-            data = self._api.memory.read(address, length)
-            return bytes(data)
-        except Exception as e:
-            self.logger.error(f"Memory read error @ 0x{address:X}: {e}")
-            return None
-
-    def write_memory(self, address: int, data: bytes):
-        if not (_HAS_RCL and self._api):
-            self.logger.warning("Memory write simulated.")
-            return
-        try:
-            self._api.memory.write(address, list(data))
-        except Exception as e:
-            self.logger.error(f"Memory write error @ 0x{address:X}: {e}")
-
-    def get_variable(self, symbol: str) -> Optional[str]:
-        if not (_HAS_RCL and self._api):
-            return None
-        try:
-            return self._api.fnc(f'Var.VALUE({symbol})')
-        except Exception as e:
-            self.logger.error(f"Variable read error ({symbol}): {e}")
-            return None
-
-    def cmd(self, command: str):
-        """Send a raw PRACTICE command."""
-        if _HAS_RCL and self._api:
-            self._api.cmd(command)
-        else:
-            self.logger.warning(f"Simulated CMD: {command}")

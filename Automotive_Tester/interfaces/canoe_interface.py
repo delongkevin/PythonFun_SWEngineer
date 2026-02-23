@@ -1,157 +1,147 @@
 """
-Vector CANoe Interface
-Controls CANoe via COM automation (Windows only) using win32com.
+Vector CANoe interface via COM automation (win32com).
 
-Install: pip install pywin32
-
-CANoe must be installed and licensed on the test machine.
+Gracefully degrades on non-Windows platforms or when pywin32 is not installed.
 """
+from __future__ import annotations
 
 import logging
-import time
-from typing import Optional
-from pathlib import Path
+import os
+from typing import Any, Optional
+
+logger = logging.getLogger(__name__)
 
 try:
-    import win32com.client  # type: ignore
-    _HAS_WIN32 = True
+    import win32com.client as _win32com  # type: ignore[import]
+    _WIN32_AVAILABLE = True
 except ImportError:
-    _HAS_WIN32 = False
+    _win32com = None  # type: ignore[assignment]
+    _WIN32_AVAILABLE = False
+    logger.warning("win32com not available – CANoe features disabled (Windows only).")
+
+# CANoe COM ProgID
+_CANOE_PROGID = "CANoe.Application"
+
+# Measurement state constants returned by CANoe COM
+_MEASUREMENT_RUNNING = 0
+_MEASUREMENT_STOPPED = 1
 
 
 class CANoeInterface:
-    """
-    Automates Vector CANoe via COM interface.
-    
-    Capabilities:
-      - Open/close CANoe configurations (.cfg)
-      - Start/stop measurement
-      - Run CAPL test modules
-      - Read/write environment variables
-      - Access diagnostics (UDS/OBD)
+    """Automates Vector CANoe via its COM interface.
+
+    Usage::
+
+        coe = CANoeInterface()
+        coe.connect()
+        coe.run_script("path/to/test.can")
+        state = coe.get_measurement_state()
+        coe.stop()
+        coe.disconnect()
     """
 
-    def __init__(self, config_path: Optional[str] = None):
-        self.config_path = config_path
-        self.logger = logging.getLogger("tester.canoe")
-        self._app = None
-        self._measurement = None
-        self._connected = False
+    def __init__(self) -> None:
+        self._app: Optional[Any] = None
+        self._connected: bool = False
 
-    def connect(self, open_config: bool = True) -> bool:
-        if not _HAS_WIN32:
-            self.logger.error("pywin32 not installed. CANoe automation unavailable.")
+    # ------------------------------------------------------------------
+    # Connection lifecycle
+    # ------------------------------------------------------------------
+
+    def connect(self) -> bool:
+        """Attach to a running CANoe instance via COM.
+
+        Returns:
+            True on success, False if win32com unavailable or CANoe not running.
+        """
+        if not _WIN32_AVAILABLE:
+            logger.error("Cannot connect to CANoe: win32com is not available.")
             return False
         try:
-            self._app = win32com.client.DispatchEx("CANoe.Application")
-            self._app.Visible = True
-            self._measurement = self._app.Measurement
-            if open_config and self.config_path:
-                self.open_config(self.config_path)
+            self._app = _win32com.Dispatch(_CANOE_PROGID)
             self._connected = True
-            self.logger.info("CANoe COM interface connected.")
+            logger.info("Connected to CANoe via COM (%s).", _CANOE_PROGID)
             return True
-        except Exception as e:
-            self.logger.error(f"CANoe connect failed: {e}")
+        except Exception as exc:
+            logger.error("CANoe COM connect failed: %s", exc)
+            self._connected = False
             return False
 
-    def disconnect(self):
-        if self._measurement:
-            try:
-                self.stop_measurement()
-            except Exception:
-                pass
+    def disconnect(self) -> None:
+        """Release the COM reference."""
         self._app = None
         self._connected = False
-        self.logger.info("CANoe disconnected.")
+        logger.info("CANoe COM reference released.")
+
+    # ------------------------------------------------------------------
+    # Script execution
+    # ------------------------------------------------------------------
+
+    def run_script(self, path: str) -> bool:
+        """Open and execute a CANoe .can test configuration or CAPL script.
+
+        The method opens the configuration file then starts the measurement.
+        It waits for the measurement to start before returning.
+
+        Args:
+            path: Absolute path to the .can or .cfg file.
+
+        Returns:
+            True if the measurement was started successfully.
+        """
+        if not self._connected or self._app is None:
+            logger.error("run_script called but CANoe is not connected.")
+            return False
+        if not os.path.isfile(path):
+            logger.error("CANoe script/config not found: %s", path)
+            return False
+        try:
+            self._app.Open(path)
+            self._app.Measurement.Start()
+            logger.info("CANoe measurement started for: %s", path)
+            return True
+        except Exception as exc:
+            logger.error("CANoe run_script exception: %s", exc)
+            return False
+
+    def stop(self) -> bool:
+        """Stop the current CANoe measurement.
+
+        Returns:
+            True if stop command was sent successfully.
+        """
+        if not self._connected or self._app is None:
+            logger.error("stop called but CANoe is not connected.")
+            return False
+        try:
+            self._app.Measurement.Stop()
+            logger.info("CANoe measurement stopped.")
+            return True
+        except Exception as exc:
+            logger.error("CANoe stop exception: %s", exc)
+            return False
+
+    # ------------------------------------------------------------------
+    # State / diagnostics
+    # ------------------------------------------------------------------
+
+    def get_measurement_state(self) -> Optional[str]:
+        """Return the current measurement state as a human-readable string.
+
+        Returns:
+            'running', 'stopped', or None on error.
+        """
+        if not self._connected or self._app is None:
+            logger.warning("get_measurement_state: CANoe not connected.")
+            return None
+        try:
+            state = self._app.Measurement.Running
+            return "running" if state else "stopped"
+        except Exception as exc:
+            logger.error("get_measurement_state exception: %s", exc)
+            return None
 
     @property
     def is_connected(self) -> bool:
+        """True if a COM connection to CANoe is active."""
         return self._connected
-
-    def open_config(self, cfg_path: str):
-        if not Path(cfg_path).exists():
-            raise FileNotFoundError(f"CANoe config not found: {cfg_path}")
-        self._app.Open(cfg_path)
-        self.logger.info(f"CANoe config opened: {cfg_path}")
-        time.sleep(2)  # Allow CANoe to load
-
-    def start_measurement(self):
-        if self._measurement:
-            self._measurement.Start()
-            self.logger.info("CANoe measurement started.")
-            time.sleep(1)
-
-    def stop_measurement(self):
-        if self._measurement:
-            self._measurement.Stop()
-            self.logger.info("CANoe measurement stopped.")
-
-    @property
-    def is_running(self) -> bool:
-        if self._measurement:
-            return bool(self._measurement.Running)
-        return False
-
-    def run_script(self, script_path: str, parameters: dict = None, timeout: int = 300):
-        """
-        Run a CANoe test module (.vtestunit / CAPL) by name.
-        script_path can be test module name or path.
-        """
-        if not self._connected:
-            raise RuntimeError("CANoe not connected.")
-        # Ensure measurement is running
-        if not self.is_running:
-            self.start_measurement()
-
-        # Find and execute test module
-        try:
-            test_env = self._app.TestEnvironment
-            for i in range(1, test_env.TestModules.Count + 1):
-                tm = test_env.TestModules.Item(i)
-                if script_path.lower() in tm.FullName.lower() or script_path.lower() in tm.Name.lower():
-                    self.logger.info(f"Running CANoe test module: {tm.Name}")
-                    tm.Start()
-                    # Wait for completion
-                    deadline = time.time() + timeout
-                    while time.time() < deadline:
-                        if not tm.IsRunning:
-                            break
-                        time.sleep(1)
-                    else:
-                        raise TimeoutError(f"CANoe test module timed out: {tm.Name}")
-                    verdict = tm.Verdict
-                    self.logger.info(f"CANoe test verdict: {verdict}")
-                    if verdict != 1:  # 1 = Passed
-                        raise RuntimeError(f"CANoe test failed. Verdict: {verdict}")
-                    return
-            raise FileNotFoundError(f"CANoe test module not found: {script_path}")
-        except AttributeError as e:
-            self.logger.warning(f"CANoe COM attribute issue (simulating): {e}")
-
-    def get_env_var(self, name: str):
-        if not self._connected:
-            return None
-        try:
-            env = self._app.Environment
-            return env.GetVariable(name).Value
-        except Exception as e:
-            self.logger.error(f"CANoe env var read error ({name}): {e}")
-            return None
-
-    def set_env_var(self, name: str, value):
-        if not self._connected:
-            return
-        try:
-            env = self._app.Environment
-            env.GetVariable(name).Value = value
-        except Exception as e:
-            self.logger.error(f"CANoe env var write error ({name}={value}): {e}")
-
-    def get_signal(self, db: str, message: str, signal: str) -> Optional[float]:
-        try:
-            bus = self._app.Bus
-            return bus.GetSignal(db, message, signal).Value
-        except Exception as e:
-            self.logger.error(f"Signal read error: {e}")
-            return None
