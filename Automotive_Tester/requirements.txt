@@ -25,3 +25,7 @@ openpyxl>=3.1.0
 
 # Optional: prettier terminal output
 colorama>=0.4.6
+
+# CAN / Diag Tester (Vector CAN/CAN-FD hardware support)
+python-can>=4.0.0
+cantools>=39.0.0
