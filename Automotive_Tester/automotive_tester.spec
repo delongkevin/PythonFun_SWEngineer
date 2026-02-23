@@ -128,21 +128,18 @@ a = Analysis(  # noqa: F821
 pyz = PYZ(a.pure)  # noqa: F821
 
 # ---------------------------------------------------------------------------
-# Single-file executable
+# Directory-based distribution (onedir) – smaller launcher + dependency folder
 # ---------------------------------------------------------------------------
 exe = EXE(  # noqa: F821
     pyz,
     a.scripts,
-    a.binaries,
-    a.datas,
     [],
+    exclude_binaries=True,
     name="AutomotiveTester",
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
-    upx=True,   # compress if UPX is available (reduces size further)
-    upx_exclude=[],
-    runtime_tmpdir=None,
+    upx=True,
     console=False,             # windowed – no black terminal behind the GUI
     disable_windowed_traceback=False,
     argv_emulation=False,
@@ -150,5 +147,15 @@ exe = EXE(  # noqa: F821
     codesign_identity=None,
     entitlements_file=None,
     icon=str(ROOT / "assets" / "icon.ico"),
-    version_file=None,
+)
+
+coll = COLLECT(  # noqa: F821
+    exe,
+    a.binaries,
+    a.zipfiles,
+    a.datas,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    name="AutomotiveTester",
 )

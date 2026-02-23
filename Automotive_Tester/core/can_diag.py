@@ -824,7 +824,7 @@ class CanDiagPanel(tk.Frame):
                     pci_type = data_bytes[0] >> 4
                     if pci_type == 0 and len(data_bytes) > 1:
                         length = data_bytes[0] & 0x0F
-                        uds_payload = data_bytes[1 : 1 + length]
+                        uds_payload = data_bytes[1:1 + length]
                     elif pci_type == 1 and len(data_bytes) > 2:
                         uds_payload = data_bytes[2:]
                     elif pci_type == 2 and len(data_bytes) > 1:
