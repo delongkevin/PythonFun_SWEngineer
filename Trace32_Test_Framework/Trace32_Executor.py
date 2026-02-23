@@ -3,10 +3,58 @@ from tkinter import filedialog, messagebox, ttk, scrolledtext
 import threading
 import queue
 import os
+import subprocess
 import time
-from lauterbach.trace32 import rcl
 
-class AppSettings:
+try:
+    from lauterbach.trace32 import rcl as _rcl
+    _TRACE32_AVAILABLE = True
+except ImportError:
+    _rcl = None  # type: ignore[assignment]
+    _TRACE32_AVAILABLE = False
+
+# ---------------------------------------------------------------------------
+# Auto-detect T32 installation (C:\T32 or D:\T32)
+# ---------------------------------------------------------------------------
+_DEFAULT_DRIVES = ["C", "D"]
+_BIN_SUBDIRS = [os.path.join("bin", "windows64"), os.path.join("bin", "windows"), "bin"]
+_EXE_CANDIDATES = ["t32marm64.exe", "t32marm.exe", "t32mppc.exe", "t32mtc.exe"]
+_CONFIG_CANDIDATES = ["config_usb3.t32", "config_usb.t32", "config.t32"]
+
+
+def _detect_t32_installation(drives=None):
+    """Return dict with 'install_dir', 't32_exe', 'config_file' if found."""
+    import platform
+    if platform.system() != "Windows":
+        return {}
+    for drive in (drives or _DEFAULT_DRIVES):
+        install_dir = f"{drive}:\\T32"
+        if not os.path.isdir(install_dir):
+            continue
+        result = {"install_dir": install_dir}
+        for sub in _BIN_SUBDIRS:
+            bin_dir = os.path.join(install_dir, sub)
+            if not os.path.isdir(bin_dir):
+                continue
+            for exe in _EXE_CANDIDATES:
+                path = os.path.join(bin_dir, exe)
+                if os.path.isfile(path):
+                    result["t32_exe"] = path
+                    break
+            if "t32_exe" in result:
+                break
+        for cfg in _CONFIG_CANDIDATES:
+            path = os.path.join(install_dir, cfg)
+            if os.path.isfile(path):
+                result["config_file"] = path
+                break
+        return result
+    return {}
+
+
+# Seconds to wait for the Trace32 RCL port after launching the executable.
+# T32 typically needs 5-8 seconds to initialise and bind the RCL listener.
+_T32_STARTUP_WAIT_SECONDS = 8
     def __init__(self):
         self.watch_variables = ["g_EngineRPM", "g_BatteryVoltage"]
         self.auto_retry = True
@@ -43,7 +91,18 @@ class Trace32Worker(threading.Thread):
         self.error_callback = error_callback
         self.settings = settings
         self.daemon = True
-        self.dbg = rcl.connect(node="localhost")
+        self.dbg = None
+        self._connect()
+
+    def _connect(self):
+        """Attempt to connect to the Trace32 RCL server."""
+        if not _TRACE32_AVAILABLE:
+            return
+        try:
+            self.dbg = _rcl.connect(node="localhost")
+        except Exception as exc:
+            self.dbg = None
+            self.status_callback("(init)", "ERROR", f"T32 connect failed: {exc}")
 
     def run(self):
         while True:
@@ -55,6 +114,10 @@ class Trace32Worker(threading.Thread):
                 continue
 
     def execute(self, script_path):
+        if self.dbg is None:
+            self.status_callback(os.path.basename(script_path), "ERROR",
+                                 "Trace32 not connected")
+            return
         name = os.path.basename(script_path)
         self.status_callback(name, "RUNNING", "...")
         
@@ -86,6 +149,8 @@ class MainApp:
         self.root = root
         self.settings = AppSettings()
         self.script_queue = queue.Queue()
+        # Auto-detect T32 installation on startup
+        self._t32_detected = _detect_t32_installation()
         self.setup_ui()
 
     def setup_ui(self):
@@ -96,7 +161,14 @@ class MainApp:
         tk.Button(toolbar, text="📂 Load CMM", command=self.add_scripts).pack(side=tk.LEFT, padx=2, pady=2)
         tk.Button(toolbar, text="⚙️ Settings", command=self.open_settings).pack(side=tk.LEFT, padx=2, pady=2)
         tk.Button(toolbar, text="▶ Start Queue", bg="#28a745", fg="white", command=self.start_worker).pack(side=tk.LEFT, padx=2, pady=2)
+        tk.Button(toolbar, text="🔍 Detect & Launch T32", command=self.detect_and_launch_t32).pack(side=tk.LEFT, padx=2, pady=2)
         toolbar.pack(side=tk.TOP, fill=tk.X)
+
+        # T32 status label
+        install_info = self._t32_detected.get("install_dir", "Not found")
+        self.t32_status = tk.Label(self.root, text=f"T32: {install_info}",
+                                   anchor="w", fg="#555")
+        self.t32_status.pack(fill=tk.X, padx=4)
 
         # Main Table
         self.tree = ttk.Treeview(self.root, columns=("File", "Status", "Telemetry"), show="headings")
@@ -111,6 +183,60 @@ class MainApp:
                                             initialvalue=",".join(self.settings.watch_variables))
         if new_vars:
             self.settings.watch_variables = [v.strip() for v in new_vars.split(",")]
+
+    def detect_and_launch_t32(self):
+        """Auto-detect T32 installation and launch it if not already running."""
+        detected = _detect_t32_installation()
+        if not detected:
+            messagebox.showwarning("T32 Not Found",
+                                   "No Trace32 installation found on C:\\T32 or D:\\T32.\n"
+                                   "Please install Trace32 or configure the path manually.")
+            return
+
+        install_dir = detected.get("install_dir", "")
+        exe = detected.get("t32_exe", "")
+        cfg = detected.get("config_file", "")
+        self.t32_status.config(
+            text=f"T32: {install_dir}  |  Exe: {os.path.basename(exe) if exe else 'n/a'}  |  Config: {os.path.basename(cfg) if cfg else 'n/a'}",
+            fg="#006600")
+
+        if not exe:
+            messagebox.showinfo("T32 Detected",
+                                f"Installation found at {install_dir} but no executable located.\n"
+                                "Start Trace32 manually and then use 'Start Queue'.")
+            return
+
+        if not _TRACE32_AVAILABLE:
+            messagebox.showwarning("Package Missing",
+                                   "The lauterbach.trace32 Python package is not installed.\n"
+                                   "Install it with: pip install lauterbach-trace32-rcl")
+            return
+
+        def _launch_bg():
+            cmd = [exe]
+            if cfg and os.path.isfile(cfg):
+                cmd += ["-c", cfg]
+            try:
+                subprocess.Popen(cmd)
+                self.root.after(0, lambda: self.t32_status.config(
+                    text=f"T32: Launched – waiting for RCL…", fg="#0055aa"))
+                # Give T32 time to start before connecting
+                time.sleep(_T32_STARTUP_WAIT_SECONDS)
+                try:
+                    dbg = _rcl.connect(node="localhost")
+                    dbg.close()
+                    self.root.after(0, lambda: self.t32_status.config(
+                        text=f"T32: Ready ({install_dir})", fg="#006600"))
+                    self.root.after(0, lambda: messagebox.showinfo(
+                        "T32 Ready", "Trace32 started and RCL connection verified."))
+                except Exception as exc:
+                    self.root.after(0, lambda: self.t32_status.config(
+                        text=f"T32: RCL not reachable – {exc}", fg="#cc0000"))
+            except Exception as exc:
+                self.root.after(0, lambda: messagebox.showerror(
+                    "Launch Failed", f"Could not start Trace32:\n{exc}"))
+
+        threading.Thread(target=_launch_bg, daemon=True).start()
 
     def add_scripts(self):
         files = filedialog.askopenfilenames(filetypes=[("CMM Scripts", "*.cmm")])

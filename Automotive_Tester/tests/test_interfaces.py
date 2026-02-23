@@ -150,6 +150,116 @@ class TestTrace32Interface(unittest.TestCase):
         self.t32.connect()
         self.assertEqual(self.t32.read_variable("g_RPM"), 3000)
 
+    # ------------------------------------------------------------------
+    # detect_installation
+    # ------------------------------------------------------------------
+
+    def test_detect_installation_not_windows_returns_empty(self) -> None:
+        with patch("interfaces.trace32_interface.platform.system", return_value="Linux"):
+            result = Trace32Interface.detect_installation()
+        self.assertEqual(result, {})
+
+    def test_detect_installation_no_drives_returns_empty(self) -> None:
+        with patch("interfaces.trace32_interface.platform.system", return_value="Windows"):
+            with patch("interfaces.trace32_interface.os.path.isdir", return_value=False):
+                result = Trace32Interface.detect_installation(drives=["C", "D"])
+        self.assertEqual(result, {})
+
+    def test_detect_installation_finds_exe_and_config(self) -> None:
+        import interfaces.trace32_interface as t32_mod
+        with patch.object(t32_mod, "platform") as mock_plat:
+            mock_plat.system.return_value = "Windows"
+            # isdir: True for install_dir and bin subdir, False for others
+            def _isdir(path):
+                return "T32" in path
+            # isfile: True for the exe and config
+            def _isfile(path):
+                return path.endswith(".exe") or path.endswith(".t32")
+            with patch("interfaces.trace32_interface.os.path.isdir", side_effect=_isdir):
+                with patch("interfaces.trace32_interface.os.path.isfile", side_effect=_isfile):
+                    result = Trace32Interface.detect_installation(drives=["C"])
+        self.assertIn("install_dir", result)
+        self.assertIn("t32_exe", result)
+        self.assertIn("config_file", result)
+
+    # ------------------------------------------------------------------
+    # launch
+    # ------------------------------------------------------------------
+
+    def test_launch_no_exe_returns_false(self) -> None:
+        t32 = Trace32Interface()
+        self.assertFalse(t32.launch())
+
+    def test_launch_exe_not_found_returns_false(self) -> None:
+        t32 = Trace32Interface(t32_exe="/nonexistent/t32marm.exe")
+        with patch("interfaces.trace32_interface.os.path.isfile", return_value=False):
+            self.assertFalse(t32.launch())
+
+    def test_launch_already_connected_returns_true(self) -> None:
+        import lauterbach.trace32.rcl as rcl
+        mock_dbg = MagicMock()
+        rcl.connect = MagicMock(return_value=mock_dbg)
+        t32 = Trace32Interface(t32_exe="/fake/t32marm.exe")
+        t32.connect()
+        self.assertTrue(t32.is_connected)
+        self.assertTrue(t32.launch())   # already connected, should return True immediately
+
+    def test_launch_connects_after_process_start(self) -> None:
+        import lauterbach.trace32.rcl as rcl
+        mock_dbg = MagicMock()
+        rcl.connect = MagicMock(return_value=mock_dbg)
+        t32 = Trace32Interface(t32_exe="/fake/t32marm.exe")
+        with patch("interfaces.trace32_interface.os.path.isfile", return_value=True):
+            with patch("interfaces.trace32_interface.subprocess.Popen") as mock_popen:
+                mock_popen.return_value = MagicMock()
+                # connect() will succeed on first try
+                ok = t32.launch(wait_seconds=5.0)
+        self.assertTrue(ok)
+        mock_popen.assert_called_once()
+
+    # ------------------------------------------------------------------
+    # run_hello_world
+    # ------------------------------------------------------------------
+
+    def test_run_hello_world_not_connected(self) -> None:
+        self.assertFalse(self.t32.run_hello_world())
+
+    def test_run_hello_world_inline_script(self) -> None:
+        import lauterbach.trace32.rcl as rcl
+        mock_dbg = MagicMock()
+        mock_dbg.fnc.return_value = ""  # no error
+        rcl.connect = MagicMock(return_value=mock_dbg)
+        self.t32.connect()
+        self.assertTrue(self.t32.run_hello_world())
+
+    def test_run_hello_world_with_explicit_script(self) -> None:
+        import lauterbach.trace32.rcl as rcl
+        import tempfile
+        mock_dbg = MagicMock()
+        mock_dbg.fnc.return_value = ""
+        rcl.connect = MagicMock(return_value=mock_dbg)
+        self.t32.connect()
+        with tempfile.NamedTemporaryFile(suffix=".cmm", delete=False) as tf:
+            tf.write(b'PRINT "Hello"\nENDDO\n')
+            path = tf.name
+        try:
+            self.assertTrue(self.t32.run_hello_world(script_path=path))
+        finally:
+            os.unlink(path)
+
+    # ------------------------------------------------------------------
+    # host / port properties
+    # ------------------------------------------------------------------
+
+    def test_host_port_properties(self) -> None:
+        t32 = Trace32Interface(host="myhost", port=20001)
+        self.assertEqual(t32.host, "myhost")
+        self.assertEqual(t32.port, 20001)
+        t32.host = "newhost"
+        t32.port = 20002
+        self.assertEqual(t32.host, "newhost")
+        self.assertEqual(t32.port, 20002)
+
 
 # ===========================================================================
 # Power Supply
