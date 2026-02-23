@@ -1,0 +1,59 @@
+; ============================================================
+; example_test.cmm  –  Automotive Tester example CMM script
+; ============================================================
+; This script demonstrates a basic Trace32/Lauterbach CMM test:
+;   1. Reset the target board.
+;   2. Load the application ELF.
+;   3. Run to main().
+;   4. Read a global variable and validate its value.
+; ============================================================
+
+; --- Configuration (edit these paths for your project) ------
+LOCAL &elf_path
+ENTRY &elf_path
+IF "&elf_path"==""
+(
+    &elf_path="build/application.elf"
+)
+
+; --- Reset and initialise -----------------------------------
+SYStem.RESet
+SYStem.CPU ARM926EJ
+SYStem.Option.ResBreak ON
+SYStem.Up
+
+; --- Load the application image -----------------------------
+Data.LOAD.Elf "&elf_path"
+IF COMSHELL.ERROR()
+(
+    PRINT %ERROR "Failed to load ELF: " "&elf_path"
+    ENDDO FALSE
+)
+
+; --- Run to main() ------------------------------------------
+Break.Set main /Program
+Go
+WAIT !STATE.RUN() 5s
+IF STATE.RUN()
+(
+    Break
+    PRINT %ERROR "Target did not stop at main() within 5 seconds."
+    ENDDO FALSE
+)
+
+; --- Validate a global variable ------------------------------
+LOCAL &value
+&value=Var.VALUE(g_BatteryVoltage)
+
+IF &value<10.0||&value>15.0
+(
+    PRINT %ERROR "Battery voltage out of range: " &value
+    ENDDO FALSE
+)
+
+PRINT "g_BatteryVoltage=" &value " V  [PASS]"
+
+; --- Teardown -----------------------------------------------
+SYStem.Down
+
+ENDDO TRUE

@@ -1,0 +1,7 @@
+pyserial>=3.5
+lauterbach.trace32>=1.2
+opencv-python>=4.5
+Pillow>=9.0
+pywin32>=306; sys_platform == "win32"
+pytest>=7.0
+pytest-mock>=3.10

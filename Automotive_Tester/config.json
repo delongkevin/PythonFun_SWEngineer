@@ -1,0 +1,13 @@
+{
+  "trace32": {"host": "localhost", "port": 20000},
+  "power_supply": {"port": "COM3", "baud_rate": 9600, "timeout": 2},
+  "camera": {"index": 0},
+  "serial_ports": [
+    {"name": "DUT1", "port": "COM4", "baud_rate": 115200},
+    {"name": "DUT2", "port": "COM5", "baud_rate": 115200},
+    {"name": "DUT3", "port": "COM6", "baud_rate": 115200},
+    {"name": "DUT4", "port": "COM7", "baud_rate": 115200}
+  ],
+  "logging": {"log_dir": "logs", "level": "INFO"},
+  "test_runner": {"auto_retry": true, "retry_count": 1, "timeout": 300}
+}
