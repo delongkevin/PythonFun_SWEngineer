@@ -84,7 +84,13 @@ class AutomotiveTesterApp:
 
         # ── Hardware interfaces (init with defaults; user configures in Settings tab)
         self.psu = BKPrecision1687B(port="COM3")
-        self.trace32 = Trace32Interface(host="localhost", port=20000)
+        _t32_detected = Trace32Interface.detect_installation()
+        self.trace32 = Trace32Interface(
+            host="localhost",
+            port=20000,
+            t32_exe=_t32_detected.get("t32_exe"),
+            config_file=_t32_detected.get("config_file"),
+        )
         self.serial_mgr = SerialManager(log_dir=self.tester_logger.session_path)
         self.camera = CameraInterface(snapshot_dir=self.tester_logger.session_path / "camera")
         self.canoe = CANoeInterface()
@@ -379,8 +385,8 @@ class AutomotiveTesterApp:
             ("🔬 Trace32 / Lauterbach", [
                 ("t32_host", "Host", "localhost"),
                 ("t32_port", "Port", "20000"),
-                ("t32_exe", "T32 Executable Path", ""),
-                ("t32_config", "T32 Config File", ""),
+                ("t32_exe", "T32 Executable Path", self.trace32.t32_exe or ""),
+                ("t32_config", "T32 Config File", self.trace32.config_file or ""),
             ]),
             ("📡 Vector CANoe", [
                 ("canoe_config", "CANoe Config (.cfg)", ""),
@@ -430,6 +436,41 @@ class AutomotiveTesterApp:
                      font=("Consolas", 10), relief=tk.FLAT, width=10).pack(side=tk.LEFT, padx=4)
             self.config_vars[f"serial_{i}_port"] = port_var
             self.config_vars[f"serial_{i}_baud"] = baud_var
+
+        # ── Trace32 quick-action buttons ─────────────────────────────────────
+        t32_act = tk.LabelFrame(inner, text=" 🔬 Trace32 Actions ",
+                                bg=COLORS["bg"], fg=COLORS["accent"],
+                                font=("Consolas", 11, "bold"))
+        t32_act.pack(fill=tk.X, padx=16, pady=8)
+
+        t32_btn_row = tk.Frame(t32_act, bg=COLORS["bg"])
+        t32_btn_row.pack(fill=tk.X, padx=12, pady=6)
+
+        tk.Button(
+            t32_btn_row, text="🔍 Auto-detect T32",
+            command=self._auto_detect_t32,
+            bg=COLORS["surface2"], fg=COLORS["info"],
+            font=("Consolas", 10), relief=tk.FLAT, padx=12, cursor="hand2"
+        ).pack(side=tk.LEFT, padx=4)
+
+        tk.Button(
+            t32_btn_row, text="🚀 Launch T32",
+            command=self._launch_t32,
+            bg=COLORS["surface2"], fg=COLORS["success"],
+            font=("Consolas", 10), relief=tk.FLAT, padx=12, cursor="hand2"
+        ).pack(side=tk.LEFT, padx=4)
+
+        tk.Button(
+            t32_btn_row, text="🔬 Sanity Check",
+            command=self._t32_sanity_check,
+            bg=COLORS["surface2"], fg=COLORS["warning"],
+            font=("Consolas", 10), relief=tk.FLAT, padx=12, cursor="hand2"
+        ).pack(side=tk.LEFT, padx=4)
+
+        self.t32_action_result = tk.Label(
+            t32_act, text="", bg=COLORS["bg"], fg=COLORS["text"],
+            font=("Consolas", 9), wraplength=600, justify=tk.LEFT)
+        self.t32_action_result.pack(fill=tk.X, padx=12, pady=(0, 6))
 
         tk.Button(inner, text="💾 Apply Configuration",
                   command=self._apply_config,
@@ -805,6 +846,74 @@ class AutomotiveTesterApp:
         self.canoe.config_path = cfg["canoe_config"].get() or None
         self.camera.device_index = int(cfg["cam_index"].get())
         messagebox.showinfo("Config Applied", "Hardware configuration updated.\nReconnect devices to apply.")
+
+    def _auto_detect_t32(self):
+        """Scan default drives for a Trace32 installation and populate fields."""
+        detected = self.trace32.detect_installation()
+        if not detected:
+            self.t32_action_result.config(
+                text="⚠  No T32 installation found on C:\\T32 or D:\\T32.",
+                fg=COLORS["warning"])
+            return
+        if "t32_exe" in detected:
+            self.config_vars["t32_exe"].set(detected["t32_exe"])
+            self.trace32.t32_exe = detected["t32_exe"]
+        if "config_file" in detected:
+            self.config_vars["t32_config"].set(detected["config_file"])
+            self.trace32.config_file = detected["config_file"]
+        self.t32_action_result.config(
+            text=(
+                f"✓  Detected: {detected.get('install_dir', '')}\n"
+                f"   Exe: {detected.get('t32_exe', 'not found')}\n"
+                f"   Config: {detected.get('config_file', 'not found')}"
+            ),
+            fg=COLORS["success"])
+
+    def _launch_t32(self):
+        """Apply current config then launch the T32 executable in a background thread."""
+        self._apply_config()
+        if not self.trace32.t32_exe:
+            messagebox.showwarning(
+                "T32 Executable Missing",
+                "T32 executable path is not set.\n"
+                "Use 'Auto-detect T32' or enter the path manually.")
+            return
+        self.t32_action_result.config(
+            text="⏳ Launching T32, waiting for RCL connection…", fg=COLORS["info"])
+
+        def _bg():
+            ok = self.trace32.launch(wait_seconds=8.0)
+            msg = "✓ T32 launched and connected." if ok else \
+                  "✗ T32 launch failed or RCL connection timed out."
+            color = COLORS["success"] if ok else COLORS["error"]
+            self.root.after(0, lambda: self.t32_action_result.config(text=msg, fg=color))
+            self.root.after(0, lambda: self._log(msg, "PASS" if ok else "FAIL"))
+
+        threading.Thread(target=_bg, daemon=True).start()
+
+    def _t32_sanity_check(self):
+        """Run the hello_world.cmm sanity check against the connected T32."""
+        if not self.trace32.is_connected:
+            messagebox.showwarning(
+                "Not Connected",
+                "Trace32 is not connected.\n"
+                "Use 'Connect All' or 'Launch T32' first.")
+            return
+        import pathlib
+        script = pathlib.Path(__file__).parent.parent / "scripts" / "hello_world.cmm"
+        self.t32_action_result.config(
+            text="⏳ Running sanity check…", fg=COLORS["info"])
+
+        def _bg():
+            ok = self.trace32.run_hello_world(
+                script_path=str(script) if script.is_file() else None
+            )
+            msg = "✓ Sanity check PASSED." if ok else "✗ Sanity check FAILED – check T32 log."
+            color = COLORS["success"] if ok else COLORS["error"]
+            self.root.after(0, lambda: self.t32_action_result.config(text=msg, fg=color))
+            self.root.after(0, lambda: self._log(msg, "PASS" if ok else "FAIL"))
+
+        threading.Thread(target=_bg, daemon=True).start()
 
     # ════════════════════════════════════════════════════════════════════════
     #  Results Actions

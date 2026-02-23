@@ -1,0 +1,40 @@
+; ============================================================
+; hello_world.cmm  –  Trace32 hardware sanity-check script
+; Hardware: PowerDebug Pro via USB 3.0
+; T32 version: R.2024.09.000175016
+; ============================================================
+; Purpose:
+;   Confirm that the Trace32 RCL connection is alive and that
+;   basic Trace32 commands work without requiring a target device.
+;   Run this script after connecting the PowerDebug Pro via USB 3.0
+;   to verify the debugger interface is operational.
+; ============================================================
+
+PRINT "============================================"
+PRINT " Hello World from Trace32!"
+PRINT "============================================"
+PRINT "  T32 Build  : " VERSION.BUILD()
+PRINT "  T32 Date   : " VERSION.DATE()
+PRINT "  Interface  : " INTERFACE.TYPE()
+PRINT "  Connection : USB 3.0 (PowerDebug Pro)"
+PRINT "============================================"
+
+; Check if the debugger pod is reachable via USB 3.0
+IF INTERFACE.TYPE()=="POWERDEBUGUSBPLUS"||INTERFACE.TYPE()=="POWERDEBUGUSB3"||INTERFACE.TYPE()=="USB3"
+(
+    PRINT "  Pod status : CONNECTED via USB 3.0"
+)
+ELSE IF INTERFACE.TYPE()!=""
+(
+    PRINT "  Pod status : CONNECTED via " INTERFACE.TYPE()
+)
+ELSE
+(
+    PRINT "  Pod status : Not connected (simulation mode)"
+)
+
+PRINT "============================================"
+PRINT " Sanity check PASSED"
+PRINT "============================================"
+
+ENDDO TRUE
