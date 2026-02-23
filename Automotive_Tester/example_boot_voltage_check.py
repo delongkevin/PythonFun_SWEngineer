@@ -29,21 +29,21 @@ def run(params: dict):
     max_v = float(params.get("max_voltage", 14.5))
 
     # Set supply voltage
-    power_supply.set_voltage(12.0)
-    power_supply.set_current(5.0)
-    power_supply.output_on()
+    power_supply.set_voltage(12.0)  # noqa: F821
+    power_supply.set_current(5.0)  # noqa: F821
+    power_supply.output_on()  # noqa: F821
     time.sleep(1.0)  # Allow ECU to boot
 
     # Measure actual voltage
-    v = power_supply.measure_voltage()
+    v = power_supply.measure_voltage()  # noqa: F821
     if v is None:
         raise RuntimeError("Could not read PSU voltage.")
 
     # Capture visual evidence
-    camera.snapshot(label="boot_voltage_check")
+    camera.snapshot(label="boot_voltage_check")  # noqa: F821
 
     # Check serial terminal for ECU boot message
-    term = serial_manager.get("Serial-1")
+    term = serial_manager.get("Serial-1")  # noqa: F821
     if term:
         response = term.wait_for("BOOT OK", timeout=10.0)
         if not response:

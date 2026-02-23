@@ -4,12 +4,10 @@ Handles ordering, execution, retry logic, and status tracking for test scripts.
 Supports: Python scripts, Vector CANoe scripts, Lauterbach .cmm scripts
 """
 
-import queue
 import threading
 import time
 from dataclasses import dataclass, field
 from enum import Enum, auto
-from pathlib import Path
 from typing import Callable, Optional
 import traceback
 

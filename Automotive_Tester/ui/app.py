@@ -21,20 +21,19 @@ from tkinter import ttk, filedialog, messagebox, scrolledtext
 import threading
 import time
 import sys
-import os
 from pathlib import Path
 
 # Add parent to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from core.logger import TesterLogger
-from core.queue_manager import TestQueueManager, TestItem, TestType, TestStatus
-from core.debug_console import DebugConsole
-from interfaces.trace32_interface import Trace32Interface
-from interfaces.power_supply import BKPrecision1687B
-from interfaces.serial_manager import SerialManager
-from interfaces.camera_interface import CameraInterface
-from interfaces.canoe_interface import CANoeInterface
+from core.logger import TesterLogger  # noqa: E402
+from core.queue_manager import TestQueueManager, TestItem, TestType, TestStatus  # noqa: E402
+from core.debug_console import DebugConsole  # noqa: E402
+from interfaces.trace32_interface import Trace32Interface  # noqa: E402
+from interfaces.power_supply import BKPrecision1687B  # noqa: E402
+from interfaces.serial_manager import SerialManager  # noqa: E402
+from interfaces.camera_interface import CameraInterface  # noqa: E402
+from interfaces.canoe_interface import CANoeInterface  # noqa: E402
 
 
 # ── Color palette ────────────────────────────────────────────────────────────
@@ -706,7 +705,6 @@ class AutomotiveTesterApp:
         for item in self.queue_tree.get_children():
             self.queue_tree.delete(item)
         for test in self.queue_mgr.get_queue():
-            status_color = STATUS_COLORS.get(test.status.name, COLORS["text"])
             duration_str = f"{test.duration}s" if test.duration else "--"
             self.queue_tree.insert(
                 "", tk.END, text=test.name,
@@ -836,7 +834,8 @@ class AutomotiveTesterApp:
                      padx=8, pady=4).pack(side=tk.LEFT, padx=4)
 
     def _open_log_folder(self):
-        import subprocess, platform
+        import subprocess
+        import platform
         path = str(self.tester_logger.session_path)
         if platform.system() == "Windows":
             subprocess.Popen(["explorer", path])
@@ -883,7 +882,7 @@ class AutomotiveTesterApp:
                                       "FAIL" if "FAILED" in line or "ERROR" in line else \
                                       "WARN" if "WARNING" in line else \
                                       "RUN" if "Running" in line else "INFO"
-                                self.root.after(0, lambda l=line, t=tag: self._append_log(l, t))
+                                self.root.after(0, lambda ln=line, t=tag: self._append_log(ln, t))
                 except Exception:
                     pass
                 time.sleep(0.5)

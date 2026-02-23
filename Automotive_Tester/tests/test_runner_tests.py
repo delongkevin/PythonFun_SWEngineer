@@ -8,14 +8,14 @@ from __future__ import annotations
 import os
 import sys
 import tempfile
-import time
 import types
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 # ---------------------------------------------------------------------------
 # Stubs for optional heavy packages (same approach as test_interfaces.py)
 # ---------------------------------------------------------------------------
+
 
 def _stub(name: str) -> None:
     if name not in sys.modules:
@@ -25,6 +25,7 @@ for _pkg in ("lauterbach", "lauterbach.trace32", "lauterbach.trace32.rcl",
              "cv2", "PIL", "PIL.Image", "PIL.ImageTk",
              "win32com", "win32com.client"):
     _stub(_pkg)
+
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
@@ -260,7 +261,6 @@ class TestTestRunner(unittest.TestCase):
     # ------------------------------------------------------------------
 
     def test_retry_on_failure(self) -> None:
-        call_count = []
         path = self._make_python_script(
             "def run(**p):\n"
             "    raise AssertionError('retry me')\n"

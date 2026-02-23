@@ -8,7 +8,6 @@ Provides interactive debugging tools for troubleshooting:
   - Hardware status dashboard
 """
 
-import logging
 import traceback
 import importlib.util
 import ast
