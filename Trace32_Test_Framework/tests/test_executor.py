@@ -324,6 +324,7 @@ class TestTryConnectT32(unittest.TestCase):
         self.assertIs(worker.dbg, mock_conn)
 
 
+
 # ===========================================================================
 # Source file quality
 # ===========================================================================
@@ -337,6 +338,101 @@ class TestSourceQuality(unittest.TestCase):
         with open(path) as fh:
             source = fh.read()
         ast.parse(source)  # raises SyntaxError on failure
+
+
+# ===========================================================================
+# _find_python_with_rcl
+# ===========================================================================
+
+class TestFindPythonWithRcl(unittest.TestCase):
+
+    def test_returns_none_when_all_pythons_fail(self):
+        """Returns None when no candidate Python has the package."""
+        with patch.object(te.subprocess, "run") as mock_run:
+            mock_run.return_value = type("R", (), {"returncode": 1})()
+            result = te._find_python_with_rcl()
+        self.assertIsNone(result)
+
+    def test_returns_path_when_current_interpreter_has_package(self):
+        """Returns sys.executable when it has the package."""
+        def _fake_run(cmd, **kwargs):
+            # First candidate (sys.executable) succeeds
+            return type("R", (), {"returncode": 0})()
+
+        with patch.object(te.subprocess, "run", side_effect=_fake_run):
+            result = te._find_python_with_rcl()
+        self.assertEqual(result, sys.executable)
+
+    def test_skips_failing_candidates(self):
+        """Skips executables that raise exceptions and tries the next one."""
+        calls = []
+
+        def _fake_run(cmd, **kwargs):
+            calls.append(cmd[0])
+            if cmd[0] == sys.executable:
+                raise FileNotFoundError("not found")
+            return type("R", (), {"returncode": 0})()
+
+        with patch("shutil.which", return_value="/usr/bin/python3"), \
+             patch.object(te.subprocess, "run", side_effect=_fake_run):
+            result = te._find_python_with_rcl()
+        # Should have found /usr/bin/python3 after skipping sys.executable
+        self.assertIsNotNone(result)
+
+    def test_constants_exist(self):
+        self.assertTrue(hasattr(te, "_RCL_PACKAGE_INSTALL_NAME"))
+        self.assertTrue(hasattr(te, "_RCL_PACKAGE_IMPORT_PATH"))
+        self.assertIn("lauterbach", te._RCL_PACKAGE_IMPORT_PATH)
+
+
+# ===========================================================================
+# _install_rcl_package
+# ===========================================================================
+
+class TestInstallRclPackage(unittest.TestCase):
+
+    def test_returns_true_on_success(self):
+        fake = type("CP", (), {"returncode": 0, "stdout": "Successfully installed\n", "stderr": ""})()
+        with patch.object(te.subprocess, "run", return_value=fake):
+            success, msg = te._install_rcl_package(python_exe=sys.executable)
+        self.assertTrue(success)
+        self.assertIn("Successfully installed", msg)
+
+    def test_returns_false_on_nonzero_returncode(self):
+        fake = type("CP", (), {"returncode": 1, "stdout": "", "stderr": "Some error"})()
+        with patch.object(te.subprocess, "run", return_value=fake):
+            success, msg = te._install_rcl_package(python_exe=sys.executable)
+        self.assertFalse(success)
+        self.assertNotIn("PERMISSION_ERROR:", msg)
+
+    def test_detects_permission_error(self):
+        fake = type("CP", (), {
+            "returncode": 1,
+            "stdout": "",
+            "stderr": "ERROR: Could not install packages due to an OSError: [Errno 13] Permission denied"
+        })()
+        with patch.object(te.subprocess, "run", return_value=fake):
+            success, msg = te._install_rcl_package(python_exe=sys.executable)
+        self.assertFalse(success)
+        self.assertTrue(msg.startswith("PERMISSION_ERROR:"))
+
+    def test_handles_timeout(self):
+        with patch.object(te.subprocess, "run", side_effect=te.subprocess.TimeoutExpired("pip", 120)):
+            success, msg = te._install_rcl_package(python_exe=sys.executable)
+        self.assertFalse(success)
+        self.assertIn("timed out", msg)
+
+    def test_uses_sys_executable_when_none(self):
+        """When python_exe=None, falls back to sys.executable."""
+        captured = []
+
+        def _fake_run(cmd, **kwargs):
+            captured.append(cmd[0])
+            return type("CP", (), {"returncode": 0, "stdout": "ok", "stderr": ""})()
+
+        with patch.object(te.subprocess, "run", side_effect=_fake_run):
+            te._install_rcl_package(python_exe=None)
+        self.assertEqual(captured[0], sys.executable)
 
 
 if __name__ == "__main__":

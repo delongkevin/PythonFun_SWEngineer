@@ -4,6 +4,7 @@ import threading
 import queue
 import os
 import subprocess
+import sys
 import time
 
 try:
@@ -20,6 +21,114 @@ _DEFAULT_DRIVES = ["C", "D"]
 _BIN_SUBDIRS = [os.path.join("bin", "windows64"), os.path.join("bin", "windows"), "bin"]
 _EXE_CANDIDATES = ["t32marm64.exe", "t32marm.exe", "t32mppc.exe", "t32mtc.exe"]
 _CONFIG_CANDIDATES = ["config_usb3.t32", "config_usb.t32", "config.t32"]
+
+# Package name required for RCL communication
+_RCL_PACKAGE_INSTALL_NAME = "lauterbach-trace32-rcl"
+_RCL_PACKAGE_IMPORT_PATH = "lauterbach.trace32.rcl"
+# Seconds to wait for a user to respond to the package-install dialog.
+_DIALOG_TIMEOUT_SECONDS = 60
+# Maximum characters of error detail shown to the user in dialogs.
+_MAX_ERROR_DETAIL_LENGTH = 400
+
+
+def _find_python_with_rcl():
+    """Search candidate Python executables for one that has lauterbach.trace32 installed.
+
+    Returns the path to the first Python interpreter where the import succeeds,
+    or ``None`` if none are found.
+    """
+    import platform
+    import shutil
+
+    # Build a prioritised candidate list: current interpreter first, then PATH,
+    # then common Windows install locations.
+    candidates = [sys.executable]
+
+    path_python = shutil.which("python")
+    if path_python and path_python not in candidates:
+        candidates.append(path_python)
+    path_python3 = shutil.which("python3")
+    if path_python3 and path_python3 not in candidates:
+        candidates.append(path_python3)
+
+    if platform.system() == "Windows":
+        # Enumerate version-specific launchers and common install roots
+        for ver in ("313", "312", "311", "310", "39", "38"):
+            major, minor = ver[0], ver[1:]
+            versioned = shutil.which(f"py -{major}.{minor}")
+            if versioned and versioned not in candidates:
+                candidates.append(versioned)
+
+        appdata = os.environ.get("LOCALAPPDATA", "")
+        programfiles = os.environ.get("PROGRAMFILES", "C:\\Program Files")
+        programfiles86 = os.environ.get("PROGRAMFILES(X86)", "C:\\Program Files (x86)")
+        for root in (appdata, programfiles, programfiles86):
+            if not root:
+                continue
+            py_root = os.path.join(root, "Programs", "Python")
+            if os.path.isdir(py_root):
+                for entry in sorted(os.listdir(py_root), reverse=True):
+                    exe = os.path.join(py_root, entry, "python.exe")
+                    if os.path.isfile(exe) and exe not in candidates:
+                        candidates.append(exe)
+
+    check_code = (
+        "import sys; "
+        f"import importlib.util; "
+        f"sys.exit(0 if importlib.util.find_spec('{_RCL_PACKAGE_IMPORT_PATH}') is not None else 1)"
+    )
+    for exe in candidates:
+        try:
+            ret = subprocess.run(
+                [exe, "-c", check_code],
+                timeout=10,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            if ret.returncode == 0:
+                return exe
+        except Exception:  # noqa: BLE001
+            continue
+    return None
+
+
+def _install_rcl_package(python_exe=None):
+    """Attempt to install *lauterbach-trace32-rcl* via pip.
+
+    Parameters
+    ----------
+    python_exe:
+        Path to the Python interpreter whose pip should be used.
+        Falls back to ``sys.executable`` when *None*.
+
+    Returns
+    -------
+    tuple[bool, str]
+        ``(success, message)`` where *message* is human-readable output or
+        error text.  When a permission/access-denied error is detected,
+        *success* is ``False`` and *message* starts with ``"PERMISSION_ERROR:"``.
+    """
+    exe = python_exe or sys.executable
+    cmd = [exe, "-m", "pip", "install", "--upgrade", _RCL_PACKAGE_INSTALL_NAME]
+    try:
+        result = subprocess.run(
+            cmd,
+            capture_output=True,
+            text=True,
+            timeout=120,
+        )
+        combined = (result.stdout + result.stderr).strip()
+        if result.returncode == 0:
+            return True, combined
+        lower = combined.lower()
+        if any(kw in lower for kw in ("access is denied", "permissionerror",
+                                      "errno 13", "permission denied")):
+            return False, f"PERMISSION_ERROR:{combined}"
+        return False, combined
+    except subprocess.TimeoutExpired:
+        return False, "pip install timed out after 120 seconds."
+    except Exception as exc:  # noqa: BLE001
+        return False, str(exc)
 
 
 def _detect_t32_installation(drives=None):
@@ -265,9 +374,7 @@ class MainApp:
             return
 
         if not _TRACE32_AVAILABLE:
-            messagebox.showwarning("Package Missing",
-                                   "The lauterbach.trace32 Python package is not installed.\n"
-                                   "Install it with: pip install lauterbach-trace32-rcl")
+            self._handle_missing_rcl_package()
             return
 
         def _launch_bg():
@@ -310,6 +417,109 @@ class MainApp:
                     "Launch Failed", f"Could not start Trace32:\n{e}"))
 
         threading.Thread(target=_launch_bg, daemon=True).start()
+
+    def _handle_missing_rcl_package(self):
+        """Guide the user through installing lauterbach-trace32-rcl.
+
+        1. Check whether any Python on this machine already has the package.
+        2. If found, show a targeted "restart the app with that Python" message.
+        3. If not found, offer to install automatically; handle permission errors
+           by instructing the user to run the app as Administrator.
+        """
+        self.t32_status.config(text="T32: Checking Python environments…", fg="#cc6600")
+
+        def _bg():
+            found_python = _find_python_with_rcl()
+            if found_python:
+                msg = (
+                    f"The lauterbach.trace32 package was found in:\n  {found_python}\n\n"
+                    "This application is currently running under a different Python interpreter "
+                    f"({sys.executable}) where the package is not available.\n\n"
+                    "Troubleshooting options:\n"
+                    f"  1. Run this application directly with the Python above:\n"
+                    f"     {found_python} Trace32_Executor.py\n"
+                    f"  2. Or install the package for the current interpreter:\n"
+                    f"     {sys.executable} -m pip install {_RCL_PACKAGE_INSTALL_NAME}"
+                )
+                self.root.after(0, lambda: self.t32_status.config(
+                    text="T32: Package found in different Python – see dialog", fg="#cc6600"))
+                self.root.after(0, lambda: messagebox.showwarning("Python Interpreter Mismatch", msg))
+                return
+
+            # Package not found anywhere – ask the user if they want to install it now
+            answer = [None]
+
+            def _ask():
+                answer[0] = messagebox.askyesno(
+                    "Package Not Installed",
+                    f"The '{_RCL_PACKAGE_INSTALL_NAME}' package is not installed.\n\n"
+                    f"Would you like to install it now using:\n"
+                    f"  {sys.executable} -m pip install {_RCL_PACKAGE_INSTALL_NAME}\n\n"
+                    "Click Yes to install automatically, or No for manual instructions."
+                )
+
+            self.root.after(0, _ask)
+            # Poll until the dialog is dismissed
+            deadline = time.time() + _DIALOG_TIMEOUT_SECONDS
+            while answer[0] is None and time.time() < deadline:
+                time.sleep(0.1)
+
+            if not answer[0]:
+                # User chose No – show manual instructions
+                manual_msg = (
+                    "To install the required package manually, open a command prompt and run:\n\n"
+                    f"  {sys.executable} -m pip install {_RCL_PACKAGE_INSTALL_NAME}\n\n"
+                    "If you have multiple Python versions installed, run the same command for "
+                    "each Python until the install succeeds, then restart this application.\n\n"
+                    "If you get a 'Permission Denied' error, open the command prompt as "
+                    "Administrator and try again."
+                )
+                self.root.after(0, lambda: messagebox.showinfo("Manual Installation Steps", manual_msg))
+                self.root.after(0, lambda: self.t32_status.config(
+                    text="T32: Package not installed – see instructions", fg="#cc0000"))
+                return
+
+            # Attempt automatic installation
+            self.root.after(0, lambda: self.t32_status.config(
+                text=f"T32: Installing {_RCL_PACKAGE_INSTALL_NAME}…", fg="#0055aa"))
+            success, output = _install_rcl_package()
+            if success:
+                self.root.after(0, lambda: self.t32_status.config(
+                    text="T32: Package installed – please restart the application", fg="#006600"))
+                self.root.after(0, lambda: messagebox.showinfo(
+                    "Installation Successful",
+                    f"'{_RCL_PACKAGE_INSTALL_NAME}' was installed successfully.\n\n"
+                    "Please restart this application so the new package is loaded, "
+                    "then click 'Detect & Launch T32' again."
+                ))
+            elif output.startswith("PERMISSION_ERROR:"):
+                details = output[len("PERMISSION_ERROR:"):].strip()
+                admin_msg = (
+                    "Installation failed due to a permission error.\n\n"
+                    "To fix this, run the application (or the installer) as Administrator:\n"
+                    "  1. Close this application.\n"
+                    "  2. Right-click the application icon and choose 'Run as Administrator'.\n"
+                    "  3. Click 'Detect & Launch T32' again.\n\n"
+                    "Alternatively, install the package manually in an elevated command prompt:\n"
+                    f"  {sys.executable} -m pip install {_RCL_PACKAGE_INSTALL_NAME}\n\n"
+                    f"Details: {details[:_MAX_ERROR_DETAIL_LENGTH]}"
+                )
+                self.root.after(0, lambda: self.t32_status.config(
+                    text="T32: Permission error during install – run as Admin", fg="#cc0000"))
+                self.root.after(0, lambda: messagebox.showerror("Permission Error", admin_msg))
+            else:
+                error_msg = (
+                    f"Automatic installation of '{_RCL_PACKAGE_INSTALL_NAME}' failed.\n\n"
+                    "Please install it manually:\n"
+                    f"  {sys.executable} -m pip install {_RCL_PACKAGE_INSTALL_NAME}\n\n"
+                    "If the error persists, check your internet connection or proxy settings.\n\n"
+                    f"Error details:\n{output[:_MAX_ERROR_DETAIL_LENGTH]}"
+                )
+                self.root.after(0, lambda: self.t32_status.config(
+                    text="T32: Package install failed – see dialog", fg="#cc0000"))
+                self.root.after(0, lambda: messagebox.showerror("Installation Failed", error_msg))
+
+        threading.Thread(target=_bg, daemon=True).start()
 
     def add_scripts(self):
         files = filedialog.askopenfilenames(filetypes=[("CMM Scripts", "*.cmm")])
