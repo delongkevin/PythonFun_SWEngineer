@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import filedialog, messagebox, ttk, scrolledtext
+from tkinter import filedialog, messagebox, ttk, scrolledtext, simpledialog
 import threading
 import queue
 import os
@@ -55,9 +55,13 @@ def _detect_t32_installation(drives=None):
 # Seconds to wait for the Trace32 RCL port after launching the executable.
 # T32 typically needs 5-8 seconds to initialise and bind the RCL listener.
 _T32_STARTUP_WAIT_SECONDS = 8
+
+
+class AppSettings:
     def __init__(self):
         self.watch_variables = ["g_EngineRPM", "g_BatteryVoltage"]
         self.auto_retry = True
+
 
 class ScriptEditor(tk.Toplevel):
     """A popup window to fix CMM scripts on the fly."""
@@ -70,11 +74,11 @@ class ScriptEditor(tk.Toplevel):
 
         self.text_area = scrolledtext.ScrolledText(self, wrap=tk.WORD, font=("Consolas", 10))
         self.text_area.pack(fill="both", expand=True)
-        
+
         with open(file_path, 'r') as f:
             self.text_area.insert(tk.INSERT, f.read())
 
-        tk.Button(self, text="Save & Re-run", bg="#d4edda", 
+        tk.Button(self, text="Save & Re-run", bg="#d4edda",
                   command=self.save_and_close).pack(fill="x")
 
     def save_and_close(self):
@@ -82,6 +86,7 @@ class ScriptEditor(tk.Toplevel):
             f.write(self.text_area.get("1.0", tk.END))
         self.on_save(self.file_path)
         self.destroy()
+
 
 class Trace32Worker(threading.Thread):
     def __init__(self, file_queue, status_callback, settings, error_callback):
@@ -120,11 +125,11 @@ class Trace32Worker(threading.Thread):
             return
         name = os.path.basename(script_path)
         self.status_callback(name, "RUNNING", "...")
-        
+
         try:
             self.dbg.cmm(script_path)
             error_msg = self.dbg.fnc("MESSAGE.ERROR()")
-            
+
             if error_msg:
                 self.status_callback(name, "FAILED", error_msg)
                 # Trigger the UI to open the Editor for the tester
@@ -141,8 +146,10 @@ class Trace32Worker(threading.Thread):
             try:
                 val = self.dbg.variable.read(var).value
                 results.append(f"{var}={val}")
-            except: continue
+            except Exception:
+                continue
         return " | ".join(results)
+
 
 class MainApp:
     def __init__(self, root):
@@ -155,7 +162,7 @@ class MainApp:
 
     def setup_ui(self):
         self.root.title("Automotive Test Executor & Debugger")
-        
+
         # Toolbar
         toolbar = tk.Frame(self.root, bd=1, relief=tk.RAISED)
         tk.Button(toolbar, text="📂 Load CMM", command=self.add_scripts).pack(side=tk.LEFT, padx=2, pady=2)
@@ -179,8 +186,8 @@ class MainApp:
 
     def open_settings(self):
         # Quick popup to change variable watch list
-        new_vars = tk.simpledialog.askstring("Settings", "Enter variables to watch (comma separated):",
-                                            initialvalue=",".join(self.settings.watch_variables))
+        new_vars = simpledialog.askstring("Settings", "Enter variables to watch (comma separated):",
+                                          initialvalue=",".join(self.settings.watch_variables))
         if new_vars:
             self.settings.watch_variables = [v.strip() for v in new_vars.split(",")]
 
@@ -219,7 +226,7 @@ class MainApp:
             try:
                 subprocess.Popen(cmd)
                 self.root.after(0, lambda: self.t32_status.config(
-                    text=f"T32: Launched – waiting for RCL…", fg="#0055aa"))
+                    text="T32: Launched – waiting for RCL…", fg="#0055aa"))
                 # Give T32 time to start before connecting
                 time.sleep(_T32_STARTUP_WAIT_SECONDS)
                 try:
@@ -230,11 +237,13 @@ class MainApp:
                     self.root.after(0, lambda: messagebox.showinfo(
                         "T32 Ready", "Trace32 started and RCL connection verified."))
                 except Exception as exc:
+                    err = str(exc)
                     self.root.after(0, lambda: self.t32_status.config(
-                        text=f"T32: RCL not reachable – {exc}", fg="#cc0000"))
+                        text=f"T32: RCL not reachable – {err}", fg="#cc0000"))
             except Exception as exc:
+                err = str(exc)
                 self.root.after(0, lambda: messagebox.showerror(
-                    "Launch Failed", f"Could not start Trace32:\n{exc}"))
+                    "Launch Failed", f"Could not start Trace32:\n{err}"))
 
         threading.Thread(target=_launch_bg, daemon=True).start()
 
@@ -262,6 +271,7 @@ class MainApp:
         for item in self.tree.get_children():
             if self.tree.item(item)["values"][0] == name:
                 self.tree.item(item, values=(name, status, telemetry))
+
 
 if __name__ == "__main__":
     root = tk.Tk()
