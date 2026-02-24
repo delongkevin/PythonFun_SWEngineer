@@ -30,7 +30,7 @@ from core.logger import TesterLogger  # noqa: E402
 from core.queue_manager import TestQueueManager, TestItem, TestType, TestStatus  # noqa: E402
 from core.debug_console import DebugConsole  # noqa: E402
 from interfaces.trace32_interface import Trace32Interface  # noqa: E402
-from interfaces.power_supply import BKPrecision1687B  # noqa: E402
+from interfaces.power_supply_interface import PowerSupplyInterface  # noqa: E402
 from interfaces.serial_manager import SerialManager  # noqa: E402
 from interfaces.camera_interface import CameraInterface  # noqa: E402
 from interfaces.canoe_interface import CANoeInterface  # noqa: E402
@@ -83,7 +83,7 @@ class AutomotiveTesterApp:
         self.logger = self.tester_logger.get_logger("ui")
 
         # ── Hardware interfaces (init with defaults; user configures in Settings tab)
-        self.psu = BKPrecision1687B(port="COM3")
+        self.psu = PowerSupplyInterface()
         _t32_detected = Trace32Interface.detect_installation()
         self.trace32 = Trace32Interface(
             host="localhost",
@@ -184,10 +184,14 @@ class AutomotiveTesterApp:
         frame = tk.Frame(self.notebook, bg=COLORS["bg"])
         self.notebook.add(frame, text="  🧪 Test Runner  ")
 
-        # Left: Queue panel
-        left = tk.Frame(frame, bg=COLORS["surface"], width=500)
-        left.pack(side=tk.LEFT, fill=tk.BOTH, padx=(8, 4), pady=8)
-        left.pack_propagate(False)
+        # Three-column adjustable paned layout:
+        #   Pane 1 – Test Queue  |  Pane 2 – Live Log  |  Pane 3 – Camera / Config
+        paned = ttk.PanedWindow(frame, orient=tk.HORIZONTAL)
+        paned.pack(fill=tk.BOTH, expand=True, padx=8, pady=8)
+
+        # ── Pane 1: Test Queue ───────────────────────────────────────────────
+        left = tk.Frame(paned, bg=COLORS["surface"])
+        paned.add(left, weight=1)
 
         # Queue header
         hdr = tk.Frame(left, bg=COLORS["surface"])
@@ -243,11 +247,11 @@ class AutomotiveTesterApp:
                       fg=COLORS["text"], font=("Consolas", 9),
                       relief=tk.FLAT, padx=8, cursor="hand2").pack(side=tk.LEFT, padx=2)
 
-        # Right: Log output
-        right = tk.Frame(frame, bg=COLORS["bg"])
-        right.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(4, 8), pady=8)
+        # ── Pane 2: Live Log Output ──────────────────────────────────────────
+        middle = tk.Frame(paned, bg=COLORS["bg"])
+        paned.add(middle, weight=2)
 
-        log_hdr = tk.Frame(right, bg=COLORS["bg"])
+        log_hdr = tk.Frame(middle, bg=COLORS["bg"])
         log_hdr.pack(fill=tk.X)
         tk.Label(log_hdr, text="Live Log Output", bg=COLORS["bg"],
                  fg=COLORS["accent"], font=("Consolas", 12, "bold")).pack(side=tk.LEFT)
@@ -257,7 +261,7 @@ class AutomotiveTesterApp:
                   cursor="hand2").pack(side=tk.RIGHT)
 
         self.log_output = scrolledtext.ScrolledText(
-            right, bg=COLORS["surface2"], fg=COLORS["text"],
+            middle, bg=COLORS["surface2"], fg=COLORS["text"],
             font=("Consolas", 10), state=tk.DISABLED,
             insertbackground=COLORS["accent"], relief=tk.FLAT
         )
@@ -269,8 +273,38 @@ class AutomotiveTesterApp:
                             ("DEBUG", COLORS["text_dim"]), ("RUN", COLORS["accent"])]:
             self.log_output.tag_config(tag, foreground=color)
 
+        # ── Pane 3: Camera Output / Quick Config ─────────────────────────────
+        right = tk.Frame(paned, bg=COLORS["bg"])
+        paned.add(right, weight=1)
+
+        cam_hdr = tk.Frame(right, bg=COLORS["bg"])
+        cam_hdr.pack(fill=tk.X, padx=4, pady=(4, 2))
+        tk.Label(cam_hdr, text="Camera Output", bg=COLORS["bg"],
+                 fg=COLORS["accent"], font=("Consolas", 12, "bold")).pack(side=tk.LEFT)
+        tk.Button(cam_hdr, text="▶ Start", command=self._open_camera_preview,
+                  bg=COLORS["surface2"], fg=COLORS["accent2"],
+                  font=("Consolas", 9), relief=tk.FLAT, padx=8,
+                  cursor="hand2").pack(side=tk.RIGHT, padx=2)
+        tk.Button(cam_hdr, text="📸 Snap", command=self._take_snapshot,
+                  bg=COLORS["surface2"], fg=COLORS["info"],
+                  font=("Consolas", 9), relief=tk.FLAT, padx=8,
+                  cursor="hand2").pack(side=tk.RIGHT, padx=2)
+
+        # Inline camera canvas for live feed in the runner tab
+        self._runner_cam_canvas = tk.Canvas(right, bg="black", highlightthickness=0)
+        self._runner_cam_canvas.pack(fill=tk.BOTH, expand=True, padx=4, pady=4)
+        self._runner_cam_photo = None  # prevent GC of PhotoImage
+
+        self._runner_cam_status = tk.Label(
+            right, text="Camera not connected – use 'Connect All' to start.",
+            bg=COLORS["surface"], fg=COLORS["text_dim"],
+            font=("Consolas", 9), wraplength=280, justify=tk.LEFT)
+        self._runner_cam_status.pack(fill=tk.X, padx=4, pady=2)
+
         # Start log tail thread
         self._start_log_tail()
+        # Start inline camera stream for the runner pane
+        self._start_runner_cam_stream()
 
     # ── Tab 2: Debug Console ─────────────────────────────────────────────────
 
@@ -444,6 +478,73 @@ class AutomotiveTesterApp:
             self.config_vars[f"serial_{i}_port"] = port_var
             self.config_vars[f"serial_{i}_baud"] = baud_var
 
+        # ── Power Supply Troubleshoot ─────────────────────────────────────────
+        psu_ts = tk.LabelFrame(inner, text=" 🔌 Power Supply Troubleshoot ",
+                               bg=COLORS["bg"], fg=COLORS["accent"],
+                               font=("Consolas", 11, "bold"))
+        psu_ts.pack(fill=tk.X, padx=16, pady=8)
+
+        psu_btn_row = tk.Frame(psu_ts, bg=COLORS["bg"])
+        psu_btn_row.pack(fill=tk.X, padx=12, pady=6)
+
+        tk.Button(
+            psu_btn_row, text="🔄 Refresh Port",
+            command=self._psu_refresh,
+            bg=COLORS["surface2"], fg=COLORS["info"],
+            font=("Consolas", 10), relief=tk.FLAT, padx=12, cursor="hand2"
+        ).pack(side=tk.LEFT, padx=4)
+
+        tk.Button(
+            psu_btn_row, text="⚡ Output ON",
+            command=self._psu_output_on,
+            bg=COLORS["surface2"], fg=COLORS["success"],
+            font=("Consolas", 10), relief=tk.FLAT, padx=12, cursor="hand2"
+        ).pack(side=tk.LEFT, padx=4)
+
+        tk.Button(
+            psu_btn_row, text="⛔ Output OFF",
+            command=self._psu_output_off,
+            bg=COLORS["surface2"], fg=COLORS["error"],
+            font=("Consolas", 10), relief=tk.FLAT, padx=12, cursor="hand2"
+        ).pack(side=tk.LEFT, padx=4)
+
+        psu_set_row = tk.Frame(psu_ts, bg=COLORS["bg"])
+        psu_set_row.pack(fill=tk.X, padx=12, pady=4)
+
+        tk.Label(psu_set_row, text="Set Voltage (V):", bg=COLORS["bg"],
+                 fg=COLORS["text"], font=("Consolas", 10)).pack(side=tk.LEFT)
+        self._psu_voltage_entry = tk.Entry(
+            psu_set_row, bg=COLORS["surface2"], fg=COLORS["text"],
+            font=("Consolas", 10), relief=tk.FLAT, width=8,
+            insertbackground=COLORS["accent"])
+        self._psu_voltage_entry.insert(0, "12.0")
+        self._psu_voltage_entry.pack(side=tk.LEFT, padx=4)
+        tk.Button(psu_set_row, text="Set V", command=self._psu_set_voltage,
+                  bg=COLORS["accent"], fg="white", font=("Consolas", 10),
+                  relief=tk.FLAT, padx=10, cursor="hand2").pack(side=tk.LEFT, padx=4)
+
+        tk.Label(psu_set_row, text="  Set Current (A):", bg=COLORS["bg"],
+                 fg=COLORS["text"], font=("Consolas", 10)).pack(side=tk.LEFT)
+        self._psu_current_entry = tk.Entry(
+            psu_set_row, bg=COLORS["surface2"], fg=COLORS["text"],
+            font=("Consolas", 10), relief=tk.FLAT, width=8,
+            insertbackground=COLORS["accent"])
+        self._psu_current_entry.insert(0, "5.0")
+        self._psu_current_entry.pack(side=tk.LEFT, padx=4)
+        tk.Button(psu_set_row, text="Set I", command=self._psu_set_current,
+                  bg=COLORS["accent"], fg="white", font=("Consolas", 10),
+                  relief=tk.FLAT, padx=10, cursor="hand2").pack(side=tk.LEFT, padx=4)
+
+        tk.Button(psu_set_row, text="📊 Read V/I", command=self._psu_read_vi,
+                  bg=COLORS["surface2"], fg=COLORS["accent2"],
+                  font=("Consolas", 10), relief=tk.FLAT, padx=12,
+                  cursor="hand2").pack(side=tk.LEFT, padx=8)
+
+        self.psu_ts_result = tk.Label(
+            psu_ts, text="", bg=COLORS["bg"], fg=COLORS["text"],
+            font=("Consolas", 9), wraplength=600, justify=tk.LEFT)
+        self.psu_ts_result.pack(fill=tk.X, padx=12, pady=(0, 6))
+
         # ── Trace32 quick-action buttons ─────────────────────────────────────
         t32_act = tk.LabelFrame(inner, text=" 🔬 Trace32 Actions ",
                                 bg=COLORS["bg"], fg=COLORS["accent"],
@@ -468,6 +569,20 @@ class AutomotiveTesterApp:
         ).pack(side=tk.LEFT, padx=4)
 
         tk.Button(
+            t32_btn_row, text="🔌 Connect",
+            command=self._t32_connect,
+            bg=COLORS["surface2"], fg=COLORS["accent2"],
+            font=("Consolas", 10), relief=tk.FLAT, padx=12, cursor="hand2"
+        ).pack(side=tk.LEFT, padx=4)
+
+        tk.Button(
+            t32_btn_row, text="⏏ Disconnect",
+            command=self._t32_disconnect,
+            bg=COLORS["surface2"], fg=COLORS["warning"],
+            font=("Consolas", 10), relief=tk.FLAT, padx=12, cursor="hand2"
+        ).pack(side=tk.LEFT, padx=4)
+
+        tk.Button(
             t32_btn_row, text="🔬 Sanity Check",
             command=self._t32_sanity_check,
             bg=COLORS["surface2"], fg=COLORS["warning"],
@@ -487,6 +602,24 @@ class AutomotiveTesterApp:
             bg=COLORS["surface2"], fg=COLORS["info"],
             font=("Consolas", 10), relief=tk.FLAT, padx=12, cursor="hand2"
         ).pack(side=tk.LEFT, padx=4)
+
+        # Send Command row
+        t32_cmd_row = tk.Frame(t32_act, bg=COLORS["bg"])
+        t32_cmd_row.pack(fill=tk.X, padx=12, pady=4)
+        tk.Label(t32_cmd_row, text="Send Command:", bg=COLORS["bg"],
+                 fg=COLORS["text"], font=("Consolas", 10)).pack(side=tk.LEFT)
+        self._t32_cmd_entry = tk.Entry(
+            t32_cmd_row, bg=COLORS["surface2"], fg=COLORS["text"],
+            font=("Consolas", 10), relief=tk.FLAT, width=50,
+            insertbackground=COLORS["accent"])
+        self._t32_cmd_entry.pack(side=tk.LEFT, padx=8, fill=tk.X, expand=True)
+        self._t32_cmd_entry.bind("<Return>", lambda e: self._t32_send_command())
+        tk.Button(t32_cmd_row, text="Send ↵", command=self._t32_send_command,
+                  bg=COLORS["accent"], fg="white", font=("Consolas", 10),
+                  relief=tk.FLAT, padx=10, cursor="hand2").pack(side=tk.LEFT, padx=4)
+        tk.Button(t32_cmd_row, text="Read Error", command=self._t32_read_error,
+                  bg=COLORS["surface2"], fg=COLORS["error"],
+                  font=("Consolas", 10), relief=tk.FLAT, padx=10, cursor="hand2").pack(side=tk.LEFT, padx=4)
 
         self.t32_action_result = tk.Label(
             t32_act, text="", bg=COLORS["bg"], fg=COLORS["text"],
@@ -575,8 +708,11 @@ class AutomotiveTesterApp:
         cfg = self.config_vars
 
         # PSU
-        self.psu.port = cfg.get("psu_port", tk.StringVar()).get() or "COM3"
-        if self.psu.connect():
+        psu_port = cfg.get("psu_port", tk.StringVar()).get() or "COM3"
+        psu_baud = int(cfg.get("psu_baud", tk.StringVar(value="9600")).get() or 9600)
+        self.psu.port = psu_port
+        self.psu.baud = psu_baud
+        if self.psu.connect(port=psu_port, baud=psu_baud):
             self.psu.set_voltage(float(cfg.get("psu_voltage", tk.StringVar(value="12")).get()))
             self.psu.set_current(float(cfg.get("psu_current", tk.StringVar(value="5")).get()))
             self._log("✓ PSU connected", "PASS")
@@ -930,13 +1066,95 @@ class AutomotiveTesterApp:
     def _apply_config(self):
         cfg = self.config_vars
         self.psu.port = cfg["psu_port"].get()
-        self.psu.baud = int(cfg["psu_baud"].get())
+        self.psu.baud = int(cfg["psu_baud"].get() or 9600)
         self._sync_t32_config_from_vars()
         self.trace32.t32_exe = cfg["t32_exe"].get() or None
         self.trace32.config_file = cfg["t32_config"].get() or None
         self.canoe.config_path = cfg["canoe_config"].get() or None
         self.camera.device_index = int(cfg["cam_index"].get())
         messagebox.showinfo("Config Applied", "Hardware configuration updated.\nReconnect devices to apply.")
+
+    # ── PSU Troubleshoot actions ─────────────────────────────────────────────
+
+    def _psu_refresh(self):
+        """Disconnect and reconnect the power supply serial port."""
+        self._apply_config()
+
+        def _bg():
+            self.psu_ts_result.config(text="⏳ Refreshing PSU connection…", fg=COLORS["info"])
+            ok = self.psu.refresh_connection()
+            if ok:
+                msg = f"✓ PSU reconnected on {self.psu.port} @ {self.psu.baud} baud."
+                color = COLORS["success"]
+            else:
+                msg = (f"✗ PSU reconnect failed on {self.psu.port}.\n"
+                       "Check the COM port is not held by another application.")
+                color = COLORS["error"]
+            self._log(msg, "PASS" if ok else "FAIL")
+            self.root.after(0, lambda: self.psu_ts_result.config(text=msg, fg=color))
+
+        threading.Thread(target=_bg, daemon=True).start()
+
+    def _psu_output_on(self):
+        if not self.psu.is_connected:
+            self.psu_ts_result.config(text="✗ PSU not connected.", fg=COLORS["error"])
+            return
+        self.psu.output_on()
+        self.psu_ts_result.config(text="✓ Output ON sent.", fg=COLORS["success"])
+        self._log("PSU output ON.", "INFO")
+
+    def _psu_output_off(self):
+        if not self.psu.is_connected:
+            self.psu_ts_result.config(text="✗ PSU not connected.", fg=COLORS["error"])
+            return
+        self.psu.output_off()
+        self.psu_ts_result.config(text="✓ Output OFF sent.", fg=COLORS["warning"])
+        self._log("PSU output OFF.", "INFO")
+
+    def _psu_set_voltage(self):
+        if not self.psu.is_connected:
+            self.psu_ts_result.config(text="✗ PSU not connected.", fg=COLORS["error"])
+            return
+        try:
+            v = float(self._psu_voltage_entry.get())
+        except ValueError:
+            self.psu_ts_result.config(text="✗ Invalid voltage value.", fg=COLORS["error"])
+            return
+        self.psu.set_voltage(v)
+        self.psu_ts_result.config(text=f"✓ Voltage set to {v:.3f} V.", fg=COLORS["success"])
+        self._log(f"PSU voltage set: {v:.3f} V.", "INFO")
+
+    def _psu_set_current(self):
+        if not self.psu.is_connected:
+            self.psu_ts_result.config(text="✗ PSU not connected.", fg=COLORS["error"])
+            return
+        try:
+            a = float(self._psu_current_entry.get())
+        except ValueError:
+            self.psu_ts_result.config(text="✗ Invalid current value.", fg=COLORS["error"])
+            return
+        self.psu.set_current(a)
+        self.psu_ts_result.config(text=f"✓ Current limit set to {a:.3f} A.", fg=COLORS["success"])
+        self._log(f"PSU current set: {a:.3f} A.", "INFO")
+
+    def _psu_read_vi(self):
+        if not self.psu.is_connected:
+            self.psu_ts_result.config(text="✗ PSU not connected.", fg=COLORS["error"])
+            return
+
+        def _bg():
+            v = self.psu.measure_voltage()
+            i = self.psu.measure_current()
+            if v is not None and i is not None:
+                msg = f"✓ Voltage: {v:.3f} V   Current: {i:.3f} A   Power: {v * i:.3f} W"
+                color = COLORS["success"]
+            else:
+                msg = "✗ Could not read V/I – check connection."
+                color = COLORS["error"]
+            self._log(msg, "INFO")
+            self.root.after(0, lambda: self.psu_ts_result.config(text=msg, fg=color))
+
+        threading.Thread(target=_bg, daemon=True).start()
 
     def _sync_t32_config_from_vars(self) -> None:
         """Push Trace32 connection parameters from ``config_vars`` to the interface."""
@@ -1105,6 +1323,71 @@ class AutomotiveTesterApp:
         self.t32_action_result.config(text=msg, fg=color)
         self._log(msg.replace("\n", " | "), "WARN" if not result["ok"] else "PASS")
 
+    def _t32_connect(self):
+        """Apply current config and connect to Trace32."""
+        self._sync_t32_config_from_vars()
+        self.t32_action_result.config(
+            text=f"⏳ Connecting to Trace32 ({self.trace32.protocol}) …", fg=COLORS["info"])
+
+        def _bg():
+            ok = self.trace32.connect()
+            msg = (f"✓ Connected to Trace32 at {self.trace32.host}:{self.trace32.port}") if ok else \
+                  (f"✗ Connect failed – verify Trace32 is running (host={self.trace32.host}, "
+                   f"port={self.trace32.port}, protocol={self.trace32.protocol})")
+            color = COLORS["success"] if ok else COLORS["error"]
+            self._log(msg, "PASS" if ok else "FAIL")
+            self.root.after(0, lambda: self.t32_action_result.config(text=msg, fg=color))
+
+        threading.Thread(target=_bg, daemon=True).start()
+
+    def _t32_disconnect(self):
+        """Disconnect from Trace32."""
+        self.trace32.disconnect()
+        msg = "ℹ Trace32 disconnected."
+        self.t32_action_result.config(text=msg, fg=COLORS["warning"])
+        self._log(msg, "WARN")
+
+    def _t32_send_command(self):
+        """Send a raw PRACTICE/CMM command to the connected Trace32."""
+        cmd = self._t32_cmd_entry.get().strip()
+        if not cmd:
+            return
+        self._t32_cmd_entry.delete(0, tk.END)
+        if not self.trace32.is_connected:
+            self.t32_action_result.config(
+                text="✗ Trace32 not connected.", fg=COLORS["error"])
+            return
+
+        def _bg():
+            try:
+                response = self.debug.send_trace32_command(cmd)
+                msg = f"T32 ← {cmd!r}\n→ {response}"
+                color = COLORS["text"]
+            except Exception as exc:
+                response = str(exc)
+                msg = f"✗ Command error: {exc}"
+                color = COLORS["error"]
+            self._log(f"[T32] {cmd!r} → {response}", "INFO")
+            self.root.after(0, lambda: self.t32_action_result.config(text=msg, fg=color))
+
+        threading.Thread(target=_bg, daemon=True).start()
+
+    def _t32_read_error(self):
+        """Read and display the last Trace32 error message."""
+        if not self.trace32.is_connected:
+            self.t32_action_result.config(
+                text="✗ Trace32 not connected.", fg=COLORS["error"])
+            return
+        err = self.trace32.get_error()
+        if err:
+            msg = f"⚠ Trace32 error: {err}"
+            color = COLORS["error"]
+        else:
+            msg = "✓ No Trace32 error reported."
+            color = COLORS["success"]
+        self.t32_action_result.config(text=msg, fg=color)
+        self._log(msg, "WARN" if err else "PASS")
+
     # ════════════════════════════════════════════════════════════════════════
     #  Results Actions
     # ════════════════════════════════════════════════════════════════════════
@@ -1186,6 +1469,46 @@ class AutomotiveTesterApp:
                     pass
                 time.sleep(0.5)
         threading.Thread(target=_tail, daemon=True).start()
+
+    def _start_runner_cam_stream(self):
+        """Start updating the inline camera canvas in the Test Runner pane."""
+        def _on_frame(frame):
+            if not self.root.winfo_exists():
+                return
+            try:
+                w = max(self._runner_cam_canvas.winfo_width(), 1)
+                h = max(self._runner_cam_canvas.winfo_height(), 1)
+                photo = self.camera.frame_to_photoimage(frame, width=w, height=h)
+                if photo is None:
+                    return
+
+                def _draw(p=photo):
+                    self._runner_cam_canvas.delete("all")
+                    self._runner_cam_canvas.create_image(0, 0, anchor=tk.NW, image=p)
+                    self._runner_cam_photo = p
+
+                self.root.after(0, _draw)
+            except Exception:
+                pass
+
+        def _poll():
+            while True:
+                try:
+                    if self.camera.is_connected and not self.camera.is_streaming:
+                        self.camera.start_stream(callback=_on_frame)
+                        self.root.after(0, lambda: self._runner_cam_status.config(
+                            text="Camera streaming.", fg=COLORS["success"]))
+                    elif not self.camera.is_connected:
+                        if self.camera.is_streaming:
+                            self.camera.stop_stream()
+                        self.root.after(0, lambda: self._runner_cam_status.config(
+                            text="Camera not connected – use 'Connect All' to start.",
+                            fg=COLORS["text_dim"]))
+                except Exception:
+                    pass
+                time.sleep(2.0)
+
+        threading.Thread(target=_poll, daemon=True).start()
 
     def _poll_status(self):
         """Update status bar every 2 seconds."""
