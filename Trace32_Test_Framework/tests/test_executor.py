@@ -231,6 +231,100 @@ class TestTrace32WorkerNoT32(unittest.TestCase):
 
 
 # ===========================================================================
+# _try_connect_t32 retry helper
+# ===========================================================================
+
+class TestTryConnectT32(unittest.TestCase):
+
+    def test_raises_when_trace32_unavailable(self):
+        orig = te._TRACE32_AVAILABLE
+        te._TRACE32_AVAILABLE = False
+        try:
+            with self.assertRaises(RuntimeError):
+                te._try_connect_t32(max_retries=1, interval=0)
+        finally:
+            te._TRACE32_AVAILABLE = orig
+
+    def test_returns_connection_on_first_success(self):
+        orig = te._TRACE32_AVAILABLE
+        te._TRACE32_AVAILABLE = True
+        mock_conn = object()
+        with patch.object(te._rcl, "connect", return_value=mock_conn, create=True):
+            result = te._try_connect_t32(max_retries=3, interval=0)
+        te._TRACE32_AVAILABLE = orig
+        self.assertIs(result, mock_conn)
+
+    def test_retries_on_connection_error_then_succeeds(self):
+        orig = te._TRACE32_AVAILABLE
+        te._TRACE32_AVAILABLE = True
+        mock_conn = object()
+        call_count = [0]
+        retry_calls = []
+
+        def _side_effect(**kwargs):
+            call_count[0] += 1
+            if call_count[0] < 3:
+                raise ConnectionRefusedError("refused")
+            return mock_conn
+
+        def _on_retry(attempt, max_retries, exc):
+            retry_calls.append((attempt, max_retries))
+
+        with patch.object(te._rcl, "connect", side_effect=_side_effect, create=True):
+            result = te._try_connect_t32(max_retries=5, interval=0,
+                                         status_callback=_on_retry)
+        te._TRACE32_AVAILABLE = orig
+        self.assertIs(result, mock_conn)
+        self.assertEqual(call_count[0], 3)
+        # status_callback fired for the two failures
+        self.assertEqual(len(retry_calls), 2)
+        self.assertEqual(retry_calls[0], (1, 5))
+        self.assertEqual(retry_calls[1], (2, 5))
+
+    def test_raises_last_exception_after_all_retries_exhausted(self):
+        orig = te._TRACE32_AVAILABLE
+        te._TRACE32_AVAILABLE = True
+        exc_sentinel = ConnectionRefusedError("always refused")
+
+        with patch.object(te._rcl, "connect", side_effect=exc_sentinel, create=True):
+            with self.assertRaises(ConnectionRefusedError) as ctx:
+                te._try_connect_t32(max_retries=3, interval=0)
+        te._TRACE32_AVAILABLE = orig
+        self.assertIs(ctx.exception, exc_sentinel)
+
+    def test_retry_constants_are_positive(self):
+        self.assertGreater(te._T32_CONNECT_MAX_RETRIES, 0)
+        self.assertGreater(te._T32_CONNECT_RETRY_INTERVAL_SECONDS, 0)
+
+    def test_worker_emits_connecting_status_on_each_retry(self):
+        """Worker._connect should surface per-attempt CONNECTING status messages."""
+        import queue as _queue
+        orig = te._TRACE32_AVAILABLE
+        te._TRACE32_AVAILABLE = True
+        call_count = [0]
+        mock_conn = object()
+
+        def _side_effect(**kwargs):
+            call_count[0] += 1
+            if call_count[0] < 3:
+                raise ConnectionRefusedError("refused")
+            return mock_conn
+
+        statuses = []
+        q = _queue.Queue()
+        settings = te.AppSettings()
+        with patch.object(te._rcl, "connect", side_effect=_side_effect, create=True):
+            worker = te.Trace32Worker(q, lambda *a: statuses.append(a), settings,
+                                      lambda p: None)
+        te._TRACE32_AVAILABLE = orig
+        # The two failed attempts should have produced CONNECTING messages
+        connecting = [s for s in statuses if s[1] == "CONNECTING"]
+        self.assertEqual(len(connecting), 2)
+        # Worker should have a live connection
+        self.assertIs(worker.dbg, mock_conn)
+
+
+# ===========================================================================
 # Source file quality
 # ===========================================================================
 

@@ -55,6 +55,50 @@ def _detect_t32_installation(drives=None):
 # Seconds to wait for the Trace32 RCL port after launching the executable.
 # T32 typically needs 5-8 seconds to initialise and bind the RCL listener.
 _T32_STARTUP_WAIT_SECONDS = 8
+# Retry configuration for RCL connection attempts after launch.
+_T32_CONNECT_MAX_RETRIES = 10
+_T32_CONNECT_RETRY_INTERVAL_SECONDS = 3
+
+
+def _try_connect_t32(max_retries=_T32_CONNECT_MAX_RETRIES,
+                     interval=_T32_CONNECT_RETRY_INTERVAL_SECONDS,
+                     status_callback=None):
+    """Attempt to connect to the T32 RCL server, retrying on failure.
+
+    Parameters
+    ----------
+    max_retries:
+        Maximum number of connection attempts.
+    interval:
+        Seconds to wait between attempts.
+    status_callback:
+        Optional callable receiving ``(attempt, max_retries, exc)`` so callers
+        can surface progress to the UI.
+
+    Returns
+    -------
+    An open RCL connection object on success.
+
+    Raises
+    ------
+    Exception
+        The last exception raised after all retries are exhausted.
+    """
+    if not _TRACE32_AVAILABLE:
+        raise RuntimeError("lauterbach.trace32 package is not installed")
+    last_exc: Exception = RuntimeError("No connection attempted")
+    for attempt in range(1, max_retries + 1):
+        try:
+            return _rcl.connect(node="localhost")
+        except (OSError, ConnectionError) as exc:
+            last_exc = exc
+            if status_callback is not None:
+                status_callback(attempt, max_retries, exc)
+            if attempt < max_retries:
+                time.sleep(interval)
+        except Exception:  # noqa: BLE001 – re-raise non-network errors immediately
+            raise
+    raise last_exc
 
 
 class AppSettings:
@@ -100,11 +144,18 @@ class Trace32Worker(threading.Thread):
         self._connect()
 
     def _connect(self):
-        """Attempt to connect to the Trace32 RCL server."""
+        """Attempt to connect to the Trace32 RCL server, with retries."""
         if not _TRACE32_AVAILABLE:
             return
+
+        def _on_retry(attempt, max_retries, exc):
+            self.status_callback(
+                "(init)", "CONNECTING",
+                f"RCL attempt {attempt}/{max_retries} failed: {exc} – retrying…"
+            )
+
         try:
-            self.dbg = _rcl.connect(node="localhost")
+            self.dbg = _try_connect_t32(status_callback=_on_retry)
         except Exception as exc:
             self.dbg = None
             self.status_callback("(init)", "ERROR", f"T32 connect failed: {exc}")
@@ -227,10 +278,17 @@ class MainApp:
                 subprocess.Popen(cmd)
                 self.root.after(0, lambda: self.t32_status.config(
                     text="T32: Launched – waiting for RCL…", fg="#0055aa"))
-                # Give T32 time to start before connecting
+                # Give T32 a short initial settle time before the first attempt
                 time.sleep(_T32_STARTUP_WAIT_SECONDS)
+
+                def _on_retry(attempt, max_retries, exc):
+                    msg = (f"T32: RCL attempt {attempt}/{max_retries} – "
+                           f"retrying in {_T32_CONNECT_RETRY_INTERVAL_SECONDS}s…")
+                    self.root.after(0, lambda m=msg: self.t32_status.config(
+                        text=m, fg="#cc6600"))
+
                 try:
-                    dbg = _rcl.connect(node="localhost")
+                    dbg = _try_connect_t32(status_callback=_on_retry)
                     dbg.close()
                     self.root.after(0, lambda: self.t32_status.config(
                         text=f"T32: Ready ({install_dir})", fg="#006600"))
@@ -238,12 +296,18 @@ class MainApp:
                         "T32 Ready", "Trace32 started and RCL connection verified."))
                 except Exception as exc:
                     err = str(exc)
-                    self.root.after(0, lambda: self.t32_status.config(
-                        text=f"T32: RCL not reachable – {err}", fg="#cc0000"))
+                    self.root.after(0, lambda e=err: self.t32_status.config(
+                        text=f"T32: RCL not reachable – {e}", fg="#cc0000"))
+                    self.root.after(0, lambda e=err: messagebox.showerror(
+                        "RCL Connection Failed",
+                        f"Trace32 launched but could not connect to RCL after "
+                        f"{_T32_CONNECT_MAX_RETRIES} attempts:\n{e}\n\n"
+                        "Ensure the Trace32 config enables the RCL port "
+                        "(e.g. RCL=NETASSIST, PORT=20000) and try again."))
             except Exception as exc:
                 err = str(exc)
-                self.root.after(0, lambda: messagebox.showerror(
-                    "Launch Failed", f"Could not start Trace32:\n{err}"))
+                self.root.after(0, lambda e=err: messagebox.showerror(
+                    "Launch Failed", f"Could not start Trace32:\n{e}"))
 
         threading.Thread(target=_launch_bg, daemon=True).start()
 
