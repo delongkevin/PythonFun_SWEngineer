@@ -10,6 +10,30 @@ can be located without manual configuration.
 PowerDebug Pro via USB 3.0 is supported: after calling detect_installation()
 or setting t32_exe / config_file manually, call launch() to start the T32
 process and establish the RCL connection automatically.
+
+Remote API protocol notes
+--------------------------
+TRACE32 supports two RCL transport modes, configured in ``config.t32``:
+
+* **UDP / NETASSIST** (recommended for most setups)::
+
+      RCL=NETASSIST
+      PORT=20000
+      PACKLEN=1024
+
+* **TCP / NETTCP**::
+
+      RCL=NETTCP
+      PORT=20000
+
+Pass ``protocol="UDP"`` (default) or ``protocol="TCP"`` to
+:class:`Trace32Interface` to match your ``config.t32``.
+
+.. note::
+   ``Test-NetConnection`` (PowerShell) and tools like ``telnet`` only check
+   TCP.  A "connection refused" from those tools does **not** mean TRACE32 is
+   unreachable when using UDP/NETASSIST.  Use :meth:`Trace32Interface.connect`
+   with ``protocol="UDP"`` to verify UDP connectivity.
 """
 from __future__ import annotations
 
@@ -58,18 +82,39 @@ _CONFIG_CANDIDATES: List[str] = [
 
 
 class Trace32Interface:
-    """Manages a connection to a Lauterbach Trace32 debugger via RCL."""
+    """Manages a connection to a Lauterbach Trace32 debugger via RCL.
+
+    Args:
+        host: Hostname or IP address of the TRACE32 instance.
+        port: RCL port number (must match ``PORT=`` in ``config.t32``).
+        protocol: Transport protocol – ``"UDP"`` (default, matches
+            ``RCL=NETASSIST``) or ``"TCP"`` (matches ``RCL=NETTCP``).
+        packlen: RCL packet length in bytes (must match ``PACKLEN=`` in
+            ``config.t32``).  Ignored for TCP connections.
+        connect_timeout: Seconds to wait for the RCL handshake before
+            raising a timeout error.
+        t32_exe: Full path to the TRACE32 executable.  Can be populated
+            automatically via :meth:`detect_installation`.
+        config_file: Full path to the ``config.t32`` configuration file
+            passed to the TRACE32 executable on startup.
+    """
 
     def __init__(
         self,
         host: str = "localhost",
         port: int = 20000,
+        protocol: str = "UDP",
+        packlen: int = 1024,
+        connect_timeout: float = 5.0,
         t32_exe: Optional[str] = None,
         config_file: Optional[str] = None,
         **_kwargs: Any,
     ) -> None:
         self._host = host
         self._port = port
+        self._protocol = protocol.upper()
+        self._packlen = packlen
+        self._connect_timeout = connect_timeout
         self._dbg: Any = None
         self._connected = False
         self._process: Optional[subprocess.Popen] = None  # type: ignore[type-arg]
@@ -84,19 +129,56 @@ class Trace32Interface:
     def connect(self) -> bool:
         """Open a connection to the Trace32 remote API.
 
+        The connection parameters (``protocol``, ``packlen``, ``port``, and
+        ``connect_timeout``) are taken from the instance attributes set at
+        construction time or via the respective properties.
+
+        For **UDP / NETASSIST** setups the ``config.t32`` file should contain::
+
+            RCL=NETASSIST
+            PORT=20000
+            PACKLEN=1024
+
+        For **TCP / NETTCP** setups::
+
+            RCL=NETTCP
+            PORT=20000
+
         Returns:
             True if the connection succeeded, False otherwise.
         """
         if not _TRACE32_AVAILABLE:
-            logger.error("Cannot connect: lauterbach.trace32 package is missing.")
+            logger.error(
+                "Cannot connect: lauterbach.trace32 package is missing. "
+                "Install it with: pip install lauterbach-trace32-rcl"
+            )
             return False
         try:
-            self._dbg = _rcl.connect(node=self._host, port=self._port)
+            kwargs: Dict[str, Any] = dict(
+                node=self._host,
+                port=str(self._port),
+                protocol=self._protocol,
+                timeout=self._connect_timeout,
+            )
+            # packlen is only relevant for UDP (NETASSIST)
+            if self._protocol == "UDP":
+                kwargs["packlen"] = self._packlen
+            self._dbg = _rcl.connect(**kwargs)
             self._connected = True
-            logger.info("Connected to Trace32 at %s:%d", self._host, self._port)
+            logger.info(
+                "Connected to Trace32 at %s:%s via %s",
+                self._host, self._port, self._protocol,
+            )
             return True
         except Exception as exc:
-            logger.error("Trace32 connect failed: %s", exc)
+            hint = (
+                "Verify TRACE32 is running and config.t32 has "
+                f"RCL={'NETASSIST' if self._protocol == 'UDP' else 'NETTCP'}, "
+                f"PORT={self._port}"
+            )
+            if self._protocol == "UDP":
+                hint += f", PACKLEN={self._packlen}"
+            logger.error("Trace32 connect failed: %s — %s", exc, hint)
             self._connected = False
             return False
 
@@ -201,9 +283,123 @@ class Trace32Interface:
     def port(self, value: int) -> None:
         self._port = int(value)
 
+    @property
+    def protocol(self) -> str:
+        """Transport protocol: ``"UDP"`` (NETASSIST) or ``"TCP"`` (NETTCP)."""
+        return self._protocol
+
+    @protocol.setter
+    def protocol(self, value: str) -> None:
+        self._protocol = value.upper()
+
+    @property
+    def packlen(self) -> int:
+        """UDP packet length (bytes) – must match ``PACKLEN=`` in config.t32."""
+        return self._packlen
+
+    @packlen.setter
+    def packlen(self, value: int) -> None:
+        self._packlen = int(value)
+
+    @property
+    def connect_timeout(self) -> float:
+        """Seconds to wait for the RCL handshake."""
+        return self._connect_timeout
+
+    @connect_timeout.setter
+    def connect_timeout(self, value: float) -> None:
+        self._connect_timeout = float(value)
+
     # ------------------------------------------------------------------
-    # Auto-detection
+    # Preflight / diagnostics
     # ------------------------------------------------------------------
+
+    def preflight_check(self) -> Dict[str, Any]:
+        """Run lightweight diagnostics before attempting to connect.
+
+        Checks are performed in this order:
+
+        1. ``lauterbach.trace32`` package availability.
+        2. Existence of :attr:`t32_exe` (if set).
+        3. Existence of :attr:`config_file` (if set).
+        4. (Optional) That ``config_file`` contains the expected ``RCL=``
+           directive for the configured ``protocol``.
+
+        Returns:
+            A dict with keys:
+
+            * ``"ok"`` (bool) – ``True`` if all checks passed.
+            * ``"issues"`` (list[str]) – Human-readable problem descriptions.
+            * ``"suggestions"`` (list[str]) – Actionable remediation hints.
+        """
+        issues: List[str] = []
+        suggestions: List[str] = []
+
+        if not _TRACE32_AVAILABLE:
+            issues.append("lauterbach.trace32 package is not installed.")
+            suggestions.append(
+                "Install it with: pip install lauterbach-trace32-rcl"
+            )
+
+        if self.t32_exe:
+            if not os.path.isfile(self.t32_exe):
+                issues.append(f"T32 executable not found: {self.t32_exe}")
+                suggestions.append(
+                    "Run 'Auto-detect T32' or set the correct path in Hardware Config."
+                )
+        else:
+            issues.append("T32 executable path is not configured.")
+            suggestions.append(
+                "Run 'Auto-detect T32' or set t32_exe manually."
+            )
+
+        if self.config_file:
+            if not os.path.isfile(self.config_file):
+                issues.append(f"T32 config file not found: {self.config_file}")
+                suggestions.append(
+                    "Check the config file path in Hardware Config."
+                )
+            else:
+                self._check_config_rcl(issues, suggestions)
+        else:
+            issues.append("T32 config file path is not configured.")
+            suggestions.append(
+                "Set config_file to your config.t32 path in Hardware Config."
+            )
+
+        return {"ok": len(issues) == 0, "issues": issues, "suggestions": suggestions}
+
+    def _check_config_rcl(
+        self, issues: List[str], suggestions: List[str]
+    ) -> None:
+        """Parse config_file and warn if the RCL mode mismatches protocol."""
+        expected_rcl = "NETASSIST" if self._protocol == "UDP" else "NETTCP"
+        try:
+            with open(self.config_file, "r", errors="replace") as fh:
+                content = fh.read().upper()
+            if f"RCL={expected_rcl}" not in content:
+                # Check what it actually has
+                actual = None
+                for candidate in ("NETASSIST", "NETTCP"):
+                    if f"RCL={candidate}" in content:
+                        actual = candidate
+                        break
+                if actual:
+                    issues.append(
+                        f"config.t32 has RCL={actual} but protocol is set to "
+                        f"{self._protocol} (expects RCL={expected_rcl})."
+                    )
+                    opposite = "TCP" if self._protocol == "UDP" else "UDP"
+                    suggestions.append(
+                        f"Either change protocol to '{opposite}' in Hardware Config, "
+                        f"or update config.t32 to use RCL={expected_rcl}."
+                    )
+                else:
+                    logger.debug(
+                        "config.t32 does not contain an RCL= line; skipping RCL check."
+                    )
+        except OSError as exc:
+            logger.warning("preflight_check: could not read config file: %s", exc)
 
     @classmethod
     def detect_installation(

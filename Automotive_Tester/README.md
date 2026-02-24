@@ -38,13 +38,62 @@ automotive_tester/
 
 ## Hardware Connections
 
-| Device               | Connection             | Default Config        |
-|----------------------|------------------------|-----------------------|
-| BK Precision 1687B   | USB-to-Serial adapter  | COM3, 9600 baud       |
-| Lauterbach TRACE32   | TCP (API port)         | localhost:20000       |
-| Vector CANoe         | COM automation (Win)   | Configure .cfg path   |
-| USB Camera           | USB                    | Device index 0        |
-| Serial Terminal 1-4  | USB-Serial adapters    | COM4-COM7, 115200     |
+| Device               | Connection             | Default Config           |
+|----------------------|------------------------|--------------------------|
+| BK Precision 1687B   | USB-to-Serial adapter  | COM3, 9600 baud          |
+| Lauterbach TRACE32   | UDP (NETASSIST) or TCP | localhost:20000, UDP     |
+| Vector CANoe         | COM automation (Win)   | Configure .cfg path      |
+| USB Camera           | USB                    | Device index 0           |
+| Serial Terminal 1-4  | USB-Serial adapters    | COM4-COM7, 115200        |
+
+---
+
+## TRACE32 Remote API Configuration
+
+The Automotive Tester connects to TRACE32 via the **Remote Control Library
+(RCL)** using UDP (NETASSIST) by default.  This matches the most common
+`config.t32` setup.
+
+### Recommended config.t32 (UDP / NETASSIST)
+
+```ini
+; TRACE32 Remote Control via UDP
+RCL=NETASSIST
+PORT=20000
+PACKLEN=1024
+```
+
+### Alternative config.t32 (TCP / NETTCP)
+
+```ini
+; TRACE32 Remote Control via TCP
+RCL=NETTCP
+PORT=20000
+```
+
+### UI settings (⚙ Hardware Config tab)
+
+| Setting              | UDP (NETASSIST) | TCP (NETTCP) |
+|----------------------|-----------------|--------------|
+| Protocol             | `UDP`           | `TCP`        |
+| Packet Length        | `1024`          | (ignored)    |
+| Connect Timeout (s)  | `5.0`           | `5.0`        |
+
+> **Note**: `Test-NetConnection` (PowerShell) and `telnet` only check **TCP**.
+> A "connection refused" from those tools does **not** mean TRACE32 is
+> unreachable – use the **🌐 Test Remote API** button in the UI to test UDP
+> connectivity correctly.
+
+### Troubleshooting
+
+1. Run **🩺 Preflight Check** to verify that the executable path, config file,
+   and `RCL=` directive all match.
+2. Run **🌐 Test Remote API** to attempt a short-timeout connection and
+   see a specific error message.
+3. Ensure TRACE32 is already running before connecting (or use **🚀 Launch T32**
+   to start it automatically).
+4. Check that the `PORT=` and `PACKLEN=` values in `config.t32` match the
+   values entered in the Hardware Config tab.
 
 ---
 
