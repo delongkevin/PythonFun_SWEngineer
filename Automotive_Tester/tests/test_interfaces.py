@@ -98,6 +98,57 @@ class TestTrace32Interface(unittest.TestCase):
         self.assertTrue(self.t32.connect())
         self.assertTrue(self.t32.is_connected)
 
+    def test_connect_passes_udp_params(self) -> None:
+        """connect() must forward protocol=UDP, packlen, port as str, timeout."""
+        import lauterbach.trace32.rcl as rcl
+        mock_dbg = MagicMock()
+        rcl.connect = MagicMock(return_value=mock_dbg)
+        t32 = Trace32Interface(
+            host="127.0.0.1", port=20000, protocol="UDP",
+            packlen=1024, connect_timeout=5.0,
+        )
+        t32.connect()
+        rcl.connect.assert_called_once_with(
+            node="127.0.0.1",
+            port="20000",
+            protocol="UDP",
+            packlen=1024,
+            timeout=5.0,
+        )
+
+    def test_connect_passes_tcp_params_no_packlen(self) -> None:
+        """connect() must not pass packlen when protocol=TCP."""
+        import lauterbach.trace32.rcl as rcl
+        mock_dbg = MagicMock()
+        rcl.connect = MagicMock(return_value=mock_dbg)
+        t32 = Trace32Interface(
+            host="127.0.0.1", port=20000, protocol="TCP",
+            packlen=1024, connect_timeout=3.0,
+        )
+        t32.connect()
+        call_kwargs = rcl.connect.call_args[1]
+        self.assertEqual(call_kwargs["protocol"], "TCP")
+        self.assertEqual(call_kwargs["port"], "20000")
+        self.assertNotIn("packlen", call_kwargs)
+
+    def test_protocol_property(self) -> None:
+        t32 = Trace32Interface(protocol="TCP")
+        self.assertEqual(t32.protocol, "TCP")
+        t32.protocol = "udp"
+        self.assertEqual(t32.protocol, "UDP")
+
+    def test_packlen_property(self) -> None:
+        t32 = Trace32Interface(packlen=512)
+        self.assertEqual(t32.packlen, 512)
+        t32.packlen = 2048
+        self.assertEqual(t32.packlen, 2048)
+
+    def test_connect_timeout_property(self) -> None:
+        t32 = Trace32Interface(connect_timeout=10.0)
+        self.assertEqual(t32.connect_timeout, 10.0)
+        t32.connect_timeout = 3.0
+        self.assertEqual(t32.connect_timeout, 3.0)
+
     def test_connect_failure_raises(self) -> None:
         import lauterbach.trace32.rcl as rcl
         rcl.connect = MagicMock(side_effect=ConnectionError("refused"))
@@ -263,6 +314,69 @@ class TestTrace32Interface(unittest.TestCase):
         t32.port = 20002
         self.assertEqual(t32.host, "newhost")
         self.assertEqual(t32.port, 20002)
+
+    # ------------------------------------------------------------------
+    # preflight_check
+    # ------------------------------------------------------------------
+
+    def test_preflight_check_no_exe_no_config(self) -> None:
+        t32 = Trace32Interface()
+        result = t32.preflight_check()
+        self.assertFalse(result["ok"])
+        self.assertTrue(any("executable" in i.lower() for i in result["issues"]))
+
+    def test_preflight_check_exe_missing_file(self) -> None:
+        t32 = Trace32Interface(t32_exe="/nonexistent/t32.exe")
+        with patch("interfaces.trace32_interface.os.path.isfile", return_value=False):
+            result = t32.preflight_check()
+        self.assertFalse(result["ok"])
+        self.assertTrue(any("not found" in i for i in result["issues"]))
+
+    def test_preflight_check_config_rcl_mismatch(self) -> None:
+        import tempfile
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".t32", delete=False
+        ) as tf:
+            tf.write("[SETUP]\nRCL=NETTCP\nPORT=20000\n")
+            cfg_path = tf.name
+        with tempfile.NamedTemporaryFile(suffix=".exe", delete=False) as ef:
+            exe_path = ef.name
+        try:
+            t32 = Trace32Interface(
+                protocol="UDP",
+                t32_exe=exe_path,
+                config_file=cfg_path,
+            )
+            result = t32.preflight_check()
+            # Should flag the RCL mismatch
+            self.assertTrue(any("NETTCP" in i or "mismatch" in i.lower()
+                                 or "NETASSIST" in i for i in result["issues"]))
+        finally:
+            os.unlink(cfg_path)
+            os.unlink(exe_path)
+
+    def test_preflight_check_config_rcl_match_udp(self) -> None:
+        import tempfile
+        with tempfile.NamedTemporaryFile(
+            mode="w", suffix=".t32", delete=False
+        ) as tf:
+            tf.write("[SETUP]\nRCL=NETASSIST\nPORT=20000\nPACKLEN=1024\n")
+            cfg_path = tf.name
+        with tempfile.NamedTemporaryFile(suffix=".exe", delete=False) as ef:
+            exe_path = ef.name
+        try:
+            t32 = Trace32Interface(
+                protocol="UDP",
+                t32_exe=exe_path,
+                config_file=cfg_path,
+            )
+            result = t32.preflight_check()
+            # Should have no RCL mismatch issue
+            rcl_issues = [i for i in result["issues"] if "rcl" in i.lower() or "NETTCP" in i]
+            self.assertEqual(rcl_issues, [])
+        finally:
+            os.unlink(cfg_path)
+            os.unlink(exe_path)
 
 
 # ===========================================================================

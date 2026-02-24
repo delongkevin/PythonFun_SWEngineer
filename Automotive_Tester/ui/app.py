@@ -88,6 +88,9 @@ class AutomotiveTesterApp:
         self.trace32 = Trace32Interface(
             host="localhost",
             port=20000,
+            protocol="UDP",
+            packlen=1024,
+            connect_timeout=5.0,
             t32_exe=_t32_detected.get("t32_exe"),
             config_file=_t32_detected.get("config_file"),
         )
@@ -386,6 +389,9 @@ class AutomotiveTesterApp:
             ("🔬 Trace32 / Lauterbach", [
                 ("t32_host", "Host", "localhost"),
                 ("t32_port", "Port", "20000"),
+                ("t32_protocol", "Protocol (UDP/TCP)", "UDP"),
+                ("t32_packlen", "Packet Length (PACKLEN)", "1024"),
+                ("t32_timeout", "Connect Timeout (s)", "5.0"),
                 ("t32_exe", "T32 Executable Path", self.trace32.t32_exe or ""),
                 ("t32_config", "T32 Config File", self.trace32.config_file or ""),
             ]),
@@ -465,6 +471,20 @@ class AutomotiveTesterApp:
             t32_btn_row, text="🔬 Sanity Check",
             command=self._t32_sanity_check,
             bg=COLORS["surface2"], fg=COLORS["warning"],
+            font=("Consolas", 10), relief=tk.FLAT, padx=12, cursor="hand2"
+        ).pack(side=tk.LEFT, padx=4)
+
+        tk.Button(
+            t32_btn_row, text="🌐 Test Remote API",
+            command=self._test_remote_api,
+            bg=COLORS["surface2"], fg=COLORS["accent2"],
+            font=("Consolas", 10), relief=tk.FLAT, padx=12, cursor="hand2"
+        ).pack(side=tk.LEFT, padx=4)
+
+        tk.Button(
+            t32_btn_row, text="🩺 Preflight Check",
+            command=self._t32_preflight,
+            bg=COLORS["surface2"], fg=COLORS["info"],
             font=("Consolas", 10), relief=tk.FLAT, padx=12, cursor="hand2"
         ).pack(side=tk.LEFT, padx=4)
 
@@ -564,12 +584,17 @@ class AutomotiveTesterApp:
             self._log("✗ PSU connect failed", "FAIL")
 
         # Trace32
-        self.trace32.host = cfg.get("t32_host", tk.StringVar(value="localhost")).get()
-        self.trace32.port = int(cfg.get("t32_port", tk.StringVar(value="20000")).get())
+        self._sync_t32_config_from_vars()
         if self.trace32.connect():
             self._log("✓ Trace32 connected", "PASS")
         else:
-            self._log("✗ Trace32 connect failed (check TRACE32 is running)", "WARN")
+            self._log(
+                f"✗ Trace32 connect failed – verify TRACE32 is running and "
+                f"config.t32 has RCL={'NETASSIST' if self.trace32.protocol == 'UDP' else 'NETTCP'}, "
+                f"PORT={self.trace32.port}"
+                + (f", PACKLEN={self.trace32.packlen}" if self.trace32.protocol == "UDP" else ""),
+                "WARN",
+            )
 
         # Camera
         idx = int(cfg.get("cam_index", tk.StringVar(value="0")).get())
@@ -906,13 +931,29 @@ class AutomotiveTesterApp:
         cfg = self.config_vars
         self.psu.port = cfg["psu_port"].get()
         self.psu.baud = int(cfg["psu_baud"].get())
-        self.trace32.host = cfg["t32_host"].get()
-        self.trace32.port = int(cfg["t32_port"].get())
+        self._sync_t32_config_from_vars()
         self.trace32.t32_exe = cfg["t32_exe"].get() or None
         self.trace32.config_file = cfg["t32_config"].get() or None
         self.canoe.config_path = cfg["canoe_config"].get() or None
         self.camera.device_index = int(cfg["cam_index"].get())
         messagebox.showinfo("Config Applied", "Hardware configuration updated.\nReconnect devices to apply.")
+
+    def _sync_t32_config_from_vars(self) -> None:
+        """Push Trace32 connection parameters from ``config_vars`` to the interface."""
+        cfg = self.config_vars
+        self.trace32.host = cfg.get("t32_host", tk.StringVar(value="localhost")).get()
+        self.trace32.port = int(cfg.get("t32_port", tk.StringVar(value="20000")).get())
+        self.trace32.protocol = cfg.get("t32_protocol", tk.StringVar(value="UDP")).get() or "UDP"
+        try:
+            self.trace32.packlen = int(cfg.get("t32_packlen", tk.StringVar(value="1024")).get())
+        except (ValueError, AttributeError):
+            pass
+        try:
+            self.trace32.connect_timeout = float(
+                cfg.get("t32_timeout", tk.StringVar(value="5.0")).get()
+            )
+        except (ValueError, AttributeError):
+            pass
 
     def _auto_detect_t32(self):
         """Scan default drives for a Trace32 installation and populate fields."""
@@ -937,8 +978,16 @@ class AutomotiveTesterApp:
             fg=COLORS["success"])
 
     def _launch_t32(self):
-        """Apply current config then launch the T32 executable in a background thread."""
+        """Apply current config then launch the T32 executable in a background thread.
+
+        If TRACE32 is already connected, the launch is skipped to avoid
+        spawning duplicate instances.
+        """
         self._apply_config()
+        if self.trace32.is_connected:
+            self.t32_action_result.config(
+                text="ℹ T32 is already connected – skipping launch.", fg=COLORS["info"])
+            return
         if not self.trace32.t32_exe:
             messagebox.showwarning(
                 "T32 Executable Missing",
@@ -981,6 +1030,80 @@ class AutomotiveTesterApp:
             self.root.after(0, lambda: self._log(msg, "PASS" if ok else "FAIL"))
 
         threading.Thread(target=_bg, daemon=True).start()
+
+    def _test_remote_api(self):
+        """Attempt a short-timeout RCL connect and report success/failure in the UI."""
+        self._sync_t32_config_from_vars()
+        proto = self.trace32.protocol
+        self.t32_action_result.config(
+            text=f"⏳ Testing Remote API ({proto}) at {self.trace32.host}:{self.trace32.port}…",
+            fg=COLORS["info"],
+        )
+
+        def _bg():
+            # Temporarily override timeout for a quick test
+            orig_timeout = self.trace32.connect_timeout
+            self.trace32.connect_timeout = 5.0
+            # Disconnect first to avoid false positives from existing connection
+            was_connected = self.trace32.is_connected
+            if was_connected:
+                self.trace32.disconnect()
+            ok = self.trace32.connect()
+            if ok:
+                msg = (
+                    f"✓ Remote API reachable ({proto}) at "
+                    f"{self.trace32.host}:{self.trace32.port}"
+                )
+                color = COLORS["success"]
+                self._log(msg, "PASS")
+            else:
+                rcl_mode = "NETASSIST" if proto == "UDP" else "NETTCP"
+                msg = (
+                    f"✗ Remote API unreachable ({proto}) – "
+                    f"ensure TRACE32 is running and config.t32 has "
+                    f"RCL={rcl_mode}, PORT={self.trace32.port}"
+                )
+                if proto == "UDP":
+                    msg += f", PACKLEN={self.trace32.packlen}"
+                msg += (
+                    "\n  Note: Test-NetConnection/telnet only test TCP and "
+                    "will show 'refused' even when UDP is working correctly."
+                )
+                color = COLORS["error"]
+                self._log(msg, "FAIL")
+            # Restore timeout
+            self.trace32.connect_timeout = orig_timeout
+            # Restore connection if it was connected before
+            if was_connected and not self.trace32.is_connected:
+                self.trace32.connect()
+            self.root.after(0, lambda: self.t32_action_result.config(
+                text=msg, fg=color))
+
+        threading.Thread(target=_bg, daemon=True).start()
+
+    def _t32_preflight(self):
+        """Run the Trace32 preflight check and display the result."""
+        self._sync_t32_config_from_vars()
+        # Also sync exe/config paths which aren't part of _sync_t32_config_from_vars
+        cfg = self.config_vars
+        self.trace32.t32_exe = cfg.get("t32_exe", tk.StringVar()).get() or None
+        self.trace32.config_file = cfg.get("t32_config", tk.StringVar()).get() or None
+        result = self.trace32.preflight_check()
+        if result["ok"]:
+            msg = "✓ Preflight check passed – all paths and config look good."
+            color = COLORS["success"]
+        else:
+            lines = ["⚠ Preflight issues found:"]
+            for issue in result["issues"]:
+                lines.append(f"  • {issue}")
+            if result["suggestions"]:
+                lines.append("Suggestions:")
+                for suggestion in result["suggestions"]:
+                    lines.append(f"  → {suggestion}")
+            msg = "\n".join(lines)
+            color = COLORS["warning"]
+        self.t32_action_result.config(text=msg, fg=color)
+        self._log(msg.replace("\n", " | "), "WARN" if not result["ok"] else "PASS")
 
     # ════════════════════════════════════════════════════════════════════════
     #  Results Actions
