@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Vector Test Table Editor-->
+<ttroot version="33" xmlns="http://www.vector-informatik.de/ITE/TestTable/1.0">
+  <tt>
+    <tf navid="354c9051-a12f-4d3d-969a-0b0fca4ad5bf">
+      <title>Serial_Port_Logging</title>
+      <preparation>
+        <title />
+        <caplfunction>
+          <title />
+          <name>Setup_SerialComLogger</name>
+        </caplfunction>
+      </preparation>
+      <capltestcase>
+        <title />
+        <name>TC_SerialPort_SendData</name>
+        <tcid>f4a19f1b-bc11-415f-b70d-0a95f769fd9c</tcid>
+        <attributes>
+          <attr>
+            <key>TC_ID</key>
+            <value />
+          </attr>
+          <attr>
+            <key>Test Case ID</key>
+            <value />
+          </attr>
+        </attributes>
+      </capltestcase>
+      <capltestcase>
+        <title />
+        <name>TC_SerialPort_ReceiveData</name>
+        <param>
+          <type>int</type>
+          <value>
+            <const>30000</const>
+          </value>
+        </param>
+        <tcid>12c6cc43-d481-4466-8616-b3ca1ecf6a2f</tcid>
+        <attributes>
+          <attr>
+            <key>TC_ID</key>
+            <value />
+          </attr>
+          <attr>
+            <key>Test Case ID</key>
+            <value />
+          </attr>
+        </attributes>
+      </capltestcase>
+      <completion>
+        <title />
+        <caplfunction>
+          <title />
+          <name>Teardown_SerialComLogger</name>
+        </caplfunction>
+      </completion>
+    </tf>
+  </tt>
+  <ttlib>
+    <ts_definitions />
+    <tc_definitions />
+    <function_definitions />
+  </ttlib>
+</ttroot>

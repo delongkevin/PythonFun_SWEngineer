@@ -1,0 +1,18 @@
+# config.yaml
+jenkins:
+  url: "https://eahubjenkins02.magna.global:8443/view/L2H5250/job/L2H5250_SWTest/job/L2H5250_SWTest/job/PR_Testing/"
+  username: "kevidelo"
+  password: "Kevman#14461990"
+  # Alternatively, set JENKINS_API_TOKEN environment variable
+
+dashboard:
+  refresh_interval: 30  # seconds
+  builds_per_job: 10
+  jobs:
+    - "frontend-pipeline"
+    - "backend-pipeline"
+    - "deployment-pipeline"
+
+output:
+  json_file: "jenkins_dashboard.json"
+  html_file: "dashboard.html"

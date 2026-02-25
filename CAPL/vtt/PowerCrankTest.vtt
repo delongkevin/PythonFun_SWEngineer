@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--Vector Test Table Editor-->
+<ttroot version="33" xmlns="http://www.vector-informatik.de/ITE/TestTable/1.0">
+  <tt>
+    <tf navid="3fb00c91-cb1b-42ed-9a6a-ef4c8cb9ee5e">
+      <title>PowerCrankTest_underOver_6_17v</title>
+      <capltestcase>
+        <title />
+        <name>PowerCrankTest</name>
+        <tcid>21818667-14cc-4033-a930-47833ef3d0ce</tcid>
+        <attributes>
+          <attr>
+            <key>TC_ID</key>
+            <value />
+          </attr>
+          <attr>
+            <key>Test Case ID</key>
+            <value />
+          </attr>
+        </attributes>
+      </capltestcase>
+    </tf>
+  </tt>
+  <ttlib>
+    <ts_definitions />
+    <tc_definitions />
+    <function_definitions>
+      <function_definition navid="58190f3f-2b90-4191-a4ad-a296d9b62ba5">
+        <name>FDF2_Reset_Reason_DID_with_Physical_Address</name>
+        <active>false</active>
+        <export>false</export>
+        <parameters />
+        <variables>
+          <variable_definition>
+            <name>sResetReason_PMIC</name>
+            <type>string</type>
+            <source>
+              <const />
+            </source>
+          </variable_definition>
+          <variable_definition>
+            <name>sResetReason_SOC</name>
+            <type>string</type>
+            <source>
+              <const />
+            </source>
+          </variable_definition>
+        </variables>
+        <diagservice>
+          <title />
+          <service>DiaObj_BEGIN_OF_OBJECT|3|2|CVADAS_0001_00000000_000|EngineeringParameters|_22FDF2_Reset_Reason_Read|||0||CVADAS_MAGNA|END_OF_OBJECT_DiaObj|</service>
+          <diagrequest>
+            <diagparam>
+              <qualifier>DiaVal_BEGIN_OF_OBJECT|3|4|CVADAS_0001_00000000_000|EngineeringParameters|_22FDF2_Reset_Reason_Read|RDBI_RQ|RecordDataIdentifier|0||CVADAS_MAGNA|END_OF_OBJECT_DiaVal|</qualifier>
+              <bytesequence>
+                <const>FDF2</const>
+              </bytesequence>
+            </diagparam>
+          </diagrequest>
+          <diagresponse>
+            <primitive>DiaObj_BEGIN_OF_OBJECT|3|3|CVADAS_0001_00000000_000|EngineeringParameters|_22FDF2_Reset_Reason_Read|RDBI_PR||1||CVADAS_MAGNA|END_OF_OBJECT_DiaObj|</primitive>
+            <diagparam_read>
+              <qualifier>DiaVal_BEGIN_OF_OBJECT|3|4|CVADAS_0001_00000000_000|EngineeringParameters|_22FDF2_Reset_Reason_Read|RDBI_PR|SOCResetRegister_Reset_Reason|1||CVADAS_MAGNA|END_OF_OBJECT_DiaVal|</qualifier>
+              <copytovar>
+                <variable>sResetReason_SOC</variable>
+              </copytovar>
+            </diagparam_read>
+            <diagparam_read>
+              <qualifier>DiaVal_BEGIN_OF_OBJECT|3|4|CVADAS_0001_00000000_000|EngineeringParameters|_22FDF2_Reset_Reason_Read|RDBI_PR|PMIC_SafeState2_Reset_Reason|1||CVADAS_MAGNA|END_OF_OBJECT_DiaVal|</qualifier>
+              <copytovar>
+                <variable>sResetReason_PMIC</variable>
+              </copytovar>
+            </diagparam_read>
+          </diagresponse>
+        </diagservice>
+        <caplinline>
+          <title>Print Reset Reason to File</title>
+          <code>char s[250] = "0";
+char s1[250] = "0";
+int iCounter = -1;
+iCounter = getProfileInt("Reset_Reason" , "Counter", -1 , "FDF2_Reset_Reason.ini");
+ltoa(iCounter,s1,10);
+strncpy(s,s1,255);
+strncat(s,"_PMIC",255);
+writeProfileString("Reset_Reason", s, sResetReason_SOC, "FDF2_Reset_Reason.ini");
+//ltoa(iCounter,s1,10);
+strncpy(s,s1,255);
+strncat(s,"_SOC",255);
+writeProfileString("Reset_Reason", s , sResetReason_PMIC, "FDF2_Reset_Reason.ini");
+writeProfileInt("Reset_Reason", "Counter", iCounter+1, "FDF2_Reset_Reason.ini");</code>
+        </caplinline>
+      </function_definition>
+    </function_definitions>
+  </ttlib>
+</ttroot>

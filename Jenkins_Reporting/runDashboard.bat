@@ -1,0 +1,4 @@
+python Jenkins_Dashboard.py --url https://eahubjenkins02.magna.global:8443/view/L2H7010/job/L2H7010_SWTest/job/L2H7010_SWTest/job/develop/ --username kevidelo --password Kevman#14461990 --no-ssl-verify --output Report.html
+python Jenkins_Dashboard.py --url https://eahubjenkins02.magna.global:8443/view/L2H7010/job/L2H7010_SWTest/job/L2H7010_SWTest/job/PR_Testing/ --username kevidelo --password Kevman#14461990 --no-ssl-verify --output Report.html
+python Jenkins_Dashboard.py --url https://eahubjenkins02.magna.global:8443/view/L2H5250/job/L2H5250_SWTest/job/L2H5250_SWTest/job/PR_Testing/ --username kevidelo --password Kevman#14461990 --no-ssl-verify --output Report.html
+python Jenkins_Dashboard.py --url https://eahubjenkins02.magna.global:8443/view/L2H4060/job/L2H4060_SWTest/job/L2H4060_SWTest/job/master_MY27/ --username kevidelo --password Kevman#14461990 --no-ssl-verify --output Report.html

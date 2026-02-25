@@ -1,0 +1,900 @@
+/*@!Encoding:1252*/
+/*==============================================================================
+  File: SerialComLogger.can
+  Description: Serial COM Port Communication with Automatic Logging
+  Compatible with: Vector VTestStudio CAPL Compiler (Test Unit)
+  
+  Features:
+  - Connect to serial COM port with configurable baud rate (115200)
+  - Open/Close serial port functions
+  - Send data to serial port with automatic newline termination (\r\n)
+  - Send break signal (Ctrl+C) to interrupt commands
+  - Receive data from serial port with callback
+  - Automatic logging to text file in root directory with proper ASCII formatting
+  
+  IMPORTANT CONFIGURATION:
+  - Baud Rate: 115200 (standard rate) - CHANGE if your device uses different rate
+  - COM Port: 16 - CHANGE to match your device
+  
+  FIXED ISSUES:
+  - Commands now sent with \r\n newline termination
+  - Received data saved as proper ASCII strings (not escaped bytes)
+  - Data logged per line for readability
+  - Added Ctrl+C support for continuous commands
+  - Added diagnostic byte output for troubleshooting
+==============================================================================*/
+
+includes
+{
+}
+
+variables
+{
+  // Serial port configuration
+  const dword COM_PORT = 16;              // DEFAULT COM port number
+  const dword BAUD_RATE = 115200;        // Baud rate: 115200 (standard rate)
+  const dword DATA_BITS = 8;             // Number of data bits
+  const dword STOP_BITS = 1;             // Number of stop bits (1 or 2)
+  const dword PARITY = 0;                // Parity: 0=None, 1=Even, 2=Odd
+  
+  // File logging configuration
+  dword gLogFileHandle;                  // File handle for logging
+  char gLogFileName[100] = "SerialComLog.txt";
+  
+  // Serial port state
+  dword gPortOpened;                     // Port status flag
+  
+  // Buffer for data operations
+  const dword BUFFER_SIZE = 5000;
+  byte gReceiveBuffer[256];
+  byte gSendBuffer[256];
+  
+  // Timestamp buffer
+  char gTimeStamp[64];
+}
+
+/*==============================================================================
+  Function: LogToFile
+  Description: Write a message to the log file
+  Parameters: message - String to log
+  Returns: void
+==============================================================================*/
+void LogToFile(char msg[])
+{
+  char logEntry[512];
+  
+  if (gLogFileHandle != 0)
+  {
+    getLocalTimeString(gTimeStamp);
+    snprintf(logEntry, elcount(logEntry), "[%s] %s\n", gTimeStamp, msg);
+    filePutString(logEntry, elcount(logEntry), gLogFileHandle);
+  }
+}
+
+/*==============================================================================
+  Function: InitializeLogger
+  Description: Initialize the log file for serial communication
+  Parameters: None
+  Returns: void
+==============================================================================*/
+void InitializeLogger()
+{
+  char initMessage[200];
+  
+  gLogFileHandle = 0;
+  gPortOpened = 0;
+  
+  // Open log file in append mode (in current directory)
+  gLogFileHandle = openFileWrite(gLogFileName, 2);
+  
+  if (gLogFileHandle != 0)
+  {
+    // Write header to log file
+    getLocalTimeString(gTimeStamp);
+    snprintf(initMessage, elcount(initMessage), 
+             "===========================================\n");
+    filePutString(initMessage, elcount(initMessage), gLogFileHandle);
+    
+    snprintf(initMessage, elcount(initMessage),
+             "Serial COM Logger Started: %s\n", gTimeStamp);
+    filePutString(initMessage, elcount(initMessage), gLogFileHandle);
+    
+    snprintf(initMessage, elcount(initMessage),
+             "Port: COM%d, Baud Rate: %d\n", COM_PORT, BAUD_RATE);
+    filePutString(initMessage, elcount(initMessage), gLogFileHandle);
+    
+    snprintf(initMessage, elcount(initMessage),
+             "===========================================\n");
+    filePutString(initMessage, elcount(initMessage), gLogFileHandle);
+    
+    write("Log file initialized: %s", gLogFileName);
+  }
+  else
+  {
+    write("ERROR: Failed to open log file: %s", gLogFileName);
+  }
+}
+
+/*==============================================================================
+  Function: CloseLogger
+  Description: Close the log file
+  Parameters: None
+  Returns: void
+==============================================================================*/
+void CloseLogger()
+{
+  char logMsg[200];
+  
+  if (gLogFileHandle != 0)
+  {
+    snprintf(logMsg, elcount(logMsg), "Logger closed");
+    LogToFile(logMsg);
+    
+    getLocalTimeString(gTimeStamp);
+    snprintf(logMsg, elcount(logMsg),
+             "===========================================\n");
+    filePutString(logMsg, elcount(logMsg), gLogFileHandle);
+    
+    snprintf(logMsg, elcount(logMsg),
+             "Serial COM Logger Stopped: %s\n", gTimeStamp);
+    filePutString(logMsg, elcount(logMsg), gLogFileHandle);
+    
+    snprintf(logMsg, elcount(logMsg),
+             "===========================================\n\n");
+    filePutString(logMsg, elcount(logMsg), gLogFileHandle);
+    
+    fileClose(gLogFileHandle);
+    gLogFileHandle = 0;
+    write("Log file closed");
+  }
+}
+
+/*==============================================================================
+  Function: SerialPort_Open
+  Description: Opens and configures the serial COM port
+  Parameters: None
+  Returns: 1 = Success, 0 = Failure
+==============================================================================*/
+dword SerialPort_Open()
+{
+  dword result;
+  char logMsg[200];
+  
+  if (gPortOpened == 1)
+  {
+    write("Serial port COM%d is already open", COM_PORT);
+    snprintf(logMsg, elcount(logMsg), 
+             "Attempted to open already opened port COM%d", COM_PORT);
+    LogToFile(logMsg);
+    return 1;
+  }
+  
+  result = RS232Open(COM_PORT);
+  
+  if (result == 1)
+  {
+    write("Serial port COM%d opened successfully", COM_PORT);
+    snprintf(logMsg, elcount(logMsg), "Port COM%d opened successfully", COM_PORT);
+    LogToFile(logMsg);
+    
+    result = RS232Configure(COM_PORT, BAUD_RATE, DATA_BITS, STOP_BITS, PARITY);
+    
+    if (result == 1)
+    {
+      write("Serial port COM%d configured: Baud=%d, Data=%d, Stop=%d, Parity=%d",
+            COM_PORT, BAUD_RATE, DATA_BITS, STOP_BITS, PARITY);
+      snprintf(logMsg, elcount(logMsg),
+               "Port COM%d configured: Baud=%d, Data=%d, Stop=%d, Parity=%d",
+               COM_PORT, BAUD_RATE, DATA_BITS, STOP_BITS, PARITY);
+      LogToFile(logMsg);
+      
+      gPortOpened = 1;
+      return 1;
+    }
+    else
+    {
+      write("ERROR: Failed to configure serial port COM%d", COM_PORT);
+      snprintf(logMsg, elcount(logMsg), 
+               "ERROR: Failed to configure port COM%d", COM_PORT);
+      LogToFile(logMsg);
+      return 0;
+    }
+  }
+  else
+  {
+    write("ERROR: Failed to open serial port COM%d", COM_PORT);
+    write("Please check if the port exists and is not in use");
+    snprintf(logMsg, elcount(logMsg), 
+             "ERROR: Failed to open port COM%d - port may not exist or is in use", 
+             COM_PORT);
+    LogToFile(logMsg);
+    return 0;
+  }
+}
+
+/*==============================================================================
+  Function: SerialPort_Close
+  Description: Closes the serial COM port
+  Parameters: None
+  Returns: 1 = Success, 0 = Failure
+==============================================================================*/
+dword SerialPort_Close()
+{
+  dword result;
+  char logMsg[200];
+  
+  if (gPortOpened == 0)
+  {
+    write("Serial port COM%d is not open", COM_PORT);
+    return 1;
+  }
+  
+  result = RS232Close(COM_PORT);
+  
+  if (result == 1)
+  {
+    write("Serial port COM%d closed successfully", COM_PORT);
+    snprintf(logMsg, elcount(logMsg), "Port COM%d closed successfully", COM_PORT);
+    LogToFile(logMsg);
+    gPortOpened = 0;
+    return 1;
+  }
+  else
+  {
+    write("ERROR: Failed to close serial port COM%d", COM_PORT);
+    snprintf(logMsg, elcount(logMsg), 
+             "ERROR: Failed to close port COM%d", COM_PORT);
+    LogToFile(logMsg);
+    return 0;
+  }
+}
+
+/*==============================================================================
+  Function: SerialPort_Send
+  Description: Send data to the serial port with \r\n line termination
+  Parameters: data - String to send
+              length - Length of data to send
+  Returns: 1 = Success, 0 = Failure
+  
+  NOTE: Automatically appends \r\n to the end of the data
+==============================================================================*/
+dword SerialPort_Send(char data[], dword length)
+{
+  dword result;
+  dword i;
+  dword totalLength;
+  char logMsg[1024];
+  char dataStr[1024];
+  char hexDump[512];  // Moved to top for CAPL compliance
+  
+  if (gPortOpened == 0)
+  {
+    write("ERROR: Cannot send data - serial port is not open");
+    return 0;
+  }
+  
+  // Copy data to buffer
+  for (i = 0; i < length && i < (BUFFER_SIZE - 2); i++)
+  {
+    gSendBuffer[i] = (byte)data[i];
+  }
+  
+  // Append \r\n to the end of the data
+  gSendBuffer[i] = 13;  // \r (Carriage Return)
+  i++;
+  gSendBuffer[i] = 10;  // \n (Line Feed)
+  i++;
+  
+  totalLength = i;
+  
+  result = RS232Send(COM_PORT, gSendBuffer, totalLength);
+  
+  if (result == 1)
+  {
+    write("Data sent successfully: %d bytes (including \\r\\n)", totalLength);
+    
+    // Build readable ASCII string for logging
+    snprintf(dataStr, elcount(dataStr), "");
+    for (i = 0; i < length && i < 512; i++)
+    {
+      if (data[i] >= 32 && data[i] <= 126)
+      {
+        snprintf(dataStr, elcount(dataStr), "%s%c", dataStr, data[i]);
+      }
+      else
+      {
+        snprintf(dataStr, elcount(dataStr), "%s[0x%02X]", dataStr, (byte)data[i]);
+      }
+    }
+    
+    // DIAGNOSTIC: Show actual bytes being sent
+    snprintf(hexDump, elcount(hexDump), "");
+    for (i = 0; i < totalLength && i < 50; i++)
+    {
+      snprintf(hexDump, elcount(hexDump), "%s %02X", hexDump, gSendBuffer[i]);
+    }
+    write("SENT BYTES (hex):%s", hexDump);
+    
+    write("SENT: %s", dataStr);
+    snprintf(logMsg, elcount(logMsg), "SENT: %s", dataStr);
+    LogToFile(logMsg);
+    
+    return 1;
+  }
+  else
+  {
+    write("ERROR: Failed to send data");
+    snprintf(logMsg, elcount(logMsg), "ERROR: Failed to send data");
+    LogToFile(logMsg);
+    return 0;
+  }
+}
+
+/*==============================================================================
+  Function: SerialPort_SendString
+  Description: Send a string to the serial port with automatic \r\n termination
+  Parameters: text - String to send
+  Returns: 1 = Success, 0 = Failure
+==============================================================================*/
+dword SerialPort_SendString(char text[])
+{
+  dword length;
+  length = strlen(text);
+  return SerialPort_Send(text, length);
+}
+
+/*==============================================================================
+  Function: SerialPort_SendBreak
+  Description: Send Ctrl+C (0x03) to interrupt running command
+  Returns: 1 = Success, 0 = Failure
+==============================================================================*/
+dword SerialPort_SendBreak()
+{
+  dword result;
+  char logMsg[200];
+  
+  if (gPortOpened == 0)
+  {
+    write("ERROR: Cannot send break - serial port is not open");
+    return 0;
+  }
+  
+  // Send Ctrl+C character (ASCII 3)
+  gSendBuffer[0] = 3;
+  
+  result = RS232Send(COM_PORT, gSendBuffer, 1);
+  
+  if (result == 1)
+  {
+    write("Break signal (Ctrl+C) sent successfully");
+    snprintf(logMsg, elcount(logMsg), "SENT: Ctrl+C (Break Signal)");
+    LogToFile(logMsg);
+    return 1;
+  }
+  else
+  {
+    write("ERROR: Failed to send break signal");
+    snprintf(logMsg, elcount(logMsg), "ERROR: Failed to send Ctrl+C");
+    LogToFile(logMsg);
+    return 0;
+  }
+}
+
+/*==============================================================================
+  Function: SerialPort_Receive
+  Description: Register to receive data from the serial port
+  Parameters: expectedLength - Expected number of bytes to receive
+  Returns: 1 = Success, 0 = Failure
+==============================================================================*/
+dword SerialPort_Receive(dword expectedLength)
+{
+  dword result;
+  
+  if (gPortOpened == 0)
+  {
+    write("ERROR: Cannot receive data - serial port is not open");
+    return 0;
+  }
+  
+  result = RS232Receive(COM_PORT, gReceiveBuffer, expectedLength);
+  
+  if (result == 1)
+  {
+    write("Receive registered for %d bytes", expectedLength);
+    return 1;
+  }
+  else
+  {
+    write("ERROR: Failed to register receive");
+    return 0;
+  }
+}
+
+/*==============================================================================
+  Callback: RS232OnReceive
+  Description: Callback triggered when data is received
+  
+  FIXED: Now saves received data as proper ASCII strings with actual newlines,
+         not escaped representations. Data is saved line-by-line to log file.
+==============================================================================*/
+RS232OnReceive(dword port, byte buffer[], dword number)
+{
+  char dataAscii[2048];
+  char logLine[2048];
+  dword i;
+  dword lineStart;
+  dword linePos;
+  char currentLine[1024];
+  char hexStr[10];  // Moved to top for CAPL compliance
+  dword j;          // Moved to top for CAPL compliance
+  
+  if (port == COM_PORT)
+  {
+    write("Data received on COM%d: %d bytes", port, number);
+    
+    // Build ASCII representation for console output
+    snprintf(dataAscii, elcount(dataAscii), "");
+    for (i = 0; i < number && i < 1024; i++)
+    {
+      if (buffer[i] >= 32 && buffer[i] <= 126)
+      {
+        snprintf(dataAscii, elcount(dataAscii), "%s%c", dataAscii, buffer[i]);
+      }
+      else if (buffer[i] == 10)  // LF
+      {
+        snprintf(dataAscii, elcount(dataAscii), "%s<LF>", dataAscii);
+      }
+      else if (buffer[i] == 13)  // CR
+      {
+        snprintf(dataAscii, elcount(dataAscii), "%s<CR>", dataAscii);
+      }
+      else if (buffer[i] == 9)   // TAB
+      {
+        snprintf(dataAscii, elcount(dataAscii), "%s<TAB>", dataAscii);
+      }
+      else
+      {
+        snprintf(dataAscii, elcount(dataAscii), "%s[0x%02X]", dataAscii, buffer[i]);
+      }
+    }
+    
+    write("RECV: %s", dataAscii);
+    
+    // Save to log file as actual ASCII text with real newlines
+    // Process data line by line
+    lineStart = 0;
+    linePos = 0;
+    
+    for (i = 0; i < number; i++)
+    {
+      if (buffer[i] == 13)  // Carriage return - skip it
+      {
+        continue;
+      }
+      else if (buffer[i] == 10)  // Line feed - end of line
+      {
+        // Save the current line
+        currentLine[linePos] = 0;  // Null terminate
+        
+        if (linePos > 0)  // Only log non-empty lines
+        {
+          snprintf(logLine, elcount(logLine), "RECV: %s", currentLine);
+          LogToFile(logLine);
+        }
+        
+        // Reset for next line
+        linePos = 0;
+        lineStart = i + 1;
+      }
+      else if (buffer[i] >= 32 && buffer[i] <= 126)  // Printable ASCII
+      {
+        if (linePos < 1023)
+        {
+          currentLine[linePos] = buffer[i];
+          linePos++;
+        }
+      }
+      else if (buffer[i] == 9)  // Tab
+      {
+        if (linePos < 1023)
+        {
+          currentLine[linePos] = '\t';
+          linePos++;
+        }
+      }
+      else  // Non-printable character - represent as hex
+      {
+        snprintf(hexStr, elcount(hexStr), "[0x%02X]", buffer[i]);
+        
+        for (j = 0; j < strlen(hexStr) && linePos < 1023; j++)
+        {
+          currentLine[linePos] = hexStr[j];
+          linePos++;
+        }
+      }
+    }
+    
+    // Log any remaining data that didn't end with newline
+    if (linePos > 0)
+    {
+      currentLine[linePos] = 0;  // Null terminate
+      snprintf(logLine, elcount(logLine), "RECV: %s", currentLine);
+      LogToFile(logLine);
+    }
+    
+    // Re-register to receive more data
+    RS232Receive(COM_PORT, gReceiveBuffer, BUFFER_SIZE);
+  }
+}
+
+/*==============================================================================
+  Callback: RS232OnSend
+  Description: Callback triggered when data is sent
+==============================================================================*/
+RS232OnSend(dword port, byte buffer[], dword number)
+{
+  char logMsg[200];
+  
+  if (port == COM_PORT)
+  {
+    getLocalTimeString(gTimeStamp);
+    write("[%s] Data transmission confirmed: %d bytes", gTimeStamp, number);
+    snprintf(logMsg, elcount(logMsg), "SEND CONFIRMED: %d bytes", number);
+    LogToFile(logMsg);
+  }
+}
+
+/*==============================================================================
+  Callback: RS232OnError
+  Description: Callback triggered on error
+==============================================================================*/
+RS232OnError(dword port, dword errorFlags)
+{
+  char logMsg[200];
+  
+  if (port == COM_PORT)
+  {
+    write("ERROR on COM%d: Error flags = 0x%X", port, errorFlags);
+    
+    if (errorFlags & 1)
+    {
+      write("  - Send error");
+      snprintf(logMsg, elcount(logMsg), "ERROR: Send error (flags=0x%X)", errorFlags);
+      LogToFile(logMsg);
+    }
+    
+    if (errorFlags & 2)
+    {
+      write("  - Receive error");
+      snprintf(logMsg, elcount(logMsg), "ERROR: Receive error (flags=0x%X)", errorFlags);
+      LogToFile(logMsg);
+    }
+    
+    if (errorFlags & 4)
+    {
+      write("  - Configuration error");
+      snprintf(logMsg, elcount(logMsg), "ERROR: Configuration error (flags=0x%X)", errorFlags);
+      LogToFile(logMsg);
+    }
+  }
+}
+
+/*==============================================================================
+  Test Function: Setup_SerialComLogger
+==============================================================================*/
+export testfunction Setup_SerialComLogger()
+{
+  InitializeLogger();
+  write("SerialComLogger Setup Complete");
+  write("========================================");
+  write("IMPORTANT: Current Configuration:");
+  write("  COM Port: COM%d", COM_PORT);
+  write("  Baud Rate: %d", BAUD_RATE);
+  write("========================================");
+  write("Functions available:");
+  write("  - SerialPort_Open()");
+  write("  - SerialPort_Close()");
+  write("  - SerialPort_SendString(text)  [Automatically adds \\r\\n]");
+  write("  - SerialPort_SendBreak()  [Sends Ctrl+C]");
+  write("  - SerialPort_Receive(length)");
+  write("========================================");
+  write("Test Cases available:");
+  write("  - TC_SerialPort_Open()");
+  write("  - TC_SerialPort_Close()");
+  write("  - TC_SerialPort_SendData()");
+  write("  - TC_SerialPort_SendAndReceive(command, waitMs)");
+  write("  - TC_SerialPort_ContinuousMonitor(command, monitorMs)");
+  write("========================================");
+  write("Example for 'top' command:");
+  write("  TC_SerialPort_ContinuousMonitor(\"top\", 10000)");
+  write("========================================");
+  write("Logging to: %s", gLogFileName);
+}
+
+/*==============================================================================
+  Test Function: Teardown_SerialComLogger
+==============================================================================*/
+export testfunction Teardown_SerialComLogger()
+{
+  if (gPortOpened == 1)
+  {
+    SerialPort_Close();
+  }
+  
+  CloseLogger();
+  write("SerialComLogger Teardown Complete");
+}
+
+/*==============================================================================
+  Test Case: TC_SerialPort_OpenClose
+==============================================================================*/
+export testcase TC_SerialPort_Open()
+{
+  dword result;
+  
+  write("Test Case: Open and Close Serial Port");
+  
+  result = SerialPort_Open();
+  if (result == 1)
+  {
+    write("  PASS: Port opened successfully");
+  }
+  else
+  {
+    write("  FAIL: Port failed to open");
+  }
+  
+  testWaitForTimeout(100);
+}
+
+export testcase TC_SerialPort_Close()
+{
+  dword result;
+  result = SerialPort_Close();
+  if (result == 1)
+  {
+    write("  PASS: Port closed successfully");
+  }
+  else
+  {
+    write("  FAIL: Port failed to close");
+  }
+}
+
+/*==============================================================================
+  Test Case: TC_SerialPort_SendData
+  
+  NOTE: This test case now properly:
+  1. Opens the port
+  2. Registers receive callback BEFORE sending
+  3. Sends the command
+  4. Waits for response
+  5. Closes the port
+==============================================================================*/
+export testcase TC_SerialPort_SendData()
+{
+  dword result;
+  char testData[50] = "top -z 40 -t 10"; // Get CPU load
+  
+  write("Test Case: Send Data and Receive Response");
+  
+  result = SerialPort_Open();
+  if (result != 1)
+  {
+    write("  FAIL: Could not open port");
+    return;
+  }
+  
+  // CRITICAL: Register receive callback BEFORE sending command
+  result = SerialPort_Receive(BUFFER_SIZE);
+  if (result != 1)
+  {
+    write("  FAIL: Could not register receive");
+    SerialPort_Close();
+    return;
+  }
+  
+  write("  Receive callback registered, sending command...");
+  
+  result = SerialPort_SendString(testData);
+  if (result == 1)
+  {
+    write("  PASS: Data sent successfully");
+    write("  Waiting for response (5 seconds)...");
+  }
+  else
+  {
+    write("  FAIL: Failed to send data");
+    SerialPort_Close();
+    return;
+  }
+  
+  // Wait for response data (5 seconds)
+  testWaitForTimeout(5000);
+  
+  SerialPort_Close();
+  write("  Test complete - check log file for received data");
+}
+
+/*==============================================================================
+  Test Case: TC_SerialPort_ReceiveData
+==============================================================================*/
+export testcase TC_SerialPort_ReceiveData(int wait)
+{
+  dword result;
+  
+  write("Test Case: Receive Data");
+  
+  result = SerialPort_Open();
+  if (result != 1)
+  {
+    write("  FAIL: Could not open port");
+    return;
+  }
+  
+  result = SerialPort_Receive(BUFFER_SIZE);
+  if (result == 1)
+  {
+    write("  PASS: Receive registered");
+    write("  Waiting for data...");
+  }
+  else
+  {
+    write("  FAIL: Failed to register receive");
+  }
+  
+  testWaitForTimeout(wait);
+  
+  SerialPort_Close();
+}
+
+/*==============================================================================
+  Test Case: TC_SerialPort_SendAndReceive
+  Description: Combined test that sends a command and receives the response
+  
+  This is the RECOMMENDED test case for interactive serial communication:
+  1. Opens port
+  2. Registers receive callback
+  3. Sends command with automatic \r\n termination
+  4. Waits for multi-line response
+  5. Logs all received data line-by-line
+  6. Closes port
+==============================================================================*/
+export testcase TC_SerialPort_SendAndReceive(char command[], int waitMs)
+{
+  dword result;
+  
+  write("==================================================");
+  write("Test Case: Send Command and Receive Response");
+  write("Command: %s", command);
+  write("==================================================");
+  
+  // Step 1: Open the serial port
+  result = SerialPort_Open();
+  if (result != 1)
+  {
+    write("  FAIL: Could not open port");
+    return;
+  }
+  
+  // Step 2: Register receive callback BEFORE sending
+  write("  Registering receive callback...");
+  result = SerialPort_Receive(BUFFER_SIZE);
+  if (result != 1)
+  {
+    write("  FAIL: Could not register receive");
+    SerialPort_Close();
+    return;
+  }
+  
+  write("  PASS: Receive callback registered");
+  
+  // Step 3: Send the command (will automatically append \r\n)
+  write("  Sending command: %s", command);
+  result = SerialPort_SendString(command);
+  if (result != 1)
+  {
+    write("  FAIL: Failed to send command");
+    SerialPort_Close();
+    return;
+  }
+  
+  write("  PASS: Command sent with \\r\\n termination");
+  
+  // Step 4: Wait for response
+  write("  Waiting %d ms for response...", waitMs);
+  testWaitForTimeout(waitMs);
+  
+  // Step 5: Close the port
+  SerialPort_Close();
+  
+  write("==================================================");
+  write("  Test complete - check SerialComLog.txt for data");
+  write("==================================================");
+}
+
+/*==============================================================================
+  Test Case: TC_SerialPort_ContinuousMonitor
+  Description: Test for continuous monitoring commands (like 'top')
+  
+  This test case:
+  1. Opens port
+  2. Registers receive callback
+  3. Sends monitoring command
+  4. Collects data for specified duration
+  5. Sends Ctrl+C to stop the command
+  6. Waits briefly for final output
+  7. Closes port
+  
+  Usage example:
+    TC_SerialPort_ContinuousMonitor("top", 10000)  // Monitor for 10 seconds
+==============================================================================*/
+export testcase TC_SerialPort_ContinuousMonitor(char command[], int monitorMs)
+{
+  dword result;
+  
+  write("==================================================");
+  write("Test Case: Continuous Monitoring Command");
+  write("Command: %s", command);
+  write("Duration: %d ms", monitorMs);
+  write("==================================================");
+  
+  // Step 1: Open the serial port
+  result = SerialPort_Open();
+  if (result != 1)
+  {
+    write("  FAIL: Could not open port");
+    return;
+  }
+  
+  // Step 2: Register receive callback
+  write("  Registering receive callback...");
+  result = SerialPort_Receive(BUFFER_SIZE);
+  if (result != 1)
+  {
+    write("  FAIL: Could not register receive");
+    SerialPort_Close();
+    return;
+  }
+  
+  write("  PASS: Receive callback registered");
+  
+  // Step 3: Send the monitoring command
+  write("  Sending command: %s", command);
+  result = SerialPort_SendString(command);
+  if (result != 1)
+  {
+    write("  FAIL: Failed to send command");
+    SerialPort_Close();
+    return;
+  }
+  
+  write("  PASS: Command sent");
+  write("  Monitoring for %d ms...", monitorMs);
+  
+  // Step 4: Wait and collect data
+  testWaitForTimeout(monitorMs);
+  
+  // Step 5: Send Ctrl+C to stop the command
+  write("  Sending Ctrl+C to stop command...");
+  result = SerialPort_SendBreak();
+  if (result != 1)
+  {
+    write("  WARNING: Failed to send break signal");
+  }
+  else
+  {
+    write("  PASS: Break signal sent");
+  }
+  
+  // Step 6: Wait for final output
+  write("  Waiting for final output...");
+  testWaitForTimeout(1000);
+  
+  // Step 7: Close the port
+  SerialPort_Close();
+  
+  write("==================================================");
+  write("  Test complete - check SerialComLog.txt for data");
+  write("==================================================");
+}
