@@ -10,7 +10,7 @@ import os
 import threading
 import time
 from pathlib import Path
-from typing import TYPE_CHECKING, Callable, Optional, Union
+from typing import TYPE_CHECKING, Callable, List, Optional, Union
 
 if TYPE_CHECKING:
     import cv2 as _cv2_type
@@ -283,3 +283,48 @@ class CameraInterface:
     def is_streaming(self) -> bool:
         """True if background streaming is active."""
         return self._streaming
+
+    # ------------------------------------------------------------------
+    # Device discovery
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def list_available_cameras(max_index: int = 10) -> List[int]:
+        """Probe camera device indices and return those that can be opened.
+
+        Scans indices ``0`` through ``max_index - 1``.  Scanning stops early
+        when three consecutive indices fail to open to avoid long waits on
+        systems with only a few cameras.
+
+        Args:
+            max_index: Highest device index to try (exclusive).
+
+        Returns:
+            Sorted list of integer device indices where a camera was found.
+            Returns an empty list when ``cv2`` is not installed.
+        """
+        if not _CV2_AVAILABLE:
+            logger.warning("list_available_cameras: cv2 not available.")
+            return []
+
+        found: List[int] = []
+        consecutive_misses = 0
+        for idx in range(max_index):
+            try:
+                cap = _cv2.VideoCapture(idx)  # type: ignore[attr-defined]
+                if cap.isOpened():
+                    found.append(idx)
+                    cap.release()
+                    consecutive_misses = 0
+                else:
+                    cap.release()
+                    consecutive_misses += 1
+                    if consecutive_misses >= 3:
+                        break
+            except Exception:
+                consecutive_misses += 1
+                if consecutive_misses >= 3:
+                    break
+
+        logger.info("Available camera indices: %s", found)
+        return found

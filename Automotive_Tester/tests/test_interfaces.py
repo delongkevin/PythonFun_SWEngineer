@@ -378,6 +378,96 @@ class TestTrace32Interface(unittest.TestCase):
             os.unlink(cfg_path)
             os.unlink(exe_path)
 
+    # ------------------------------------------------------------------
+    # _resolve_t32_exe
+    # ------------------------------------------------------------------
+
+    def test_resolve_t32_exe_uses_configured_exe(self) -> None:
+        import tempfile
+        with tempfile.NamedTemporaryFile(suffix=".exe", delete=False) as tf:
+            exe_path = tf.name
+        try:
+            t32 = Trace32Interface(t32_exe=exe_path)
+            self.assertEqual(t32._resolve_t32_exe(), exe_path)
+        finally:
+            os.unlink(exe_path)
+
+    def test_resolve_t32_exe_returns_none_when_not_windows_and_no_exe(self) -> None:
+        with patch("interfaces.trace32_interface.platform.system", return_value="Linux"):
+            t32 = Trace32Interface()
+            self.assertIsNone(t32._resolve_t32_exe())
+
+    # ------------------------------------------------------------------
+    # run_cmm subprocess fallback
+    # ------------------------------------------------------------------
+
+    def test_run_cmm_subprocess_fallback_when_not_connected(self) -> None:
+        """run_cmm uses subprocess when not connected via RCL."""
+        import tempfile
+        with tempfile.NamedTemporaryFile(suffix=".cmm", delete=False) as tf:
+            tf.write(b"; test\n")
+            cmm_path = tf.name
+        with tempfile.NamedTemporaryFile(suffix=".exe", delete=False) as ef:
+            exe_path = ef.name
+        try:
+            t32 = Trace32Interface(t32_exe=exe_path)
+            mock_proc = MagicMock()
+            mock_proc.communicate.return_value = (b"", b"")
+            mock_proc.returncode = 0
+            with patch("interfaces.trace32_interface.subprocess.Popen",
+                       return_value=mock_proc) as mock_popen:
+                result = t32.run_cmm(cmm_path)
+            self.assertTrue(result)
+            # Verify it was called with the -s flag
+            call_args = mock_popen.call_args[0][0]
+            self.assertIn("-s", call_args)
+            self.assertIn(cmm_path, call_args)
+        finally:
+            os.unlink(cmm_path)
+            os.unlink(exe_path)
+
+    def test_run_cmm_subprocess_nonzero_returncode_returns_false(self) -> None:
+        """run_cmm subprocess returns False when T32 exits with non-zero rc."""
+        import tempfile
+        with tempfile.NamedTemporaryFile(suffix=".cmm", delete=False) as tf:
+            tf.write(b"; test\n")
+            cmm_path = tf.name
+        with tempfile.NamedTemporaryFile(suffix=".exe", delete=False) as ef:
+            exe_path = ef.name
+        try:
+            t32 = Trace32Interface(t32_exe=exe_path)
+            mock_proc = MagicMock()
+            mock_proc.communicate.return_value = (b"", b"error")
+            mock_proc.returncode = 1
+            with patch("interfaces.trace32_interface.subprocess.Popen",
+                       return_value=mock_proc):
+                result = t32.run_cmm(cmm_path)
+            self.assertFalse(result)
+        finally:
+            os.unlink(cmm_path)
+            os.unlink(exe_path)
+
+    def test_run_cmm_subprocess_no_exe_returns_false(self) -> None:
+        """run_cmm returns False when not connected and no exe is configured."""
+        import tempfile
+        with tempfile.NamedTemporaryFile(suffix=".cmm", delete=False) as tf:
+            tf.write(b"; test\n")
+            cmm_path = tf.name
+        try:
+            t32 = Trace32Interface()   # no t32_exe set
+            with patch("interfaces.trace32_interface.platform.system",
+                       return_value="Linux"):
+                result = t32.run_cmm(cmm_path)
+            self.assertFalse(result)
+        finally:
+            os.unlink(cmm_path)
+
+    def test_run_cmm_file_missing_returns_false_immediately(self) -> None:
+        """run_cmm returns False immediately when CMM file does not exist."""
+        t32 = Trace32Interface(t32_exe="/fake/t32.exe")
+        result = t32.run_cmm("/no/such/file.cmm")
+        self.assertFalse(result)
+
 
 # ===========================================================================
 # Power Supply
@@ -610,6 +700,32 @@ class TestCameraInterface(unittest.TestCase):
             cam.disconnect()
             self.assertFalse(cam.is_streaming)
             self.assertFalse(cam.is_connected)
+
+    def test_list_available_cameras_returns_indices(self) -> None:
+        """list_available_cameras returns indices of cameras that open."""
+        cap = self._make_cap_mock()
+        p1, p2 = self._cv2_patches(cap)
+        with p1, p2:
+            indices = CameraInterface.list_available_cameras(max_index=3)
+        # The mock cap always reports isOpened=True, so all 3 indices found
+        self.assertEqual(indices, [0, 1, 2])
+
+    def test_list_available_cameras_cv2_unavailable(self) -> None:
+        """list_available_cameras returns [] when cv2 is not installed."""
+        import interfaces.camera_interface as cam_mod
+        with patch.object(cam_mod, "_CV2_AVAILABLE", False):
+            indices = CameraInterface.list_available_cameras(max_index=5)
+        self.assertEqual(indices, [])
+
+    def test_list_available_cameras_stops_on_consecutive_misses(self) -> None:
+        """Scanning stops after 3 consecutive failed indices."""
+        bad_cap = MagicMock()
+        bad_cap.isOpened.return_value = False
+        p1, p2 = self._cv2_patches(bad_cap)
+        with p1, p2:
+            indices = CameraInterface.list_available_cameras(max_index=10)
+        # 3 consecutive misses at 0,1,2 → stops early, nothing found
+        self.assertEqual(indices, [])
 
 
 # ===========================================================================

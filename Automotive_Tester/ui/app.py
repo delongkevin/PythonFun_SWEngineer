@@ -456,6 +456,77 @@ class AutomotiveTesterApp:
                 ent.pack(side=tk.LEFT, padx=8)
                 self.config_vars[key] = var
 
+        # ── Camera Source Scanner ─────────────────────────────────────────────
+        cam_scan_frame = tk.LabelFrame(
+            inner, text=" 🎥 Camera Source Scanner ",
+            bg=COLORS["bg"], fg=COLORS["accent"],
+            font=("Consolas", 11, "bold"),
+        )
+        cam_scan_frame.pack(fill=tk.X, padx=16, pady=8)
+
+        cam_scan_row = tk.Frame(cam_scan_frame, bg=COLORS["bg"])
+        cam_scan_row.pack(fill=tk.X, padx=12, pady=6)
+
+        tk.Label(
+            cam_scan_row, text="Available Cameras:", bg=COLORS["bg"],
+            fg=COLORS["text"], font=("Consolas", 10),
+        ).pack(side=tk.LEFT)
+
+        self._cam_source_combo = ttk.Combobox(
+            cam_scan_row, values=["Click 'Scan' to detect cameras"],
+            width=34, font=("Consolas", 10), state="readonly",
+        )
+        self._cam_source_combo.set("Click 'Scan' to detect cameras")
+        self._cam_source_combo.pack(side=tk.LEFT, padx=8)
+
+        def _cam_source_selected(event=None):
+            val = self._cam_source_combo.get()
+            # Value format: "Index 0 – <description>" or "Index 0"
+            try:
+                idx = int(val.split()[1])
+                self.config_vars["cam_index"].set(str(idx))
+            except (IndexError, ValueError):
+                pass
+
+        self._cam_source_combo.bind("<<ComboboxSelected>>", _cam_source_selected)
+
+        def _scan_cameras():
+            self._cam_source_combo.set("Scanning…")
+            self._cam_source_combo.configure(state="disabled")
+
+            def _bg():
+                indices = CameraInterface.list_available_cameras(max_index=10)
+                if indices:
+                    entries = [f"Index {i}" for i in indices]
+                else:
+                    entries = ["No cameras found"]
+
+                def _update():
+                    self._cam_source_combo.configure(
+                        values=entries, state="readonly"
+                    )
+                    self._cam_source_combo.set(entries[0])
+                    if entries[0] != "No cameras found":
+                        _cam_source_selected()
+
+                self.root.after(0, _update)
+
+            threading.Thread(target=_bg, daemon=True).start()
+
+        tk.Button(
+            cam_scan_row, text="🔍 Scan Cameras",
+            command=_scan_cameras,
+            bg=COLORS["surface2"], fg=COLORS["info"],
+            font=("Consolas", 10), relief=tk.FLAT, padx=12, cursor="hand2",
+        ).pack(side=tk.LEFT, padx=4)
+
+        self._cam_scan_status = tk.Label(
+            cam_scan_frame, text="",
+            bg=COLORS["bg"], fg=COLORS["text_dim"],
+            font=("Consolas", 9), wraplength=600, justify=tk.LEFT,
+        )
+        self._cam_scan_status.pack(fill=tk.X, padx=12, pady=(0, 4))
+
         # Serial Ports section
         serial_frame = tk.LabelFrame(inner, text=" 🔗 Serial Terminal Ports (up to 4) ",
                                      bg=COLORS["bg"], fg=COLORS["accent"],
