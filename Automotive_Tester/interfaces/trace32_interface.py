@@ -201,28 +201,138 @@ class Trace32Interface:
     def run_cmm(self, path: str) -> bool:
         """Execute a CMM script on the connected Trace32 instance.
 
+        When connected via RCL the script is executed through the remote API.
+        If the RCL connection is not available but a T32 executable is
+        configured (or auto-detected), the script is executed by launching the
+        T32 executable directly with the ``-s`` flag so the CMM script takes
+        full control — all paths, flashing logic, etc. are handled inside the
+        script itself.  64-bit ``t32marm64.exe`` is tried first; the tool
+        falls back to 32-bit ``t32marm.exe`` when the 64-bit binary is not
+        found (mirrors the approach used by the Magna CPU-Load tool).
+
         Args:
             path: Absolute or relative path to the .cmm file.
 
         Returns:
             True if the script ran without reported errors, False otherwise.
         """
-        if not self._connected or self._dbg is None:
-            logger.error("run_cmm called but Trace32 is not connected.")
-            return False
         if not os.path.isfile(path):
             logger.error("CMM script not found: %s", path)
             return False
-        try:
-            self._dbg.cmm(path)
-            error = self.get_error()
-            if error:
-                logger.error("CMM script reported error: %s", error)
+
+        if self._connected and self._dbg is not None:
+            # Primary path: use the RCL API.
+            try:
+                self._dbg.cmm(path)
+                error = self.get_error()
+                if error:
+                    logger.error("CMM script reported error: %s", error)
+                    return False
+                logger.info("CMM script completed successfully: %s", path)
+                return True
+            except Exception as exc:
+                logger.error("CMM script execution exception: %s", exc)
                 return False
-            logger.info("CMM script completed successfully: %s", path)
-            return True
+
+        # Fallback: launch T32 with -s <script> so the CMM script takes full control.
+        return self._run_cmm_subprocess(path)
+
+    def _resolve_t32_exe(self) -> Optional[str]:
+        """Return the T32 executable path to use for subprocess invocation.
+
+        Preference order:
+
+        1. ``self.t32_exe`` when set and the file exists.
+        2. Auto-scan ``C:\\T32`` and ``D:\\T32`` on Windows, preferring the
+           64-bit binary (``t32marm64.exe``) before the 32-bit one
+           (``t32marm.exe``).
+
+        Returns:
+            Absolute path string, or ``None`` when no executable is found.
+        """
+        if self.t32_exe and os.path.isfile(self.t32_exe):
+            return self.t32_exe
+
+        if platform.system() != "Windows":
+            return None
+
+        for drive in _DEFAULT_INSTALL_DRIVES:
+            install_dir = f"{drive}:\\{_DEFAULT_INSTALL_ROOT}"
+            if not os.path.isdir(install_dir):
+                continue
+            for bin_sub in _BIN_SUBDIRS:
+                bin_dir = os.path.join(install_dir, bin_sub)
+                if not os.path.isdir(bin_dir):
+                    continue
+                for exe in _EXE_CANDIDATES:
+                    candidate = os.path.join(bin_dir, exe)
+                    if os.path.isfile(candidate):
+                        logger.info("Resolved T32 exe (auto-detect): %s", candidate)
+                        return candidate
+        return None
+
+    def _run_cmm_subprocess(self, path: str, timeout: float = 120.0) -> bool:
+        """Launch the T32 executable with *path* as the startup script (``-s`` flag).
+
+        This mirrors the approach used by the Magna CPU-Load tool:
+        ``subprocess.Popen([t32_exe, "-s", cmm_path], ...)``.
+
+        Args:
+            path:    Absolute path to the ``.cmm`` script.
+            timeout: Seconds to wait for the process to finish before
+                     forcibly terminating it.
+
+        Returns:
+            ``True`` when the process exits with return-code 0, ``False``
+            otherwise.
+        """
+        exe = self._resolve_t32_exe()
+        if not exe:
+            logger.error(
+                "run_cmm: Trace32 is not connected and no T32 executable is "
+                "configured – set t32_exe or use detect_installation()."
+            )
+            return False
+
+        cmd = [exe, "-s", path]
+        logger.info("Launching T32 with CMM script (subprocess): %s", " ".join(cmd))
+        try:
+            proc = subprocess.Popen(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+            )
+            try:
+                _stdout, stderr = proc.communicate(timeout=timeout)
+                rc = proc.returncode
+                if stderr:
+                    logger.debug(
+                        "T32 subprocess stderr: %s",
+                        stderr.decode("utf-8", errors="replace"),
+                    )
+                if rc == 0:
+                    logger.info(
+                        "CMM script completed (subprocess, rc=0): %s", path
+                    )
+                    return True
+                logger.warning(
+                    "CMM script subprocess exited with rc=%d: %s", rc, path
+                )
+                return False
+            except subprocess.TimeoutExpired:
+                logger.error(
+                    "T32 subprocess timed out after %.0fs for script: %s",
+                    timeout,
+                    path,
+                )
+                proc.kill()
+                try:
+                    proc.communicate()
+                except Exception:
+                    pass
+                return False
         except Exception as exc:
-            logger.error("CMM script execution exception: %s", exc)
+            logger.error("T32 subprocess launch failed: %s", exc)
             return False
 
     # ------------------------------------------------------------------
