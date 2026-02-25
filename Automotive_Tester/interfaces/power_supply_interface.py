@@ -52,18 +52,45 @@ class PowerSupplyInterface:
     def __init__(self) -> None:
         self._serial: Optional[serial.Serial] = None
         self._port: str = ""
+        self._baud: int = 9600
         self._connected: bool = False
+
+    # ------------------------------------------------------------------
+    # Port / baud properties
+    # ------------------------------------------------------------------
+
+    @property
+    def port(self) -> str:
+        """Serial port name (e.g. 'COM3')."""
+        return self._port
+
+    @port.setter
+    def port(self, value: str) -> None:
+        self._port = value
+
+    @property
+    def baud(self) -> int:
+        """Baud rate for the serial connection."""
+        return self._baud
+
+    @baud.setter
+    def baud(self, value: int) -> None:
+        self._baud = int(value)
 
     # ------------------------------------------------------------------
     # Connection lifecycle
     # ------------------------------------------------------------------
 
-    def connect(self, port: str, baud: int = 9600, timeout: float = 2.0) -> bool:
+    def connect(self, port: str = "", baud: Optional[int] = None, timeout: float = 2.0) -> bool:
         """Open a serial connection to the power supply.
+
+        If *port* is omitted (or empty), the last-stored :attr:`port` value is
+        used.  If *baud* is ``None``, the last-stored :attr:`baud` value is used.
 
         Args:
             port:    Serial port name, e.g. 'COM3' or '/dev/ttyUSB0'.
-            baud:    Baud rate (default 9600 for 1687b).
+            baud:    Baud rate (default 9600 for 1687b).  Pass ``None`` to reuse
+                     the previously configured baud rate.
             timeout: Read timeout in seconds.
 
         Returns:
@@ -72,21 +99,27 @@ class PowerSupplyInterface:
         if not _SERIAL_AVAILABLE:
             logger.error("pyserial is not installed – cannot connect to power supply.")
             return False
+        conn_port = port or self._port
+        conn_baud = baud if baud is not None else self._baud
+        if not conn_port:
+            logger.error("Power supply connect: no port specified.")
+            return False
         try:
             self._serial = serial.Serial(
-                port=port,
-                baudrate=baud,
+                port=conn_port,
+                baudrate=conn_baud,
                 bytesize=serial.EIGHTBITS,
                 parity=serial.PARITY_NONE,
                 stopbits=serial.STOPBITS_ONE,
                 timeout=timeout,
             )
-            self._port = port
+            self._port = conn_port
+            self._baud = conn_baud
             self._connected = True
-            logger.info("Power supply connected on %s @ %d baud.", port, baud)
+            logger.info("Power supply connected on %s @ %d baud.", conn_port, conn_baud)
             return True
         except Exception as exc:
-            logger.error("Power supply connect failed on %s: %s", port, exc)
+            logger.error("Power supply connect failed on %s: %s", conn_port, exc)
             self._connected = False
             return False
 
@@ -217,3 +250,44 @@ class PowerSupplyInterface:
     def is_connected(self) -> bool:
         """True if the serial port is currently open."""
         return self._connected and self._serial is not None and self._serial.is_open
+
+    # ------------------------------------------------------------------
+    # Convenience wrappers
+    # ------------------------------------------------------------------
+
+    def measure_voltage(self) -> Optional[float]:
+        """Read actual output voltage in volts."""
+        return self._query_float(_CMD_VOLTAGE_READ)
+
+    def measure_current(self) -> Optional[float]:
+        """Read actual output current in amperes."""
+        return self._query_float(_CMD_CURRENT_READ)
+
+    def power_cycle(self, off_time: float = 2.0) -> None:
+        """Turn output off, wait *off_time* seconds, then turn it back on.
+
+        Args:
+            off_time: Duration in seconds to keep the output off.
+        """
+        self.output_off()
+        time.sleep(off_time)
+        self.output_on()
+        logger.info("Power cycled (off for %.1f s).", off_time)
+
+    def refresh_connection(self) -> bool:
+        """Disconnect then reconnect to release and re-acquire the serial port.
+
+        Useful when another process was holding the port, or after a USB
+        cable re-seat.  The previously configured :attr:`port` and
+        :attr:`baud` are reused.
+
+        Returns:
+            True if the reconnection succeeded, False otherwise.
+        """
+        if self._connected:
+            self.disconnect()
+        time.sleep(0.5)
+        if not self._port:
+            logger.warning("refresh_connection: no port configured.")
+            return False
+        return self.connect(self._port, baud=self._baud)

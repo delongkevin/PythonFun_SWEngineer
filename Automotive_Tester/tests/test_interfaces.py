@@ -448,6 +448,68 @@ class TestPowerSupplyInterface(unittest.TestCase):
         ps.disconnect()
         self.assertFalse(ps._connected)
 
+    def test_port_baud_properties(self) -> None:
+        ps = PowerSupplyInterface()
+        ps.port = "COM5"
+        ps.baud = 115200
+        self.assertEqual(ps.port, "COM5")
+        self.assertEqual(ps.baud, 115200)
+
+    def test_connect_uses_stored_port(self) -> None:
+        ps = PowerSupplyInterface()
+        ps.port = "COM3"
+        mock_ser = MagicMock()
+        mock_ser.is_open = True
+        with patch("interfaces.power_supply_interface.serial.Serial", return_value=mock_ser) as m:
+            ps.connect()
+        m.assert_called_once()
+        call_kwargs = m.call_args[1]
+        self.assertEqual(call_kwargs["port"], "COM3")
+
+    def test_connect_no_port_returns_false(self) -> None:
+        ps = PowerSupplyInterface()
+        self.assertFalse(ps.connect())
+
+    def test_measure_voltage(self) -> None:
+        ps = self._connected_ps()
+        ps._serial.in_waiting = 8
+        ps._serial.readline.return_value = b"12.050\r\n"
+        v = ps.measure_voltage()
+        self.assertAlmostEqual(v, 12.05)
+
+    def test_measure_current(self) -> None:
+        ps = self._connected_ps()
+        ps._serial.in_waiting = 8
+        ps._serial.readline.return_value = b"1.500\r\n"
+        i = ps.measure_current()
+        self.assertAlmostEqual(i, 1.5)
+
+    def test_power_cycle(self) -> None:
+        ps = self._connected_ps()
+        with patch("interfaces.power_supply_interface.time.sleep") as mock_sleep:
+            ps.power_cycle(off_time=0.01)
+        calls = [c[0][0] for c in mock_sleep.call_args_list]
+        self.assertIn(0.01, calls)
+
+    def test_refresh_connection_reconnects(self) -> None:
+        ps = PowerSupplyInterface()
+        ps.port = "COM3"
+        mock_ser = MagicMock()
+        mock_ser.is_open = True
+        with patch("interfaces.power_supply_interface.serial.Serial", return_value=mock_ser):
+            ps.connect("COM3")
+        with patch("interfaces.power_supply_interface.serial.Serial", return_value=mock_ser):
+            with patch("interfaces.power_supply_interface.time.sleep"):
+                ok = ps.refresh_connection()
+        self.assertTrue(ok)
+        self.assertTrue(ps.is_connected)
+
+    def test_refresh_connection_no_port(self) -> None:
+        ps = PowerSupplyInterface()
+        with patch("interfaces.power_supply_interface.time.sleep"):
+            result = ps.refresh_connection()
+        self.assertFalse(result)
+
 
 # ===========================================================================
 # Camera
