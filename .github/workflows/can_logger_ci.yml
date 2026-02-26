@@ -1,0 +1,140 @@
+name: CAN Logger GUI CI/CD
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'CAN_Logger/**'
+      - '.github/workflows/can_logger_ci.yml'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'CAN_Logger/**'
+      - '.github/workflows/can_logger_ci.yml'
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint (flake8)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install flake8
+        run: pip install flake8
+
+      - name: Run flake8
+        run: |
+          flake8 CAN_Logger/can_logger_gui \
+            --max-line-length=120 \
+            --extend-ignore=E501,E127
+
+  test:
+    name: Unit Tests (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    needs: lint
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        working-directory: CAN_Logger
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas numpy matplotlib pytest
+
+      - name: Run unit tests
+        working-directory: CAN_Logger
+        run: |
+          python -m pytest tests/ -v --tb=short --junitxml=test-results.xml
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-py${{ matrix.python-version }}
+          path: CAN_Logger/test-results.xml
+
+  headless-cli-smoke:
+    name: CLI smoke test (headless)
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install pandas numpy matplotlib
+
+      - name: Smoke-test CLI --stats
+        working-directory: CAN_Logger
+        run: |
+          python -m can_logger_gui.cli tests/fixtures/sample.asc --stats
+
+      - name: Smoke-test CLI --csv export
+        working-directory: CAN_Logger
+        run: |
+          python -m can_logger_gui.cli tests/fixtures/sample.asc \
+            --csv /tmp/can_smoke_test.csv
+          test -f /tmp/can_smoke_test.csv
+          echo "CSV export OK"
+
+      - name: Smoke-test CLI --report export
+        working-directory: CAN_Logger
+        run: |
+          python -m can_logger_gui.cli tests/fixtures/sample.asc \
+            --report /tmp/can_smoke_report.html
+          test -f /tmp/can_smoke_report.html
+          echo "HTML report export OK"
+
+  build-package:
+    name: Build Distribution Package
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install build tools
+        run: pip install build
+
+      - name: Build wheel & sdist
+        working-directory: CAN_Logger
+        run: python -m build --outdir dist/
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: can-logger-gui-dist
+          path: CAN_Logger/dist/
+          retention-days: 30

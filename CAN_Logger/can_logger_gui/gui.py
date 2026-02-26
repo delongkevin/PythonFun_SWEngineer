@@ -1,6 +1,5 @@
 """Full-featured tkinter GUI for CAN log visualisation."""
 
-import sys
 import os
 import io
 import base64
@@ -389,10 +388,12 @@ class CANLogAnalyzerApp:
         try:
             df = log_parser.parse_log(file_path)
             self.root.after(0, lambda: self._on_parse_complete(df, file_path))
-        except FileNotFoundError as exc:
-            self.root.after(0, lambda: self._on_parse_error(str(exc)))
-        except Exception as exc:
-            self.root.after(0, lambda: self._on_parse_error(str(exc)))
+        except FileNotFoundError as err:
+            msg = str(err)
+            self.root.after(0, lambda: self._on_parse_error(msg))
+        except Exception as err:
+            msg = str(err)
+            self.root.after(0, lambda: self._on_parse_error(msg))
 
     def _on_parse_complete(self, df: pd.DataFrame, file_path: str) -> None:
         self._progress.stop()

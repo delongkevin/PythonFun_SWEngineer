@@ -1,8 +1,6 @@
 """CLI entry point for headless CAN log analysis."""
 
 import argparse
-import sys
-import os
 
 
 def main() -> None:

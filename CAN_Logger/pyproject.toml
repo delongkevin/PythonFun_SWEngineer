@@ -19,3 +19,7 @@ can-logger-gui = "can_logger_gui.cli:main"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["can_logger_gui*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
