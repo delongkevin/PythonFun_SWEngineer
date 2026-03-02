@@ -29,8 +29,10 @@ import numpy as np
 
 from . import parser as log_parser
 from . import analytics
+from . import __version__ as _GUI_VERSION
 
 _MAX_TREE_ROWS = 10_000
+_MAX_SIGNAL_ROWS = 20_000
 
 
 # ---------------------------------------------------------------------------
@@ -134,11 +136,13 @@ class CANLogAnalyzerApp:
 
     def __init__(self, root: tk.Tk):
         self.root = root
-        self.root.title("CAN Log Analyzer v0.1.0")
+        self.root.title(f"CAN Log Analyzer v{_GUI_VERSION}")
         self.root.geometry("1400x900")
 
         self.df: pd.DataFrame = None        # full parsed DataFrame
         self.df_filtered: pd.DataFrame = None  # filtered view
+        self._dbc_db = None                 # loaded DBC/CDD database (cantools)
+        self._signals_df: pd.DataFrame = None  # decoded signals DataFrame
 
         # Sorting state for Frames treeview
         self._sort_col: str = ""
@@ -167,9 +171,15 @@ class CANLogAnalyzerApp:
         toolbar.pack(side=tk.TOP, fill=tk.X)
 
         ttk.Button(toolbar, text="📂 Load File", command=self.load_file).pack(side=tk.LEFT, padx=2)
+        ttk.Button(toolbar, text="📋 Load DBC/CDD", command=self.load_dbc_file).pack(side=tk.LEFT, padx=2)
         ttk.Button(toolbar, text="💾 Export CSV", command=self.export_csv).pack(side=tk.LEFT, padx=2)
         ttk.Button(toolbar, text="📄 Export JSON", command=self.export_json).pack(side=tk.LEFT, padx=2)
         ttk.Button(toolbar, text="🌐 Export HTML Report", command=self.export_html_report).pack(side=tk.LEFT, padx=2)
+
+        # DBC/CDD status label
+        self._dbc_status_var = tk.StringVar(value="No DBC/CDD loaded")
+        ttk.Label(toolbar, textvariable=self._dbc_status_var,
+                  foreground="gray").pack(side=tk.LEFT, padx=(16, 2))
 
     def _build_summary_bar(self) -> None:
         bar = ttk.Frame(self.root, padding=(6, 2))
@@ -230,12 +240,17 @@ class CANLogAnalyzerApp:
         self._notebook.add(frames_tab, text="Frames")
         self._build_frames_tab(frames_tab)
 
-        # Tab 2 – Rate Plot
+        # Tab 2 – Signals (DBC/CDD decoded)
+        signals_tab = ttk.Frame(self._notebook)
+        self._notebook.add(signals_tab, text="Signals")
+        self._build_signals_tab(signals_tab)
+
+        # Tab 3 – Rate Plot
         rate_tab = ttk.Frame(self._notebook)
         self._notebook.add(rate_tab, text="Rate Plot")
         self._build_rate_plot_tab(rate_tab)
 
-        # Tab 3 – Byte Analysis
+        # Tab 4 – Byte Analysis
         byte_tab = ttk.Frame(self._notebook)
         self._notebook.add(byte_tab, text="Byte Analysis")
         self._build_byte_analysis_tab(byte_tab)
@@ -271,6 +286,51 @@ class CANLogAnalyzerApp:
         self._tree.grid(row=0, column=0, sticky="nsew")
         vsb.grid(row=0, column=1, sticky="ns")
         hsb.grid(row=1, column=0, sticky="ew")
+        tree_frame.rowconfigure(0, weight=1)
+        tree_frame.columnconfigure(0, weight=1)
+
+    def _build_signals_tab(self, parent: ttk.Frame) -> None:
+        """Build the Signals tab for DBC/CDD-decoded signal values."""
+        info_frame = ttk.Frame(parent)
+        info_frame.pack(fill=tk.X, padx=4, pady=2)
+
+        self._signals_count_var = tk.StringVar(value="Load a DBC/CDD file to decode signals.")
+        ttk.Label(info_frame, textvariable=self._signals_count_var).pack(side=tk.LEFT)
+
+        # Signal filter controls
+        ctrl_frame = ttk.Frame(parent)
+        ctrl_frame.pack(fill=tk.X, padx=4, pady=2)
+
+        ttk.Label(ctrl_frame, text="Filter by Signal:").pack(side=tk.LEFT)
+        self._sig_filter_var = tk.StringVar()
+        sig_entry = ttk.Entry(ctrl_frame, textvariable=self._sig_filter_var, width=20)
+        sig_entry.pack(side=tk.LEFT, padx=4)
+        sig_entry.bind("<Return>", lambda _e: self._populate_signals_tab())
+        ttk.Button(ctrl_frame, text="Apply",
+                   command=self._populate_signals_tab).pack(side=tk.LEFT, padx=2)
+        ttk.Button(ctrl_frame, text="Clear",
+                   command=self._clear_signal_filter).pack(side=tk.LEFT, padx=2)
+
+        tree_frame = ttk.Frame(parent)
+        tree_frame.pack(fill=tk.BOTH, expand=True)
+
+        sig_cols = ("#", "Timestamp", "CAN ID", "Signal Name", "Signal Value", "Unit")
+        self._sig_tree = ttk.Treeview(tree_frame, columns=sig_cols, show="headings",
+                                      selectmode="browse")
+        col_widths = {"#": 55, "Timestamp": 110, "CAN ID": 70,
+                      "Signal Name": 180, "Signal Value": 120, "Unit": 80}
+        for col in sig_cols:
+            self._sig_tree.heading(col, text=col)
+            self._sig_tree.column(col, width=col_widths.get(col, 80),
+                                  minwidth=30, anchor=tk.CENTER)
+
+        svsb = ttk.Scrollbar(tree_frame, orient=tk.VERTICAL, command=self._sig_tree.yview)
+        shsb = ttk.Scrollbar(tree_frame, orient=tk.HORIZONTAL, command=self._sig_tree.xview)
+        self._sig_tree.configure(yscrollcommand=svsb.set, xscrollcommand=shsb.set)
+
+        self._sig_tree.grid(row=0, column=0, sticky="nsew")
+        svsb.grid(row=0, column=1, sticky="ns")
+        shsb.grid(row=1, column=0, sticky="ew")
         tree_frame.rowconfigure(0, weight=1)
         tree_frame.columnconfigure(0, weight=1)
 
@@ -384,6 +444,51 @@ class CANLogAnalyzerApp:
         t = threading.Thread(target=self._parse_thread, args=(file_path,), daemon=True)
         t.start()
 
+    def load_dbc_file(self, db_path: str = None) -> None:
+        """Load a DBC or CDD signal database file."""
+        if db_path is None:
+            db_path = filedialog.askopenfilename(
+                title="Open DBC/CDD signal database",
+                filetypes=[("Signal database files", "*.dbc *.cdd"),
+                           ("DBC files", "*.dbc"),
+                           ("CDD files", "*.cdd"),
+                           ("All files", "*.*")],
+            )
+        if not db_path:
+            return
+
+        self._status_var.set(f"Loading database: {os.path.basename(db_path)} …")
+        self._progress.start(10)
+        t = threading.Thread(target=self._load_dbc_thread, args=(db_path,), daemon=True)
+        t.start()
+
+    def _load_dbc_thread(self, db_path: str) -> None:
+        try:
+            db = log_parser.load_database(db_path)
+            self.root.after(0, lambda: self._on_dbc_loaded(db, db_path))
+        except Exception as err:
+            msg = str(err)
+            self.root.after(0, lambda: self._on_dbc_error(msg))
+
+    def _on_dbc_loaded(self, db, db_path: str) -> None:
+        self._progress.stop()
+        self._dbc_db = db
+        n_msgs = len(db.messages) if hasattr(db, "messages") else "?"
+        self._dbc_status_var.set(
+            f"DB: {os.path.basename(db_path)} ({n_msgs} msgs)"
+        )
+        self._status_var.set(
+            f"Loaded database: {os.path.basename(db_path)} – {n_msgs} messages defined"
+        )
+        # Re-decode signals if a log is already loaded
+        if self.df is not None:
+            self._decode_and_populate_signals()
+
+    def _on_dbc_error(self, msg: str) -> None:
+        self._progress.stop()
+        self._status_var.set(f"Database error: {msg}")
+        messagebox.showerror("Database Load Error", msg)
+
     def _parse_thread(self, file_path: str) -> None:
         try:
             df = log_parser.parse_log(file_path)
@@ -407,6 +512,9 @@ class CANLogAnalyzerApp:
         self._populate_rate_id_listbox()
         self._update_rate_plot()
         self._populate_byte_id_combo()
+        # Decode signals if a database is already loaded
+        if self._dbc_db is not None:
+            self._decode_and_populate_signals()
 
     def _on_parse_error(self, msg: str) -> None:
         self._progress.stop()
@@ -491,8 +599,7 @@ class CANLogAnalyzerApp:
 
     def _populate_frames_tab(self) -> None:
         # Clear existing rows
-        for item in self._tree.get_children():
-            self._tree.delete(item)
+        self._tree.delete(*self._tree.get_children())
 
         df = self.df_filtered
         if df is None or df.empty:
@@ -514,22 +621,21 @@ class CANLogAnalyzerApp:
                 return "—"
             return f"{int(val):02X}"
 
+        # Build all rows as a list and insert in one pass for speed
+        byte_cols = [f"byte{i}" for i in range(8)]
+        rows_data = []
         for idx, row in display_df.iterrows():
             values = (
                 idx + 1,
                 f"{row['timestamp_sec']:.6f}",
                 row["can_id"],
                 int(row["dlc"]) if pd.notna(row["dlc"]) else "—",
-                _fmt_byte(row["byte0"]),
-                _fmt_byte(row["byte1"]),
-                _fmt_byte(row["byte2"]),
-                _fmt_byte(row["byte3"]),
-                _fmt_byte(row["byte4"]),
-                _fmt_byte(row["byte5"]),
-                _fmt_byte(row["byte6"]),
-                _fmt_byte(row["byte7"]),
+                *(_fmt_byte(row[c]) for c in byte_cols),
                 row["hex_data"],
             )
+            rows_data.append(values)
+
+        for values in rows_data:
             self._tree.insert("", tk.END, values=values)
 
     def _treeview_sort_column(self, col: str) -> None:
@@ -555,6 +661,81 @@ class CANLogAnalyzerApp:
                 df_col, ascending=not reverse, kind="stable"
             ).reset_index(drop=True)
             self._populate_frames_tab()
+
+    # ------------------------------------------------------------------
+    # Signals Tab
+    # ------------------------------------------------------------------
+
+    def _decode_and_populate_signals(self) -> None:
+        """Decode signals from the current DataFrame using the loaded DB."""
+        if self.df is None or self._dbc_db is None:
+            return
+        self._status_var.set("Decoding signals …")
+        self._progress.start(10)
+        db = self._dbc_db
+        df = self.df
+
+        def _worker():
+            try:
+                signals_df = log_parser.decode_signals(df, db)
+                self.root.after(0, lambda: self._on_signals_decoded(signals_df))
+            except Exception as err:
+                msg = str(err)
+                self.root.after(0, lambda: self._on_parse_error(msg))
+
+        threading.Thread(target=_worker, daemon=True).start()
+
+    def _on_signals_decoded(self, signals_df: pd.DataFrame) -> None:
+        self._progress.stop()
+        self._signals_df = signals_df
+        self._populate_signals_tab()
+        self._status_var.set(
+            f"Decoded {len(signals_df):,} signal values from {signals_df['signal_name'].nunique()} signals"
+            if not signals_df.empty else "No signals decoded (no matching CAN IDs in database)"
+        )
+
+    def _populate_signals_tab(self) -> None:
+        """Fill the Signals treeview from self._signals_df."""
+        self._sig_tree.delete(*self._sig_tree.get_children())
+
+        if self._signals_df is None or self._signals_df.empty:
+            self._signals_count_var.set(
+                "No signals decoded. Load a DBC/CDD file and a CAN log."
+            )
+            return
+
+        df = self._signals_df
+
+        # Apply signal name filter
+        flt = self._sig_filter_var.get().strip()
+        if flt:
+            df = df[df["signal_name"].str.contains(flt, case=False, na=False)]
+
+        total = len(df)
+        display_df = df.head(_MAX_SIGNAL_ROWS)
+
+        if total > _MAX_SIGNAL_ROWS:
+            self._signals_count_var.set(
+                f"Showing first {_MAX_SIGNAL_ROWS:,} of {total:,} decoded values."
+            )
+        else:
+            self._signals_count_var.set(f"Total: {total:,} decoded signal values.")
+
+        for i, (_, row) in enumerate(display_df.iterrows(), start=1):
+            val = row["signal_value"]
+            val_str = f"{val:.4g}" if isinstance(val, float) else str(val)
+            self._sig_tree.insert("", tk.END, values=(
+                i,
+                f"{row['timestamp_sec']:.6f}",
+                row["can_id"],
+                row["signal_name"],
+                val_str,
+                row["unit"],
+            ))
+
+    def _clear_signal_filter(self) -> None:
+        self._sig_filter_var.set("")
+        self._populate_signals_tab()
 
     # ------------------------------------------------------------------
     # Rate Plot Tab
