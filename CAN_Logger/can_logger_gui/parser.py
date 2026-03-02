@@ -14,6 +14,12 @@ if _PARSER_DIR not in sys.path:
 
 from CAN_log_parser import RXMessageParser  # noqa: E402
 
+try:
+    import cantools
+    _CANTOOLS_OK = True
+except ImportError:
+    _CANTOOLS_OK = False
+
 COLUMNS = [
     "timestamp_raw",
     "timestamp_sec",
@@ -25,6 +31,102 @@ COLUMNS = [
     "channel",
     "line_number",
 ]
+
+
+def load_database(db_path: str):
+    """Load a DBC or CDD signal database via cantools.
+
+    Parameters
+    ----------
+    db_path : str
+        Path to a ``.dbc`` or ``.cdd`` file.
+
+    Returns
+    -------
+    cantools.database.can.Database or None
+        The loaded database, or ``None`` when cantools is unavailable.
+
+    Raises
+    ------
+    FileNotFoundError
+        If *db_path* does not exist.
+    cantools.database.UnsupportedDatabaseFormatError
+        If the file format is not recognised.
+    """
+    if not _CANTOOLS_OK:
+        raise ImportError("cantools is not installed; cannot load DBC/CDD files.")
+    if not os.path.exists(db_path):
+        raise FileNotFoundError(f"Database file not found: {db_path}")
+    return cantools.database.load_file(db_path)
+
+
+def decode_signals(df: pd.DataFrame, db) -> pd.DataFrame:
+    """Decode CAN signals for every row in *df* using *db*.
+
+    Each decoded signal produces one row in the returned DataFrame which has
+    columns: ``timestamp_sec``, ``can_id``, ``signal_name``, ``signal_value``,
+    ``unit``.  Rows for messages not present in the database are silently
+    skipped.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        Parsed CAN log DataFrame as returned by :func:`parse_log`.
+    db : cantools.database.can.Database
+        Loaded signal database.
+
+    Returns
+    -------
+    pd.DataFrame
+    """
+    if df is None or df.empty or db is None:
+        return pd.DataFrame(columns=["timestamp_sec", "can_id",
+                                     "signal_name", "signal_value", "unit"])
+
+    rows = []
+    for _, row in df.iterrows():
+        # Convert hex CAN ID to integer for lookup
+        try:
+            frame_id = int(row["can_id"], 16)
+        except (ValueError, TypeError):
+            continue
+
+        try:
+            msg_def = db.get_message_by_frame_id(frame_id)
+        except KeyError:
+            continue
+
+        # Build payload bytes from byte columns
+        payload = bytes(
+            int(row[f"byte{i}"])
+            for i in range(min(int(row["dlc"]) if pd.notna(row["dlc"]) else 0, 8))
+            if pd.notna(row.get(f"byte{i}"))
+        )
+        if len(payload) < msg_def.length:
+            payload = payload.ljust(msg_def.length, b'\x00')
+
+        try:
+            decoded = msg_def.decode(payload, decode_choices=False)
+        except Exception:
+            continue
+
+        for sig_name, sig_val in decoded.items():
+            unit = ""
+            try:
+                sig_def = msg_def.get_signal_by_name(sig_name)
+                unit = sig_def.unit or ""
+            except Exception:
+                pass
+            rows.append({
+                "timestamp_sec": row["timestamp_sec"],
+                "can_id": row["can_id"],
+                "signal_name": sig_name,
+                "signal_value": sig_val,
+                "unit": unit,
+            })
+
+    return pd.DataFrame(rows, columns=["timestamp_sec", "can_id",
+                                       "signal_name", "signal_value", "unit"])
 
 
 def parse_log(file_path: str) -> pd.DataFrame:
