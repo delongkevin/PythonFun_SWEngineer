@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_00044.xsd">
-  <AR-PACKAGES>
-    <AR-PACKAGE UUID="48212cc4-8ccd-45cd-b70d-36bbe068fa0b">
-      <SHORT-NAME>TI_J7</SHORT-NAME>
-    </AR-PACKAGE>
-  </AR-PACKAGES>
-</AUTOSAR>

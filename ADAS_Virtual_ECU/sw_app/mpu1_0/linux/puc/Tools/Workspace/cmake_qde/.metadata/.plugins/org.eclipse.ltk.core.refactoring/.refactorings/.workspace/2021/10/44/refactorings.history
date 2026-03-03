@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Delete resource &apos;puc_app/code/Apps/TIOVXIntgr/tiovx&apos;" deleteContents="false" description="Delete resource &apos;puc_app/code/Apps/TIOVXIntgr/tiovx&apos;" element1="/puc_app/code/Apps/TIOVXIntgr/tiovx" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1635182618446"/>
-</session>

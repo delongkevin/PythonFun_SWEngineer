@@ -1,3 +1,0 @@
-D:/L2H4060_Software/sw/binary/bookshelf/magna_apps/trsc//obj/j721s2/mcu2_1/release/./algo/_sharedutils/linsearch_u32f.oer5f: \
-  algo\_sharedutils\linsearch_u32f.c algo\_sharedutils\rtwtypes.h \
-  algo\_sharedutils\linsearch_u32f.h

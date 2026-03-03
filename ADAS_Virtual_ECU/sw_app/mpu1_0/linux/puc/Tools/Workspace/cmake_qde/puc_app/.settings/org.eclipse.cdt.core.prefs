@@ -1,9 +1,0 @@
-eclipse.preferences.version=1
-environment/project/com.qnx.qcc.toolChain.1931481089/DEBUG_DIR/delimiter=;
-environment/project/com.qnx.qcc.toolChain.1931481089/DEBUG_DIR/operation=replace
-environment/project/com.qnx.qcc.toolChain.1931481089/DEBUG_DIR/value=${CWD}/../../../App/build/libs/qnx/debug
-environment/project/com.qnx.qcc.toolChain.1931481089/RELEASE_DIR/delimiter=;
-environment/project/com.qnx.qcc.toolChain.1931481089/RELEASE_DIR/operation=replace
-environment/project/com.qnx.qcc.toolChain.1931481089/RELEASE_DIR/value=${working_dir}/../../../App/build/libs/qnx/release/
-environment/project/com.qnx.qcc.toolChain.1931481089/append=true
-environment/project/com.qnx.qcc.toolChain.1931481089/appendContributed=true
