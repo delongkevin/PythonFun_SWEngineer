@@ -1,0 +1,117 @@
+Release 3.09
+    Radial shading settings are updated;
+    Pink sun compensation algorithm is integrated;
+    Anti Flicker (50/60 hertz)  is integrated;
+    minor updates of AE and ISP settings for night conditions with AE in the experimental mode;
+    95% of the project is checked on MISRA rules (The QAC application shows some strange behavior, which does not allow us to complete check. I will provide a detailed description of the problem on Monday).
+    Dump bayers from config is integrated.
+Release 3.10
+    Anti Flicker (50/60 hertz) is fixed.
+Release 3.12
+    Anti Flicker exposure algorithm is fixed.
+    Sinter threshold for low spatial frequencies is decreased.
+    Sharpness algorithm is switched to old by default. (Vehicle test shows that "old" algorithm with parameters: Sharp_Str_d = 0, Sharp_Str_ud = 176, provides more visual sharpness than "new" algorithm)
+    LTM settings are improved for experimental mode.
+    Saturation LUT is improved for experimental mode.
+    Known Issues:
+        1. AWB flickering at sun sunset and dawn with street lights conditions.
+        2. Black rings on lamps in low light conditions due to HDR stitching in sensor.
+Release 3.13
+    Brightness jump at switching moment between night/day mode is fixed.
+    AWB flickering at sun sunset and dawn with street lights conditions is fixed.
+    Known Issues:
+        1. Black rings on lamps in low light conditions due to HDR stitching in sensor.
+Release 3.14
+    Disable display gamma correction for machine vision mode.
+    Known Issues:
+        1. Black rings on lamps in low light conditions due to HDR stitching in sensor.
+Release 3.15
+    Bayers dump service is fixed.
+    Oscillations in antiflicker exposure algorithm is fixed.
+    Adaptive calculation of threshold for AE statistics is added.
+    Known Issues:
+        1. Black rings on lamps in low light conditions due to HDR stitching in sensor.
+Release 3.16
+    Enable display gamma correction for machine vision mode.
+    Workaround for sensor register setup is added.
+    Embedded data check of each written parameter is added.
+    Embedded data usage is implemented in AWB algorithm.
+    Known Issues:
+        1. Black rings on lamps in low light conditions due to HDR stitching in sensor.
+Release 3.17
+    Radial shading configuration is updated.
+    Sharpness algorithm, which was added in 3.16 release, is turned off for MV mode.
+    Known Issues:
+        1. Black rings on lamps in low light conditions due to HDR stitching in sensor.
+Release 3.18
+    Block write of AWB registers is added.
+    Improvement of AE in experimental mode is added.
+    Synchronize write of ISP and sensor parameters from AWB is implemented.
+    Improvement of AWB evening conditions is added.
+    The Algorithm for saturation calculation is improved.
+    Known Issues:
+        1. Black rings on lamps in low light conditions due to HDR stitching in sensor.
+Release 3.19
+    Bug at average brightness calculation in experimental mode is fixed.
+    Known Issues:
+        1. Black rings on lamps in low light conditions due to HDR stitching in sensor.
+Release 3.20
+    Bug in synchronization write of awb gains in sensor and ccm is fixed.
+    Bug in the saturation algorithm is fixed.
+    Bug in the sharpness algorithm is fixed.
+    AE limitation of FPS switch is removed based on updates from QNX.
+    Unit tests are added.
+    Known Issues:
+        1. Black rings on lamps in low light conditions due to HDR stitching in sensor.
+Release 3.21
+    AntiFog histogram from ISP is turned off because not used.
+    Known Issues:
+        1. Black rings on lamps in low light conditions due to HDR stitching in sensor.
+Release 3.22
+    Non-homogeneous saturation level is fixed.
+    AWB algorithm is improved.
+    LTM brightness fluctuations are reduced.
+    Algorithm for DBLC control is developed.
+    Known Issues:
+        1. Black rings on lamps in low light conditions due to HDR stitching in sensor.
+Release 3.23
+    Red is to red issue (ticket 10242181) is fixed.
+    The color space conversion matrix (rgb2yuv) is set to bt601 full range standard.
+    Known Issues:
+        1. Black rings on lamps in low light conditions due to HDR stitching in sensor.
+Release 3.25
+    AR0147 support is added.
+    Known Issues:
+        1. Night mode for AR0147 is disables.
+        2. Sensor temparature is flickering in embedded data.
+        3. Stitching artefact is visible at high lux outdoor scenes.
+        4. Y offset is 4 rather than 0.
+Release 3.26
+    HDR stitching artefact is fixed
+    Night mode for AR0147 is supported
+    Y offset limitation is fixed(removed)
+    Known Issues:
+        1. Sensor temparature is flickering in embedded data.
+        2. Bottom line artefact is visible with T4 higher than mimnial value
+        3. Night mode analog gain is limited 2x maximum (not the best visibility on dark scenes, less than ar143)
+Release 3.30
+    Night mode visibility improvement for ar0147
+    AWB calibration is improved
+    Sensor embedded statistic is integrated
+    Indoor/parking/shadow visibility is improved
+    Bottom line artefact is fixed
+    Known Issues:
+        1. Sensor temparature is flickering in embedded data.
+        2. HDR-stitch one frame flick when CIT is changed
+        3. Brightness flicker at 15fps due to small CIT step in this mode
+        4. Bad HDR-Stitching if Analog gain = 2x. The issue is observed on bright objects in dark scenes.
+        5. Night mode green line issue (DBLC).
+Release 3.31
+    Add visibility improvement for ar0233
+    AWB calibration is improved
+    Sensor embedded statistic is integrated
+    Indoor/parking/shadow visibility is improved
+    Known Issues:
+        1. One frame flicker at switching between day and night mode.
+        2. Asynchronous delay of sensor registers setup between cameras.
+        3. Black rings around light objects at night.

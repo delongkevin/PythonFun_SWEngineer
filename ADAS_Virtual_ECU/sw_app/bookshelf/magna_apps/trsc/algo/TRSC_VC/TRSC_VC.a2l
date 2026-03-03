@@ -1,0 +1,2913 @@
+/******************************************************************************
+ *
+ *  ASAP2 file:     TRSC_VC.a2l
+ *
+ * Code generation for model "TRSC_VC".
+ *
+ * Model version              : 1.7705
+ * Simulink Coder version : 9.2 (R2019b) 18-Jul-2019
+ * C source code generated on : Thu Nov 13 09:52:03 2025
+ * 
+ * Target selection: ert.tlc
+ * Embedded hardware selection: ARM Compatible->ARM Cortex
+ * Code generation objectives: 
+ *    1. MISRA C:2012 guidelines
+ *    2. RAM efficiency
+ *    3. ROM efficiency
+ * Validation result: Not run
+ *
+ * (add additional file header information here)
+ *
+ ******************************************************************************/
+
+ASAP2_VERSION  1 31   /* Version 1.31 */
+
+/begin PROJECT ProjectName "Project Comment Goes Here"
+  
+  /begin HEADER "Header Comments go here"
+    
+  /end HEADER
+  
+  
+  /begin MODULE ModuleName  "Module Comment Goes Here"
+    
+    /begin MOD_PAR "MOD PAR Comment Goes Here"
+      
+    /end MOD_PAR
+    
+    /begin MOD_COMMON  "Mod Common Comment Here" 
+      BYTE_ORDER     MSB_LAST
+    /end MOD_COMMON
+    
+    /begin RECORD_LAYOUT Scalar_BOOLEAN
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_UBYTE
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_BYTE
+      FNC_VALUES  1 SBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_UWORD
+      FNC_VALUES  1 UWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_SWORD
+      FNC_VALUES 1 SWORD COLUMN_DIR DIRECT
+    /end RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_ULONG
+      FNC_VALUES  1 ULONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_LONG
+      FNC_VALUES  1 SLONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_FLOAT32_IEEE
+      FNC_VALUES  1 FLOAT32_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_FLOAT64_IEEE
+      FNC_VALUES  1 FLOAT64_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    
+    /begin RECORD_LAYOUT Lookup1D_BOOLEAN
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_BOOLEAN
+      AXIS_PTS_X  1 UBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_BYTE
+      FNC_VALUES  1 SBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_BYTE
+      AXIS_PTS_X  1 SBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_UBYTE
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_UBYTE
+      AXIS_PTS_X  1 UBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_UWORD
+      FNC_VALUES  1 UWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_UWORD
+      AXIS_PTS_X  1 UWORD INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_WORD
+      FNC_VALUES  1 SWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_WORD
+      AXIS_PTS_X  1 SWORD INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_ULONG
+      FNC_VALUES  1 ULONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_ULONG
+      AXIS_PTS_X  1 ULONG INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_SLONG
+      FNC_VALUES  1 SLONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_LONG
+      AXIS_PTS_X  1 SLONG INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_FLOAT32_IEEE
+      FNC_VALUES  1 FLOAT32_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_FLOAT32_IEEE
+      AXIS_PTS_X  1 FLOAT32_IEEE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_FLOAT64_IEEE
+      FNC_VALUES  1 FLOAT64_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_FLOAT64_IEEE
+      AXIS_PTS_X  1 FLOAT64_IEEE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_BOOLEAN
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_BOOLEAN
+      AXIS_PTS_X  1 UBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT    
+    
+    /begin RECORD_LAYOUT Lookup2D_UBYTE
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_UBYTE
+      AXIS_PTS_X  1 UBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_BYTE
+      FNC_VALUES  1 SBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_BYTE
+      AXIS_PTS_X  1 SBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_UWORD
+      FNC_VALUES  1 UWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_UWORD
+      AXIS_PTS_X  1 UWORD INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_WORD
+      FNC_VALUES  1 SWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_WORD
+      AXIS_PTS_X  1 SWORD INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_ULONG
+      FNC_VALUES  1 ULONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_ULONG
+      AXIS_PTS_X  1 ULONG INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_LONG
+      FNC_VALUES  1 SLONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_LONG
+      AXIS_PTS_X  1 SLONG INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_FLOAT32_IEEE
+      FNC_VALUES  1 FLOAT32_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_FLOAT32_IEEE
+      AXIS_PTS_X 1 FLOAT32_IEEE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_FLOAT64_IEEE
+      FNC_VALUES  1  FLOAT64_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_FLOAT64_IEEE
+      AXIS_PTS_X 1 FLOAT64_IEEE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    
+    /begin CHARACTERISTIC      
+      /* Name                   */      KeTRSC_pct_TrlrAngScaleDwnPct
+      /* Long Identifier        */      "Percentage to scale down KnobAngle based on TBL"
+      /* Characteristic Type    */      CURVE
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_pct_TrlrAngScaleDwnPct@ */
+      /* Record Layout          */      Lookup1D_FLOAT32_IEEE
+      /* Maxdiff                */      0
+      /* Conversion Method      */      TRSC_VC_CM_single
+      /* Lower Limit            */      -3.4E+38
+      /* Upper Limit            */      3.4E+38
+      /begin AXIS_DESCR                 
+        /* Description of X-Axis Points */
+        /* Axis Type            */      COM_AXIS
+        /* Reference to Input   */      NO_INPUT_QUANTITY
+        /* Conversion Method    */      TRSC_VC_CM_single
+        /* Number of Axis Pts   */      4
+        /* Lower Limit          */      -3.4E+38
+        /* Upper Limit          */      3.4E+38
+        AXIS_PTS_REF                    KeTRSC_m_DesAnglScaleTBLThr
+      /end AXIS_DESCR
+    /end CHARACTERISTIC
+    
+    /begin AXIS_PTS
+      /* Name                   */      KeTRSC_m_DesAnglScaleTBLThr
+      /* Long Identifier        */      "Desired Trlr Angle TBL Threshold"
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_m_DesAnglScaleTBLThr@ */
+      /* Input Quantity         */      NO_INPUT_QUANTITY
+      /* Record Layout          */      Lookup1D_X_FLOAT32_IEEE
+      /* Maximum Difference     */      0
+      /* Conversion Method      */      TRSC_VC_CM_single
+      /* Number of Axis Pts     */      4
+      /* Lower Limit            */      -3.4E+38
+      /* Upper Limit            */      3.4E+38
+    /end AXIS_PTS
+    
+    /begin CHARACTERISTIC      
+      /* Name                   */      KaTRA_k_PGainLUTTblData
+      /* Long Identifier        */      "Table Data for P-Gain LookUp Table "
+      /* Characteristic Type    */      MAP
+      /* ECU Address            */      0x0000 /* @ECU_Address@KaTRA_k_PGainLUTTblData@ */
+      /* Record Layout          */      Lookup2D_FLOAT32_IEEE
+      /* Maxdiff                */      0
+      /* Conversion Method      */      TRSC_VC_CM_single
+      /* Lower Limit            */      -3.4E+38
+      /* Upper Limit            */      3.4E+38
+      /begin AXIS_DESCR                 
+        /* Description of Y-Axis Points */
+        /* Axis Type            */      COM_AXIS
+        /* Reference to Input   */      NO_INPUT_QUANTITY
+        /* Conversion Method    */      TRSC_VC_CM_single_m
+        /* Number of Axis Pts   */      2
+        /* Lower Limit          */      -3.4E+38
+        /* Upper Limit          */      3.4E+38
+        AXIS_PTS_REF                    KaTRA_m_PGainLUTYBrkPts
+      /end AXIS_DESCR
+      /begin AXIS_DESCR                 
+        /* Description of X-Axis Points */
+        /* Axis Type            */      COM_AXIS
+        /* Reference to Input   */      NO_INPUT_QUANTITY
+        /* Conversion Method    */      TRSC_VC_CM_single_mps
+        /* Number of Axis Pts   */      2
+        /* Lower Limit          */      -3.4E+38
+        /* Upper Limit          */      3.4E+38
+        AXIS_PTS_REF                    KaTRA_v_PGainLUTXBrkPts
+      /end AXIS_DESCR
+    /end CHARACTERISTIC
+    
+    /begin AXIS_PTS
+      /* Name                   */      KaTRA_v_PGainLUTXBrkPts
+      /* Long Identifier        */      "X-Breakpoints for P-Gain LookUp Table "
+      /* ECU Address            */      0x0000 /* @ECU_Address@KaTRA_v_PGainLUTXBrkPts@ */
+      /* Input Quantity         */      NO_INPUT_QUANTITY
+      /* Record Layout          */      Lookup2D_X_FLOAT32_IEEE
+      /* Maximum Difference     */      0
+      /* Conversion Method      */      TRSC_VC_CM_single_mps
+      /* Number of Axis Pts     */      2
+      /* Lower Limit            */      -3.4E+38
+      /* Upper Limit            */      3.4E+38
+    /end AXIS_PTS
+    
+    /begin AXIS_PTS
+      /* Name                   */      KaTRA_m_PGainLUTYBrkPts
+      /* Long Identifier        */      "Y-Breakpoints for P-Gain LookUp Table "
+      /* ECU Address            */      0x0000 /* @ECU_Address@KaTRA_m_PGainLUTYBrkPts@ */
+      /* Input Quantity         */      NO_INPUT_QUANTITY
+      /* Record Layout          */      Lookup2D_X_FLOAT32_IEEE
+      /* Maximum Difference     */      0
+      /* Conversion Method      */      TRSC_VC_CM_single_m
+      /* Number of Axis Pts     */      2
+      /* Lower Limit            */      -3.4E+38
+      /* Upper Limit            */      3.4E+38
+    /end AXIS_PTS
+    
+    /begin CHARACTERISTIC      
+      /* Name                   */      KaTRSC_k_PGainLUTTDTyp1
+      /* Long Identifier        */      "Table Data for P Gain LookUp Table "
+      /* Characteristic Type    */      MAP
+      /* ECU Address            */      0x0000 /* @ECU_Address@KaTRSC_k_PGainLUTTDTyp1@ */
+      /* Record Layout          */      Lookup2D_FLOAT32_IEEE
+      /* Maxdiff                */      0
+      /* Conversion Method      */      TRSC_VC_CM_single
+      /* Lower Limit            */      -3.4E+38
+      /* Upper Limit            */      3.4E+38
+      /begin AXIS_DESCR                 
+        /* Description of Y-Axis Points */
+        /* Axis Type            */      COM_AXIS
+        /* Reference to Input   */      NO_INPUT_QUANTITY
+        /* Conversion Method    */      TRSC_VC_CM_single
+        /* Number of Axis Pts   */      5
+        /* Lower Limit          */      -3.4E+38
+        /* Upper Limit          */      3.4E+38
+        AXIS_PTS_REF                    KaTRSC_deg_PGainLUTYBPTyp1
+      /end AXIS_DESCR
+      /begin AXIS_DESCR                 
+        /* Description of X-Axis Points */
+        /* Axis Type            */      COM_AXIS
+        /* Reference to Input   */      NO_INPUT_QUANTITY
+        /* Conversion Method    */      TRSC_VC_CM_single
+        /* Number of Axis Pts   */      4
+        /* Lower Limit          */      -3.4E+38
+        /* Upper Limit          */      3.4E+38
+        AXIS_PTS_REF                    KaTRSC_kph_PGainLUTXBPTyp1
+      /end AXIS_DESCR
+    /end CHARACTERISTIC
+    
+    /begin AXIS_PTS
+      /* Name                   */      KaTRSC_kph_PGainLUTXBPTyp1
+      /* Long Identifier        */      "X Breakpoints for P Gain LookUp Table "
+      /* ECU Address            */      0x0000 /* @ECU_Address@KaTRSC_kph_PGainLUTXBPTyp1@ */
+      /* Input Quantity         */      NO_INPUT_QUANTITY
+      /* Record Layout          */      Lookup2D_X_FLOAT32_IEEE
+      /* Maximum Difference     */      0
+      /* Conversion Method      */      TRSC_VC_CM_single
+      /* Number of Axis Pts     */      4
+      /* Lower Limit            */      -3.4E+38
+      /* Upper Limit            */      3.4E+38
+    /end AXIS_PTS
+    
+    /begin AXIS_PTS
+      /* Name                   */      KaTRSC_deg_PGainLUTYBPTyp1
+      /* Long Identifier        */      "Y Breakpoints for P Gain LookUp Table "
+      /* ECU Address            */      0x0000 /* @ECU_Address@KaTRSC_deg_PGainLUTYBPTyp1@ */
+      /* Input Quantity         */      NO_INPUT_QUANTITY
+      /* Record Layout          */      Lookup2D_X_FLOAT32_IEEE
+      /* Maximum Difference     */      0
+      /* Conversion Method      */      TRSC_VC_CM_single
+      /* Number of Axis Pts     */      5
+      /* Lower Limit            */      -3.4E+38
+      /* Upper Limit            */      3.4E+38
+    /end AXIS_PTS
+    
+    /begin CHARACTERISTIC      
+      /* Name                   */      KaTRSC_k_PGainLUTTDTyp2
+      /* Long Identifier        */      "Table Data for P Gain LookUp Table "
+      /* Characteristic Type    */      MAP
+      /* ECU Address            */      0x0000 /* @ECU_Address@KaTRSC_k_PGainLUTTDTyp2@ */
+      /* Record Layout          */      Lookup2D_FLOAT32_IEEE
+      /* Maxdiff                */      0
+      /* Conversion Method      */      TRSC_VC_CM_single
+      /* Lower Limit            */      -3.4E+38
+      /* Upper Limit            */      3.4E+38
+      /begin AXIS_DESCR                 
+        /* Description of Y-Axis Points */
+        /* Axis Type            */      COM_AXIS
+        /* Reference to Input   */      NO_INPUT_QUANTITY
+        /* Conversion Method    */      TRSC_VC_CM_single
+        /* Number of Axis Pts   */      5
+        /* Lower Limit          */      -3.4E+38
+        /* Upper Limit          */      3.4E+38
+        AXIS_PTS_REF                    KaTRSC_deg_PGainLUTYBPTyp2
+      /end AXIS_DESCR
+      /begin AXIS_DESCR                 
+        /* Description of X-Axis Points */
+        /* Axis Type            */      COM_AXIS
+        /* Reference to Input   */      NO_INPUT_QUANTITY
+        /* Conversion Method    */      TRSC_VC_CM_single
+        /* Number of Axis Pts   */      4
+        /* Lower Limit          */      -3.4E+38
+        /* Upper Limit          */      3.4E+38
+        AXIS_PTS_REF                    KaTRSC_kph_PGainLUTXBPTyp2
+      /end AXIS_DESCR
+    /end CHARACTERISTIC
+    
+    /begin AXIS_PTS
+      /* Name                   */      KaTRSC_kph_PGainLUTXBPTyp2
+      /* Long Identifier        */      "X Breakpoints for P Gain LookUp Table "
+      /* ECU Address            */      0x0000 /* @ECU_Address@KaTRSC_kph_PGainLUTXBPTyp2@ */
+      /* Input Quantity         */      NO_INPUT_QUANTITY
+      /* Record Layout          */      Lookup2D_X_FLOAT32_IEEE
+      /* Maximum Difference     */      0
+      /* Conversion Method      */      TRSC_VC_CM_single
+      /* Number of Axis Pts     */      4
+      /* Lower Limit            */      -3.4E+38
+      /* Upper Limit            */      3.4E+38
+    /end AXIS_PTS
+    
+    /begin AXIS_PTS
+      /* Name                   */      KaTRSC_deg_PGainLUTYBPTyp2
+      /* Long Identifier        */      "Y Breakpoints for P Gain LookUp Table "
+      /* ECU Address            */      0x0000 /* @ECU_Address@KaTRSC_deg_PGainLUTYBPTyp2@ */
+      /* Input Quantity         */      NO_INPUT_QUANTITY
+      /* Record Layout          */      Lookup2D_X_FLOAT32_IEEE
+      /* Maximum Difference     */      0
+      /* Conversion Method      */      TRSC_VC_CM_single
+      /* Number of Axis Pts     */      5
+      /* Lower Limit            */      -3.4E+38
+      /* Upper Limit            */      3.4E+38
+    /end AXIS_PTS
+    
+    /begin CHARACTERISTIC      
+      /* Name                   */      KaTRSC_k_PGainLUTTDTyp3
+      /* Long Identifier        */      "Table Data for P Gain LookUp Table "
+      /* Characteristic Type    */      MAP
+      /* ECU Address            */      0x0000 /* @ECU_Address@KaTRSC_k_PGainLUTTDTyp3@ */
+      /* Record Layout          */      Lookup2D_FLOAT32_IEEE
+      /* Maxdiff                */      0
+      /* Conversion Method      */      TRSC_VC_CM_single
+      /* Lower Limit            */      -3.4E+38
+      /* Upper Limit            */      3.4E+38
+      /begin AXIS_DESCR                 
+        /* Description of Y-Axis Points */
+        /* Axis Type            */      COM_AXIS
+        /* Reference to Input   */      NO_INPUT_QUANTITY
+        /* Conversion Method    */      TRSC_VC_CM_single
+        /* Number of Axis Pts   */      5
+        /* Lower Limit          */      -3.4E+38
+        /* Upper Limit          */      3.4E+38
+        AXIS_PTS_REF                    KaTRSC_deg_PGainLUTYBPTyp3
+      /end AXIS_DESCR
+      /begin AXIS_DESCR                 
+        /* Description of X-Axis Points */
+        /* Axis Type            */      COM_AXIS
+        /* Reference to Input   */      NO_INPUT_QUANTITY
+        /* Conversion Method    */      TRSC_VC_CM_single
+        /* Number of Axis Pts   */      4
+        /* Lower Limit          */      -3.4E+38
+        /* Upper Limit          */      3.4E+38
+        AXIS_PTS_REF                    KaTRSC_kph_PGainLUTXBPTyp3
+      /end AXIS_DESCR
+    /end CHARACTERISTIC
+    
+    /begin AXIS_PTS
+      /* Name                   */      KaTRSC_kph_PGainLUTXBPTyp3
+      /* Long Identifier        */      "X Breakpoints for P Gain LookUp Table "
+      /* ECU Address            */      0x0000 /* @ECU_Address@KaTRSC_kph_PGainLUTXBPTyp3@ */
+      /* Input Quantity         */      NO_INPUT_QUANTITY
+      /* Record Layout          */      Lookup2D_X_FLOAT32_IEEE
+      /* Maximum Difference     */      0
+      /* Conversion Method      */      TRSC_VC_CM_single
+      /* Number of Axis Pts     */      4
+      /* Lower Limit            */      -3.4E+38
+      /* Upper Limit            */      3.4E+38
+    /end AXIS_PTS
+    
+    /begin AXIS_PTS
+      /* Name                   */      KaTRSC_deg_PGainLUTYBPTyp3
+      /* Long Identifier        */      "Y Breakpoints for P Gain LookUp Table "
+      /* ECU Address            */      0x0000 /* @ECU_Address@KaTRSC_deg_PGainLUTYBPTyp3@ */
+      /* Input Quantity         */      NO_INPUT_QUANTITY
+      /* Record Layout          */      Lookup2D_X_FLOAT32_IEEE
+      /* Maximum Difference     */      0
+      /* Conversion Method      */      TRSC_VC_CM_single
+      /* Number of Axis Pts     */      5
+      /* Lower Limit            */      -3.4E+38
+      /* Upper Limit            */      3.4E+38
+    /end AXIS_PTS
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeConst_k_ConstOne  
+      /* Long Identifier        */      ""
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeConst_k_ConstOne@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeConst_k_ConstTwo  
+      /* Long Identifier        */      ""
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeConst_k_ConstTwo@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeConst_k_ConstZero  
+      /* Long Identifier        */      ""
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeConst_k_ConstZero@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeConst_ku_deg2rad  
+      /* Long Identifier        */      ""
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeConst_ku_deg2rad@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeKM_deg_180  
+      /* Long Identifier        */      "180 degree"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeKM_deg_180@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single_deg 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeKM_deg_360  
+      /* Long Identifier        */      "360 degree"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeKM_deg_360@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single_deg 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeKM_k_ArrayZeros  
+      /* Long Identifier        */      "array of zeros for initialiation"
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeKM_k_ArrayZeros@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+      /* Array Size             */
+      NUMBER                            3
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeKM_k_pi  
+      /* Long Identifier        */      "Pi Constant"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeKM_k_pi@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeTRA_deg_AngleNinety  
+      /* Long Identifier        */      "Angle 90 deg"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeTRA_deg_AngleNinety@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single_deg 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeTRA_deg_AngleOneEighty  
+      /* Long Identifier        */      "Angle 180 degree"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeTRA_deg_AngleOneEighty@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single_deg 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeTRA_deg_AngleThreeSixty  
+      /* Long Identifier        */      "Angle 360 degree"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeTRA_deg_AngleThreeSixty@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single_deg 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeTRA_k_ConstTen  
+      /* Long Identifier        */      "Constant value Ten"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeTRA_k_ConstTen@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeTRA_k_OnePerHundred  
+      /* Long Identifier        */      "Constant value 0.01 used to calculate D-gain of PID controller"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeTRA_k_OnePerHundred@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeTRA_k_fifteen  
+      /* Long Identifier        */      "Constant Value Fifteen"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeTRA_k_fifteen@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeTRA_sec_SampleTime  
+      /* Long Identifier        */      "sampling time"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeTRA_sec_SampleTime@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single_sec 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeTRSC_s_TRSCLpTm  
+      /* Long Identifier        */      "TRSC Loop time"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeTRSC_s_TRSCLpTm@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single_sec 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KM_SamplingTime  
+      /* Long Identifier        */      ""
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KM_SamplingTime@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KaTRSC_k_IntGainTDTyp1  
+      /* Long Identifier        */      "Table Data for Integrator Gain LookUp Table "
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KaTRSC_k_IntGainTDTyp1@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+      /* Array Size             */
+      NUMBER                            16
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KaTRSC_k_IntGainTDTyp2or3  
+      /* Long Identifier        */      "Table Data for Integrator Gain LookUp Table "
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KaTRSC_k_IntGainTDTyp2or3@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+      /* Array Size             */
+      NUMBER                            16
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeKM_k_KM_YawRateGyroBiasInit  
+      /* Long Identifier        */      "Yaw rate Gyro bias initialization"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeKM_k_KM_YawRateGyroBiasInit@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_Nm_MaxTrqLim  
+      /* Long Identifier        */      "KeTRSC_Nm_MaxTrqLim"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_Nm_MaxTrqLim@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single_nm 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_ddeg_TadDesRateLim  
+      /* Long Identifier        */      "Desired Trailer Angle rate limit for TAD Error computation"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_ddeg_TadDesRateLim@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single_ddeg_s 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_deg_TADErrSpdLmtLowThr  
+      /* Long Identifier        */      "TADErrSpdLmtLowThr"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_deg_TADErrSpdLmtLowThr@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single_deg 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_deg_TADErrSpdLmtMidThr  
+      /* Long Identifier        */      "TADErrSpdLmtMidThr"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_deg_TADErrSpdLmtMidThr@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single_deg 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_deg_TadCornerCaseThr  
+      /* Long Identifier        */      "TAD angle threshold for corner case"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_deg_TadCornerCaseThr@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_deg_TadErrSatLim  
+      /* Long Identifier        */      "Saturation Limit for TAD error"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_deg_TadErrSatLim@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_deg_TwitchTrqRateLim  
+      /* Long Identifier        */      "trq rate limit for twitch"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_deg_TwitchTrqRateLim@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single_deg_sec 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_deg_Zero  
+      /* Long Identifier        */      "lower saturation value for Trailer Protection Angle "
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_deg_Zero@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_EnblJKPrevention  
+      /* Long Identifier        */      "flag to Enable JK Prevention logic in TAD PID"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_EnblJKPrevention@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_ErrSatLim  
+      /* Long Identifier        */      "steering Error saturation limit
+      "
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_ErrSatLim@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+      /* Array Size             */
+      NUMBER                            4
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_IntExtSat  
+      /* Long Identifier        */      "Integrator Saturation Limit"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_IntExtSat@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_NumTwitchPulse  
+      /* Long Identifier        */      "Number of PWM pulses for twitch"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_NumTwitchPulse@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_PIDKdPathDeviation  
+      /* Long Identifier        */      "Path Deviation PID control D gain"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_PIDKdPathDeviation@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_StrCtrlLPFFrequency  
+      /* Long Identifier        */      "Steering_controller_low_pass_filter_frequency
+      "
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_StrCtrlLPFFrequency@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_StrRptLPFFrequency  
+      /* Long Identifier        */      "Steering_controller_low_pass_filter_frequency
+      "
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_StrRptLPFFrequency@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_TadPidPGainMult  
+      /* Long Identifier        */      "TAD PID P gain multiplier for non-zero Knob angle"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_TadPidPGainMult@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      1.0 
+      /* Upper Limit            */      100.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_TrqConstRateLim  
+      /* Long Identifier        */      "Constant Rate Limit for Torque "
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_TrqConstRateLim@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_TrqConstSatLim  
+      /* Long Identifier        */      "Constant Saturation Limit for Torque "
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_TrqConstSatLim@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_TrqCtrlDMultiplier  
+      /* Long Identifier        */      "Torque controller D multiplier"
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_TrqCtrlDMultiplier@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+      /* Array Size             */
+      NUMBER                            4
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_TrqCtrlIMultiplier  
+      /* Long Identifier        */      "Torque controller I multiplier"
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_TrqCtrlIMultiplier@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+      /* Array Size             */
+      NUMBER                            4
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_TrqCtrlPMultiplierT1  
+      /* Long Identifier        */      "Torque controller P multiplier"
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_TrqCtrlPMultiplierT1@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+      /* Array Size             */
+      NUMBER                            4
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_TrqCtrlPMultiplierT2or3  
+      /* Long Identifier        */      "Torque controller P multiplier"
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_TrqCtrlPMultiplierT2or3@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+      /* Array Size             */
+      NUMBER                            4
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_m_HardcodedTBL  
+      /* Long Identifier        */      "Hardcoded TBL value"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_m_HardcodedTBL@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_m_SprLimitTBLThr  
+      /* Long Identifier        */      "Trailer Beam Length Upper Limit"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_m_SprLimitTBLThr@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_m_SprLimitTBLThr1  
+      /* Long Identifier        */      "Trailer Beam Length Upper Limit"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_m_SprLimitTBLThr1@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_pct_4kphSpdThr  
+      /* Long Identifier        */      "Percentage Threshold for 4 kph Speed Limit Req"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_pct_4kphSpdThr@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_pct_5kphSpdThr  
+      /* Long Identifier        */      "Percentage Threshold for 5 kph Speed Limit Req"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_pct_5kphSpdThr@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_pct_6kphSpdThr  
+      /* Long Identifier        */      "Percentage Threshold for 6 kph Speed Limit Req"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_pct_6kphSpdThr@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_pct_7kphSpdThr  
+      /* Long Identifier        */      "Percentage Threshold for 7 kph Speed Limit Req"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_pct_7kphSpdThr@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_pct_8kphSpdThr  
+      /* Long Identifier        */      "Percentage Threshold for 8 kph Speed Limit Req"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_pct_8kphSpdThr@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_pct_9kphSpdThr  
+      /* Long Identifier        */      "Percentage Threshold for 8 kph Speed Limit Req"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_pct_9kphSpdThr@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_pct_JackKnifePerc  
+      /* Long Identifier        */      "JackKnife Angle Percentage"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_pct_JackKnifePerc@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      95.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_pct_StrCornerCaseThr  
+      /* Long Identifier        */      "Percentage Max Steering wheel angle threshold for corner case"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_pct_StrCornerCaseThr@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_s_HeldThreshold  
+      /* Long Identifier        */      "Time threshold to ensure user is actually requesting knob zero
+      "
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_s_HeldThreshold@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_s_TblKmDelay  
+      /* Long Identifier        */      "Systemic delay for KM signal i.e. speed and yaw specified in seconds"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_s_TblKmDelay@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_s_TwitchTime  
+      /* Long Identifier        */      "KeTRSC_s_TwitchTime"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_s_TwitchTime@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single_sec 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_sec_CornerCaseLatchLimit  
+      /* Long Identifier        */      "Corner case latch limit
+      "
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_sec_CornerCaseLatchLimit@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_sec_CornerCaseTimeLimit  
+      /* Long Identifier        */      "Corner case identification limit
+      "
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_sec_CornerCaseTimeLimit@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_single 
+      /* Lower Limit            */      -3.4E+38 
+      /* Upper Limit            */      3.4E+38
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeConst_k_ConstOneInt16  
+      /* Long Identifier        */      ""
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeConst_k_ConstOneInt16@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_int16 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeTRSC_deg_KnobHysLowLim  
+      /* Long Identifier        */      " Lower Limit of Threshold value for Knob Hysteresis"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeTRSC_deg_KnobHysLowLim@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_int16 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeTRSC_deg_KnobHysUpLim  
+      /* Long Identifier        */      "Upper Limit of Threshold value for Knob Hysteresis"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeTRSC_deg_KnobHysUpLim@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_int16 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_deg_ZeroInt16  
+      /* Long Identifier        */      "lower saturation value for Trailer Protection Angle "
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_deg_ZeroInt16@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_int16 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_deg_ZeroPadUpThr  
+      /* Long Identifier        */      ""
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_deg_ZeroPadUpThr@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_int16_deg 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      10.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeTRSC_deg_MaxKnobAngleLowLim  
+      /* Long Identifier        */      "Maximum Knob Angle Lower Limit"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeTRSC_deg_MaxKnobAngleLowLim@ */ 
+      /* Record Layout          */      Scalar_UWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_uint16 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      360.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeTRSC_deg_MaxKnobAngleUpLim  
+      /* Long Identifier        */      "Maximum Knob Angle Upper Limit"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeTRSC_deg_MaxKnobAngleUpLim@ */ 
+      /* Record Layout          */      Scalar_UWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_uint16 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      360.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeTRSC_k_MaxJumpSizeLowLim  
+      /* Long Identifier        */      "Lower limit of Max Jump Size for Raw Knob Count"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeTRSC_k_MaxJumpSizeLowLim@ */ 
+      /* Record Layout          */      Scalar_UWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_uint16 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      65535
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeTRSC_k_MaxJumpSizeUpLim  
+      /* Long Identifier        */      "Upper limit of Max Jump Size for Raw Knob Count"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeTRSC_k_MaxJumpSizeUpLim@ */ 
+      /* Record Layout          */      Scalar_UWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_uint16 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      65535
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_k_MaxJumpSize  
+      /* Long Identifier        */      "Max Jump Size for Raw Knob Count"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_k_MaxJumpSize@ */ 
+      /* Record Layout          */      Scalar_UWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_uint16 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      65535
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeKM_b_False  
+      /* Long Identifier        */      "Relative angle Covariance"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeKM_b_False@ */ 
+      /* Record Layout          */      Scalar_BOOLEAN 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_boolean 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      1
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeKM_b_True  
+      /* Long Identifier        */      "array of zeros for initialiation"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeKM_b_True@ */ 
+      /* Record Layout          */      Scalar_BOOLEAN 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_boolean 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      1
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_b_ForceJKCalc  
+      /* Long Identifier        */      "Force JK calculation"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_b_ForceJKCalc@ */ 
+      /* Record Layout          */      Scalar_BOOLEAN 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_boolean 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      1
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTRSC_b_HardcodeTBLflag  
+      /* Long Identifier        */      "Flag to enable/disable TBL hardcoding"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTRSC_b_HardcodeTBLflag@ */ 
+      /* Record Layout          */      Scalar_BOOLEAN 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_boolean 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      1
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      OTBL_EN  
+      /* Long Identifier        */      ""
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@OTBL_EN@ */ 
+      /* Record Layout          */      Scalar_BOOLEAN 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_boolean 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      1
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeConst_k_ConstThreeUint8  
+      /* Long Identifier        */      ""
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeConst_k_ConstThreeUint8@ */ 
+      /* Record Layout          */      Scalar_UBYTE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_uint8 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      255
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeConst_k_ConstTwoUint8  
+      /* Long Identifier        */      ""
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeConst_k_ConstTwoUint8@ */ 
+      /* Record Layout          */      Scalar_UBYTE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_uint8 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      255
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      CeKM_k_ConstFour  
+      /* Long Identifier        */      "Gear number four"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@CeKM_k_ConstFour@ */ 
+      /* Record Layout          */      Scalar_UBYTE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      TRSC_VC_CM_uint8 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      255
+    /end CHARACTERISTIC
+    
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      KM_MABx.IeLSCAN_m_HV_X
+      /* Long identifier        */      ""
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@KM_MABx.IeLSCAN_m_HV_X@ */
+    /end MEASUREMENT
+    
+    /begin MEASUREMENT
+      /* Name                   */      KM_MABx.IeLSCAN_m_HV_Y
+      /* Long identifier        */      ""
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@KM_MABx.IeLSCAN_m_HV_Y@ */
+    /end MEASUREMENT
+    
+    /begin MEASUREMENT
+      /* Name                   */      KM_MABx.IeLSCAN_deg_HV_H
+      /* Long identifier        */      ""
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@KM_MABx.IeLSCAN_deg_HV_H@ */
+    /end MEASUREMENT
+    
+    /begin MEASUREMENT
+      /* Name                   */      KM_MABx.IeLSCAN_m_TX
+      /* Long identifier        */      ""
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@KM_MABx.IeLSCAN_m_TX@ */
+    /end MEASUREMENT
+    
+    /begin MEASUREMENT
+      /* Name                   */      KM_MABx.IeLSCAN_m_TY
+      /* Long identifier        */      ""
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@KM_MABx.IeLSCAN_m_TY@ */
+    /end MEASUREMENT
+    
+    /begin MEASUREMENT
+      /* Name                   */      KM_MABx.IeLSCAN_deg_TH
+      /* Long identifier        */      ""
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@KM_MABx.IeLSCAN_deg_TH@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      IeLSCAN_m_TrailerBeamLen
+      /* Long identifier        */      "IeLSCAN_m_TrailerBeamLen"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@IeLSCAN_m_TrailerBeamLen@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeCtrl_deg_THInit
+      /* Long identifier        */      "MeCtrl_deg_THInit"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeCtrl_deg_THInit@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeCtrl_deg_HdgDevLookup
+      /* Long identifier        */      "MeCtrl_deg_HdgDevLookup"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeCtrl_deg_HdgDevLookup@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeCtrl_deg_TAD_des
+      /* Long identifier        */      "MeCtrl_deg_TAD_des"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeCtrl_deg_TAD_des@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeCtrl_deg_TAD_error
+      /* Long identifier        */      "MeCtrl_deg_TAD_error"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeCtrl_deg_TAD_error@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeTRSC_deg_TrlrAngKnob
+      /* Long identifier        */      "MeTRSC_deg_TrlrAngKnob"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeTRSC_deg_TrlrAngKnob@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeCtrl_deg_TAD_PID
+      /* Long identifier        */      "Intermediate signal for Trailer Angle Detect for PID"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single_deg
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeCtrl_deg_TAD_PID@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeCtrl_deg_SteerAngIn
+      /* Long identifier        */      "MeCtrl_deg_SteerAngIn"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeCtrl_deg_SteerAngIn@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeCtrl_deg_SteerCMD
+      /* Long identifier        */      "MeCtrl_deg_SteerCMD"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeCtrl_deg_SteerCMD@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      StrCmd
+      /* Long identifier        */      "StrCmd"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@StrCmd@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      StrRpt
+      /* Long identifier        */      "StrRpt"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@StrRpt@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeTRSC_s_TwitchTmr
+      /* Long identifier        */      "MeTRSC_s_TwitchTmr"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeTRSC_s_TwitchTmr@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeTRSC_e_IdentifiedCase
+      /* Long identifier        */      "MeTRSC_e_IdentifiedCase"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeTRSC_e_IdentifiedCase@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeCtrl_m_TravelDist
+      /* Long identifier        */      "MeCtrl_m_TravelDist"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeCtrl_m_TravelDist@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeCtrl_deg_PIDe_p
+      /* Long identifier        */      "MeCtrl_deg_PIDe_p"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeCtrl_deg_PIDe_p@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeTRA_deg_PathDeviation
+      /* Long identifier        */      "MeTRA_deg_PathDeviation"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeTRA_deg_PathDeviation@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeCtrl_deg_HeadingOut
+      /* Long identifier        */      "Intermediate signal for Heading Output"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single_deg
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeCtrl_deg_HeadingOut@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeCtrl_deg_e_p
+      /* Long identifier        */      "Intermediate signal for error"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single_deg
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeCtrl_deg_e_p@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeCtrl_deg_HeadingDeviation
+      /* Long identifier        */      "Intermediate signal for Heading Deviation"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single_deg
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeCtrl_deg_HeadingDeviation@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeTRSC_deg_RawDesTrlrAng
+      /* Long identifier        */      "Intermediate signal for Raw value of desired trailer angle"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeTRSC_deg_RawDesTrlrAng@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      IeLSCAN_v_VehSp_pulse
+      /* Long identifier        */      "IeLSCAN_v_VehSp_pulse"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@IeLSCAN_v_VehSp_pulse@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeKM_deg_GyroYawRate
+      /* Long identifier        */      "MeKM_deg_GyroYawRate"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeKM_deg_GyroYawRate@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      JackKnifeAngle_deg
+      /* Long identifier        */      "JackKnifeAngle_deg"
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      TRSC_VC_CM_single
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -3.4E+38
+      /* Upper limit            */      3.4E+38
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@JackKnifeAngle_deg@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeTRSC_deg_KnobAngHys
+      /* Long identifier        */      "Intermediate signal for Knob Angle (Output of knob hysteresis logic)"
+      /* Data type              */      SWORD
+      /* Conversion method      */      TRSC_VC_CM_int16_deg
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -32768
+      /* Upper limit            */      32767
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeTRSC_deg_KnobAngHys@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeTRSC_b_TRAAct
+      /* Long identifier        */      "TRA ACT"
+      /* Data type              */      UBYTE
+      /* Conversion method      */      TRSC_VC_CM_boolean_inherit
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      0.0
+      /* Upper limit            */      0.0
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeTRSC_b_TRAAct@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeOTBL_b_Enable_1
+      /* Long identifier        */      "MeOTBL_b_Enable_1"
+      /* Data type              */      UBYTE
+      /* Conversion method      */      TRSC_VC_CM_boolean
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      0
+      /* Upper limit            */      1
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeOTBL_b_Enable_1@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeOTBL_b_Enable
+      /* Long identifier        */      "MeOTBL_b_Enable"
+      /* Data type              */      UBYTE
+      /* Conversion method      */      TRSC_VC_CM_boolean
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      0
+      /* Upper limit            */      1
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeOTBL_b_Enable@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeTRSC_b_TwitchCompleted
+      /* Long identifier        */      "MeTRSC_b_TwitchCompleted"
+      /* Data type              */      UBYTE
+      /* Conversion method      */      TRSC_VC_CM_boolean
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      0
+      /* Upper limit            */      1
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeTRSC_b_TwitchCompleted@ */
+    /end MEASUREMENT
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      TRSC_VC_CM_single
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      ""
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      TRSC_VC_CM_single_m
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      "m"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      TRSC_VC_CM_single_mps
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      "mps"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      TRSC_VC_CM_single_deg
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      "deg"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      TRSC_VC_CM_single_sec
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      "sec"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      TRSC_VC_CM_single_nm
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      "nm"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      TRSC_VC_CM_single_ddeg_s
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      "ddeg/s"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      TRSC_VC_CM_single_deg_sec
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      "deg/sec"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      TRSC_VC_CM_int16
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%5.0"
+      /* Units                  */      ""
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      TRSC_VC_CM_int16_deg
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%5.0"
+      /* Units                  */      "deg"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      TRSC_VC_CM_uint16
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%5.0"
+      /* Units                  */      ""
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      TRSC_VC_CM_boolean
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%1.0"
+      /* Units                  */      ""
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      TRSC_VC_CM_uint8
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%3.0"
+      /* Units                  */      ""
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      TRSC_VC_CM_boolean_inherit
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%1.0"
+      /* Units                  */      "inherit"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin GROUP 
+      /* Name                   */       TRSC_VC
+      /* Long identifier        */       "TRSC_VC"
+      /* Root                    */       ROOT
+      /begin SUB_GROUP
+        Root_TRSC_VC2
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       Root_TRSC_VC2
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2"
+      /begin SUB_GROUP
+        S1_JackKnife_Angle_
+        S1_Kinematic_Model
+        S1_Knob_Sensing
+        S1_Torque_Control
+        S1_Trailer_Beam_Length1
+        S1_VehicleActivation
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        KeTRSC_b_ForceJKCalc
+        KeTRSC_b_HardcodeTBLflag
+        KeTRSC_deg_Zero
+        KeTRSC_m_HardcodedTBL
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S1_JackKnife_Angle_
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/JackKnife Angle "
+      /begin REF_MEASUREMENT
+        JackKnifeAngle_deg
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S1_Kinematic_Model
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model"
+      /begin SUB_GROUP
+        KM_MABx
+        S8_Kinematic_model
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        KeTRSC_deg_Zero
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S1_Knob_Sensing
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Knob_Sensing"
+      /begin SUB_GROUP
+        S9_DesiredTrailerAngleComp
+        S9_KnobHysteresis
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        CeTRSC_deg_MaxKnobAngleLowLim
+        CeTRSC_deg_MaxKnobAngleUpLim
+        CeTRSC_k_MaxJumpSizeLowLim
+        CeTRSC_k_MaxJumpSizeUpLim
+        KeTRSC_deg_Zero
+        KeTRSC_k_MaxJumpSize
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S1_Torque_Control
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control"
+      /begin SUB_GROUP
+        S17_VehicleControl
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S1_Trailer_Beam_Length1
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Trailer Beam Length1"
+      /begin SUB_GROUP
+        S18_Subsystem
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S1_VehicleActivation
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/VehicleActivation"
+      /begin REF_MEASUREMENT
+        MeTRSC_b_TRAAct
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S8_Kinematic_model
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model"
+      /begin SUB_GROUP
+        S24_KM_Gyro_YawRate
+        S24_KM_Integrator_Trapazoidal
+        S24_KM_Integrator_Trapazoidal1
+        S24_KM_Integrator_Trapazoidal2
+        S24_KM_Rear_Axle_ds
+        S24_KM_Reset
+        S24_KM_Wheel_Angle
+        S24_KM_heading_angle
+        S24_ME_EWMA_Float
+        S24_Predict
+        S24_TrailerPositionAndHeadingCalculation
+        S24_YawRate
+        S24_YawRateEnableCriteria
+        S24_YawRateWhlRPMEn
+        S24_YawRate_RPM
+        S24_YawRate_RPM_Bias
+        S24_x_Out
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S9_DesiredTrailerAngleComp
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Knob_Sensing/DesiredTrailerAngleComp"
+      /begin REF_MEASUREMENT
+        MeTRSC_deg_RawDesTrlrAng
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S9_KnobHysteresis
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Knob_Sensing/KnobHysteresis"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOneInt16
+        CeTRSC_deg_KnobHysLowLim
+        CeTRSC_deg_KnobHysUpLim
+        KeTRSC_deg_ZeroInt16
+        KeTRSC_deg_ZeroPadUpThr
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeTRSC_deg_KnobAngHys
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S17_VehicleControl
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl"
+      /begin SUB_GROUP
+        S108_Controller_Main2
+        S108_Controller_T_h_init
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S18_Subsystem
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Trailer Beam Length1/Subsystem"
+      /begin SUB_GROUP
+        S170_OTBL_Enable
+        S170_OTBL_Enable1
+        S170_OnlineTrailerBeamLengthEstimation
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        OTBL_EN
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        IeLSCAN_m_TrailerBeamLen
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_KM_Gyro_YawRate
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/KM_Gyro_YawRate"
+      /begin SUB_GROUP
+        S28_Bias_Calculation_Enable_Criteria
+        S28_Gyro_Measurement_Signal_Processing
+        S28_Gyro_YawRate_Bias
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        KeKM_k_KM_YawRateGyroBiasInit
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_KM_Integrator_Trapazoidal
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/KM_Integrator_Trapazoidal"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstTwo
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_KM_Integrator_Trapazoidal1
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/KM_Integrator_Trapazoidal1"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstTwo
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_KM_Integrator_Trapazoidal2
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/KM_Integrator_Trapazoidal2"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstTwo
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_KM_Rear_Axle_ds
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/KM_Rear_Axle_ds"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstZero
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_KM_Reset
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/KM_Reset"
+      /begin SUB_GROUP
+        S33_reset_KM
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstZero
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_KM_Wheel_Angle
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/KM_Wheel_Angle"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeConst_k_ConstZero
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_KM_heading_angle
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/KM_heading_angle"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeConst_k_ConstZero
+        CeKM_deg_180
+        CeKM_deg_360
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_ME_EWMA_Float
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/ME_EWMA_Float"
+      /begin REF_MEASUREMENT
+        IeLSCAN_v_VehSp_pulse
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_Predict
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/Predict"
+      /begin SUB_GROUP
+        S38_StateTransitionFunction_Avg_tanAngle
+        S38_StateTransitionFunction_x_next
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_TrailerPositionAndHeadingCalculation
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/TrailerPositionAndHeadingCalculation"
+      /begin SUB_GROUP
+        S39_Calc_T_H
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_YawRate
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/YawRate"
+      /begin REF_CHARACTERISTIC
+        CeKM_deg_180
+        CeKM_k_pi
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_YawRateEnableCriteria
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/YawRateEnableCriteria"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstZero
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_YawRateWhlRPMEn
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/YawRateWhlRPMEn"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeConst_k_ConstZero
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_YawRate_RPM
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/YawRate_RPM"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstZero
+        CeKM_b_False
+        CeKM_b_True
+        CeKM_deg_180
+        CeKM_k_pi
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_YawRate_RPM_Bias
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/YawRate_RPM_Bias"
+      /begin SUB_GROUP
+        S47_Accumulator
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S24_x_Out
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/x_Out"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstTwo
+        CeConst_k_ConstZero
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S108_Controller_Main2
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2"
+      /begin SUB_GROUP
+        S109_Desired_angle_controller
+        S109_FrontWheel_to_Steering1
+        S109_Heading_Deviation1
+        S109_Path_Deviation
+        S109_Speed_Limit_Req
+        S109_TAD_Error
+        S109_TAD_PID1
+        S109_TAD_des1
+        S109_TAD_ep1
+        S109_TravDist_TrapIntegrator
+        S109_TrqControl2
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        KeTRSC_deg_Zero
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S108_Controller_T_h_init
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_T_h_init"
+      /begin SUB_GROUP
+        S110_Calc_T_H_init
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S170_OTBL_Enable
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Trailer Beam Length1/Subsystem/OTBL_Enable"
+      /begin REF_MEASUREMENT
+        MeOTBL_b_Enable
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S170_OTBL_Enable1
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Trailer Beam Length1/Subsystem/OTBL_Enable1"
+      /begin REF_MEASUREMENT
+        MeOTBL_b_Enable_1
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S170_OnlineTrailerBeamLengthEstimation
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Trailer Beam Length1/Subsystem/OnlineTrailerBeamLengthEstimation"
+      /begin SUB_GROUP
+        S177_TrailerBeamLengthCalculation
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S28_Bias_Calculation_Enable_Criteria
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/KM_Gyro_YawRate/Bias_Calculation_Enable_Criteria"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeConst_k_ConstZero
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S28_Gyro_Measurement_Signal_Processing
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/KM_Gyro_YawRate/Gyro_Measurement_Signal_Processing"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstZero
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeKM_deg_GyroYawRate
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S28_Gyro_YawRate_Bias
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/KM_Gyro_YawRate/Gyro_YawRate_Bias"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S33_reset_KM
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/KM_Reset/reset_KM"
+      /begin REF_CHARACTERISTIC
+        CeKM_b_False
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S38_StateTransitionFunction_Avg_tanAngle
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/Predict/StateTransitionFunction_Avg_tanAngle"
+      /begin SUB_GROUP
+        S57_Enable_Average_Wheel_Angle_Calculation
+        S57_ResettableSubsystem
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S38_StateTransitionFunction_x_next
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/Predict/StateTransitionFunction_x_next"
+      /begin SUB_GROUP
+        S58_X_next_2_
+        S58_X_next_2_1
+        S58_x_next_1_
+        S58_x_next_3_
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        CeKM_k_ArrayZeros
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S39_Calc_T_H
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/TrailerPositionAndHeadingCalculation/Calc_T_H"
+      /begin SUB_GROUP
+        S82_heading_angle
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S47_Accumulator
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/YawRate_RPM_Bias/Accumulator"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S109_Desired_angle_controller
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/Desired_angle_controller"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeConst_ku_deg2rad
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S109_FrontWheel_to_Steering1
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/FrontWheel_to_Steering1"
+      /begin SUB_GROUP
+        S113_Dynamic_rate_limiter2
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeConst_k_ConstZero
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeCtrl_deg_SteerAngIn
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S109_Heading_Deviation1
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/Heading_Deviation1"
+      /begin SUB_GROUP
+        S114_heading_angle
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeConst_k_ConstZero
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeCtrl_deg_HeadingDeviation
+        MeCtrl_deg_e_p
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S109_Path_Deviation
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/Path_Deviation"
+      /begin REF_CHARACTERISTIC
+        CeTRA_deg_AngleNinety
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeTRA_deg_PathDeviation
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S109_Speed_Limit_Req
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/Speed Limit Req"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstThreeUint8
+        CeConst_k_ConstTwoUint8
+        KeTRSC_deg_TADErrSpdLmtLowThr
+        KeTRSC_deg_TADErrSpdLmtMidThr
+        KeTRSC_m_SprLimitTBLThr
+        KeTRSC_m_SprLimitTBLThr1
+        KeTRSC_pct_4kphSpdThr
+        KeTRSC_pct_5kphSpdThr
+        KeTRSC_pct_6kphSpdThr
+        KeTRSC_pct_7kphSpdThr
+        KeTRSC_pct_8kphSpdThr
+        KeTRSC_pct_9kphSpdThr
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S109_TAD_Error
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/TAD_Error"
+      /begin SUB_GROUP
+        S117_Dynamic_rate_limiter1
+        S117_Dynamic_rate_limiter2
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        KeTRSC_ddeg_TadDesRateLim
+        KeTRSC_deg_TadErrSatLim
+        KeTRSC_pct_JackKnifePerc
+        KeTRSC_pct_TrlrAngScaleDwnPct
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeCtrl_deg_TAD_error
+        MeTRSC_deg_TrlrAngKnob
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S109_TAD_PID1
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/TAD_PID1"
+      /begin SUB_GROUP
+        S118_Discrete_PID_Controller
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeTRA_k_ConstTen
+        CeTRA_k_OnePerHundred
+        CeTRA_sec_SampleTime
+        KaTRA_k_PGainLUTTblData
+        KeTRSC_k_TadPidPGainMult
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S109_TAD_des1
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/TAD_des1"
+      /begin SUB_GROUP
+        S119_TAD_PID
+      /end SUB_GROUP
+      /begin REF_MEASUREMENT
+        MeCtrl_deg_HdgDevLookup
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S109_TAD_ep1
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/TAD_ep1"
+      /begin REF_CHARACTERISTIC
+        CeTRA_k_ConstTen
+        CeTRA_k_fifteen
+        CeTRA_sec_SampleTime
+        KeTRSC_k_PIDKdPathDeviation
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeCtrl_deg_PIDe_p
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S109_TravDist_TrapIntegrator
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/TravDist_TrapIntegrator"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstTwo
+        CeTRA_sec_SampleTime
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeCtrl_m_TravelDist
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S109_TrqControl2
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/TrqControl2"
+      /begin SUB_GROUP
+        S122_THA_SteerTweakProfile_Processing2
+        S122_TrqControl1
+        S122_low_pass_filter
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        KeTRSC_Nm_MaxTrqLim
+        KeTRSC_deg_TadCornerCaseThr
+        KeTRSC_deg_TwitchTrqRateLim
+        KeTRSC_k_StrCtrlLPFFrequency
+        KeTRSC_pct_StrCornerCaseThr
+        KeTRSC_s_TwitchTime
+        KeTRSC_sec_CornerCaseLatchLimit
+        KeTRSC_sec_CornerCaseTimeLimit
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeTRSC_b_TwitchCompleted
+        MeTRSC_e_IdentifiedCase
+        MeTRSC_s_TwitchTmr
+        StrRpt
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S110_Calc_T_H_init
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_T_h_init/Calc_T_H_init"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstZero
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeCtrl_deg_THInit
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S177_TrailerBeamLengthCalculation
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Trailer Beam Length1/Subsystem/OnlineTrailerBeamLengthEstimation/TrailerBeamLengthCalculation"
+      /begin SUB_GROUP
+        S184_TBL_DataLog
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S57_Enable_Average_Wheel_Angle_Calculation
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/Predict/StateTransitionFunction_Avg_tanAngle/Enable_Average_Wheel_Angle_Calculation"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeConst_k_ConstTwo
+        CeConst_k_ConstZero
+        CeKM_k_ConstFour
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S57_ResettableSubsystem
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/Predict/StateTransitionFunction_Avg_tanAngle/ResettableSubsystem"
+      /begin SUB_GROUP
+        S60_AvgTanAngleCal
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S58_X_next_2_
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/Predict/StateTransitionFunction_x_next/X_next(2)"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeConst_k_ConstTwo
+        CeKM_deg_180
+        CeKM_k_pi
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S58_X_next_2_1
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/Predict/StateTransitionFunction_x_next/X_next(2)1"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeConst_k_ConstTwo
+        CeKM_deg_180
+        CeKM_k_pi
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S58_x_next_1_
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/Predict/StateTransitionFunction_x_next/x_next(1)"
+      /begin REF_CHARACTERISTIC
+        CeKM_deg_180
+        CeKM_k_pi
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S58_x_next_3_
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/Predict/StateTransitionFunction_x_next/x_next(3)"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeConst_k_ConstTwo
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S82_heading_angle
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/TrailerPositionAndHeadingCalculation/Calc_T_H/heading_angle"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeConst_k_ConstZero
+        CeKM_deg_180
+        CeKM_deg_360
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S113_Dynamic_rate_limiter2
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/FrontWheel_to_Steering1/Dynamic_rate_limiter2"
+      /begin REF_CHARACTERISTIC
+        KM_SamplingTime
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeCtrl_deg_SteerCMD
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S114_heading_angle
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/Heading_Deviation1/heading_angle"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeConst_k_ConstZero
+        CeTRA_deg_AngleOneEighty
+        CeTRA_deg_AngleThreeSixty
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeCtrl_deg_HeadingOut
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S117_Dynamic_rate_limiter1
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/TAD_Error/Dynamic_rate_limiter1"
+      /begin REF_CHARACTERISTIC
+        KM_SamplingTime
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S117_Dynamic_rate_limiter2
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/TAD_Error/Dynamic_rate_limiter2"
+      /begin REF_CHARACTERISTIC
+        KM_SamplingTime
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S118_Discrete_PID_Controller
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/TAD_PID1/Discrete_PID_Controller"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstOne
+        CeConst_k_ConstZero
+        KeTRSC_k_EnblJKPrevention
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeCtrl_deg_TAD_PID
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S119_TAD_PID
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/TAD_des1/TAD_PID"
+      /begin REF_CHARACTERISTIC
+        CeTRA_k_ConstTen
+        CeTRA_sec_SampleTime
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeCtrl_deg_TAD_des
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S122_THA_SteerTweakProfile_Processing2
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/TrqControl2/THA_SteerTweakProfile_Processing2"
+      /begin REF_CHARACTERISTIC
+        KeTRSC_k_NumTwitchPulse
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S122_TrqControl1
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/TrqControl2/TrqControl1"
+      /begin REF_CHARACTERISTIC
+        CeTRA_sec_SampleTime
+        KaTRSC_k_IntGainTDTyp1
+        KaTRSC_k_IntGainTDTyp2or3
+        KaTRSC_k_PGainLUTTDTyp1
+        KaTRSC_k_PGainLUTTDTyp2
+        KaTRSC_k_PGainLUTTDTyp3
+        KeTRSC_k_ErrSatLim
+        KeTRSC_k_IntExtSat
+        KeTRSC_k_StrRptLPFFrequency
+        KeTRSC_k_TrqConstRateLim
+        KeTRSC_k_TrqConstSatLim
+        KeTRSC_k_TrqCtrlDMultiplier
+        KeTRSC_k_TrqCtrlIMultiplier
+        KeTRSC_k_TrqCtrlPMultiplierT1
+        KeTRSC_k_TrqCtrlPMultiplierT2or3
+        KeTRSC_s_HeldThreshold
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S122_low_pass_filter
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Torque Control/VehicleControl/Controller_Main2/TrqControl2/low_pass_filter"
+      /begin REF_MEASUREMENT
+        StrCmd
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S184_TBL_DataLog
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Trailer Beam Length1/Subsystem/OnlineTrailerBeamLengthEstimation/TrailerBeamLengthCalculation/TBL_DataLog"
+      /begin REF_CHARACTERISTIC
+        CeTRSC_s_TRSCLpTm
+        KeTRSC_s_TblKmDelay
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S60_AvgTanAngleCal
+      /* Long identifier        */       "TRSC_VC/TRSC_VC2/Kinematic Model/Kinematic_model/Predict/StateTransitionFunction_Avg_tanAngle/ResettableSubsystem/AvgTanAngleCal"
+      /begin REF_CHARACTERISTIC
+        CeConst_k_ConstZero
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       KM_MABx
+      /* Long identifier        */       ""
+      /begin REF_MEASUREMENT
+        KM_MABx.IeLSCAN_deg_HV_H
+        KM_MABx.IeLSCAN_deg_TH
+        KM_MABx.IeLSCAN_m_HV_X
+        KM_MABx.IeLSCAN_m_HV_Y
+        KM_MABx.IeLSCAN_m_TX
+        KM_MABx.IeLSCAN_m_TY
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    
+  /end MODULE
+  
+  
+/end PROJECT
+/* (add any file trailer comments here) */
+/* EOF TRSC_VC.a2l */

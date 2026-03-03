@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This file was saved with a tool from Vector Informatik GmbH-->
+<AUTOSAR xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_00050.xsd" xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AR-PACKAGES>
+    <AR-PACKAGE UUID="89C68629-6BF5-4D1C-8C75-71D964926DB8">
+      <SHORT-NAME>Pkg_DegManager_B</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE UUID="4F3A4BF4-2F11-4E18-9959-86F21C264D4C">
+          <SHORT-NAME>ComponentTypes</SHORT-NAME>
+          <ELEMENTS>
+            <APPLICATION-SW-COMPONENT-TYPE UUID="6DCC2E92-3766-473C-A421-13402C9B62E4">
+              <SHORT-NAME>DegManager_B</SHORT-NAME>
+              <PORTS>
+                <P-PORT-PROTOTYPE UUID="5588E57C-6E35-4E22-8DA3-152028417F4E">
+                  <SHORT-NAME>P_FID_Output_B</SHORT-NAME>
+                  <PROVIDED-COM-SPECS>
+                    <NONQUEUED-SENDER-COM-SPEC>
+                      <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/Pkg_DegManager_B/PortInterfaces/P_FID_Output_B_SR/FID_B</DATA-ELEMENT-REF>
+                    </NONQUEUED-SENDER-COM-SPEC>
+                  </PROVIDED-COM-SPECS>
+                  <PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/Pkg_DegManager_B/PortInterfaces/P_FID_Output_B_SR</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE UUID="9ABB25C9-1FFB-4F93-94A8-8CD03F762209">
+                  <SHORT-NAME>R_Errors_B</SHORT-NAME>
+                  <REQUIRED-COM-SPECS>
+                    <NONQUEUED-RECEIVER-COM-SPEC>
+                      <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/Pkg_ErrorMgrAgg_1_0_B/PortInterfaces/P_Errors_B_SR/Errors_B</DATA-ELEMENT-REF>
+                      <ALIVE-TIMEOUT>0</ALIVE-TIMEOUT>
+                      <ENABLE-UPDATE>false</ENABLE-UPDATE>
+                      <HANDLE-NEVER-RECEIVED>false</HANDLE-NEVER-RECEIVED>
+                      <INIT-VALUE>
+                        <CONSTANT-REFERENCE>
+                          <CONSTANT-REF DEST="CONSTANT-SPECIFICATION">/Pkg_ErrorMgrAgg_1_0_B/Constant/init_Errors_B</CONSTANT-REF>
+                        </CONSTANT-REFERENCE>
+                      </INIT-VALUE>
+                    </NONQUEUED-RECEIVER-COM-SPEC>
+                  </REQUIRED-COM-SPECS>
+                  <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/Pkg_ErrorMgrAgg_1_0_B/PortInterfaces/P_Errors_B_SR</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+                <P-PORT-PROTOTYPE UUID="F2FADC10-6998-400F-B01B-0562344687B0">
+                  <SHORT-NAME>P_RES_Output_B</SHORT-NAME>
+                  <PROVIDED-COM-SPECS>
+                    <NONQUEUED-SENDER-COM-SPEC>
+                      <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/Pkg_DegManager_B/PortInterfaces/P_RES_Output_B_SR/RES_B</DATA-ELEMENT-REF>
+                    </NONQUEUED-SENDER-COM-SPEC>
+                  </PROVIDED-COM-SPECS>
+                  <PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/Pkg_DegManager_B/PortInterfaces/P_RES_Output_B_SR</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE UUID="5457DF4B-E4AF-48FE-A434-6708EB871B69">
+                  <SHORT-NAME>R_IPC</SHORT-NAME>
+                  <ADMIN-DATA>
+                    <SDGS>
+                      <SDG GID="DV:DEV">
+                        <SD GID="DV:ImportModePreset">Keep</SD>
+                      </SDG>
+                    </SDGS>
+                  </ADMIN-DATA>
+                  <REQUIRED-COM-SPECS>
+                    <CLIENT-COM-SPEC>
+                      <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/IPC_SWC/PortInterfaces/IF_IpcTxData/IPC_Write_v</OPERATION-REF>
+                    </CLIENT-COM-SPEC>
+                  </REQUIRED-COM-SPECS>
+                  <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/IPC_SWC/PortInterfaces/IF_IpcTxData</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR UUID="45844B65-2174-46ED-8E55-95B69450F8BC">
+                  <SHORT-NAME>DegManager_B_InternalBehavior</SHORT-NAME>
+                  <EVENTS>
+                    <TIMING-EVENT UUID="B8F4C1B7-0BC2-45C9-8964-EBF5A0AEBD1F">
+                      <SHORT-NAME>TMT_RE_Periodic_DegManager_B</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/Pkg_DegManager_B/ComponentTypes/DegManager_B/DegManager_B_InternalBehavior/RE_Periodic_DegManager_B</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <INIT-EVENT UUID="DFCD3DA7-AA5F-420C-81E5-B5FD17994E20">
+                      <SHORT-NAME>InitEvent</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/Pkg_DegManager_B/ComponentTypes/DegManager_B/DegManager_B_InternalBehavior/RE_Init_DegManager_B</START-ON-EVENT-REF>
+                    </INIT-EVENT>
+                  </EVENTS>
+                  <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                  <PORT-API-OPTIONS>
+                    <PORT-API-OPTION>
+                      <ENABLE-TAKE-ADDRESS>false</ENABLE-TAKE-ADDRESS>
+                      <INDIRECT-API>false</INDIRECT-API>
+                      <PORT-REF DEST="P-PORT-PROTOTYPE">/Pkg_DegManager_B/ComponentTypes/DegManager_B/P_FID_Output_B</PORT-REF>
+                    </PORT-API-OPTION>
+                    <PORT-API-OPTION>
+                      <ENABLE-TAKE-ADDRESS>false</ENABLE-TAKE-ADDRESS>
+                      <INDIRECT-API>false</INDIRECT-API>
+                      <PORT-REF DEST="R-PORT-PROTOTYPE">/Pkg_DegManager_B/ComponentTypes/DegManager_B/R_Errors_B</PORT-REF>
+                    </PORT-API-OPTION>
+                    <PORT-API-OPTION>
+                      <ENABLE-TAKE-ADDRESS>false</ENABLE-TAKE-ADDRESS>
+                      <INDIRECT-API>false</INDIRECT-API>
+                      <PORT-REF DEST="P-PORT-PROTOTYPE">/Pkg_DegManager_B/ComponentTypes/DegManager_B/P_RES_Output_B</PORT-REF>
+                    </PORT-API-OPTION>
+                    <PORT-API-OPTION>
+                      <ENABLE-TAKE-ADDRESS>false</ENABLE-TAKE-ADDRESS>
+                      <INDIRECT-API>false</INDIRECT-API>
+                      <PORT-REF DEST="R-PORT-PROTOTYPE">/Pkg_DegManager_B/ComponentTypes/DegManager_B/R_IPC</PORT-REF>
+                    </PORT-API-OPTION>
+                  </PORT-API-OPTIONS>
+                  <RUNNABLES>
+                    <RUNNABLE-ENTITY UUID="3A4330FC-6573-4431-BF94-D0D7F54572BB">
+                      <SHORT-NAME>RE_Periodic_DegManager_B</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL">Periodic Runnable of Satellite</L-2>
+                      </DESC>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                        <VARIABLE-ACCESS UUID="3D72E0A7-E774-481B-8B10-8DE899FA737B">
+                          <SHORT-NAME>REC_R_Errors_B_Errors_B</SHORT-NAME>
+                          <ACCESSED-VARIABLE>
+                            <AUTOSAR-VARIABLE-IREF>
+                              <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/Pkg_DegManager_B/ComponentTypes/DegManager_B/R_Errors_B</PORT-PROTOTYPE-REF>
+                              <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Pkg_ErrorMgrAgg_1_0_B/PortInterfaces/P_Errors_B_SR/Errors_B</TARGET-DATA-PROTOTYPE-REF>
+                            </AUTOSAR-VARIABLE-IREF>
+                          </ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                      </DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                      <DATA-SEND-POINTS>
+                        <VARIABLE-ACCESS UUID="B3658276-57E3-42F3-94B2-6D6BBD3E37DE">
+                          <SHORT-NAME>SEND_P_FID_Output_B_FID_B</SHORT-NAME>
+                          <ACCESSED-VARIABLE>
+                            <AUTOSAR-VARIABLE-IREF>
+                              <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/Pkg_DegManager_B/ComponentTypes/DegManager_B/P_FID_Output_B</PORT-PROTOTYPE-REF>
+                              <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Pkg_DegManager_B/PortInterfaces/P_FID_Output_B_SR/FID_B</TARGET-DATA-PROTOTYPE-REF>
+                            </AUTOSAR-VARIABLE-IREF>
+                          </ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                        <VARIABLE-ACCESS UUID="D06022DF-526C-4500-BC59-9693E26B1FB5">
+                          <SHORT-NAME>SEND_P_RES_Output_B_RES_B</SHORT-NAME>
+                          <ACCESSED-VARIABLE>
+                            <AUTOSAR-VARIABLE-IREF>
+                              <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/Pkg_DegManager_B/ComponentTypes/DegManager_B/P_RES_Output_B</PORT-PROTOTYPE-REF>
+                              <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Pkg_DegManager_B/PortInterfaces/P_RES_Output_B_SR/RES_B</TARGET-DATA-PROTOTYPE-REF>
+                            </AUTOSAR-VARIABLE-IREF>
+                          </ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                      </DATA-SEND-POINTS>
+                      <SERVER-CALL-POINTS>
+                        <SYNCHRONOUS-SERVER-CALL-POINT UUID="56E6E2BF-430E-49A3-8340-54D585A07D9A">
+                          <SHORT-NAME>SC_R_IPC_IPC_Write_v</SHORT-NAME>
+                          <OPERATION-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/Pkg_DegManager_B/ComponentTypes/DegManager_B/R_IPC</CONTEXT-R-PORT-REF>
+                            <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/IPC_SWC/PortInterfaces/IF_IpcTxData/IPC_Write_v</TARGET-REQUIRED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </SYNCHRONOUS-SERVER-CALL-POINT>
+                      </SERVER-CALL-POINTS>
+                      <SYMBOL>RE_Periodic_DegManager_B</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="4221F075-A48B-4207-9F62-48B032671959">
+                      <SHORT-NAME>RE_Init_DegManager_B</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL">Init Runnable</L-2>
+                      </DESC>
+                      <ADMIN-DATA>
+                        <SDGS>
+                          <SDG GID="edve:RunnableKind">
+                            <SD>InitRunnable</SD>
+                          </SDG>
+                        </SDGS>
+                      </ADMIN-DATA>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>RE_Init_DegManager_B</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                  </RUNNABLES>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </APPLICATION-SW-COMPONENT-TYPE>
+            <SWC-IMPLEMENTATION UUID="66D97F1D-E3A6-4DD3-B335-5B864EFE9A97">
+              <SHORT-NAME>DegManager_B_Implementation</SHORT-NAME>
+              <CODE-DESCRIPTORS>
+                <CODE UUID="5A05A624-3CA2-44C8-A5D9-DE459E6BE4DA">
+                  <SHORT-NAME>Default</SHORT-NAME>
+                  <ARTIFACT-DESCRIPTORS>
+                    <AUTOSAR-ENGINEERING-OBJECT>
+                      <CATEGORY>SWSRC</CATEGORY>
+                    </AUTOSAR-ENGINEERING-OBJECT>
+                  </ARTIFACT-DESCRIPTORS>
+                </CODE>
+              </CODE-DESCRIPTORS>
+              <PROGRAMMING-LANGUAGE>C</PROGRAMMING-LANGUAGE>
+              <VENDOR-ID>0</VENDOR-ID>
+              <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/Pkg_DegManager_B/ComponentTypes/DegManager_B/DegManager_B_InternalBehavior</BEHAVIOR-REF>
+            </SWC-IMPLEMENTATION>
+          </ELEMENTS>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

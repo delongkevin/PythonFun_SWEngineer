@@ -1,0 +1,159 @@
+//--------------------------------------------------------------------------
+/// @file mecl.dox
+/// --------------------------------------------------------------------------
+/// @copyright MAGNA Electronics - C O N F I D E N T I A L <br>
+/// This document in its entirety is CONFIDENTIAL and may not be disclosed,
+/// disseminated or distributed to parties outside MAGNA Electronics
+/// without written permission from MAGNA Electronics.
+///
+/// @author Michael Schulte (michael.schulte@magna.com)
+/// @author Allan Reinhold Kildeby (allan.kildeby@magna.com)
+///
+//  --------------------------------------------------------------------------
+///
+/// @mainpage MECL - MAGNA Electronics Core Library
+/// @tableofcontents
+///
+/// The MECL - short for MAGNA Electronics Core Library - is a common base library that shall
+/// be used for different projects using C++.
+///
+/// @section namespaces Namespaces
+/// The MECL is divided into several namespaces
+/// - @ref mecl - Namespace for MAGNA Electronics Core Library
+/// - @ref config - Namespace for configuration templates and interfaces
+///	- @ref core - Namespace for collection templates, i.e. arrays, matrices etc.
+///	- @ref ctrl - Namespace for control and regulation templates.
+///	- @ref image - Namespace for image processing templates, i.e. filtering, transformation and segmentation.
+///	- @ref math - Namespace for mathematical templates, i.e. trigonometry, constants, numerical limits and decompositions.
+///	- @ref model - Namespace for model templates, i.e. camera and car/trailer components.
+///
+/// @section struct_conventions Structural Conventions
+/// @subsection releases Releases
+/// A release plan is maintained in which functionality requirements based on customer and internal projects are bundled into releases. Release dates are coordinated between project owners and MECL library responsible. 
+/// Once the required functionality is implemented, a development path is formed in MKS which all dependant projects integrate to.
+/// 
+/// @subsection mks MKS
+/// The following conventions apply to the MECL library source files located in MKS:
+/// - All development is done on HEAD
+/// - Once a defined level of functionality required for a specific release is implemented and tested, a Development Path is formed in MKS.
+///		- This Development Path is integrated into algorithms requiring the specific functionality
+///		- It is possible for different algorithms to utilize different MECL releases, however only one release can be integrated into a specific algorithm.
+///	- Each Development Path is given a label consisting of the library name and the version number.  
+/// - Labels must adhere to the following format: 
+/// 	- MECL_X_Y_Z	(for further details please refer to the \ref versioning section)
+/// - If a change to MECL is implemented within a Development Path, only the subcomponent Z of the version number can be changed.
+/// - Once a Development Path is closed/released, changes must be manually merged into HEAD.
+///
+/// @subsubsection mks_developers For Developers
+/// - Each file must be committed separately.
+/// - Each commit must be accompanied by comments in MKS describing changes since checkout.
+/// - In addition, the following requirements must be fulfilled prior to committing:
+///   - Doxygen comments must be added to all source code entities.
+///   - Each function, operator and constructor, regardless of scope, must be accompanied by an example in the Build Test project.
+///   - Each function, operator and constructor, regardless of scope, must be accompanied by a unit test in the Google Test project.
+///   - Examples must be added to the corresponding Doxygen comments and/or headers using the \@snippet command.
+///   - Doxygen comments must adhere to the current source code and documentation guidelines.
+/// 
+/// @subsection versioning Versioning
+/// The following conventions apply to the version number system used for the MECL library.
+/// - Version numbers consist of 3 sub components and adhere to the following format:
+///		-  X.Y.Z 
+/// 		- X: Major release. New functionality or modifications to existing functionality with impact on compatibility.
+/// 		- Y: Minor release. New functionality or modifications to existing functionality without impact on compatibility.
+/// 		- Z: Revision. Bug fixes or modifications without impact on functionality.
+/// 	- Only digits 1-9 are valid
+/// 	- Valid values for subcomponents x, y and z are 1-99
+/// 
+/// @section math_conventions Mathematical Conventions
+/// @subsection coord_systems Coordinate Systems
+/// The following conventions apply to all coordinate systems applied by and utilized within MECL.
+/// - All coordinate systems are right-handed
+/// - Origin (0, 0) in image coordinate system is top left corner of the image, i.e. MATLAB convention.
+/// - Initial camera coordinate system prior to any pre-roll is identical to world/vehicle coordinate system.
+/// 
+/// \image html ImageAndCameraCoords.png "Figure: Relation between image and camera coordinate systems"
+/// \n
+/// 
+/// <CENTER>
+/// Parameter                                   | Description
+/// --------------------------------------------|------------------------------------------
+/// u, v                 		                    | Image coordinate system in pixels
+/// w, h                                        | Image width and height in pixels
+/// X<SUB>c</SUB>, Y<SUB>c</SUB>, Z<SUB>c</SUB> | Camera coordinate system in metrics
+/// f                                           | Focal length in metrics
+/// u<SUB>p</SUB>, v<SUB>p</SUB>                | Principal point in image plane in pixels
+/// u<SUB>c</SUB>, v<SUB>c</SUB>                | Camera coordinate system in image plane
+/// (X, Y, Z)<SUB>c</SUB>                       | 3D point in camera coordinate system
+/// 
+/// <B>Table: Notations used in the figure above</B>
+/// </CENTER>
+/// 
+/// @attention It is important to note, that Euler angles and translation vectors supplied to the MECL camera model describe camera 
+/// pose, and not transformation from world coordinates into camera coordinate system. 
+///
+/// Let \f$C\f$ be a column vector describing the location of the camera center in world coordinates, and let \f$R_c\f$ be the rotation matrix
+/// describing the camera's orientation with respect to the world coordinate axes. The transformation matrix that describes the camera's pose
+/// is then \f$[R_c|C]\f$. Like before, we make the matrix square by adding an extra row of \f$(0,0,0,1)\f$. Then the extrinsic matrix is
+/// obtained by inverting the camera's pose matrix:
+/// 
+/// \f{eqnarray*}{
+/// \left[ \begin{array}{c|c}
+/// R & t  \\
+/// \hline 
+/// 0 & 1
+/// \end{array} \right]
+/// 
+/// &=&
+/// \left[ \begin{array}{c|c}
+/// R_c & C  \\
+/// \hline 
+/// 0 & 1
+/// \end{array} \right]^{-1} \\
+/// 
+/// &=&
+/// \left[ \begin{array}{c|c}
+/// R_c & 0  \\
+/// \hline 
+/// 0 & 1
+/// \end{array} \right]^{-1}
+/// \left[ \begin{array}{c|c}
+/// I & C  \\
+/// \hline 
+/// 0 & 1
+/// \end{array} \right]^{-1} \\
+///
+/// &=&
+/// \left[ \begin{array}{c|c}
+/// R_c^T & 0  \\
+/// \hline 
+/// 0 & 1
+/// \end{array} \right]
+/// \left[ \begin{array}{c|c}
+/// I & -C  \\
+/// \hline 
+/// 0 & 1
+/// \end{array} \right] \\
+///
+/// &=&
+/// \left[ \begin{array}{c|c}
+/// R_c^T & -R_c^TC  \\
+/// \hline 
+/// 0 & 1
+/// \end{array} \right]
+/// \f}
+/// 
+/// When applying the inverse, we use the fact that the inverse of a rotation matrix is it's transpose, and inverting a translation matrix
+/// simply negates the translation vector. Thus, we see that the relationship between the extrinsic matrix parameters and the camera's pose is
+/// straightforward:
+/// \f{eqnarray*}{
+/// R &=& R^T_c \\
+/// t &=& -RC
+/// \f}
+/// 
+/// Some texts write the extrinsic matrix substituting \f$-RC\f$ for \f$t\f$, which mixes a world transform \f$(R)\f$ and camera transform
+/// notation \f$(C)\f$.
+/// 
+/// @subsection math_operators Mathematical Operators
+/// The following conventions apply to mathematical operators on objects available in MECL:
+/// TBD
+///

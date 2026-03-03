@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_00050.xsd">
+  <AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>ActiveEcuC</SHORT-NAME>
+      <ELEMENTS>
+        <ECUC-MODULE-CONFIGURATION-VALUES UUID="5bae1ebe-5349-4261-93a5-87db3f06f6f9">
+          <SHORT-NAME>vXSpi</SHORT-NAME>
+          <DEFINITION-REF DEST="ECUC-MODULE-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi</DEFINITION-REF>
+          <IMPLEMENTATION-CONFIG-VARIANT>VARIANT-PRE-COMPILE</IMPLEMENTATION-CONFIG-VARIANT>
+          <MODULE-DESCRIPTION-REF DEST="BSW-IMPLEMENTATION">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi_Impl</MODULE-DESCRIPTION-REF>
+          <CONTAINERS>
+            <ECUC-CONTAINER-VALUE UUID="957134ac-fecc-4599-8b00-7fbd54ffd407">
+              <SHORT-NAME>vXSpiPublishedInformation</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation</DEFINITION-REF>
+              <SUB-CONTAINERS>
+                <ECUC-CONTAINER-VALUE UUID="20fb07aa-ad39-4510-9fd9-e082d8dd5fb0">
+                  <SHORT-NAME>vXSpiDerivativeInformation</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation/vXSpiDataAlignment</DEFINITION-REF>
+                      <VALUE>1</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                  <SUB-CONTAINERS>
+                    <ECUC-CONTAINER-VALUE UUID="c1d7fb94-5218-4285-945d-77f9e47a9a58">
+                      <SHORT-NAME>vXSpiHwUnitInformation_OSPI0</SHORT-NAME>
+                      <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation/vXSpiHwUnitInformation</DEFINITION-REF>
+                      <PARAMETER-VALUES>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation/vXSpiHwUnitInformation/vXSpiMemoryBaseAddress</DEFINITION-REF>
+                          <VALUE>1342177280</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation/vXSpiHwUnitInformation/vXSpiMemorySize</DEFINITION-REF>
+                          <VALUE>4294967295</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation/vXSpiHwUnitInformation/vXSpiNumberOfChipSelects</DEFINITION-REF>
+                          <VALUE>4</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation/vXSpiHwUnitInformation/vXSpiRegisterEndAddress</DEFINITION-REF>
+                          <VALUE>1191444736</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation/vXSpiHwUnitInformation/vXSpiRegisterStartAddress</DEFINITION-REF>
+                          <VALUE>1191444480</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                      </PARAMETER-VALUES>
+                    </ECUC-CONTAINER-VALUE>
+                    <ECUC-CONTAINER-VALUE UUID="2a0d8eaf-fd61-447a-9fd0-14fc573d4520">
+                      <SHORT-NAME>vXSpiHwUnitInformation_OSPI1</SHORT-NAME>
+                      <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation/vXSpiHwUnitInformation</DEFINITION-REF>
+                      <PARAMETER-VALUES>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation/vXSpiHwUnitInformation/vXSpiMemoryBaseAddress</DEFINITION-REF>
+                          <VALUE>1476395008</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation/vXSpiHwUnitInformation/vXSpiMemorySize</DEFINITION-REF>
+                          <VALUE>4294967295</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation/vXSpiHwUnitInformation/vXSpiNumberOfChipSelects</DEFINITION-REF>
+                          <VALUE>4</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation/vXSpiHwUnitInformation/vXSpiRegisterEndAddress</DEFINITION-REF>
+                          <VALUE>1191510272</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation/vXSpiHwUnitInformation/vXSpiRegisterStartAddress</DEFINITION-REF>
+                          <VALUE>1191510016</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                      </PARAMETER-VALUES>
+                    </ECUC-CONTAINER-VALUE>
+                  </SUB-CONTAINERS>
+                </ECUC-CONTAINER-VALUE>
+              </SUB-CONTAINERS>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="258d1d1c-c163-46f2-b06d-c384c2614698">
+              <SHORT-NAME>vXSpiGeneral</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiGeneral</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiGeneral/vXSpiDevErrorDetect</DEFINITION-REF>
+                  <VALUE>true</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiGeneral/vXSpiSafeBswChecks</DEFINITION-REF>
+                  <VALUE>false</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiGeneral/vXSpiUsePeripheralAccessApi</DEFINITION-REF>
+                  <VALUE>false</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-FLOAT-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiGeneral/vXSpiMainFunctionPeriod</DEFINITION-REF>
+                  <VALUE>0.01</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiGeneral/vXSpiHardwareLoopCycles</DEFINITION-REF>
+                  <VALUE>1000</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiGeneral/vXSpiSynchronousProcessing</DEFINITION-REF>
+                  <VALUE>true</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiGeneral/vXSpiSynchronousProcessingLoopCycles</DEFINITION-REF>
+                  <VALUE>100000000</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="d9a7c1cd-8abc-4250-8a36-8d6a364f7484">
+              <SHORT-NAME>vXSpiHwConfig</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig</DEFINITION-REF>
+              <SUB-CONTAINERS>
+                <ECUC-CONTAINER-VALUE UUID="7f4fff71-7baa-428d-92f3-6e46c9e4565b">
+                  <SHORT-NAME>vXSpiHwUnit</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiHwUnitId</DEFINITION-REF>
+                      <VALUE>0</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                  <REFERENCE-VALUES>
+                    <ECUC-REFERENCE-VALUE>
+                      <DEFINITION-REF DEST="ECUC-REFERENCE-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiHwUnitInformationRef</DEFINITION-REF>
+                      <VALUE-REF DEST="ECUC-CONTAINER-VALUE">/ActiveEcuC/vXSpi/vXSpiPublishedInformation/vXSpiDerivativeInformation/vXSpiHwUnitInformation_OSPI0</VALUE-REF>
+                    </ECUC-REFERENCE-VALUE>
+                  </REFERENCE-VALUES>
+                  <SUB-CONTAINERS>
+                    <ECUC-CONTAINER-VALUE UUID="749e7e67-460a-452b-aa47-d792d3676f90">
+                      <SHORT-NAME>vXSpiDevice</SHORT-NAME>
+                      <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice</DEFINITION-REF>
+                      <PARAMETER-VALUES>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiMemorySize</DEFINITION-REF>
+                          <VALUE>134217728</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiDeviceId</DEFINITION-REF>
+                          <VALUE>0</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiChipSelectIndex</DEFINITION-REF>
+                          <VALUE>0</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiMemoryBaseAddressOffset</DEFINITION-REF>
+                          <VALUE>0</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiBaudrateDivider</DEFINITION-REF>
+                          <VALUE>4</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiPageSize</DEFINITION-REF>
+                          <VALUE>4095</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiClockDelayChipSelectDeassert</DEFINITION-REF>
+                          <VALUE>64</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiClockDelayChipSelectDeactivation</DEFINITION-REF>
+                          <VALUE>64</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiClockDelayLastTransactionBit</DEFINITION-REF>
+                          <VALUE>8</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiClockDelayNssOut</DEFINITION-REF>
+                          <VALUE>8</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiReadDataDelay</DEFINITION-REF>
+                          <VALUE>0</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiReadDataDdrReadDelay</DEFINITION-REF>
+                          <VALUE>0</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-TEXTUAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiReadDataSampleEdgeSelect</DEFINITION-REF>
+                          <VALUE>FALLING_EDGE</VALUE>
+                        </ECUC-TEXTUAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiReadDataDqsEnable</DEFINITION-REF>
+                          <VALUE>false</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiHwUnit/vXSpiDevice/vXSpiReadDataBypass</DEFINITION-REF>
+                          <VALUE>true</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                      </PARAMETER-VALUES>
+                    </ECUC-CONTAINER-VALUE>
+                  </SUB-CONTAINERS>
+                </ECUC-CONTAINER-VALUE>
+                <ECUC-CONTAINER-VALUE UUID="a77049b5-6244-4930-938d-2e6ae27746b1">
+                  <SHORT-NAME>vXSpiProtocolMode_Read</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiCommandDataWidth</DEFINITION-REF>
+                      <VALUE>SINGLE</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiCommandDataRate</DEFINITION-REF>
+                      <VALUE>SDR</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiAddressDataWidth</DEFINITION-REF>
+                      <VALUE>SINGLE</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiAddressDataRate</DEFINITION-REF>
+                      <VALUE>SDR</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiDataDataWidth</DEFINITION-REF>
+                      <VALUE>OCTAL</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiDataDataRate</DEFINITION-REF>
+                      <VALUE>SDR</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                </ECUC-CONTAINER-VALUE>
+                <ECUC-CONTAINER-VALUE UUID="03c056c3-cb40-477d-ba76-5cc529ade68a">
+                  <SHORT-NAME>vXSpiProtocolMode_Write</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiCommandDataWidth</DEFINITION-REF>
+                      <VALUE>SINGLE</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiCommandDataRate</DEFINITION-REF>
+                      <VALUE>SDR</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiAddressDataWidth</DEFINITION-REF>
+                      <VALUE>OCTAL</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiAddressDataRate</DEFINITION-REF>
+                      <VALUE>SDR</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiDataDataWidth</DEFINITION-REF>
+                      <VALUE>OCTAL</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiDataDataRate</DEFINITION-REF>
+                      <VALUE>SDR</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                </ECUC-CONTAINER-VALUE>
+                <ECUC-CONTAINER-VALUE UUID="78b96554-0f9a-400e-bf71-7e564e04878f">
+                  <SHORT-NAME>vXSpiProtocolMode</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiCommandDataWidth</DEFINITION-REF>
+                      <VALUE>SINGLE</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiCommandDataRate</DEFINITION-REF>
+                      <VALUE>SDR</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiAddressDataWidth</DEFINITION-REF>
+                      <VALUE>SINGLE</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiAddressDataRate</DEFINITION-REF>
+                      <VALUE>SDR</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiDataDataWidth</DEFINITION-REF>
+                      <VALUE>SINGLE</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/vXSpi_Jacinto7Ti01/vXSpi/vXSpiHwConfig/vXSpiProtocolMode/vXSpiDataDataRate</DEFINITION-REF>
+                      <VALUE>SDR</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                </ECUC-CONTAINER-VALUE>
+              </SUB-CONTAINERS>
+            </ECUC-CONTAINER-VALUE>
+          </CONTAINERS>
+        </ECUC-MODULE-CONFIGURATION-VALUES>
+      </ELEMENTS>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

@@ -1,0 +1,1 @@
+rule={'space':'OV','scope':'B','type':'^(\^)?&\{c::.*[^>]\}$','flag':'R','pattern':'^[ob]_[A-Z][A-Za-z0-9]*_r(o|x|t|x)$', 'message':6200}

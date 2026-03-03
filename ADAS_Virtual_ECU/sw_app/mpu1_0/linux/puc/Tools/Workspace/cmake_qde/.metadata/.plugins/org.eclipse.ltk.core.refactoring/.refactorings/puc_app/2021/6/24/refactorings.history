@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;puc_app/code/Framework/CoreLibs/bsp/bsp/bps.h&apos; to &apos;bsp.h&apos;" description="Rename resource &apos;bps.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="code/Framework/CoreLibs/bsp/bsp/bps.h" name="bsp.h" stamp="1624006403140" updateReferences="true"/>
+</session>

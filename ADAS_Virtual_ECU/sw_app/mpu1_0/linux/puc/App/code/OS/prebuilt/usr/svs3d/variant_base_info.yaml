@@ -1,0 +1,37 @@
+#SECTION custom_fcpv_view_position_data
+#VARIANT 0
+position : [0, 0, 0],
+
+#VARIANT 1
+position : [-164, 0, 0],
+
+#VARIANT 2
+position : [74, 0, 0],
+
+#SECTION custom_fcpv_view_rotation_data
+#VARIANT 0
+rotation : [0, 3, 0],
+
+#VARIANT 1
+rotation : [0, -35, 0],
+
+
+#SECTION custom_guideline_data
+#VARIANT 0
+ffc-width : 1738.88,
+
+#VARIANT 1
+ffc-width : 1889.03,
+
+#SECTION custom_vehicle_blind_area
+#VARIANT 0
+ 	left-blind-area : 200,
+	right-blind-area : 200,
+	rear-blind-area : 200,
+	front-blind-area : 200,
+	
+#VARIANT 1
+	left-blind-area : 100,
+	right-blind-area : 100,
+	rear-blind-area : 100,
+	front-blind-area : 100,

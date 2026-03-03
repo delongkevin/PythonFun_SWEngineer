@@ -1,0 +1,1781 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Enums>
+    <Folder Name="Languages">
+        <Enum Name="Language" ID="4">
+            <EnumEntry Name="LanguageEnglish" ID="6" commment="English Language">
+                <Value kind="2" value="0"/>
+            </EnumEntry>
+            <EnumEntry Name="LanguageGerman" ID="7" commment="German Language">
+                <Value kind="2" value="1"/>
+            </EnumEntry>
+            <EnumEntry Name="LanguageFrench" ID="8" commment="French Language">
+                <Value kind="2" value="2"/>
+            </EnumEntry>
+            <EnumEntry Name="LanguageSpanish" ID="8209" commment="Spanish Language">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+    </Folder>
+    <Folder Name="Cameras">
+        <Enum Name="Camera" ID="108">
+            <EnumEntry Name="CameraFront" ID="109" commment="Front Camera">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CameraLeft" ID="110" commment="Left Camera">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CameraRear" ID="111" commment="Rear Camera">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CameraRight" ID="112" commment="Right Camera">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CameraChmsl" ID="5584" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="Coefficients" ID="186">
+            <EnumEntry Name="Coeff0" ID="191" commment="just used for index">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="Coeff1" ID="197" commment="just used for index">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="Coeff2" ID="198" commment="just used for index">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="Coeff3" ID="202" commment="just used for index">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="Coeff4" ID="207" commment="just used for index">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="Coeff5" ID="212" commment="just used for index">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="PreRoll" ID="121">
+            <EnumEntry Name="PreRoll0" ID="122" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PreRoll90" ID="124" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PreRoll180" ID="143" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PreRoll270" ID="169" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="RotationType" ID="160">
+            <EnumEntry Name="WorldToCamera" ID="1" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CameraToWorld" ID="14" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="ImageOriginPosition" ID="1275">
+            <EnumEntry Name="UpperLeft" ID="516" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="UpperRight" ID="519" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="LowerLeft" ID="991" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="LowerRight" ID="1276" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="CameraDevice" ID="8054">
+            <EnumEntry Name="SpiFlashW25Q40" ID="8057" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SerializerCXD4963ER" ID="5287" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="DeserializerCXD4960ER" ID="5383" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ImagerAS0149AT" ID="5388" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="CameraPowerMode" ID="6619">
+            <EnumEntry Name="CameraPowerModeOff" ID="6624" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CameraPowerModeOn" ID="6629" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CameraPowerModeSleep" ID="6634" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="CameraPrbsTestState" ID="6639">
+            <EnumEntry Name="CameraPrbsTestStateStarted" ID="6644" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CameraPrbsTestStateNotStarted" ID="6649" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CameraPrbsTestStateSuccessful" ID="6654" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CameraPrbsTestStateNotSuccessful" ID="6659" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+    </Folder>
+    <Folder Name="Views">
+        <Enum Name="ViewId" ID="245">
+            <EnumEntry Name="ServiceHelper_E_HMIView_NoView " ID="502" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_FRONT_TOP_ALL" ID="251" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_FRONT_TOP_FL" ID="116" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_FRONT_TOP_FR" ID="19" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_FRONT_TOP_RL" ID="560" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_FRONT_TOP_RR" ID="1185" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_FRONT_SPLIT_TOP_ALL" ID="139" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_FRONT_SPLIT_TOP_FL" ID="291" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_FRONT_SPLIT_TOP_FR" ID="901" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_FRONT_SPLIT_TOP_RL" ID="6456" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_FRONT_SPLIT_TOP_RR" ID="6461" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_TOP_ALL" ID="6466" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_TOP_FL" ID="6471" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_TOP_FR" ID="6476" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_TOP_RL" ID="6481" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_TOP_RR" ID="6486" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_CENTER_TOP_ALL" ID="6491" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_CENTER_TOP_FL" ID="6496" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_CENTER_TOP_FR" ID="6501" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_CENTER_TOP_RL" ID="6506" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_CENTER_TOP_RR" ID="6511" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_RIGHT_TOP_ALL" ID="6516" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_RIGHT_TOP_FL" ID="6521" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_RIGHT_TOP_FR" ID="6526" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_RIGHT_TOP_RL" ID="6531" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_RIGHT_TOP_RR" ID="6536" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_FAR_RIGHT_TOP_ALL" ID="6541" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_FAR_RIGHT_TOP_FL" ID="6546" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_FAR_RIGHT_TOP_FR" ID="6551" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_FAR_RIGHT_TOP_RL" ID="6556" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_FAR_RIGHT_TOP_RR" ID="6561" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_LEFT_TOP_ALL" ID="6566" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_LEFT_TOP_FL" ID="6571" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_LEFT_TOP_FR" ID="6576" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_LEFT_TOP_RL" ID="936" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_LEFT_TOP_RR" ID="125" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_FAR_LEFT_TOP_ALL" ID="1716" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_FAR_LEFT_TOP_FL" ID="1720" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_FAR_LEFT_TOP_FR" ID="1724" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_FAR_LEFT_TOP_RL" ID="872" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_SPLIT_FAR_LEFT_TOP_RR" ID="1218" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_FRONT_FULL" ID="536" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_WIDE" ID="272" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_BED_ST" ID="540" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_CONFIRM_EXTERIOR" ID="542" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_CONFIRM_EXTERIOR_COLOR" ID="1727" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_CONFIRM_INTERIOR" ID="3171" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_CONFIRM_INTERIOR_COLOR" ID="3176" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_FRONT_SIDE_OVERALL" ID="7195" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_FRONT_SIDE_FRONTWHEEL" ID="2849" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_UNDERFLOOR_SIDE_OVERALL" ID="5428" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_UNDERFLOOR_SIDE_FRONTWHEEL" ID="7125" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_BACK_SIDE_OVERALL" ID="1286" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_WIDE_BACK" ID="5504" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_NARROW" ID="4223" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_HITCH_ZOOM" ID="7184" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_QUAD" ID="3625" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_TOP_ALL_CALIBRATION" ID="4355" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_FRONT_RAW" ID="340" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_LEFT_RAW" ID="762" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_REAR_RAW" ID="1071" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_RIGHT_RAW" ID="1127" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ServiceHelper_E_HMIView_CHMSL_RAW" ID="1193" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="VideoFlowType" ID="988">
+            <EnumEntry Name="ImageVparkEtIncrustations" ID="1273" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ImageVparkAerienne" ID="510" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+    </Folder>
+    <Folder Name="JobConfig">
+        <Enum Name="AppState" ID="610">
+            <EnumEntry Name="AppStateInit" ID="611" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="AppStateNormal" ID="612" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="AppStateVariantSwitch" ID="613" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="Job" ID="614">
+            <EnumEntry Name="JobSys" ID="5845" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="JobAppM" ID="6759" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="JobSigM" ID="1044" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="JobVarM" ID="742" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="JobLogM" ID="757" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="JobSysMon" ID="678" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="JobOVL3D" ID="682" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="JobTIOVX" ID="684" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="JobEol" ID="696" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="JobOC" ID="8196" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="JobCamM" ID="1280" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="JobCalSM" ID="760" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="JobTHA" ID="8641" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="JobTAD2" ID="8658" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="JobDLD" ID="1725" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+    </Folder>
+    <Folder Name="Calibration">
+        <Folder Name="OC">
+            <Enum Name="SpeedrangesE" ID="1131">
+                <EnumEntry Name="Speed0" ID="1321" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="Speed1" ID="1332" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="Speed2" ID="1343" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="Speed3" ID="1354" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="Speed4" ID="1365" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="Speed5" ID="1376" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+            </Enum>
+            <Enum Name="FrameSkipsE" ID="1387">
+                <EnumEntry Name="Frame0" ID="1388" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="Frame1" ID="1389" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="Frame2" ID="1390" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="Frame3" ID="1391" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="Frame4" ID="1392" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="Frame5" ID="1393" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+            </Enum>
+            <Enum Name="ROIPoolE" ID="1436">
+                <EnumEntry Name="ROIPool0" ID="1443" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="ROIPool1" ID="1450" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+            </Enum>
+            <Enum Name="ROIPoolRectE" ID="7884">
+                <EnumEntry Name="ROIPoolRect0" ID="7885" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="ROIPoolRect1" ID="7886" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+            </Enum>
+            <Enum Name="OCErrorCodeE" ID="2940">
+                <EnumEntry Name="OcErrCodeNoError" ID="2945" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcErrCodeInitFail" ID="2960" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcErrCodeStartFail" ID="2955" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcErrCodeFeatureCollectionError" ID="2970" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcErrCodeCalibrationError" ID="2965" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcErrCodeInvalidConfiguration" ID="2980" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcErrCodeInvalidSavedData" ID="2975" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcErrCodeUnexpectedRequest" ID="2998" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+            </Enum>
+            <Enum Name="OCAlgoStateE" ID="2950">
+                <EnumEntry Name="OcStateUninit" ID="2993" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcStateInitOk" ID="3008" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcStateError" ID="3003" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcStateFeatureCollection" ID="3018" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcStateFeatureCollectionCompleted" ID="3013" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcStateCalibration" ID="3028" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcStateCalibrationCompleted" ID="3023" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcStateTerminated" ID="6704" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcStatePaused" ID="6714" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcStateUnknown" ID="6709" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="OcStateEnd" ID="6724" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+            </Enum>
+        </Folder>
+        <Enum Name="CalibrationRequestE" ID="505">
+            <EnumEntry Name="CalibReqNone" ID="985" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CalibReqStart" ID="1270" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CalibReqStop" ID="504" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CalibReqPause" ID="507" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CalibReqResume" ID="986" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CalibReqStatus" ID="1271" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CalibReqDebug" ID="506" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="CalibrationTypeE" ID="584">
+            <EnumEntry Name="CalibTypeNONE" ID="1317" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CalibTypeEOL" ID="522" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CalibTypeOC" ID="532" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CalibTypeTEOL" ID="300" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CalibTypeSC" ID="303" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CalibTypeSSA" ID="666" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CalibTypeDSA" ID="689" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CalibTypeMax" ID="688" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Folder Name="EOL">
+            <Enum Name="TargetArray" ID="548">
+                <EnumEntry Name="TargetArray0" ID="998" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetArray1" ID="1283" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetArray2" ID="5542" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+            </Enum>
+            <Enum Name="MaxTargetPoints" ID="547">
+                <EnumEntry Name="TargetPoint0" ID="550" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint1" ID="999" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint2" ID="1284" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint3" ID="549" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint4" ID="552" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint5" ID="1000" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint6" ID="1285" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint7" ID="551" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint8" ID="544" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint9" ID="585" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint10" ID="1318" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint11" ID="543" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint12" ID="1549" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint13" ID="1151" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint14" ID="1148" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint15" ID="1639" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint16" ID="3118" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint17" ID="3219" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint18" ID="3320" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint19" ID="3421" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint20" ID="3522" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint21" ID="3623" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint22" ID="3724" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint23" ID="3825" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint24" ID="3926" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint25" ID="4027" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint26" ID="4128" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint27" ID="4229" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint28" ID="4330" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint29" ID="4431" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint30" ID="4532" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint31" ID="4633" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint32" ID="4734" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint33" ID="4835" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint34" ID="4936" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint35" ID="5037" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint36" ID="5138" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint37" ID="5239" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint38" ID="5340" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="TargetPoint39" ID="5441" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+            </Enum>
+            <Enum Name="GeometricDimensionsWorld" ID="1588">
+                <EnumEntry Name="GEOX" ID="1650" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="GEOY" ID="1661" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+                <EnumEntry Name="GEOZ" ID="1437" commment="todo">
+                    <Value kind="3"/>
+                </EnumEntry>
+            </Enum>
+            <Enum Name="Orientation" ID="1385">
+                <EnumEntry Name="ZPlane" ID="1435" commment="todo">
+                    <Value kind="2" value="0"/>
+                </EnumEntry>
+                <EnumEntry Name="XPlane" ID="1429" commment="todo">
+                    <Value kind="2" value="1"/>
+                </EnumEntry>
+                <EnumEntry Name="YPlane" ID="1442" commment="todo">
+                    <Value kind="2" value="2"/>
+                </EnumEntry>
+            </Enum>
+        </Folder>
+    </Folder>
+    <Folder Name="SignalManager">
+        <Enum Name="SignalTypesResponseCode" ID="1301">
+            <EnumEntry Name="ResponseCodeFailed" ID="361" commment="todo">
+                <Value kind="2" value="0x00"/>
+            </EnumEntry>
+            <EnumEntry Name="ResponseCodePositive" ID="364" commment="todo">
+                <Value kind="2" value="1"/>
+            </EnumEntry>
+            <EnumEntry Name="ResponseCodeNotSupportedCANID" ID="926" commment="FF">
+                <Value kind="2" value="255"/>
+            </EnumEntry>
+            <EnumEntry Name="ResponseCodeNotSupportedParam" ID="1210" commment="FE">
+                <Value kind="2" value="254"/>
+            </EnumEntry>
+            <EnumEntry Name="ResponseCodeUndefError" ID="363" commment="FD">
+                <Value kind="2" value="253"/>
+            </EnumEntry>
+            <EnumEntry Name="ResponseCodeDelayed" ID="366" commment="FC">
+                <Value kind="2" value="252"/>
+            </EnumEntry>
+        </Enum>
+        <Folder Name="Calibration">
+            <Folder Name="EOL">
+                <Enum Name="EolErrorCodeE" ID="927">
+                    <EnumEntry Name="EOL_NoError" ID="1211" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_In_PROCESS" ID="365" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_MISSING_SOFTWARE" ID="494" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_PRECONDITION_VRANGE" ID="497" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_PRECONDITION_BASE_MODULE_360" ID="499" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_CAMERA_ERROR" ID="983" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_VARIANT_CODING" ID="1268" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_TARGET_NOT_FOUND_INIT" ID="2701" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_TARGET_NOT_FOUND_LEFT" ID="2890" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_TARGET_NOT_FOUND_RIGHT" ID="1675" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_TARGET_IDENT_ERROR_LEFT" ID="2702" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_TARGET_IDENT_ERROR_RIGHT" ID="2325" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_EXCEED_QUALITY_LIMIT" ID="2514" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_NOT_CALIBRATED" ID="1237" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_ABORTED" ID="8298" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_H_ESTIMATION_ERROR" ID="8299" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_PRECONDITION_VELOCITY" ID="8300" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_PRECONDITION_DOORS" ID="8301" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_WRONG_CAMERA_SOFTWARE" ID="8302" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="EOL_PRECONDITION" ID="8303" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                </Enum>
+                <Enum Name="EolAlgoStateE" ID="928">
+                    <EnumEntry Name="Eol_NotInit" ID="1184" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Eol_Init" ID="1654" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Eol_Start" ID="2134" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Eol_Running" ID="949" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Eol_Finished" ID="421" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                </Enum>
+            </Folder>
+            <Folder Name="OC">
+                <Enum Name="OcAlgoStateE" ID="500">
+                    <EnumEntry Name="Oc_Uninit" ID="493" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_InitOk" ID="581" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_Error" ID="1314" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_FeatureCollection" ID="492" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_FeatureCollectionCompleted" ID="141" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_Calibration" ID="367" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_CalibrationCompleted" ID="360" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_Terminated" ID="567" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_Paused" ID="1213" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_Unknown" ID="359" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_End" ID="118" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                </Enum>
+                <Enum Name="OcErrorCodeE" ID="897">
+                    <EnumEntry Name="Oc_NoError" ID="1300" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_InitFail" ID="241" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_StartFail" ID="292" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_FeatureCollectionError" ID="898" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_CalibrationError" ID="1182" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_InvalidConfiguration" ID="115" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_InvalidSavedData" ID="290" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_UnexpectedRequest" ID="899" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Oc_Num" ID="1183" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                </Enum>
+            </Folder>
+            <Folder Name="TEOL">
+                <Enum Name="TeolErrorCodeE" ID="1293">
+                    <EnumEntry Name="Teol_No_Error" ID="293" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Teol_NOTCALIBRATED" ID="319" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                </Enum>
+                <Enum Name="TeolAlgoStateE" ID="123">
+                    <EnumEntry Name="Teol_NotInit" ID="902" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Teol_Init" ID="1186" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Teol_Start" ID="325" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Teol_Running" ID="2323" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Teol_Finished" ID="2512" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                </Enum>
+            </Folder>
+            <Folder Name="SC">
+                <Enum Name="ScErrorCodeE" ID="1197">
+                    <EnumEntry Name="Sc_Error_NoError" ID="304" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Sc_Error_NotCalibrated" ID="342" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Sc_Error_Unknown" ID="918" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                </Enum>
+                <Enum Name="ScAlgoStateE" ID="917">
+                    <EnumEntry Name="Sc_NotInit" ID="1296" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Sc_Init" ID="341" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Sc_Start" ID="344" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Sc_Running" ID="1759" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                    <EnumEntry Name="Sc_Finished" ID="1770" commment="todo">
+                        <Value kind="3"/>
+                    </EnumEntry>
+                </Enum>
+            </Folder>
+        </Folder>
+        <Enum Name="PerfMBootState" ID="509">
+            <EnumEntry Name="PerfMBootStateComplete" ID="987" commment="">
+                <Value kind="2" value="0"/>
+            </EnumEntry>
+            <EnumEntry Name="PerfMBootStateBooting" ID="1272" commment="">
+                <Value kind="2" value="1"/>
+            </EnumEntry>
+            <EnumEntry Name="PerfMBootStateInit" ID="508" commment="">
+                <Value kind="2" value="2"/>
+            </EnumEntry>
+            <EnumEntry Name="PerfMBootStateSNA" ID="511" commment="">
+                <Value kind="2" value="255"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="PerfMErrorCategory" ID="503">
+            <EnumEntry Name="PerfMErrorCategoryCamera" ID="582" commment="">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PerfMErrorCategoryOthers" ID="1315" commment="">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="CamError" ID="1202">
+            <EnumEntry Name="CamErrorNone" ID="343" commment="Everything is fine">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CamErrorCrc" ID="346" commment="EEPROM Crc check failed">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CamErrorInitFailed" ID="919" commment="Init failed, some internal camera error">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CamErrorUpdateFailed" ID="1203" commment="Update Variant data failed">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CamErrorDisconnected" ID="912" commment="Camera was unplugged or disconnected">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="SwType" ID="1204">
+            <EnumEntry Name="SwTypeVersionPuC" ID="345" commment="PuC Software Version">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SwTypeOS" ID="152" commment="Operation System Type">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SwTypeCpuLoad" ID="545" commment="Type for getting CPU load">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SwTypeVersionPL" ID="5579" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SwTempMeasurementSoC" ID="3535" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SwTypeCamVersion" ID="8610" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="OsType" ID="546">
+            <EnumEntry Name="OsTypeQNX" ID="997" commment="QNX Operating System">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="OSTypeWindows" ID="1282" commment="Windows Operating System">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="CamTestPattern" ID="1676">
+            <EnumEntry Name="CamTestPatternNone" ID="844" commment="No test pattern (normal operation)">
+                <Value kind="2" value="0"/>
+            </EnumEntry>
+            <EnumEntry Name="CamTestPatternFullVertColorBars" ID="2136" commment="100 percent Vertical Color Bars test pattern">
+                <Value kind="2" value="2"/>
+            </EnumEntry>
+            <EnumEntry Name="CamTestPatternFadeToGrey" ID="8208" commment="Fade To Grey Vertical Color Bars test pattern">
+                <Value kind="2" value="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CamTestPatternSolidBlack" ID="1761" commment="Solid Black Color test pattern">
+                <Value kind="2" value="4"/>
+            </EnumEntry>
+            <EnumEntry Name="CamTestPatternSolidWhite" ID="2891" commment="Solid White Color test pattern">
+                <Value kind="2" value="5"/>
+            </EnumEntry>
+            <EnumEntry Name="CamTestPatternSolidRed" ID="1768" commment="Solid Red Color test pattern">
+                <Value kind="2" value="6"/>
+            </EnumEntry>
+            <EnumEntry Name="CamTestPatternSolidGreen" ID="414" commment="Solid Green Color test pattern">
+                <Value kind="2" value="7"/>
+            </EnumEntry>
+            <EnumEntry Name="CamTestPatternSolidBlue" ID="8207" commment="Solid Blue Color test pattern">
+                <Value kind="2" value="8"/>
+            </EnumEntry>
+            <EnumEntry Name="CamTestPatternTurnOff" ID="8312" commment="Power off camera deserialiizer">
+                <Value kind="2" value="15"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="HmiSoftButton" ID="5090">
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_None" ID="5191" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_Ok" ID="5297" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_Back" ID="5292" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_Next" ID="5398" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_NG" ID="5393" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_Cancel" ID="5499" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_UpArrow" ID="5494" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_DownArrow" ID="4893" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_LeftArrow" ID="6599" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_RightArrow" ID="6594" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_NextPage" ID="6609" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_PreviousPage" ID="6604" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_CounterClockwiseArrow" ID="6664" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_ClockwiseArrow" ID="6614" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_FrontCam" ID="6674" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_RearCam" ID="6669" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_LeftCam" ID="6684" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_RightCam" ID="6679" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_AllViewReset" ID="6694" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_NewCamera" ID="6689" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_Init" ID="6589" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_ViewAdjustment" ID="6699" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_CameraCheck" ID="2597" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButton_DiagCheck" ID="5690" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="HmiSoftButtonStatus" ID="5196">
+            <EnumEntry Name="aPerfM_E_HmiSoftButtonStatus_Normal" ID="536" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButtonStatus_React" ID="2338" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButtonStatus_Select" ID="2426" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButtonStatus_SelectReact" ID="2496" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButtonStatus_ToneDown" ID="5555" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="aPerfM_E_HmiSoftButtonStatus_ToneDownReact" ID="7180" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+    </Folder>
+    <Folder Name="VDG">
+        <Enum Name="SingleViews" ID="2542">
+            <EnumEntry Name="SingleViewFullFront" ID="2547" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewFullRearWide" ID="2552" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewFullRearNarrow" ID="7035" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewFullRearHitch" ID="7060" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopPrimaryFront" ID="7085" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopPrimaryRear" ID="7110" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopAllFront" ID="7135" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopAllLeft" ID="7160" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopAllRear" ID="7185" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopAllRight" ID="2721" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopFlFront" ID="2746" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopFrFront" ID="2771" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopFlLeft" ID="2804" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopRlLeft" ID="2829" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopRlRear" ID="2854" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopRrRear" ID="2879" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopFrRight" ID="3403" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopRrRight" ID="3610" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewFrontSplitLeft" ID="3908" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewFrontSplitRight" ID="4115" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewBed" ID="4413" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewAux" ID="4620" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewRearSplitCenterLeft" ID="4918" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewRearSplitCenterRight" ID="5125" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewRearSplitRightLeft" ID="5423" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewRearSplitRightRight" ID="7218" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewRearSplitLeftLeft" ID="7243" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewRearSplitLeftRight" ID="7268" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewRearSplitFarLeft" ID="7293" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewRearSplitFarRight" ID="7318" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmFrontSideOverallLeft" ID="69" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmFrontSideOverallCenter" ID="2211" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmFrontSideOverallRight" ID="7553" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmFrontSideLeft" ID="3000" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmFrontSideCenter" ID="599" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmFrontSideRight" ID="2357" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmRearSideOverallLeft" ID="7424" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmRearSideOverallCenter" ID="2810" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmRearSideOverallRight" ID="7774" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmRearFull" ID="4952" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewQuadFront" ID="4537" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewQuadLeft" ID="6316" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewQuadRear" ID="5571" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewQuadRight" ID="1180" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopAllFrontCalibration" ID="5425" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopAllLeftCalibration" ID="6906" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopAllRearCalibration" ID="3368" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewTopAllRightCalibration" ID="6489" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmUnderfloorSideOverallCenterHistoric" ID="4865" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmUnderfloorSideOverallCenterFront" ID="4130" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmUnderfloorSideOverallCenterLeft" ID="1418" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmUnderfloorSideOverallCenterRight" ID="1441" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmUnderfloorSideCenterHistoric" ID="1526" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmUnderfloorSideCenterFront" ID="1804" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmUnderfloorSideCenterLeft" ID="1857" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewMtmUnderfloorSideCenterRight" ID="8346" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewRawFront" ID="8351" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewRawLeft" ID="8356" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewRawRear" ID="8486" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewRawRight" ID="8491" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewRawChmsl" ID="8496" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="SingleViewLinks" ID="6807">
+            <EnumEntry Name="SingleViewLink0" ID="4494" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewLink1" ID="4499" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewLink2" ID="4600" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewLink3" ID="4696" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewLink4" ID="4701" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="SingleViewLink5" ID="4797" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="VirtualCameras" ID="6937">
+            <EnumEntry Name="VirtualCameraFullFront" ID="6942" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraFullRearWide" ID="6947" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraFullRearNarrow" ID="7343" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraFullRearHitch" ID="7348" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraTopPrimaryFront" ID="7353" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraTopPrimaryRear" ID="7358" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraTopAll" ID="7363" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraTopFl" ID="7368" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraTopFr" ID="7373" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraTopRl" ID="7378" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraTopRr" ID="7383" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraFrontSplitLeft" ID="7388" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraFrontSplitRight" ID="7393" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraBed" ID="7398" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraAux" ID="7403" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraRearSplitCenterLeft" ID="7408" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraRearSplitCenterRight" ID="2905" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraRearSplitRightLeft" ID="2910" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraRearSplitRightRight" ID="2915" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraRearSplitLeftLeft" ID="2920" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraRearSplitLeftRight" ID="2925" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraRearSplitFarLeft" ID="2930" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraRearSplitFarRight" ID="2935" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraMtmFrontSideOverallLeft" ID="5472" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraMtmFrontSideOverallCenter" ID="2228" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraMtmFrontSideOverallRight" ID="7265" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraMtmFrontSideLeft" ID="6891" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraMtmFrontSideCenter" ID="5691" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraMtmFrontSideRight" ID="7499" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraMtmRearSideOverallLeft" ID="7444" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraMtmRearSideOverallCenter" ID="7419" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraMtmRearSideOverallRight" ID="3036" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraMtmRearFull" ID="3064" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraQuadFront" ID="2732" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraQuadLeft" ID="3404" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraQuadRear" ID="4164" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraQuadRight" ID="3713" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraTopAllCalibration" ID="2450" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraMtmUnderfloorSideOverallCenter" ID="2843" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraMtmUnderfloorSideCenter" ID="4886" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraRawFront" ID="2226" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraRawLeft" ID="2264" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraRawRear" ID="2362" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraRawRight" ID="2367" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VirtualCameraRawChmsl" ID="2397" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="VideoLayer" ID="7589">
+            <EnumEntry Name="VideoLayer0" ID="5128" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VideoLayer1" ID="5133" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VideoLayer2" ID="7594" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="Zoomable" ID="6581">
+            <EnumEntry Name="ZoomableNo" ID="2112" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="ZoomableYes" ID="2113" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="PixelAreas" ID="6320">
+            <EnumEntry Name="PixelAreaFull" ID="5796" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopAll" ID="4528" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopAllFront" ID="7018" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopAllLeft" ID="6325" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopAllRear" ID="6175" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopAllRight" ID="273" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopZoomFront" ID="1288" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopZoomLeft" ID="5801" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopZoomRear" ID="4624" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopZoomRight" ID="2525" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopPrimary" ID="6335" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaSplitCenterLeft" ID="5806" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaSplitCenterRight" ID="4629" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaSplitRightLeft" ID="2613" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaSplitRightRight" ID="6340" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaSplitLeftLeft" ID="5846" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaSplitLeftRight" ID="5033" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaMtmSideOverallLeft" ID="3069" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaMtmSideOverallCenter" ID="1125" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaMtmSideOverallRight" ID="6429" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaMtmSideLeft" ID="6484" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaMtmSideCenter" ID="3411" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaMtmSideRight" ID="2968" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaMtmFull" ID="2120" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaQuadAll" ID="5350" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaQuadFront" ID="5003" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaQuadLeft" ID="6389" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaQuadRear" ID="5661" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaQuadRight" ID="7400" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopAllCalibration" ID="6474" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopAllFrontCalibration" ID="2309" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopAllLeftCalibration" ID="2932" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopAllRearCalibration" ID="6991" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="PixelAreaTopAllRightCalibration" ID="4249" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="StitchParams" ID="1228">
+            <EnumEntry Name="StitchParamsTopAllFrontLeft" ID="5284" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="StitchParamsTopAllFrontRight" ID="4049" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="StitchParamsTopAllRearLeft" ID="5592" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="StitchParamsTopAllRearRight" ID="4603" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="StitchParamsTopZoomFrontLeft" ID="5289" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="StitchParamsTopZoomFrontRight" ID="4054" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="StitchParamsTopZoomRearLeft" ID="938" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="StitchParamsTopZoomRearRight" ID="4608" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="StitchParamsTopAllFrontLeftCalibration" ID="4462" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="StitchParamsTopAllFrontRightCalibration" ID="4617" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="StitchParamsTopAllRearLeftCalibration" ID="3791" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="StitchParamsTopAllRearRightCalibration" ID="6379" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="StitchParamsLinks" ID="7561">
+            <EnumEntry Name="StitchParamsLink0" ID="7566" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="StitchParamsLink1" ID="5593" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="StitchParamsLink2" ID="4614" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="StitchParamsLink3" ID="2371" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="LensStretchCoefficients" ID="2870">
+            <EnumEntry Name="LensStretchCoeff0" ID="6987" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="LensStretchCoeff1" ID="2337" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="LensStretchCoeff2" ID="4765" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="LensStretchCoeff3" ID="4542" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="LensStretchCoeff4" ID="4319" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="LensStretchCoeff5" ID="1190" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="LensStretchCoeff6" ID="5581" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+    </Folder>
+    <Folder Name="3DViews">
+        <Enum Name="CarColorSelection" ID="2286">
+            <EnumEntry Name="CarColorIndex0" ID="2173" commment="Wind Chill Pearl (E3E9E9)">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CarColorIndex1" ID="7297" commment="Magnetic Gray Metallic (494848)">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CarColorIndex2" ID="6875" commment="Midnight Black Metallic (00031E)">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CarColorIndex3" ID="3759" commment="Supersonic Red (E20500)">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CarColorIndex4" ID="2001" commment="Smoked Mesquite (412C1B)">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CarColorIndex5" ID="2291" commment="Army Green (2A3A2A)">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CarColorIndex6" ID="7407" commment="Lunar Rock (949B96)">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="CarColorIndex7" ID="5718" commment="Blueprint (1E2548)">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+        <Enum Name="DriverSide" ID="1861">
+            <EnumEntry Name="DriverSideLeft" ID="1876" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="DriverSideRight" ID="1875" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+    </Folder>
+    <Folder Name="Variants">
+        <Enum Name="VariantIds" ID="1869">
+            <EnumEntry Name="VariantId0" ID="1868" commment="  Config A | 780B C-Cab Long     | Grille Type 1 | Normal   Mirror | 14 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId1" ID="1871" commment="  Config A | 780B C-Cab Long     | Grille Type 1 | Extended Mirror | 14 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId2" ID="1879" commment="  Config B | 780B D-Cab Standard | Grille Type 1 | Normal   Mirror | 14 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId3" ID="1882" commment="  Config B | 780B D-Cab Standard | Grille Type 1 | Extended Mirror | 14 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId4" ID="1881" commment="  Config C | 780B C-Cab Standard | Grille Type 1 | Normal   Mirror | 14 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId5" ID="1884" commment="  Config C | 780B C-Cab Standard | Grille Type 1 | Extended Mirror | 14 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId6" ID="1883" commment="  Config D | 780B D-Cab Short    | Grille Type 1 | Normal   Mirror | 14 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId7" ID="1886" commment="  Config D | 780B D-Cab Short    | Grille Type 1 | Extended Mirror | 14 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId8" ID="1885" commment="  Config D | 780B D-Cab Short    | Grille Type 2 | Normal   Mirror | 14 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId9" ID="1874" commment="  Config D | 780B D-Cab Short    | Grille Type 2 | Extended Mirror | 14 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId10" ID="8304" commment="Config E | 660B                | Grille Type 1 | Normal   Mirror | 14 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId11" ID="8305" commment="Config E | 660B                | Grille Type 1 | Extended Mirror | 14 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId12" ID="8306" commment="Config E | 660B                | Grille Type 2 | Normal   Mirror | 14 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId13" ID="8307" commment="Config E | 660B                | Grille Type 2 | Extended Mirror | 14 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId14" ID="8308" commment="Config E | 660B                | Grille Type 1 | Normal   Mirror |  8 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId15" ID="8309" commment="Config E | 660B                | Grille Type 1 | Extended Mirror |  8 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId16" ID="8310" commment="Config E | 660B                | Grille Type 2 | Normal   Mirror |  8 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId17" ID="8311" commment="Config E | 660B                | Grille Type 2 | Extended Mirror |  8 Inch">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId18" ID="8709" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+            <EnumEntry Name="VariantId19" ID="8675" commment="todo">
+                <Value kind="3"/>
+            </EnumEntry>
+        </Enum>
+    </Folder>
+</Enums>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_4-0-3.xsd">
+  <AR-PACKAGES>
+    <AR-PACKAGE UUID="a5522cf9-c7cb-4aa3-a229-cb1c65e9b2ff">
+      <SHORT-NAME>MICROSAR</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE UUID="395c69fe-ce7b-48f3-a7c7-18c4c70ac66b">
+          <SHORT-NAME>Crypto_30_vHsm_ib_bswmd</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE UUID="b767f6b7-5baf-4b97-b122-adca1f84b4ae">
+              <SHORT-NAME>BswModuleDescriptions</SHORT-NAME>
+              <ELEMENTS>
+                <BSW-MODULE-DESCRIPTION UUID="4ac8cb11-d65b-489e-8a2f-f8e11bb8c4c9">
+                  <SHORT-NAME>Crypto</SHORT-NAME>
+                  <PROVIDED-ENTRYS>
+                    <BSW-MODULE-ENTRY-REF-CONDITIONAL>
+                      <BSW-MODULE-ENTRY-REF DEST="BSW-MODULE-ENTRY">/MICROSAR/Crypto_30_vHsm_ib_bswmd/BswModuleDescriptions/Crypto_30_vHsm_MainFunction</BSW-MODULE-ENTRY-REF>
+                    </BSW-MODULE-ENTRY-REF-CONDITIONAL>
+                  </PROVIDED-ENTRYS>
+                  <INTERNAL-BEHAVIORS>
+                    <BSW-INTERNAL-BEHAVIOR UUID="db5022d7-2c0b-40cb-8835-0a7813362ff1">
+                      <SHORT-NAME>Crypto_30_vHsm</SHORT-NAME>
+                      <EXCLUSIVE-AREAS>
+                        <EXCLUSIVE-AREA UUID="aad97a8a-4e84-4128-957d-dfb8506b47d4">
+                          <SHORT-NAME>CRYPTO_30_VHSM_EXCLUSIVE_AREA_0</SHORT-NAME>
+                          <DESC>
+                            <L-2 L="FOR-ALL">This critical section protects workspace locking resources. Therefore the critical section enclosed with CRYPTO_30_VHSM_EXCLUSIVE_AREA_0 should never be interrupted by any other API. For more details, see DocTechRef.</L-2>
+                          </DESC>
+                        </EXCLUSIVE-AREA>
+                        <EXCLUSIVE-AREA UUID="af7558c8-5836-4f8d-a7eb-ea3deb777a66">
+                          <SHORT-NAME>CRYPTO_30_VHSM_EXCLUSIVE_AREA_1</SHORT-NAME>
+                          <DESC>
+                            <L-2 L="FOR-ALL">This critical section ensures that a forwarded DET from the vHsm is processed only once (Flag is located in the IPC memory).Therefore the critical section enclosed with CRYPTO_30_VHSM_EXCLUSIVE_AREA_1 should ensure that the Crypto_30_vHsm_MainFuncion does not interrupt an ongoing Job Processing. Otherwise, a DET could be notified twice.</L-2>
+                          </DESC>
+                        </EXCLUSIVE-AREA>
+                        <EXCLUSIVE-AREA UUID="3952be39-6f46-4802-978f-d77cac46edc9">
+                          <SHORT-NAME>CRYPTO_30_VHSM_EXCLUSIVE_AREA_2</SHORT-NAME>
+                          <DESC>
+                            <L-2 L="FOR-ALL">This critical section protects workspace locking resources when it can not be ensured that uint32 write access is atomic.The critical section enclosed with CRYPTO_30_VHSM_EXCLUSIVE_AREA_2 does not need to be protected against interruption by other API calls when the combination of hardware and compiler can guarantee atomic uint32 write operations.The critical section can therefore be empty in this case. If atomic uint32 write access can not be guaranteed, the critical sections enclosed with CRYPTO_30_VHSM_EXCLUSIVE_AREA_2 should ensure that they should never be interrupted by any other API</L-2>
+                          </DESC>
+                        </EXCLUSIVE-AREA>
+                        <EXCLUSIVE-AREA UUID="bb056b5d-c3a8-4c66-b446-76c0141809cd">
+                          <SHORT-NAME>CRYPTO_30_VHSM_EXCLUSIVE_AREA_3</SHORT-NAME>
+                          <DESC>
+                            <L-2 L="FOR-ALL">This critical section protects workspace locking resources when it can not be ensured that uint32 write access is atomic.The critical section enclosed with CRYPTO_30_VHSM_EXCLUSIVE_AREA_3 does not need to be protected against interruption by other API calls when the combination of hardware and compiler can guarantee atomic uint32 write operations.The critical section can therefore be empty in this case. If atomic uint32 write access can not be guaranteed, the critical sections enclosed with CRYPTO_30_VHSM_EXCLUSIVE_AREA_3 should ensure that they should never be interrupted by any other API. If interrupt mode of the driver is used and ISRs can not be interrupted by other interrupts, this critical section does not need to be protected.</L-2>
+                          </DESC>
+                        </EXCLUSIVE-AREA>
+                      </EXCLUSIVE-AREAS>
+                      <ENTITYS>
+                        <BSW-SCHEDULABLE-ENTITY UUID="e0a67b4d-a8c9-41ba-bf99-36c7572dc2f4">
+                          <SHORT-NAME>Crypto_30_vHsm_MainFunction</SHORT-NAME>
+                          <IMPLEMENTED-ENTRY-REF DEST="BSW-MODULE-ENTRY">/MICROSAR/Crypto_30_vHsm_ib_bswmd/BswModuleDescriptions/Crypto_30_vHsm_MainFunction</IMPLEMENTED-ENTRY-REF>
+                        </BSW-SCHEDULABLE-ENTITY>
+                      </ENTITYS>
+                      <EVENTS>
+                        <BSW-TIMING-EVENT UUID="fe1275ba-c32f-42c6-a41d-724f74d51ea8">
+                          <SHORT-NAME>Crypto_30_vHsm_MainFunctionTimingEvent0</SHORT-NAME>
+                          <STARTS-ON-EVENT-REF DEST="BSW-SCHEDULABLE-ENTITY">/MICROSAR/Crypto_30_vHsm_ib_bswmd/BswModuleDescriptions/Crypto/Crypto_30_vHsm/Crypto_30_vHsm_MainFunction</STARTS-ON-EVENT-REF>
+                          <PERIOD>0.01</PERIOD>
+                        </BSW-TIMING-EVENT>
+                      </EVENTS>
+                    </BSW-INTERNAL-BEHAVIOR>
+                  </INTERNAL-BEHAVIORS>
+                </BSW-MODULE-DESCRIPTION>
+                <BSW-MODULE-ENTRY UUID="e92a8a3b-74f4-48d6-aa4f-023be18dc4d8">
+                  <SHORT-NAME>Crypto_30_vHsm_MainFunction</SHORT-NAME>
+                  <CALL-TYPE>SCHEDULED</CALL-TYPE>
+                  <EXECUTION-CONTEXT>TASK</EXECUTION-CONTEXT>
+                </BSW-MODULE-ENTRY>
+              </ELEMENTS>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project>
+	<configuration id="com.qnx.qcc.toolChain.1931481089" name="aarch64le-release">
+		<extension point="org.eclipse.cdt.core.LanguageSettingsProvider">
+			<provider id="org.eclipse.cdt.ui.UserLanguageSettingsProvider">
+				<language id="org.eclipse.cdt.core.gcc">
+					<resource project-relative-path="">
+						<entry kind="macro" name="ME_PLATFORM_QNX" value="1"/>
+					</resource>
+				</language>
+				<language id="org.eclipse.cdt.core.assembly">
+					<resource project-relative-path="">
+						<entry kind="macro" name="ME_PLATFORM_QNX" value=""/>
+					</resource>
+				</language>
+			</provider>
+		</extension>
+	</configuration>
+</project>

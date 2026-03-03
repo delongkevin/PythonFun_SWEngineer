@@ -1,0 +1,31 @@
+D:/L2H4060_Software/sw/binary/bookshelf/SignalMgr//obj/j721s2/mcu2_1/release/SignalMgrBase.oer5f: \
+  src\SignalMgrBase.cpp \
+  D:\L2H4060_Software\sw\bookshelf\SignalMgr\inc\SignalMgrBase.h \
+  D:\L2H4060_Software\sw\bookshelf\SignalMgr\cfg\SignalMgr.cfg \
+  D:\L2H4060_Software\sw\bookshelf\SignalMgr\inc\SignalMgrTypes.h \
+  ..\..\platform\inc\PlatformDataTypes.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\stdint.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\__config \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c\sys\stdint.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\stdbool.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\string.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c\sys\cdefs.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\osal.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\TaskP.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\stddef.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\HwiP.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\MuxIntcP.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\SemaphoreP.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\CacheP.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\TimerP.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\RegisterIntr.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\EventCombinerP.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\QueueP.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\CycleprofilerP.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\MailboxP.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\MutexP.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\ClockP.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\DebugP.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\HeapP.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\MemoryP.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\osal\EventP.h

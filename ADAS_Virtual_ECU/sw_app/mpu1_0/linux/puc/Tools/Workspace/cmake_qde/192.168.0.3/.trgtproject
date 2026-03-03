@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<trgtproject id="com.qnx.tools.ide.target.core.target">
+    <data>
+        <item id="com.qnx.tools.ide.target">
+            <connection>
+                <ENDIAN value="le"/>
+                <VERSION value="2018/02/06-14:33:34EST"/>
+                <ARCHITECTURE value="aarch64le"/>
+                <MACHINE value="Xilinx_MPSoC_ZCU102_board"/>
+                <SYSNAME value="QNX"/>
+                <CPU value="aarch64le"/>
+                <HASVERSION value="1"/>
+                <HOSTNAME value="localhost"/>
+                <OS value="nto"/>
+                <QCONN_VERSION value="1.4.207944"/>
+                <RELEASE value="7.0.1"/>
+                <NUM_SRVCS value="1"/>
+            </connection>
+            <qconnostype value="nto"/>
+            <project>
+                <name value="192.168.0.3"/>
+            </project>
+            <qconnport value="8000"/>
+            <qconnguid value="25249eaa-e314-4d0d-ab74-2873e53d1605"/>
+            <targettmpdir value="/tmp"/>
+            <qconnhostname value="192.168.0.3"/>
+        </item>
+    </data>
+</trgtproject>

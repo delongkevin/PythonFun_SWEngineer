@@ -1,0 +1,650 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_00048.xsd">
+  <AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>ActiveEcuC</SHORT-NAME>
+      <ELEMENTS>
+        <ECUC-MODULE-CONFIGURATION-VALUES UUID="927a9dac-da25-4945-b3c9-9528675559f0">
+          <SHORT-NAME>I2c</SHORT-NAME>
+          <DEFINITION-REF DEST="ECUC-MODULE-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c</DEFINITION-REF>
+          <IMPLEMENTATION-CONFIG-VARIANT>VARIANT-PRE-COMPILE</IMPLEMENTATION-CONFIG-VARIANT>
+          <MODULE-DESCRIPTION-REF DEST="BSW-IMPLEMENTATION">/MICROSAR/I2c_Jacinto7Tii2c01/I2c_Impl</MODULE-DESCRIPTION-REF>
+          <CONTAINERS>
+            <ECUC-CONTAINER-VALUE UUID="978eb469-d0f1-4ff4-bb9a-1d1f77c73bfc">
+              <SHORT-NAME>AM64x_I2C0</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>536870912</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>536871127</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="bfd92d7a-aa5e-43e1-b0ef-db4b0670905c">
+              <SHORT-NAME>AM64x_I2C1</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>536936448</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>536936663</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="01c75e7d-cc95-4444-ab0f-8a4c91884754">
+              <SHORT-NAME>AM64x_I2C2</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>537001984</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>537002199</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="ad86b37c-bf15-45f9-9624-4cbb040887a1">
+              <SHORT-NAME>AM64x_I2C3</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>537067520</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>537067735</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="ba20e9f9-b79c-422f-ba49-06eeafb82907">
+              <SHORT-NAME>AM64x_MCU_I2C0</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>76546048</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>76546263</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="d1a1341c-1ade-45d5-84e0-ede4096dbebc">
+              <SHORT-NAME>AM64x_MCU_I2C1</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>76611584</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>76611799</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="978eb469-d0f1-4ff4-bb9a-1d1f77c73bfc">
+              <SHORT-NAME>TDA4x_DRA8xx_I2C0</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>33554432</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>33554647</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="24c5fbb5-18f3-4977-a0ad-842ec7ead961">
+              <SHORT-NAME>TDA4x_DRA8xx_I2C1</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>33619968</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>33620183</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="49c0ed40-de76-4bb7-b4f5-1c81014823d9">
+              <SHORT-NAME>TDA4x_DRA8xx_I2C2</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>33685504</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>33685719</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="8e1ea232-7b4d-4e79-a984-fb63b61a4416">
+              <SHORT-NAME>TDA4x_DRA8xx_I2C3</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>33751040</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>33751255</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="d26f4fd6-add2-4951-af24-ba8309298e99">
+              <SHORT-NAME>TDA4x_DRA8xx_I2C4</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>33816576</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>33816791</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="f151360c-11b4-4e70-a35d-88fa0ed1b3c3">
+              <SHORT-NAME>TDA4x_DRA8xx_I2C5</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>33882112</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>33882327</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="1047bcfb-c9e7-41ac-9665-0f9b3857d04e">
+              <SHORT-NAME>TDA4x_DRA8xx_I2C6</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>33947648</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>33947863</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="c5d3c16b-441c-4ccb-a150-3ac61d7c1b7f">
+              <SHORT-NAME>TDA4x_DRA8xx_MCU_I2C0</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>1085276160</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>1085276375</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="b4cb2064-c921-47f5-89b5-ec2e52b099d9">
+              <SHORT-NAME>TDA4x_DRA8xx_MCU_I2C1</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>1085341696</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>1085341911</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="b640b4a7-ffce-4359-b02f-d7c666b1c87c">
+              <SHORT-NAME>TDA4x_DRA8xx_WKUP_I2C0</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitBase</DEFINITION-REF>
+                  <VALUE>1108475904</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cHardwareConfiguration/I2cUnitEnd</DEFINITION-REF>
+                  <VALUE>1108476119</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="92b30733-b9fc-4e9e-8a77-6484f998c4db">
+              <SHORT-NAME>I2cConfigSet</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet</DEFINITION-REF>
+              <SUB-CONTAINERS>
+                <ECUC-CONTAINER-VALUE UUID="37db2161-f852-4ff1-a6ae-6c893aecda48">
+                  <SHORT-NAME>I2cChannel_EEPROM_ReadCom</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cChannelId</DEFINITION-REF>
+                      <VALUE>0</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cDeviceAddress</DEFINITION-REF>
+                      <VALUE>80</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cChainChannel</DEFINITION-REF>
+                      <VALUE>false</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cDefaultData</DEFINITION-REF>
+                      <VALUE>255</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                </ECUC-CONTAINER-VALUE>
+                <ECUC-CONTAINER-VALUE UUID="7759c9af-b90b-4e7d-b098-cc2a45010104">
+                  <SHORT-NAME>I2cBus_EEPROM</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cBus</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cBus/I2cBusId</DEFINITION-REF>
+                      <VALUE>0</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cBus/I2cTransferRate</DEFINITION-REF>
+                      <VALUE>400</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-FLOAT-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cBus/I2cTimeout</DEFINITION-REF>
+                      <VALUE>0.04</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                  <REFERENCE-VALUES>
+                    <ECUC-REFERENCE-VALUE>
+                      <DEFINITION-REF DEST="ECUC-REFERENCE-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cBus/I2cHwUnitAssignment</DEFINITION-REF>
+                      <VALUE-REF DEST="ECUC-CONTAINER-VALUE">/ActiveEcuC/I2c/I2cConfigSet/I2cHardwareUnit_EEPROM</VALUE-REF>
+                    </ECUC-REFERENCE-VALUE>
+                  </REFERENCE-VALUES>
+                </ECUC-CONTAINER-VALUE>
+                <ECUC-CONTAINER-VALUE UUID="7f61891d-de35-47d3-a537-976c77b427d7">
+                  <SHORT-NAME>I2cHardwareUnit_EEPROM</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cHardwareUnit</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cHardwareUnit/I2cUnitId</DEFINITION-REF>
+                      <VALUE>0</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cHardwareUnit/I2cMaxResetWaitCycles</DEFINITION-REF>
+                      <VALUE>500000</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-FLOAT-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cHardwareUnit/I2cClockFrequencyManual</DEFINITION-REF>
+                      <VALUE>100000000</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                  <REFERENCE-VALUES>
+                    <ECUC-REFERENCE-VALUE>
+                      <DEFINITION-REF DEST="ECUC-REFERENCE-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cHardwareUnit/I2cHardwareConfigurationRef</DEFINITION-REF>
+                      <VALUE-REF DEST="ECUC-CONTAINER-VALUE">/ActiveEcuC/I2c/TDA4x_DRA8xx_MCU_I2C1</VALUE-REF>
+                    </ECUC-REFERENCE-VALUE>
+                  </REFERENCE-VALUES>
+                </ECUC-CONTAINER-VALUE>
+                <ECUC-CONTAINER-VALUE UUID="629f3039-ac9b-43cc-a4bb-0d5ed0d9eeaa">
+                  <SHORT-NAME>I2cSequence_EEPROM_Read</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cPriority</DEFINITION-REF>
+                      <VALUE>1</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-FUNCTION-NAME-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cEndNotification</DEFINITION-REF>
+                      <VALUE>Eep_30_XXi2c01_ComEnd</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cSequenceId</DEFINITION-REF>
+                      <VALUE>0</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cHandleNackAsError</DEFINITION-REF>
+                      <VALUE>false</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-FUNCTION-NAME-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cErrorNotification</DEFINITION-REF>
+                      <VALUE>NULL_PTR</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                  <REFERENCE-VALUES>
+                    <ECUC-REFERENCE-VALUE>
+                      <DEFINITION-REF DEST="ECUC-REFERENCE-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cAssignedBus</DEFINITION-REF>
+                      <VALUE-REF DEST="ECUC-CONTAINER-VALUE">/ActiveEcuC/I2c/I2cConfigSet/I2cBus_EEPROM</VALUE-REF>
+                    </ECUC-REFERENCE-VALUE>
+                  </REFERENCE-VALUES>
+                  <SUB-CONTAINERS>
+                    <ECUC-CONTAINER-VALUE UUID="b53df5cc-9867-4d69-bd7d-5e1e0f7b7134">
+                      <SHORT-NAME>I2cChannelList_EEPROM_ReadCom</SHORT-NAME>
+                      <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList</DEFINITION-REF>
+                      <PARAMETER-VALUES>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList/I2cChannelIndex</DEFINITION-REF>
+                          <VALUE>1</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                      </PARAMETER-VALUES>
+                      <REFERENCE-VALUES>
+                        <ECUC-REFERENCE-VALUE>
+                          <DEFINITION-REF DEST="ECUC-REFERENCE-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList/I2cChannelAssignment</DEFINITION-REF>
+                          <VALUE-REF DEST="ECUC-CONTAINER-VALUE">/ActiveEcuC/I2c/I2cConfigSet/I2cChannel_EEPROM_ReadCom</VALUE-REF>
+                        </ECUC-REFERENCE-VALUE>
+                      </REFERENCE-VALUES>
+                    </ECUC-CONTAINER-VALUE>
+                    <ECUC-CONTAINER-VALUE UUID="43514f81-4895-45a0-8a3e-0d9de3fb0ddf">
+                      <SHORT-NAME>I2cChannelList_EEPROM_ReadData</SHORT-NAME>
+                      <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList</DEFINITION-REF>
+                      <PARAMETER-VALUES>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList/I2cChannelIndex</DEFINITION-REF>
+                          <VALUE>2</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                      </PARAMETER-VALUES>
+                      <REFERENCE-VALUES>
+                        <ECUC-REFERENCE-VALUE>
+                          <DEFINITION-REF DEST="ECUC-REFERENCE-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList/I2cChannelAssignment</DEFINITION-REF>
+                          <VALUE-REF DEST="ECUC-CONTAINER-VALUE">/ActiveEcuC/I2c/I2cConfigSet/I2cChannel_EEPROM_ReadData</VALUE-REF>
+                        </ECUC-REFERENCE-VALUE>
+                      </REFERENCE-VALUES>
+                    </ECUC-CONTAINER-VALUE>
+                  </SUB-CONTAINERS>
+                </ECUC-CONTAINER-VALUE>
+                <ECUC-CONTAINER-VALUE UUID="4f40fac6-9cf2-483b-b33a-38a2fe07ed6f">
+                  <SHORT-NAME>I2cChannel_EEPROM_ReadData</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cChannelId</DEFINITION-REF>
+                      <VALUE>1</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cDeviceAddress</DEFINITION-REF>
+                      <VALUE>80</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cChainChannel</DEFINITION-REF>
+                      <VALUE>false</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cDefaultData</DEFINITION-REF>
+                      <VALUE>255</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                </ECUC-CONTAINER-VALUE>
+                <ECUC-CONTAINER-VALUE UUID="40839444-8f07-4113-b9ff-b773739a652b">
+                  <SHORT-NAME>I2cChannel_EEPROM_WriteCom</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cChannelId</DEFINITION-REF>
+                      <VALUE>2</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cDeviceAddress</DEFINITION-REF>
+                      <VALUE>80</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cChainChannel</DEFINITION-REF>
+                      <VALUE>false</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cDefaultData</DEFINITION-REF>
+                      <VALUE>255</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                </ECUC-CONTAINER-VALUE>
+                <ECUC-CONTAINER-VALUE UUID="9820b1d9-ea88-4c5c-93f4-e02246dcff47">
+                  <SHORT-NAME>I2cChannel_EEPROM_WriteData</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cChannelId</DEFINITION-REF>
+                      <VALUE>3</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cDeviceAddress</DEFINITION-REF>
+                      <VALUE>80</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cChainChannel</DEFINITION-REF>
+                      <VALUE>true</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cDefaultData</DEFINITION-REF>
+                      <VALUE>255</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                </ECUC-CONTAINER-VALUE>
+                <ECUC-CONTAINER-VALUE UUID="2a2859d9-ea7e-49f6-9212-dec40cf125cf">
+                  <SHORT-NAME>I2cChannel_EEPROM_Ack</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cChannelId</DEFINITION-REF>
+                      <VALUE>4</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cDeviceAddress</DEFINITION-REF>
+                      <VALUE>80</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cChainChannel</DEFINITION-REF>
+                      <VALUE>false</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cChannel/I2cDefaultData</DEFINITION-REF>
+                      <VALUE>255</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                </ECUC-CONTAINER-VALUE>
+                <ECUC-CONTAINER-VALUE UUID="b878ed32-4893-4f92-b0a7-d9493e5afdc9">
+                  <SHORT-NAME>I2cSequence_EEPROM_Write</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cPriority</DEFINITION-REF>
+                      <VALUE>1</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-FUNCTION-NAME-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cEndNotification</DEFINITION-REF>
+                      <VALUE>Eep_30_XXi2c01_ComEnd</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cSequenceId</DEFINITION-REF>
+                      <VALUE>1</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cHandleNackAsError</DEFINITION-REF>
+                      <VALUE>false</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-FUNCTION-NAME-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cErrorNotification</DEFINITION-REF>
+                      <VALUE>NULL_PTR</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                  <REFERENCE-VALUES>
+                    <ECUC-REFERENCE-VALUE>
+                      <DEFINITION-REF DEST="ECUC-REFERENCE-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cAssignedBus</DEFINITION-REF>
+                      <VALUE-REF DEST="ECUC-CONTAINER-VALUE">/ActiveEcuC/I2c/I2cConfigSet/I2cBus_EEPROM</VALUE-REF>
+                    </ECUC-REFERENCE-VALUE>
+                  </REFERENCE-VALUES>
+                  <SUB-CONTAINERS>
+                    <ECUC-CONTAINER-VALUE UUID="42ace682-a59f-4b74-bf34-a155b05554bd">
+                      <SHORT-NAME>I2cChannelList_EEPROM_WriteData</SHORT-NAME>
+                      <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList</DEFINITION-REF>
+                      <PARAMETER-VALUES>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList/I2cChannelIndex</DEFINITION-REF>
+                          <VALUE>2</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                      </PARAMETER-VALUES>
+                      <REFERENCE-VALUES>
+                        <ECUC-REFERENCE-VALUE>
+                          <DEFINITION-REF DEST="ECUC-REFERENCE-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList/I2cChannelAssignment</DEFINITION-REF>
+                          <VALUE-REF DEST="ECUC-CONTAINER-VALUE">/ActiveEcuC/I2c/I2cConfigSet/I2cChannel_EEPROM_WriteData</VALUE-REF>
+                        </ECUC-REFERENCE-VALUE>
+                      </REFERENCE-VALUES>
+                    </ECUC-CONTAINER-VALUE>
+                    <ECUC-CONTAINER-VALUE UUID="3606f86c-e31a-404b-a363-306cb66dc3a4">
+                      <SHORT-NAME>I2cChannelList_EEPROM_WriteCom</SHORT-NAME>
+                      <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList</DEFINITION-REF>
+                      <PARAMETER-VALUES>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList/I2cChannelIndex</DEFINITION-REF>
+                          <VALUE>1</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                      </PARAMETER-VALUES>
+                      <REFERENCE-VALUES>
+                        <ECUC-REFERENCE-VALUE>
+                          <DEFINITION-REF DEST="ECUC-REFERENCE-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList/I2cChannelAssignment</DEFINITION-REF>
+                          <VALUE-REF DEST="ECUC-CONTAINER-VALUE">/ActiveEcuC/I2c/I2cConfigSet/I2cChannel_EEPROM_WriteCom</VALUE-REF>
+                        </ECUC-REFERENCE-VALUE>
+                      </REFERENCE-VALUES>
+                    </ECUC-CONTAINER-VALUE>
+                  </SUB-CONTAINERS>
+                </ECUC-CONTAINER-VALUE>
+                <ECUC-CONTAINER-VALUE UUID="c6dcf8c2-73bc-418b-958c-bb3726f07e0a">
+                  <SHORT-NAME>I2cSequence_EEPROM_Status</SHORT-NAME>
+                  <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence</DEFINITION-REF>
+                  <PARAMETER-VALUES>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cPriority</DEFINITION-REF>
+                      <VALUE>1</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-FUNCTION-NAME-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cEndNotification</DEFINITION-REF>
+                      <VALUE>Eep_30_XXi2c01_ComEnd</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cSequenceId</DEFINITION-REF>
+                      <VALUE>2</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-NUMERICAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cHandleNackAsError</DEFINITION-REF>
+                      <VALUE>false</VALUE>
+                    </ECUC-NUMERICAL-PARAM-VALUE>
+                    <ECUC-TEXTUAL-PARAM-VALUE>
+                      <DEFINITION-REF DEST="ECUC-FUNCTION-NAME-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cErrorNotification</DEFINITION-REF>
+                      <VALUE>NULL_PTR</VALUE>
+                    </ECUC-TEXTUAL-PARAM-VALUE>
+                  </PARAMETER-VALUES>
+                  <REFERENCE-VALUES>
+                    <ECUC-REFERENCE-VALUE>
+                      <DEFINITION-REF DEST="ECUC-REFERENCE-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cAssignedBus</DEFINITION-REF>
+                      <VALUE-REF DEST="ECUC-CONTAINER-VALUE">/ActiveEcuC/I2c/I2cConfigSet/I2cBus_EEPROM</VALUE-REF>
+                    </ECUC-REFERENCE-VALUE>
+                  </REFERENCE-VALUES>
+                  <SUB-CONTAINERS>
+                    <ECUC-CONTAINER-VALUE UUID="2b84e833-47e1-4eac-bd49-04f2ad51148f">
+                      <SHORT-NAME>I2cChannelList_EEPROM_Ack</SHORT-NAME>
+                      <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList</DEFINITION-REF>
+                      <PARAMETER-VALUES>
+                        <ECUC-NUMERICAL-PARAM-VALUE>
+                          <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList/I2cChannelIndex</DEFINITION-REF>
+                          <VALUE>1</VALUE>
+                        </ECUC-NUMERICAL-PARAM-VALUE>
+                      </PARAMETER-VALUES>
+                      <REFERENCE-VALUES>
+                        <ECUC-REFERENCE-VALUE>
+                          <DEFINITION-REF DEST="ECUC-REFERENCE-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cConfigSet/I2cSequence/I2cChannelList/I2cChannelAssignment</DEFINITION-REF>
+                          <VALUE-REF DEST="ECUC-CONTAINER-VALUE">/ActiveEcuC/I2c/I2cConfigSet/I2cChannel_EEPROM_Ack</VALUE-REF>
+                        </ECUC-REFERENCE-VALUE>
+                      </REFERENCE-VALUES>
+                    </ECUC-CONTAINER-VALUE>
+                  </SUB-CONTAINERS>
+                </ECUC-CONTAINER-VALUE>
+              </SUB-CONTAINERS>
+            </ECUC-CONTAINER-VALUE>
+            <ECUC-CONTAINER-VALUE UUID="14cb1f35-34a1-4082-a80a-2ca67b077382">
+              <SHORT-NAME>I2cGeneral</SHORT-NAME>
+              <DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral</DEFINITION-REF>
+              <PARAMETER-VALUES>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral/I2cDevErrorDetect</DEFINITION-REF>
+                  <VALUE>true</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral/I2cGetStatusApi</DEFINITION-REF>
+                  <VALUE>true</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral/I2cCancelApi</DEFINITION-REF>
+                  <VALUE>true</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral/I2cVersionInfoApi</DEFINITION-REF>
+                  <VALUE>true</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-TEXTUAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-ENUMERATION-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral/I2cIrqType</DEFINITION-REF>
+                  <VALUE>I2C_ISR_CAT2</VALUE>
+                </ECUC-TEXTUAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral/I2cQueueDepth</DEFINITION-REF>
+                  <VALUE>10</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-FLOAT-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral/I2cMainFunctionPeriod</DEFINITION-REF>
+                  <VALUE>0.01</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral/I2cProtectedMode</DEFINITION-REF>
+                  <VALUE>false</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral/I2cSafeBswChecks</DEFINITION-REF>
+                  <VALUE>false</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-TEXTUAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-STRING-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral/I2cUserConfigFile</DEFINITION-REF>
+                  <VALUE/>
+                </ECUC-TEXTUAL-PARAM-VALUE>
+                <ECUC-TEXTUAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-STRING-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral/I2cUserCallbackHeaderFile</DEFINITION-REF>
+                  <VALUE>Eep_30_XXi2c01_Cbk.h</VALUE>
+                </ECUC-TEXTUAL-PARAM-VALUE>
+                <ECUC-TEXTUAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-STRING-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral/I2cUserCallbackHeaderFile</DEFINITION-REF>
+                  <VALUE>CDD_PMIC.h</VALUE>
+                </ECUC-TEXTUAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-BOOLEAN-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral/I2cPollingMode</DEFINITION-REF>
+                  <VALUE>false</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+                <ECUC-NUMERICAL-PARAM-VALUE>
+                  <DEFINITION-REF DEST="ECUC-INTEGER-PARAM-DEF">/MICROSAR/I2c_Jacinto7Tii2c01/I2c/I2cGeneral/I2cMaxHwLoopCycle</DEFINITION-REF>
+                  <VALUE>1000</VALUE>
+                </ECUC-NUMERICAL-PARAM-VALUE>
+              </PARAMETER-VALUES>
+            </ECUC-CONTAINER-VALUE>
+          </CONTAINERS>
+        </ECUC-MODULE-CONFIGURATION-VALUES>
+      </ELEMENTS>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

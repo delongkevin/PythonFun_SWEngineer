@@ -1,0 +1,1474 @@
+Warning Summary results for analysed files:
+-------------------------------------------
+
+                                   Levels
+File Name                              9     8     7     6     5     4     3     2     1     0 Total
+---------------------------------- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\C
+amMIntgr\camm                                                                                       
+IDataProviderCamM.h                    0     0     0     0     0     0     0     0     0     0     0
+JobCamM.cpp                            0     0     0     0     0     0     0     0     0     0     0
+JobCamM.h                              0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\C
+amMIntgr\cfg                                                                                        
+CameraHandlerThread.cpp                0     0     0     0     0     0     0     0     0     0     0
+CameraHandlerThread.h                  0     0     1     0     0     0     0     0     0     0     1
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\C
+amMIntgr\cfg\DataProvider                                                                           
+DataProviderCamM.cpp                   0     0     0     0     0     0     0     0     0     0     0
+DataProviderCamM.h                     0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\E
+OLIntgr\EOL                                                                                         
+BlockMatcher.cpp                       0     0     0     0     0     0     0     0     0     0     0
+BlockMatcher.h                         0     0     0     0     0     0     0     0     0     0     0
+Calibration.cpp                        0     0     0     0     0     0     0     0     0     0     0
+Calibration.h                          0     0     1     0     0     0     0     0     0     0     1
+CalibrationTemplate.h                  0     0     2     0     1     0     0     0     0     0     3
+EolUtils.cpp                           0     0     1     0     0     0     0     0     0     0     1
+EolUtils.h                             0     0     0     0     0     0     0     0     0     0     0
+IDataProviderEol.h                     0     0     0     0     0     0     0     0     0     0     0
+JobAlgoEol.cpp                         0     0    86     0     0     0     0     0     0     0    86
+JobAlgoEol.h                           0     0    67     0     0     0     0     0     0     0    67
+Point.h                                0     0    10     0     0     0     0     0     0     0    10
+RotFromVP.cpp                          0     0     1     0     0     0     0     0     0     0     1
+RotFromVP.h                            0     0     0     0     0     0     0     0     0     0     0
+SensorCfg.cpp                          0     0     2     0     0     0     0     0     0     0     2
+SensorCfg.h                            0     0     0     0     0     0     0     0     0     0     0
+World2ImageDef.h                       0     0     0     0     0     0     0     0     0     0     0
+World2ImageTypes.h                     0     0     0     0     0     0     0     0     0     0     0
+cornerDetector.cpp                     0     0     4     0     0     0     0     0     0     0     4
+cornerDetector.h                       0     0     0     0     0     0     0     0     0     0     0
+mathComplex.cpp                        0     0     0     0     0     0     0     0     0     0     0
+mathComplex.h                          0     0     0     0     0     0     0     0     0     0     0
+vgg.h                                  0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\E
+OLIntgr\cfg\DataProvider                                                                            
+DataProviderEol.cpp                    0     0     1     0     0     0     0     0     0     0     1
+DataProviderEol.h                      0     0     9     0     8     0     0     0     0     0    17
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\E
+OLIntgr\cfg                                                                                         
+Eol_Types.h                            0     0     0     0     2     0     0     0     0     0     2
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\F
+PGAIntgr\cfg\DataProvider                                                                           
+DataProviderFPGA.cpp                   0     0     0     0     0     0     0     0     0     0     0
+DataProviderFPGA.h                     0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\F
+PGAIntgr\cfg                                                                                        
+FpgaHandlerThread.cpp                  0     0     0     0     0     0     0     0     0     0     0
+FpgaHandlerThread.h                    0     0     0     0     1     0     0     0     0     0     1
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\F
+PGAIntgr\fpga                                                                                       
+IDataProviderFPGA.h                    0     0     0     0     0     0     0     0     0     0     0
+JobFPGA.cpp                            0     0     0     0     1     0     0     0     0     0     1
+JobFPGA.h                              0     0     1     0     0     0     0     0     0     0     1
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\K
+MIntgr\cfg\DataProvider                                                                             
+DataProviderKM.cpp                     0     0     0     0     0     0     0     0     0     0     0
+DataProviderKM.h                       0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\K
+MIntgr\cfg                                                                                          
+KMHandler.cpp                          0     0     7     0     0     0     0     0     0     0     7
+KMHandler.h                            0     0    18     0     0     0     0     0     0     0    18
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\K
+MIntgr\km                                                                                           
+IDataProviderKM.h                      0     0     0     0     0     0     0     0     0     0     0
+JobKM.cpp                              0     0     8     0     0     0     0     0     0     0     8
+JobKM.h                                0     0     0     0     0     0     0     0     0     0     0
+od_kinematic.cpp                       0     0    35     0     2     0     0     0     0     0    37
+od_kinematic.h                         0     0    14     0     0     0     0     0     0     0    14
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\O
+VL3DIntgr                                                                                           
+IDataProviderOvl3D.h                   0     0     0     0     0     0     0     0     0     0     0
+JobOvl3D.cpp                           0     0     1     0    21     0     0     0     0     0    22
+JobOvl3D.h                             0     0     0     0     0     0     0     0     0     0     0
+RenderThreadRunnable.cpp               0     0     4     0     0     0     0     0     0     0     4
+RenderThreadRunnable.h                 0     0     2     0     0     0     0     0     0     0     2
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\O
+VL3DIntgr\cfg\DataProvider                                                                          
+DataProviderOvl3D.cpp                  0     0     3     0     0     0     0     0     0     0     3
+DataProviderOvl3D.h                    0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\O
+VL3DIntgr\ovl3D\Camera                                                                              
+VirtualCameraControl.cpp               0     0    18     0     0     0     0     0     0     0    18
+VirtualCameraControl.h                 0     0     0     0     0     0     0     0     0     0     0
+VirtualCameraControlKey.cpp            0     0     9     0     0     0     0     0     0     0     9
+VirtualCameraControlKey.h              0     0     0     0     0     0     0     0     0     0     0
+VirtualCameraControlSphere.cpp         0     0    30     0     0     0     0     0     0     0    30
+VirtualCameraControlSphere.h           0     0     0     0     0     0     0     0     0     0     0
+VirtualCameraControlTarget.cpp         0     0     4     0     0     0     0     0     0     0     4
+VirtualCameraControlTarget.h           0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\O
+VL3DIntgr\ovl3D\Entity\Components                                                                   
+BaseComponent.cpp                      0     0     0     0     0     0     0     0     0     0     0
+BaseComponent.h                        0     0     0     0     0     0     0     0     0     0     0
+BowlViewComponent.cpp                  0     0     1     0     0     0     0     0     0     0     1
+BowlViewComponent.h                    0     0     0     0     0     0     0     0     0     0     0
+GuiObjectComponent.cpp                 0     0     0     0     0     0     0     0     0     0     0
+GuiObjectComponent.h                   0     0     0     0     0     0     0     0     0     0     0
+GuideLineComponent.cpp                 0     0     0     0     0     0     0     0     0     0     0
+GuideLineComponent.h                   0     0     0     0     0     0     0     0     0     0     0
+KeyFrameComponent.cpp                  0     0     0     0     0     0     0     0     0     0     0
+KeyFrameComponent.h                    0     0     0     0     0     0     0     0     0     0     0
+LightComponent.cpp                     0     0     0     0     0     0     0     0     0     0     0
+LightComponent.h                       0     0     0     0     0     0     0     0     0     0     0
+ModelComponent.cpp                     0     0     0     0     0     0     0     0     0     0     0
+ModelComponent.h                       0     0     0     0     0     0     0     0     0     0     0
+RealCameraComponent.cpp                0     0     0     0     0     0     0     0     0     0     0
+RealCameraComponent.h                  0     0     0     0     0     0     0     0     0     0     0
+RenderControlComponent.cpp             0     0     0     0     0     0     0     0     0     0     0
+RenderControlComponent.h               0     0     0     0     0     0     0     0     0     0     0
+RenderTargetComponent.cpp              0     0     0     0     0     0     0     0     0     0     0
+RenderTargetComponent.h                0     0     0     0     0     0     0     0     0     0     0
+SingleViewComponent.cpp                0     0     5     0     0     0     0     0     0     0     5
+SingleViewComponent.h                  0     0     0     0     0     0     0     0     0     0     0
+SyntheticCameraComponent.cpp           0     0    17     0    29     0     0     0     0     0    46
+SyntheticCameraComponent.h             0     0     0     0     0     0     0     0     0     0     0
+TransformComponent.cpp                 0     0     0     0     0     0     0     0     0     0     0
+TransformComponent.h                   0     0     0     0     0     0     0     0     0     0     0
+VehicleAnimationComponent.cpp          0     0     0     0     0     0     0     0     0     0     0
+VehicleAnimationComponent.h            0     0     0     0     0     0     0     0     0     0     0
+ViewPortComponent.cpp                  0     0     0     0     0     0     0     0     0     0     0
+ViewPortComponent.h                    0     0     0     0     0     0     0     0     0     0     0
+VirtualCamCtlComponent.cpp             0     0     0     0     0     0     0     0     0     0     0
+VirtualCamCtlComponent.h               0     0     0     0     0     0     0     0     0     0     0
+VirtualCameraComponent.cpp             0     0     7     0     0     0     0     0     0     0     7
+VirtualCameraComponent.h               0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\O
+VL3DIntgr\ovl3D\Entity                                                                              
+Entity.cpp                             0     0    16     0     2     0     0     0     0     0    18
+Entity.h                               0     0     0     0     0     0     0     0     0     0     0
+EntityTypes.h                          0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\O
+VL3DIntgr\ovl3D\EventSystem                                                                         
+Event.h                                0     0     0     0     0     0     0     0     0     0     0
+EventDelegate.h                        0     0     0     0     0     0     0     0     0     0     0
+EventDispatcher.h                      0     0     0     0     0     0     0     0     0     0     0
+EventHandler.cpp                       0     0     0     0     0     0     0     0     0     0     0
+EventHandler.h                         0     0     0     0     0     0     0     0     0     0     0
+EventListener.cpp                      0     0     0     0     0     0     0     0     0     0     0
+EventListener.h                        0     0     0     0     0     0     0     0     0     0     0
+EventTypes.h                           0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\O
+VL3DIntgr\ovl3D\GuideLine                                                                           
+DynGdl.cpp                             0     0     0     0     0     0     0     0     0     0     0
+DynGdl.h                               0     0     0     0     0     0     0     0     0     0     0
+DynGdlPerp.cpp                         0     0     0     0     0     0     0     0     0     0     0
+DynGdlPerp.h                           0     0     0     0     0     0     0     0     0     0     0
+DynGdlSheerFront.cpp                   0     0     0     0     0     0     0     0     0     0     0
+DynGdlSheerFront.h                     0     0     0     0     0     0     0     0     0     0     0
+DynGdlSheerRear.cpp                    0     0     0     0     0     0     0     0     0     0     0
+DynGdlSheerRear.h                      0     0     0     0     0     0     0     0     0     0     0
+DynGdlStretch.cpp                      0     0     3     0     0     0     0     0     0     0     3
+DynGdlStretch.h                        0     0     0     0     0     0     0     0     0     0     0
+GuideLineTypes.h                       0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\O
+VL3DIntgr\ovl3D\Manager                                                                             
+BaseManager.cpp                        0     0     0     0     0     0     0     0     0     0     0
+BaseManager.h                          0     0     0     0     0     0     0     0     0     0     0
+CameraManager.cpp                      0     0     0     0     0     0     0     0     0     0     0
+CameraManager.h                        0     0     0     0     0     0     0     0     0     0     0
+EntityManager.cpp                      0     0    16     0     0     0     0     0     0     0    16
+EntityManager.h                        0     0     0     0     0     0     0     0     0     0     0
+SystemManager.cpp                      0     0     0     0     0     0     0     0     0     0     0
+SystemManager.h                        0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\O
+VLIntgr\cfg                                                                                         
+ArialData.cpp                          0     0     5     0     2     0     0     0     0     0     7
+ArialData.h                            0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\O
+VLIntgr\cfg\DataProvider                                                                            
+DataProviderOvl.cpp                    0     0    53     0    59     0     0     0     0     0   112
+DataProviderOvl.h                      0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\O
+VLIntgr\cfg                                                                                         
+OvlTypes.h                             0     0     7     0     4     0     0     0     0     0    11
+RenEng.cpp                             0     0    19     0    18     0     0     0     0     0    37
+RenEng.h                               0     0    29     0     1     0     0     0     0     0    30
+Svg_Toyota_FlashData.h                 0     0     0     0     0     0     0     0     0     0     0
+Svg_Toyota_FontData.h                  0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\O
+VLIntgr\ovl                                                                                         
+IDataProviderOvl.h                     0     0     0     0     0     0     0     0     0     0     0
+IRenEng.h                              0     0     1     0     0     0     0     0     0     0     1
+JobOvl.cpp                             0     0    37     0     0     0     0     0     0     0    37
+JobOvl.h                               0     0     0     0     0     0     0     0     0     0     0
+LogCtxOvl.h                            0     0     0     0     5     0     0     0     0     0     5
+Ovl2D.cpp                              0     0     0     0     0     0     0     0     0     0     0
+Ovl2D.h                                0     0     0     0     0     0     0     0     0     0     0
+Ovl3D.cpp                              0     0    10     0     2     0     0     0     0     0    12
+Ovl3D.h                                0     0     0     0     0     0     0     0     0     0     0
+OvlBaseObj.cpp                         0     0     0     0     0     0     0     0     0     0     0
+OvlBaseObj.h                           0     0     8     0     2     0     0     0     0     0    10
+OvlDynGdl.cpp                          0     0     0     0     0     0     0     0     0     0     0
+OvlDynGdl.h                            0     0     0     0     0     0     0     0     0     0     0
+OvlGrp.h                               0     0     3     0     0     0     0     0     0     0     3
+OvlMgr.cpp                             0     0     0     0     0     0     0     0     0     0     0
+OvlMgr.h                               0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\O
+VLIntgr\ovl\ovlGrps                                                                                 
+DynGdl.cpp                             0     0     5     0     0     0     0     0     0     0     5
+DynGdl.h                               0     0     0     0     0     0     0     0     0     0     0
+DynGdlDiag.cpp                         0     0     0     0     1     0     0     0     0     0     1
+DynGdlDiag.h                           0     0     0     0     0     0     0     0     0     0     0
+DynGdlOutSwitch.cpp                    0     0     0     0     0     0     0     0     0     0     0
+DynGdlOutSwitch.h                      0     0     2     0     0     0     0     0     0     0     2
+DynGdlPerp.cpp                         0     0     0     0     2     0     0     0     0     0     2
+DynGdlPerp.h                           0     0     9     0     0     0     0     0     0     0     9
+DynGdlSheerFront.cpp                   0     0     0     0     1     0     0     0     0     0     1
+DynGdlSheerFront.h                     0     0     2     0     0     0     0     0     0     0     2
+DynGdlSheerRear.cpp                    0     0     0     0     1     0     0     0     0     0     1
+DynGdlSheerRear.h                      0     0     3     0     0     0     0     0     0     0     3
+DynStraightRotate.cpp                  0     0     0     0     0     0     0     0     0     0     0
+DynStraightRotate.h                    0     0     0     0     0     0     0     0     0     0     0
+GrpMod2DRot.cpp                        0     0     2     0     0     0     0     0     0     0     2
+GrpMod2DRot.h                          0     0     0     0     0     0     0     0     0     0     0
+GrpMod2DTrans.cpp                      0     0     2     0     0     0     0     0     0     0     2
+GrpMod2DTrans.h                        0     0     0     0     0     0     0     0     0     0     0
+GrpMod3DBound.cpp                      0     0     4     0     0     0     0     0     0     0     4
+GrpMod3DBound.h                        0     0     0     0     0     0     0     0     0     0     0
+GrpModVisibility.h                     0     0     0     0     0     0     0     0     0     0     0
+GrpModVisiblity.cpp                    0     0     3     0     0     0     0     0     0     0     3
+ModColor.cpp                           0     0     3     0     0     0     0     0     0     0     3
+ModColor.h                             0     0     0     0     0     0     0     0     0     0     0
+ModDashLine.cpp                        0     0     0     0     0     0     0     0     0     0     0
+ModDashLine.h                          0     0     0     0     0     0     0     0     0     0     0
+ModOpaque.cpp                          0     0     1     0     0     0     0     0     0     0     1
+ModOpaque.h                            0     0     0     0     0     0     0     0     0     0     0
+ModTextValToStr.cpp                    0     0     8     0     0     0     0     0     0     0     8
+ModTextValToStr.h                      0     0     0     0     0     0     0     0     0     0     0
+Pr2DCircle.cpp                         0     0     0     0     0     0     0     0     0     0     0
+Pr2DCircle.h                           0     0     0     0     0     0     0     0     0     0     0
+Pr2DQuad.cpp                           0     0     1     0     0     0     0     0     0     0     1
+Pr2DQuad.h                             0     0     0     0     0     0     0     0     0     0     0
+Pr3DCircle.cpp                         0     0     1     0     4     0     0     0     0     0     5
+Pr3DCircle.h                           0     0     0     0     0     0     0     0     0     0     0
+Pr3DLine.cpp                           0     0     4     0     0     0     0     0     0     0     4
+Pr3DLine.h                             0     0     0     0     1     0     0     0     0     0     1
+Pr3DPolygon.cpp                        0     0     0     0     0     0     0     0     0     0     0
+Pr3DPolygon.h                          0     0     0     0     0     0     0     0     0     0     0
+Pr3DRect.cpp                           0     0     0     0     0     0     0     0     0     0     0
+Pr3DRect.h                             0     0     0     0     0     0     0     0     0     0     0
+StGdl.cpp                              0     0     0     0     0     0     0     0     0     0     0
+StGdl.h                                0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\T
+raIntgr\Tra                                                                                         
+IDataProviderTra.h                     0     0     0     0     0     0     0     0     0     0     0
+JobTra.cpp                             0     0    76     0     4     0     0     0     0     0    80
+JobTra.h                               0     0     0     0     0     0     0     0     0     0     0
+LogCtxTra.h                            0     0     0     0     5     0     0     0     0     0     5
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\T
+raIntgr\Tra\VC                                                                                      
+ASR_codeGen.h                          0     0    95     0     0     0     0     0     0     0    95
+ASR_codeGen_types.h                    0     0     4     0     0     0     0     0     0     0     4
+JobVehCtrl.cpp                         0     0     2     0     0     0     0     0     0     0     2
+JobVehCtrl.h                           0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\T
+raIntgr\Tra\VC\sharedutils                                                                          
+rt_zcfcn.h                             0     0     2     0     0     0     0     0     0     0     2
+rtsplntypes.h                          0     0     4     0     0     0     0     0     0     0     4
+rtwtypes.h                             0     0    56     0     0     0     0     0     0     0    56
+solver_zc.h                            0     0    28     0     0     0     0     0     0     0    28
+zero_crossing_types.h                  0     0    11     0     0     0     0     0     0     0    11
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\T
+raIntgr\Tra\algo\inc                                                                                
+AngleDetectionState.h                  0     0     3     0     0     0     0     0     0     0     3
+AngleSampling.h                        0     0     2     0     0     0     0     0     0     0     2
+CalibrationState.h                     0     0     3     0     0     0     0     0     0     0     3
+CollisionAngleDetection.h              0     0     0     0     0     0     0     0     0     0     0
+FeatureExtraction.h                    0     0     0     0     0     0     0     0     0     0     0
+HitchDetection.h                       0     0     4     0     0     0     0     0     0     0     4
+IdleState.h                            0     0     0     0     0     0     0     0     0     0     0
+ImageThresholding.h                    0     0     0     0     0     0     0     0     0     0     0
+ImplicitCalibrationObject.h            0     0     0     0     0     0     0     0     0     0     0
+JobTADInput.h                          0     0     0     0     0     0     0     0     0     0     0
+JobTADOutput.h                         0     0     0     0     0     0     0     0     0     0     0
+PreProcessing.h                        0     0     0     0     0     0     0     0     0     0     0
+Scanning.h                             0     0     1     0     0     0     0     0     0     0     1
+ScanningState.h                        0     0     0     0     0     0     0     0     0     0     0
+TADAlgoObject.h                        0     0     0     0     0     0     0     0     0     0     0
+TADStateMachine.h                      0     0     0     0     0     0     0     0     0     0     0
+TemplateBuildUp.h                      0     0     0     0     0     0     0     0     0     0     0
+TrackingLostState.h                    0     0     0     0     0     0     0     0     0     0     0
+TrailerAngleCalibration.h              0     0     5     0     0     0     0     0     0     0     5
+TrailerDetectionState.h                0     0     0     0     0     0     0     0     0     0     0
+TrailerPresenceDetection.h             0     0     0     0     0     0     0     0     0     0     0
+TrailerTracking.h                      0     0     5     0     0     0     0     0     0     0     5
+TurnaroundState.h                      0     0     0     0     0     0     0     0     0     0     0
+VehicleKinematics.h                    0     0     3     0     0     0     0     0     0     0     3
+stdafx.h                               0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\T
+raIntgr\Tra\algo\src                                                                                
+AngleDetectionState.cpp                0     0    20     0     0     0     0     0     0     0    20
+AngleSampling.cpp                      0     0    29     0     0     0     0     0     0     0    29
+CalibrationState.cpp                   0     0    23     0     0     0     0     0     0     0    23
+CollisionAngleDetection.cpp            0     0     5     0     0     0     0     0     0     0     5
+FeatureExtraction.cpp                  0     0     0     0     0     0     0     0     0     0     0
+HitchDetection.cpp                     0     0    10     0     0     0     0     0     0     0    10
+IdleState.cpp                          0     0     0     0     0     0     0     0     0     0     0
+ImageThresholding.cpp                  0     0     6     0     0     0     0     0     0     0     6
+ImplicitCalibrationObject.cpp          0     0     9     0     0     0     0     0     0     0     9
+PreProcessing.cpp                      0     0     6     0     0     0     0     0     0     0     6
+Scanning.cpp                           0     0    11     0     0     0     0     0     0     0    11
+ScanningState.cpp                      0     0     0     0     0     0     0     0     0     0     0
+TADAlgoObject.cpp                      0     0    20     0     0     0     0     0     0     0    20
+TADStatemachine.cpp                    0     0    19     0     0     0     0     0     0     0    19
+TemplateBuildUp.cpp                    0     0     5     0     0     0     0     0     0     0     5
+TrackingLostState.cpp                  0     0    15     0     0     0     0     0     0     0    15
+TrailerAngleCalibration.cpp            0     0    27     0     0     0     0     0     0     0    27
+TrailerDetectionState.cpp              0     0     3     0     0     0     0     0     0     0     3
+TrailerPresenceDetection.cpp           0     0     3     0     0     0     0     0     0     0     3
+TrailerTracking.cpp                    0     0    47     0     0     0     0     0     0     0    47
+TurnaroundState.cpp                    0     0     3     0     0     0     0     0     0     0     3
+VehicleKinematics.cpp                  0     0     7     0     0     0     0     0     0     0     7
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\T
+raIntgr\Tra\common                                                                                  
+CANData.h                              0     0     0     0     0     0     0     0     0     0     0
+CircularBuffer.cpp                     0     0     0     0     0     0     0     0     0     0     0
+CircularBuffer.h                       0     0     0     0     0     0     0     0     0     0     0
+CrossplatformCommon.h                  0     0     0     0     0     0     0     0     0     0     0
+Defines.h                              0     0     0     0     0     0     0     0     0     0     0
+EdgeDetector.cpp                       0     0     3     0     0     0     0     0     0     0     3
+EdgeDetector.h                         0     0     8     0     0     0     0     0     0     0     8
+EqualSeparationLinkedList.h            0     0     0     0     0     0     0     0     0     0     0
+EqualSeparationLinkedList.hpp          0     0     0     0     0     0     0     0     0     0     0
+Image.cpp                              0     0     0     0     0     0     0     0     0     0     0
+Image.h                                0     0     0     0     0     0     0     0     0     0     0
+ImageIterator.h                        0     0     0     0     0     0     0     0     0     0     0
+ImageProcessing.cpp                    0     0     6     0     0     0     0     0     0     0     6
+ImageProcessing.h                      0     0     0     0     0     0     0     0     0     0     0
+ImageType.cpp                          0     0     1     0     0     0     0     0     0     0     1
+ImageType.h                            0     0     0     0     0     0     0     0     0     0     0
+MemoryPool.cpp                         0     0     0     0     0     0     0     0     0     0     0
+Point.h                                0     0    19     0     0     0     0     0     0     0    19
+TADState.h                             0     0     0     0     0     0     0     0     0     0     0
+TADStructures.cpp                      0     0     3     0     0     0     0     0     0     0     3
+TADStructures.h                        0     0     0     0     0     0     0     0     0     0     0
+TemplateMatching.cpp                   0     0    49     0     0     0     0     0     0     0    49
+TemplateMatching.h                     0     0     0     0     0     0     0     0     0     0     0
+TemplateWeightMask.h                   0     0     1     0     0     0     0     0     0     0     1
+TrailerNvmManager.cpp                  0     0     1     0     0     0     0     0     0     0     1
+TrailerNvmManager.h                    0     0     0     0     0     0     0     0     0     0     0
+WarpLUT.cpp                            0     0     5     0     0     0     0     0     0     0     5
+WarpLUT.h                              0     0     0     0     0     0     0     0     0     0     0
+config.cpp                             0     0     9     0     0     0     0     0     0     0     9
+config.h                               0     0     0     0     0     0     0     0     0     0     0
+memorypool.h                           0     0     0     0     0     0     0     0     0     0     0
+singleLUTImageOffsets.h                0     0     6     0     0     0     0     0     0     0     6
+singleLutImageFractions.h              0     0     3     0     0     0     0     0     0     0     3
+stdtad.h                               0     0     0     0     0     0     0     0     0     0     0
+tadStatetypes.h                        0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\T
+raIntgr\Tra\lutgen\include                                                                          
+AppCtrl_CamModel.h                     0     0    27     0     0     0     0     0     0     0    27
+Camera.h                               0     0     3     0     0     0     0     0     0     0     3
+CameraCfg.h                            0     0     0     0     0     0     0     0     0     0     0
+LUTGen.h                               0     0     1     0     0     0     0     0     0     0     1
+MatrixFunctions.h                      0     0     1     0     1     0     0     0     0     0     2
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\T
+raIntgr\Tra\lutgen\src                                                                              
+Camera.cpp                             0     0     0     0     0     0     0     0     0     0     0
+LUTGen.cpp                             0     0     0     0     0     0     0     0     0     0     0
+MatrixFunctions.cpp                    0     0     1     0     0     0     0     0     0     0     1
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\T
+raIntgr\Tra                                                                                         
+pikeos.h                               0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\T
+raIntgr\cfg\DataProvider                                                                            
+DataProviderTRA.h                      0     0     0     0     0     0     0     0     0     0     0
+DataProviderTra.cpp                    0     0    16     0     0     0     0     0     0     0    16
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\T
+raIntgr\cfg                                                                                         
+TraTypes.h                             0     0     0     0     1     0     0     0     0     0     1
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\V
+DGIntgr\cfg\DataProvider                                                                            
+DataProviderVdg.cpp                    0     0     9     0     0     0     0     0     0     0     9
+DataProviderVdg.h                      0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\V
+DGIntgr\cfg                                                                                         
+ViewGeneratorThread.cpp                0     0     1     0     0     0     0     0     0     0     1
+ViewGeneratorThread.h                  0     0     5     0     0     0     0     0     0     0     5
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\V
+DGIntgr\vdg                                                                                         
+CombinedView.cpp                       0     0     1     0     1     0     0     0     0     0     2
+CombinedView.h                         0     0     3     0     0     0     0     0     0     0     3
+IDataProviderVdg.h                     0     0     0     0     0     0     0     0     0     0     0
+JobVdg.cpp                             0     0     0     0     0     0     0     0     0     0     0
+JobVdg.h                               0     0     0     0     0     0     0     0     0     0     0
+Line2d.cpp                             0     0     0     0     0     0     0     0     0     0     0
+Line2d.h                               0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps  
+aPuC_ver.h                             0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Apps\a
+manith\include\VG                                                                                   
+openvg.h                               0     0    48     0     0     0     0     0     0     0    48
+vgext.h                                0     0     8     0     0     0     0     0     0     0     8
+vgplatform.h                           0     0     0     0     0     0     0     0     0     0     0
+vgu.h                                  0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\bsp\driver                                                                         
+Can.h                                  0     0     6     0     0     0     0     0     0     0     6
+I2c.h                                  0     0     0     0     0     0     0     0     0     0     0
+Iccom.h                                0     0     0     0     0     0     0     0     0     0     0
+Uart.h                                 0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\bsp\graphics                                                                       
+Pixmap.h                               0     0     0     0     0     0     0     0     0     0     0
+Screen.h                               0     0     1     0     0     0     0     0     0     0     1
+Stream.h                               0     0     0     0     0     0     0     0     0     0     0
+Window.h                               0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\bsp\io\fpga                                                                        
+AxisMipMem.h                           0     0     0     0     0     0     0     0     0     0     0
+FpgaAlgoView.h                         0     0     0     0     0     0     0     0     0     0     0
+FpgaLayerEngine.h                      0     0     0     0     0     0     0     0     0     0     0
+FpgaLayerEngineDefines.h               0     0    13     0     0     0     0     0     0     0    13
+FpgaParameters.h                       0     0     0     0     0     0     0     0     0     0     0
+FpgaVideoInput.h                       0     0     0     0     0     0     0     0     0     0     0
+FpgaVideoOutput.h                      0     0     0     0     0     0     0     0     0     0     0
+FpgaViewGen.h                          0     0     0     0     0     0     0     0     0     0     0
+FpgaViewGenConfig.h                    0     0     0     0     0     0     0     0     0     0     0
+FpgaZCU102.h                           0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\bsp\io\ps                                                                          
+PsTempMonAccess.h                      0     0    11     0     7     0     0     0     0     0    18
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg                                                                                
+BspTypes.h                             0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\autosar\driver                                                                 
+I2c_Autosar.cpp                        0     0     0     0     0     0     0     0     0     0     0
+Iccom_Autosar.cpp                      0     0     0     0     0     0     0     0     0     0     0
+Uart_Autosar.cpp                       0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\autosar\graphics                                                               
+Pixmap_Autosar.cpp                     0     0     0     0     0     0     0     0     0     0     0
+Screen_Autosar.cpp                     0     0     0     0     0     0     0     0     0     0     0
+Stream_Autosar.cpp                     0     0     0     0     0     0     0     0     0     0     0
+Window_Autosar.cpp                     0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\autosar\io\fpga                                                                
+AxisMipMem_AUTOSAR.cpp                 0     0     0     0     0     0     0     0     0     0     0
+FpgaAlgoView_AUTOSAR.cpp               0     0     0     0     0     0     0     0     0     0     0
+FpgaLayerEngine_AUTOSAR.cpp            0     0     0     0     0     0     0     0     0     0     0
+FpgaVideoInput_AUTOSAR.cpp             0     0     0     0     0     0     0     0     0     0     0
+FpgaVideoOutput_AUTOSAR.cpp            0     0     0     0     0     0     0     0     0     0     0
+FpgaViewGenConfig_AUTOSAR.cpp          0     0     0     0     0     0     0     0     0     0     0
+FpgaViewGen_AUTOSAR.cpp                0     0     0     0     0     0     0     0     0     0     0
+FpgaZCU102_AUTOSAR.cpp                 0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\autosar\io\ps                                                                  
+PsTempMonAccess_AUTOSAR.cpp            0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\linux\driver                                                                   
+I2c_Linux.cpp                          0     0     0     0     0     0     0     0     0     0     0
+Iccom_Linux.cpp                        0     0     0     0     0     0     0     0     0     0     0
+Uart_Linux.cpp                         0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\linux\graphics                                                                 
+Pixmap_Linux.cpp                       0     0     0     0     0     0     0     0     0     0     0
+Screen_Linux.cpp                       0     0     0     0     0     0     0     0     0     0     0
+Stream_Linux.cpp                       0     0     0     0     0     0     0     0     0     0     0
+Window_Linux.cpp                       0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\linux\io\fpga                                                                  
+AxisMipMem_LINUX.cpp                   0     0     0     0     0     0     0     0     0     0     0
+FpgaAlgoView_LINUX.cpp                 0     0     0     0     0     0     0     0     0     0     0
+FpgaLayerEngine_LINUX.cpp              0     0     0     0     0     0     0     0     0     0     0
+FpgaVideoInput_LINUX.cpp               0     0     0     0     0     0     0     0     0     0     0
+FpgaVideoOutput_LINUX.cpp              0     0     0     0     0     0     0     0     0     0     0
+FpgaViewGenConfig_LINUX.cpp            0     0     0     0     0     0     0     0     0     0     0
+FpgaViewGen_LINUX.cpp                  0     0     0     0     0     0     0     0     0     0     0
+FpgaZCU102_LINUX.cpp                   0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\linux\io\ps                                                                    
+PsTempMonAccess_LINUX.cpp              0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\qnx                                                                            
+BspTypes_Qnx.h                         0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\qnx\driver                                                                     
+Can_Qnx.cpp                            0     0    17     0     2     0     0     0     0     0    19
+I2c_Qnx.cpp                            0     0    20     0     0     0     0     0     0     0    20
+Iccom_Qnx.cpp                          0     0     0     0     0     0     0     0     0     0     0
+Uart_Qnx.cpp                           0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\qnx\graphics                                                                   
+Pixmap_Qnx.cpp                         0     0     0     0     0     0     0     0     0     0     0
+Screen_Qnx.cpp                         0     0     2     0     0     0     0     0     0     0     2
+Stream_Qnx.cpp                         0     0     0     0     0     0     0     0     0     0     0
+Window_Qnx.cpp                         0     0     3     0     0     0     0     0     0     0     3
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\qnx\io\fpga                                                                    
+AxisMipMem.cpp                         0     0     0     0     0     0     0     0     0     0     0
+FpgaAlgoView.cpp                       0     0    13     0     3     0     0     0     0     0    16
+FpgaLayerEngine.cpp                    0     0     0     0     0     0     0     0     0     0     0
+FpgaParameters_QNX.h                   0     0     0     0     0     0     0     0     0     0     0
+FpgaVideoInput.cpp                     0     0     0     0     0     0     0     0     0     0     0
+FpgaVideoOutput.cpp                    0     0     0     0     0     0     0     0     0     0     0
+FpgaViewGen.cpp                        0     0     1     0     1     0     0     0     0     0     2
+FpgaViewGenConfig.cpp                  0     0     0     0     0     0     0     0     0     0     0
+FpgaZCU102.cpp                         0     0     3     0     1     0     0     0     0     0     4
+xparameters.h                          0     0  1010     0     0     0     0     0     0     0  1010
+xparameters_ps.h                       0     0    97     0     0     0     0     0     0     0    97
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\qnx\io\ps                                                                      
+PsTempMonAccess.cpp                    0     0     8     0     1     0     0     0     0     0     9
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\win\driver                                                                     
+Can_Win.cpp                            0     0     0     0     0     0     0     0     0     0     0
+I2c_Win.cpp                            0     0     0     0     0     0     0     0     0     0     0
+Iccom_Win.cpp                          0     0     0     0     0     0     0     0     0     0     0
+Uart_Win.cpp                           0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\win\graphics                                                                   
+Pixmap_Win.cpp                         0     0     0     0     0     0     0     0     0     0     0
+Screen_Win.cpp                         0     0     0     0     0     0     0     0     0     0     0
+Stream_Win.cpp                         0     0     0     0     0     0     0     0     0     0     0
+Window_Win.cpp                         0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\win\io\fpga                                                                    
+AxisMipMem_WIN.cpp                     0     0     0     0     0     0     0     0     0     0     0
+FpgaAlgoView_WIN.cpp                   0     0     0     0     0     0     0     0     0     0     0
+FpgaLayerEngine_WIN.cpp                0     0     0     0     0     0     0     0     0     0     0
+FpgaVideoInput_WIN.cpp                 0     0     0     0     0     0     0     0     0     0     0
+FpgaVideoOutput_WIN.cpp                0     0     0     0     0     0     0     0     0     0     0
+FpgaViewGenConfig_WIN.cpp              0     0     0     0     0     0     0     0     0     0     0
+FpgaViewGen_WIN.cpp                    0     0     0     0     0     0     0     0     0     0     0
+FpgaZCU102_WIN.cpp                     0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\bsp\cfg\win\io\ps                                                                      
+PsTempMonAccess_WIN.cpp                0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\container\cfg                                                                          
+Context.cpp                            0     0     0     0     0     0     0     0     0     0     0
+Context.h                              0     0     0     0     0     0     0     0     0     0     0
+ContextTypes.h                         0     0     0     0     0     0     0     0     0     0     0
+DataProvider.cpp                       0     0     0     0     0     0     0     0     0     0     0
+DataProvider.h                         0     0     0     0     0     0     0     0     0     0     0
+DataProviderTypes.h                    0     0     0     0     0     0     0     0     0     0     0
+IDataProvider.h                        0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\container\cfg\shmdata                                                                  
+AppMData.cpp                           0     0     0     0     0     0     0     0     0     0     0
+AppMData.h                             0     0     0     0     0     0     0     0     0     0     0
+CamMData.cpp                           0     0    28     0     0     0     0     0     0     0    28
+CamMData.h                             0     0     0     0     0     0     0     0     0     0     0
+EolMData.cpp                           0     0     0     0     0     0     0     0     0     0     0
+EolMData.h                             0     0     2     0     1     0     0     0     0     0     3
+ErrMData.cpp                           0     0     0     0     0     0     0     0     0     0     0
+ErrMData.h                             0     0     0     0     0     0     0     0     0     0     0
+FpgaMData.cpp                          0     0     2     0     1     0     0     0     0     0     3
+FpgaMData.h                            0     0     0     0     0     0     0     0     0     0     0
+KMData.cpp                             0     0     6     0     0     0     0     0     0     0     6
+KMData.h                               0     0     0     0     0     0     0     0     0     0     0
+ODData.cpp                             0     0     0     0     0     0     0     0     0     0     0
+ODData.h                               0     0     0     0     0     0     0     0     0     0     0
+OVLData.cpp                            0     0    19     0     0     0     0     0     0     0    19
+OVLData.h                              0     0    40     0     1     0     0     0     0     0    41
+OcMData.cpp                            0     0     0     0     1     0     0     0     0     0     1
+OcMData.h                              0     0     0     0     0     0     0     0     0     0     0
+ScrMData.cpp                           0     0     0     0     0     0     0     0     0     0     0
+ScrMData.h                             0     0     6     0     0     0     0     0     0     0     6
+SigMData.cpp                           0     0    11     0     0     0     0     0     0     0    11
+SigMData.h                             0     0    15     0     0     0     0     0     0     0    15
+SigM_Messages.h                        0     0   113     0     0     0     0     0     0     0   113
+TraData.cpp                            0     0     2     0     0     0     0     0     0     0     2
+TraData.h                              0     0     0     0     0     0     0     0     0     0     0
+VDGData.cpp                            0     0   100     0     1     0     0     0     0     0   101
+VDGData.h                              0     0     4     0     0     0     0     0     0     0     4
+VarMData.cpp                           0     0     0     0     0     0     0     0     0     0     0
+VarMData.h                             0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\container\container                                                                    
+DataContainer.cpp                      0     0     0     0     0     0     0     0     0     0     0
+DataContainer.h                        0     0     0     0     0     0     0     0     0     0     0
+IMessageHandler.h                      0     0     0     0     0     0     0     0     0     0     0
+ImageHelper.cpp                        0     0    11     0     0     0     0     0     0     0    11
+ImageHelper.h                          0     0     0     0     0     0     0     0     0     0     0
+JobBase.h                              0     0     0     0     0     0     0     0     0     0     0
+JobContext.cpp                         0     0     0     0     0     0     0     0     0     0     0
+JobContext.h                           0     0     0     0     0     0     0     0     0     0     0
+McuData.h                              0     0     9     0     1     0     0     0     0     0    10
+Message.cpp                            0     0     0     0     0     0     0     0     0     0     0
+Message.h                              0     0     0     0     0     0     0     0     0     0     0
+MessageDispatcher.cpp                  0     0     0     0     0     0     0     0     0     0     0
+MessageDispatcher.h                    0     0     0     0     0     0     0     0     0     0     0
+MessageQueue.cpp                       0     0     0     0     0     0     0     0     0     0     0
+MessageQueue.h                         0     0     0     0     0     0     0     0     0     0     0
+MessageTypes.h                         0     0     0     0     0     0     0     0     0     0     0
+VideoStreamProvider.cpp                0     0     0     0     1     0     0     0     0     0     1
+VideoStreamProvider.h                  0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\logging\cfg                                                                            
+LogTypes.cpp                           0     0     1     0     0     0     0     0     0     0     1
+LogTypes.h                             0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\logging\logging                                                                        
+Logger.cpp                             0     0     0     0     0     0     0     0     0     0     0
+Logger.h                               0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\Camera                                                                
+Camera.cpp                             0     0     0     0     0     0     0     0     0     0     0
+Camera.h                               0     0     0     0     0     0     0     0     0     0     0
+CameraTypes.h                          0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\Debug                                                                 
+DebugRenderObject.cpp                  0     0     0     0     0     0     0     0     0     0     0
+DebugRenderObject.h                    0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\Device                                                                
+Device3D.cpp                           0     0     0     0     0     0     0     0     0     0     0
+Device3D.h                             0     0     0     0     0     0     0     0     0     0     0
+Device3DTypes.h                        0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\Effect                                                                
+EffectFile.cpp                         0     0     0     0     0     0     0     0     0     0     0
+EffectFile.h                           0     0     0     0     0     0     0     0     0     0     0
+EffectFileConstantBlock.cpp            0     0     0     0     0     0     0     0     0     0     0
+EffectFileConstantBlock.h              0     0     0     0     0     0     0     0     0     0     0
+EffectFileParser.cpp                   0     0     0     0     0     0     0     0     0     0     0
+EffectFileParser.h                     0     0     0     0     0     0     0     0     0     0     0
+EffectFilePass.cpp                     0     0     0     0     0     0     0     0     0     0     0
+EffectFilePass.h                       0     0     0     0     0     0     0     0     0     0     0
+EffectFileRenderStateBlock.cpp         0     0     0     0     0     0     0     0     0     0     0
+EffectFileRenderStateBlock.h           0     0     0     0     0     0     0     0     0     0     0
+EffectFileSamplerStateBlock.cpp        0     0     0     0     0     0     0     0     0     0     0
+EffectFileSamplerStateBlock.h          0     0     0     0     0     0     0     0     0     0     0
+EffectFileShader.cpp                   0     0     0     0     0     0     0     0     0     0     0
+EffectFileShader.h                     0     0     0     0     0     0     0     0     0     0     0
+EffectFileTypes.cpp                    0     0     0     0     0     0     0     0     0     0     0
+EffectFileTypes.h                      0     0     0     0     0     0     0     0     0     0     0
+EffectFileVertexDeclaration.cpp        0     0     0     0     0     0     0     0     0     0     0
+EffectFileVertexDeclaration.h          0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\GUI                                                                   
+Font.cpp                               0     0     0     0     0     0     0     0     0     0     0
+Font.h                                 0     0     0     0     0     0     0     0     0     0     0
+FontTypes.h                            0     0     0     0     0     0     0     0     0     0     0
+GuiTypes.h                             0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\GuideLine                                                             
+GuideLineObject.cpp                    0     0     0     0     0     0     0     0     0     0     0
+GuideLineObject.h                      0     0     0     0     0     0     0     0     0     0     0
+GuideLineTypes.h                       0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\Interfaces                                                            
+BowlViewInterface.cpp                  0     0     2     0     0     0     0     0     0     0     2
+BowlViewInterface.h                    0     0     0     0     0     0     0     0     0     0     0
+CameraInterface.cpp                    0     0     0     0     0     0     0     0     0     0     0
+CameraInterface.h                      0     0     0     0     0     0     0     0     0     0     0
+DebugInterface.cpp                     0     0     0     0     0     0     0     0     0     0     0
+DebugInterface.h                       0     0     0     0     0     0     0     0     0     0     0
+DeviceInterface.cpp                    0     0     0     0     0     0     0     0     0     0     0
+DeviceInterface.h                      0     0     0     0     0     0     0     0     0     0     0
+GuiInterface.cpp                       0     0     0     0     0     0     0     0     0     0     0
+GuiInterface.h                         0     0     0     0     0     0     0     0     0     0     0
+GuideLineInterface.cpp                 0     0     0     0     0     0     0     0     0     0     0
+GuideLineInterface.h                   0     0     0     0     0     0     0     0     0     0     0
+LightInterface.cpp                     0     0     0     0     0     0     0     0     0     0     0
+LightInterface.h                       0     0     0     0     0     0     0     0     0     0     0
+MaterialInterface.cpp                  0     0     0     0     0     0     0     0     0     0     0
+MaterialInterface.h                    0     0     0     0     0     0     0     0     0     0     0
+ModelInterface.cpp                     0     0     0     0     0     0     0     0     0     0     0
+ModelInterface.h                       0     0     0     0     0     0     0     0     0     0     0
+RenderInterfaceTypes.h                 0     0     0     0     0     0     0     0     0     0     0
+SingleViewInterface.cpp                0     0     0     0     0     0     0     0     0     0     0
+SingleViewInterface.h                  0     0     0     0     0     0     0     0     0     0     0
+TextureInterface.cpp                   0     0     0     0     0     0     0     0     0     0     0
+TextureInterface.h                     0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\Manager                                                               
+BufferManager.cpp                      0     0     0     0     0     0     0     0     0     0     0
+BufferManager.h                        0     0     0     0     0     0     0     0     0     0     0
+CameraManager.cpp                      0     0     0     0     0     0     0     0     0     0     0
+CameraManager.h                        0     0     0     0     0     0     0     0     0     0     0
+ConstantsManager.cpp                   0     0     0     0     0     0     0     0     0     0     0
+ConstantsManager.h                     0     0     0     0     0     0     0     0     0     0     0
+GUIManager.cpp                         0     0     0     0     0     0     0     0     0     0     0
+GUIManager.h                           0     0     0     0     0     0     0     0     0     0     0
+GuideLineManager.cpp                   0     0     0     0     0     0     0     0     0     0     0
+GuideLineManager.h                     0     0     0     0     0     0     0     0     0     0     0
+IManager.h                             0     0     0     0     0     0     0     0     0     0     0
+LightManager.cpp                       0     0     0     0     0     0     0     0     0     0     0
+LightManager.h                         0     0     0     0     0     0     0     0     0     0     0
+MaterialManager.cpp                    0     0     0     0     0     0     0     0     0     0     0
+MaterialManager.h                      0     0     0     0     0     0     0     0     0     0     0
+ModelManager.cpp                       0     0     0     0     0     0     0     0     0     0     0
+ModelManager.h                         0     0     0     0     0     0     0     0     0     0     0
+ShaderManager.cpp                      0     0     0     0     0     0     0     0     0     0     0
+ShaderManager.h                        0     0     0     0     0     0     0     0     0     0     0
+TextureManager.cpp                     0     0     0     0     0     0     0     0     0     0     0
+TextureManager.h                       0     0     0     0     0     0     0     0     0     0     0
+ViewManager.cpp                        0     0     0     0     0     0     0     0     0     0     0
+ViewManager.h                          0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\Materials                                                             
+Material.cpp                           0     0     0     0     0     0     0     0     0     0     0
+Material.h                             0     0     0     0     0     0     0     0     0     0     0
+MaterialPhong.cpp                      0     0     0     0     0     0     0     0     0     0     0
+MaterialPhong.h                        0     0     0     0     0     0     0     0     0     0     0
+MaterialTypes.h                        0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\Model                                                                 
+Animation.cpp                          0     0     0     0     0     0     0     0     0     0     0
+Animation.h                            0     0     0     0     0     0     0     0     0     0     0
+AnimationChannel.cpp                   0     0     3     0     0     0     0     0     0     0     3
+AnimationChannel.h                     0     0     1     0     0     0     0     0     0     0     1
+Mesh.cpp                               0     0     0     0     0     0     0     0     0     0     0
+Mesh.h                                 0     0     0     0     0     0     0     0     0     0     0
+Model.cpp                              0     0     0     0     1     0     0     0     0     0     1
+Model.h                                0     0     0     0     0     0     0     0     0     0     0
+ModelTypes.h                           0     0     0     0     0     0     0     0     0     0     0
+Node.cpp                               0     0     0     0     2     0     0     0     0     0     2
+Node.h                                 0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common                                                                       
+RenderEngine.cpp                       0     0     0     0     0     0     0     0     0     0     0
+RenderEngine.h                         0     0     0     0     0     0     0     0     0     0     0
+RenderEngineTypes.h                    0     0     0     0     0     0     0     0     0     0     0
+RenderInterface.cpp                    0     0     0     0     0     0     0     0     0     0     0
+RenderInterface.h                      0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\Renderer                                                              
+CubeMapRenderer.cpp                    0     0     0     0     0     0     0     0     0     0     0
+CubeMapRenderer.h                      0     0     0     0     0     0     0     0     0     0     0
+DebugRenderer.cpp                      0     0     0     0     0     0     0     0     0     0     0
+DebugRenderer.h                        0     0     0     0     0     0     0     0     0     0     0
+GUIRenderer.cpp                        0     0     0     0     0     0     0     0     0     0     0
+GUIRenderer.h                          0     0     0     0     0     0     0     0     0     0     0
+GuideLineRenderer.cpp                  0     0     0     0     0     0     0     0     0     0     0
+GuideLineRenderer.h                    0     0     0     0     0     0     0     0     0     0     0
+IRenderer.h                            0     0     0     0     0     0     0     0     0     0     0
+ModelRenderer.cpp                      0     0     0     0     0     0     0     0     0     0     0
+ModelRenderer.h                        0     0     0     0     0     0     0     0     0     0     0
+ViewRenderer.cpp                       0     0     0     0     0     0     0     0     0     0     0
+ViewRenderer.h                         0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\ResourceHandler                                                       
+KTXFile.cpp                            0     0     0     0     0     0     0     0     0     0     0
+KTXFile.h                              0     0     0     0     0     0     0     0     0     0     0
+KTXTypes.h                             0     0     0     0     0     0     0     0     0     0     0
+ResourceHandler.cpp                    0     0     0     0     0     0     0     0     0     0     0
+ResourceHandler.h                      0     0     0     0     0     0     0     0     0     0     0
+ResourceTypes.h                        0     0     0     0     0     0     0     0     0     0     0
+Resources.h                            0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\Resources                                                             
+Constant.cpp                           0     0     0     0     0     0     0     0     0     0     0
+Constant.h                             0     0     0     0     0     0     0     0     0     0     0
+ConstantBuffer.cpp                     0     0     0     0     0     0     0     0     0     0     0
+ConstantBuffer.h                       0     0     0     0     0     0     0     0     0     0     0
+ITextureConstantData.h                 0     0     0     0     0     0     0     0     0     0     0
+IndexBuffer.cpp                        0     0     0     0     0     0     0     0     0     0     0
+IndexBuffer.h                          0     0     0     0     0     0     0     0     0     0     0
+MultipleRenderTarget.cpp               0     0     0     0     0     0     0     0     0     0     0
+MultipleRenderTarget.h                 0     0     0     0     0     0     0     0     0     0     0
+RenderTarget.cpp                       0     0     0     0     0     0     0     0     0     0     0
+RenderTarget.h                         0     0     0     0     0     0     0     0     0     0     0
+Texture.cpp                            0     0     0     0     0     0     0     0     0     0     0
+Texture.h                              0     0     0     0     0     0     0     0     0     0     0
+VertexBuffer.cpp                       0     0     0     0     0     0     0     0     0     0     0
+VertexBuffer.h                         0     0     0     0     0     0     0     0     0     0     0
+VertexDeclarationTypes.h               0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\Textures                                                              
+TextureInfo.cpp                        0     0     2     0     0     0     0     0     0     0     2
+TextureInfo.h                          0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Common\View                                                                  
+BaseBowlView.cpp                       0     0     0     0     0     0     0     0     0     0     0
+BaseBowlView.h                         0     0     0     0     0     0     0     0     0     0     0
+BaseView.h                             0     0     0     0     0     0     0     0     0     0     0
+BowlView.cpp                           0     0     0     0     0     0     0     0     0     0     0
+BowlView.h                             0     0     0     0     0     0     0     0     0     0     0
+BowlViewCPU.cpp                        0     0     0     0     0     0     0     0     0     0     0
+BowlViewCPU.h                          0     0     0     0     0     0     0     0     0     0     0
+SingleView.cpp                         0     0    21     0     1     0     0     0     0     0    22
+SingleView.h                           0     0     0     0     0     0     0     0     0     0     0
+ViewTypes.h                            0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Math                                                                         
+BBox2D.cpp                             0     0     0     0     0     0     0     0     0     0     0
+BBox2D.h                               0     0     0     0     0     0     0     0     0     0     0
+BBox3D.cpp                             0     0     0     0     0     0     0     0     0     0     0
+BBox3D.h                               0     0     0     0     0     0     0     0     0     0     0
+Color.cpp                              0     0    10     0     0     0     0     0     0     0    10
+Color.h                                0     0     0     0     0     0     0     0     0     0     0
+GizmoObject.cpp                        0     0     0     0     0     0     0     0     0     0     0
+GizmoObject.h                          0     0     0     0     0     0     0     0     0     0     0
+Line2D.cpp                             0     0     0     0     0     0     0     0     0     0     0
+Line2D.h                               0     0     0     0     0     0     0     0     0     0     0
+MathLib.cpp                            0     0    36     0     0     0     0     0     0     0    36
+MathLib.h                              0     0     0     0     0     0     0     0     0     0     0
+Plane.cpp                              0     0     0     0     0     0     0     0     0     0     0
+Plane.h                                0     0     0     0     0     0     0     0     0     0     0
+Transform.cpp                          0     0     0     0     4     0     0     0     0     0     4
+Transform.h                            0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d                                                                              
+MeclCfg.h                              0     0     0     0     0     0     0     0     0     0     0
+MeclTypeDefs.h                         0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\OpenGL\Device                                                                
+DeviceGLES.cpp                         0     0     0     0     0     0     0     0     0     0     0
+DeviceGLES.h                           0     0     0     0     0     0     0     0     0     0     0
+DeviceGLTypes.h                        0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\OpenGL\Effect                                                                
+EffectFileConstantBlockGL.cpp          0     0     0     0     0     0     0     0     0     0     0
+EffectFileConstantBlockGL.h            0     0     0     0     0     0     0     0     0     0     0
+EffectFileParserGL.cpp                 0     0     0     0     0     0     0     0     0     0     0
+EffectFileParserGL.h                   0     0     0     0     0     0     0     0     0     0     0
+EffectFilePassGL.cpp                   0     0     0     0     0     0     0     0     0     0     0
+EffectFilePassGL.h                     0     0     0     0     0     0     0     0     0     0     0
+EffectFileRenderStateBlockGL.cpp       0     0     0     0     0     0     0     0     0     0     0
+EffectFileRenderStateBlockGL.h         0     0     0     0     0     0     0     0     0     0     0
+EffectFileSamplerStateBlockGL.cpp      0     0     0     0     0     0     0     0     0     0     0
+EffectFileSamplerStateBlockGL.h        0     0     0     0     0     0     0     0     0     0     0
+EffectFileShaderGL.cpp                 0     0     0     0     0     0     0     0     0     0     0
+EffectFileShaderGL.h                   0     0     0     0     0     0     0     0     0     0     0
+EffectFileTypesGL.h                    0     0     0     0     0     0     0     0     0     0     0
+EffectFileVertexDeclarationGL.cpp      0     0     0     0     0     0     0     0     0     0     0
+EffectFileVertexDeclarationGL.h        0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\OpenGL                                                                       
+GLIncludes.h                           0     0     1     0     0     0     0     0     0     0     1
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\OpenGL\Manager                                                               
+BufferManagerGL.cpp                    0     0     0     0     0     0     0     0     0     0     0
+BufferManagerGL.h                      0     0     0     0     0     0     0     0     0     0     0
+ShaderManagerGL.cpp                    0     0     0     0     0     0     0     0     0     0     0
+ShaderManagerGL.h                      0     0     0     0     0     0     0     0     0     0     0
+TextureManagerGL.cpp                   0     0     0     0     0     0     0     0     0     0     0
+TextureManagerGL.h                     0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\OpenGL                                                                       
+RenderEngineGL.cpp                     0     0     0     0     0     0     0     0     0     0     0
+RenderEngineGL.h                       0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\OpenGL\Resources                                                             
+IndexBufferGL.cpp                      0     0     0     0     0     0     0     0     0     0     0
+IndexBufferGL.h                        0     0     0     0     0     0     0     0     0     0     0
+MultipleRenderTargetGL.cpp             0     0     0     0     0     0     0     0     0     0     0
+MultipleRenderTargetGL.h               0     0     0     0     0     0     0     0     0     0     0
+RenderTargetGL.cpp                     0     0     0     0     0     0     0     0     0     0     0
+RenderTargetGL.h                       0     0     0     0     0     0     0     0     0     0     0
+ShaderTypesGL.h                        0     0     0     0     0     0     0     0     0     0     0
+TextureGL.cpp                          0     0     0     0     0     0     0     0     0     0     0
+TextureGL.h                            0     0     0     0     0     0     0     0     0     0     0
+VertexBufferGL.cpp                     0     0     0     0     0     0     0     0     0     0     0
+VertexBufferGL.h                       0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\OpenGL\Shaders                                                               
+Shaders.h                              0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\OpenGLES30\Manager                                                           
+TextureManagerGLES30.cpp               0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\OpenGLES30                                                                   
+RenderEngineGLES30.cpp                 0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\OpenGLES30\Resources                                                         
+TextureGLES30.cpp                      0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d                                                                              
+RenderEngineCfg.h                      0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Utilities                                                                    
+DebugHelper.cpp                        0     0     1     0     0     0     0     0     0     0     1
+DebugHelper.h                          0     0     0     0     0     0     0     0     0     0     0
+Directory.cpp                          0     0     0     0     0     0     0     0     0     0     0
+Directory.h                            0     0     0     0     0     0     0     0     0     0     0
+DirectoryWatcher.cpp                   0     0     0     0     0     0     0     0     0     0     0
+DirectoryWatcher.h                     0     0     0     0     0     0     0     0     0     0     0
+FileUtils.cpp                          0     0     0     0     0     0     0     0     0     0     0
+FileUtils.h                            0     0     0     0     0     0     0     0     0     0     0
+GUIDGenerator.h                        0     0     0     0     0     0     0     0     0     0     0
+InOut.cpp                              0     0     0     0     0     0     0     0     0     0     0
+InOut.h                                0     0     0     0     0     0     0     0     0     0     0
+InputHandler.cpp                       0     0     0     0     0     0     0     0     0     0     0
+InputHandler.h                         0     0     0     0     0     0     0     0     0     0     0
+Window.cpp                             0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Vulkan\Device                                                                
+DeviceVK.cpp                           0     0     0     0     0     0     0     0     0     0     0
+DeviceVK.h                             0     0     0     0     0     0     0     0     0     0     0
+SwapChainVK.cpp                        0     0     0     0     0     0     0     0     0     0     0
+SwapChainVK.h                          0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Vulkan\Manager                                                               
+BufferManagerVK.cpp                    0     0     0     0     0     0     0     0     0     0     0
+BufferManagerVK.h                      0     0     0     0     0     0     0     0     0     0     0
+ShaderManagerVK.cpp                    0     0     0     0     0     0     0     0     0     0     0
+ShaderManagerVK.h                      0     0     0     0     0     0     0     0     0     0     0
+TextureManagerVK.cpp                   0     0     0     0     0     0     0     0     0     0     0
+TextureManagerVK.h                     0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Vulkan                                                                       
+RenderEngineVK.cpp                     0     0     0     0     0     0     0     0     0     0     0
+RenderEngineVK.h                       0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\me3d\me3d\Vulkan\Resources                                                             
+IndexBufferVK.cpp                      0     0     0     0     0     0     0     0     0     0     0
+IndexBufferVK.h                        0     0     0     0     0     0     0     0     0     0     0
+TextureVK.cpp                          0     0     0     0     0     0     0     0     0     0     0
+TextureVK.h                            0     0     0     0     0     0     0     0     0     0     0
+VertexBufferVK.cpp                     0     0     0     0     0     0     0     0     0     0     0
+VertexBufferVK.h                       0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\mecl\mecl\buffer                                                                       
+Buffer.h                               0     0     0     0     0     0     0     0     0     0     0
+Fifo.h                                 0     0     0     0     0     0     0     0     0     0     0
+IBuffer.h                              0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\mecl\mecl\config                                                                       
+IConfig.h                              0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\mecl\mecl\core                                                                         
+Array.h                                0     0     0     0     0     0     0     0     0     0     0
+ArrayBase.h                            0     0     0     0     0     0     0     0     0     0     0
+ArrayList.h                            0     0     0     0     0     0     0     0     0     0     0
+ArrayN.h                               0     0     0     0     0     0     0     0     0     0     0
+BitSet.h                               0     0     0     0     0     0     0     0     0     0     0
+BitStream.h                            0     0     0     0     0     0     0     0     0     0     0
+Collection.h                           0     0     1     0     0     0     0     0     0     0     1
+Core.h                                 0     0     0     0     0     0     0     0     0     0     0
+Crc.cpp                                0     0   566     0     0     0     0     0     0     0   566
+Crc.h                                  0     0     1     0     0     0     0     0     0     0     1
+Crc_cfg.h                              0     0     0     0     0     0     0     0     0     0     0
+FixedPoint.h                           0     0     6     0     0     0     0     0     0     0     6
+Float16.h                              0     0     0     0     0     0     0     0     0     0     0
+Helpers.h                              0     0     0     0     0     0     0     0     0     0     0
+MatCalcIndex.cpp                       0     0     3     0     0     0     0     0     0     0     3
+MatCalcIndex.h                         0     0     0     0     0     0     0     0     0     0     0
+Matrix.h                               0     0    18     0     0     0     0     0     0     0    18
+Matrix.hpp                             0     0    12     0     0     0     0     0     0     0    12
+Matrix3x3.h                            0     0     3     0    39     0     0     0     0     2    44
+MeclTypes.h                            0     0     0     0     0     0     0     0     0     0     0
+MemArray.h                             0     0     0     0     0     0     0     0     0     0     0
+MemArrayList.h                         0     0     0     0     0     0     0     0     0     0     0
+MultiArrayAccess.h                     0     0     6     0     0     0     0     0     0     0     6
+Point.h                                0     0     0     0     0     0     0     0     0     0     0
+Point.hpp                              0     0     6     0     5     0     0     0     0     0    11
+Projection4D.h                         0     0     5     0     0     0     0     0     0     0     5
+Quaternion.h                           0     0     1     0     0     0     0     0     0     0     1
+Quaternion.hpp                         0     0    34     0     3     0     0     0     0     0    37
+Rectangle.h                            0     0     4     0     0     0     0     0     0     0     4
+Rectangle.hpp                          0     0     2     0     0     0     0     0     0     0     2
+RotationMatrix.h                       0     0     5     0     0     0     0     0     0     0     5
+Singleton.h                            0     0     1     0     0     0     0     0     0     0     1
+TriangleMatrix.h                       0     0     0     0     0     0     0     0     0     0     0
+Vector.h                               0     0     1     0     0     0     0     0     0    48    49
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\mecl\mecl\ctrl                                                                         
+Ctrl.h                                 0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\mecl\mecl\math                                                                         
+FPolynomial.h                          0     0     0     0     0     0     0     0     0     0     0
+FPolynomial.hpp                        0     0     0     0     0     0     0     0     0     0     0
+Math.h                                 0     0    22     0    13     0     0     0     0     0    35
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\mecl\mecl                                                                              
+mecl.h                                 0     0     0     0     0     0     0     0     0     0     0
+meclcfg.h                              0     0     1     0     0     0     0     0     0     0     1
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\mecl\mecl\model                                                                        
+Camera.h                               0     0     0     0     0     0     0     0     0     0     0
+Camera.hpp                             0     0     4     0     0     0     0     0     0     0     4
+CarModel.h                             0     0     0     0     0     0     0     0     0     0     0
+CarModel.hpp                           0     0     1     0     0     0     0     0     0     0     1
+IImager.h                              0     0     0     0     0     0     0     0     0     0     0
+ILens.h                                0     0     1     0     0     0     0     0     0     0     1
+IMovableObject.h                       0     0     0     0     0     0     0     0     0     0     0
+ISensor.h                              0     0     0     0     0     0     0     0     0     0     0
+IView.h                                0     0     0     0     0     0     0     0     0     0     0
+LensCylinder.h                         0     0     0     0     0     0     0     0     0     0     0
+LensCylinder.hpp                       0     0     0     0     2     0     0     0     0     0     2
+LensPrism.h                            0     0     2     0     0     0     0     0     0     0     2
+LensPrism.hpp                          0     0     1     0     3     0     0     0     0     0     4
+LensRadial.h                           0     0     0     0     0     0     0     0     0     0     0
+LensRadial.hpp                         0     0     0     0    10     0     0     0     0     0    10
+LensStretchVertical.h                  0     0     0     0     1     0     0     0     0     0     1
+LensStretchVertical.hpp                0     0     2     0    18     0     0     0     0     0    20
+Model.h                                0     0     0     0    24     0     0     0     0     1    25
+ModelTypes.h                           0     0     0     0     0     0     0     0     0     0     0
+Pinhole.h                              0     0     0     0     0     0     0     0     0     0     0
+Pinhole.hpp                            0     0    22     0     2     0     0     0     0     0    24
+Projection.h                           0     0     1     0     1     0     0     0     0     2     4
+Sensor.h                               0     0     0     0     0     0     0     0     0     0     0
+Sensor.hpp                             0     0    11     0     3     0     0     0     0     0    14
+SingleView.h                           0     0     0     0     0     0     0     0     0     0     0
+SingleView.hpp                         0     0     6     0     1     0     0     0     0     0     7
+TrailerModel.h                         0     0     0     0     0     0     0     0     0     0     0
+TrailerModel.hpp                       0     0     1     0     0     0     0     0     0     0     1
+ViewGen.h                              0     0     0     0     0     0     0     0     0     0     0
+ViewGen.hpp                            0     0     2     0     2     0     0     0     0     0     4
+ViewGenCodec_Hydra2.h                  0     0    17     0     2     0     0     0     0     0    19
+ViewGen_Hydra2.cpp                     0     0    18     0     2     0     0     0     0     0    20
+ViewGen_Hydra2.h                       0     0     4     0     0     0     0     0     0     0     4
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\osal\osal\io                                                                           
+File.cpp                               0     0     0     0     0     0     0     0     0     0     0
+File.h                                 0     0     0     0     0     0     0     0     0     0     0
+IFile.h                                0     0     0     0     0     0     0     0     0     0     0
+InOut.cpp                              0     0     0     0     0     0     0     0     0     0     0
+InOut.h                                0     0     0     0     0     0     0     0     0     0     0
+MemoryFile.cpp                         0     0     0     0     0     0     0     0     0     0     0
+MemoryFile.h                           0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\osal\osal\networking                                                                   
+INetwork.h                             0     0     0     0     0     0     0     0     0     0     0
+INetworkMsgHandler.h                   0     0     0     0     0     0     0     0     0     0     0
+SocketClient.cpp                       0     0     0     0     0     0     0     0     0     0     0
+SocketClient.h                         0     0     0     0     0     0     0     0     0     0     0
+SocketServer.cpp                       0     0     0     0     0     0     0     0     0     0     0
+SocketServer.h                         0     0     0     0     0     0     0     0     0     0     0
+UDPSenderReceiver.cpp                  0     0     0     0     0     0     0     0     0     0     0
+UDPSenderReceiver.h                    0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\osal\osal\system                                                                       
+Clock.cpp                              0     0     7     0     0     0     0     0     0     0     7
+Clock.h                                0     0     0     0     0     0     0     0     0     0     0
+Path.cpp                               0     0     0     0     0     0     0     0     0     0     0
+Path.h                                 0     0     0     0     0     0     0     0     0     0     0
+String.cpp                             0     0     0     0     0     0     0     0     0     0     0
+String.h                               0     0     0     0     0     0     0     0     0     0     0
+StringW.cpp                            0     0     0     0     0     0     0     0     0     0     0
+StringW.h                              0     0     0     0     0     0     0     0     0     0     0
+Time.cpp                               0     0     0     0     0     0     0     0     0     0     0
+Time.h                                 0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\osal\osal\threading                                                                    
+BinarySemaphore.cpp                    0     0     0     0     0     0     0     0     0     0     0
+BinarySemaphore.h                      0     0     0     0     0     0     0     0     0     0     0
+IRunnable.h                            0     0     0     0     0     0     0     0     0     0     0
+Mutex.cpp                              0     0     0     0     0     0     0     0     0     0     0
+Mutex.h                                0     0     0     0     0     0     0     0     0     0     0
+Thread.cpp                             0     0     0     0     0     0     0     0     0     0     0
+Thread.h                               0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\platform\platform                                                                      
+PlatformAPI.cpp                        0     0     0     0     0     0     0     0     0     0     0
+PlatformAPI.h                          0     0     0     0     0     0     0     0     0     0     0
+PlatformDefines.h                      0     0     0     0     0     0     0     0     0     0     0
+PlatformHelper.h                       0     0     1     0     0     0     0     0     0     0     1
+PlatformSpecs.h                        0     0     0     0     0     0     0     0     0     0     0
+PlatformSpecsQnx64.h                   0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\platform\platform\qnx                                                                  
+StdLibTypes_QNX.h                      0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\platform\platform\stdlib                                                               
+ME_Assert.h                            0     0     0     0     0     0     0     0     0     0     0
+ME_Condvar.h                           0     0     0     0     0     0     0     0     0     0     0
+ME_Debugger.h                          0     0     0     0     0     0     0     0     0     0     0
+ME_Directory.h                         0     0     0     0     0     0     0     0     0     0     0
+ME_File.h                              0     0     0     0     0     0     0     0     0     0     0
+ME_IO.h                                0     0     0     0     0     0     0     0     0     0     0
+ME_Interrupt.h                         0     0     0     0     0     0     0     0     0     0     0
+ME_Mutex.h                             0     0     0     0     0     0     0     0     0     0     0
+ME_Process.h                           0     0     0     0     0     0     0     0     0     0     0
+ME_Semaphore.h                         0     0     0     0     0     0     0     0     0     0     0
+ME_SharedMemory.h                      0     0     0     0     0     0     0     0     0     0     0
+ME_Socket.h                            0     0     0     0     0     0     0     0     0     0     0
+ME_String.h                            0     0     0     0     0     0     0     0     0     0     0
+ME_Thread.h                            0     0     0     0     0     0     0     0     0     0     0
+ME_Time.h                              0     0     0     0     0     0     0     0     0     0     0
+PixelFormatTypes.h                     0     0     0     0     0     0     0     0     0     0     0
+StdLibTypes.h                          0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\platform\platform\stdlib\memory                                                        
+PlatformAllocator.h                    0     0     0     0     0     0     0     0     0     0     0
+PlatformMemory.h                       0     0     0     0     0     0     0     0     0     0     0
+PlatformNew.cpp                        0     0     0     0     0     0     0     0     0     0     0
+PlatformStl.h                          0     0     0     0     0     0     0     0     0     0     0
+tlsf.h                                 0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\platform\platform\stdlib\utils                                                         
+CppBridge.h                            0     0     0     0     0     0     0     0     0     0     0
+CppHelpers.h                           0     0     0     0     0     0     0     0     0     0     0
+DataSerializer.h                       0     0    44     0     0     0     0     0     0     0    44
+ME_Profiler.h                          0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\platform\platform\stdlib\utils\crc                                                     
+crc_cfg.h                              0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\platform\platform\stdlib\utils\crc\src                                                 
+crc.h                                  0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\sensor\cfg                                                                             
+CamShm.cpp                             0     0     1     0     0     0     0     0     0     0     1
+CamShm.h                               0     0     0     0     0     0     0     0     0     1     1
+CamTypes.cpp                           0     0     1     0     0     0     0     0     0     0     1
+CamTypes.h                             0     0     2     0     0     0     0     0     0     0     2
+CameraZyrichLite.cpp                   0     0     2     0     3     0     0     0     0     0     5
+CameraZyrichLite.h                     0     0     0     0     0     0     0     0     0     1     1
+DeserializerCXD4960ER.cpp              0     0     1     0     0     0     0     0     0     0     1
+DeserializerCXD4960ER.h                0     0     0     0     0     0     0     0     0     0     0
+ImagerAS0149AT.cpp                     0     0     1     0     0     0     0     0     0     0     1
+ImagerAS0149AT.h                       0     0     0     0     0     0     0     0     0     0     0
+SerializerCXD4963ER.cpp                0     0     1     0     0     0     0     0     0     0     1
+SerializerCXD4963ER.h                  0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\sensor\sensor                                                                          
+CameraBase.cpp                         0     0     1     0     0     0     0     0     0     0     1
+CameraBase.h                           0     0     0     0     0     0     0     0     0     0     0
+CameraParams.cpp                       0     0     0     0     0     0     0     0     0     0     0
+CameraParams.h                         0     0     0     0     0     0     0     0     0     0     0
+IspBase.cpp                            0     0     0     0     0     0     0     0     0     0     0
+IspBase.h                              0     0     0     0     0     0     0     0     0     0     0
+SensorBase.h                           0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\sensor\sensor\devices                                                                  
+DeserializerBase.cpp                   0     0     0     0     0     0     0     0     0     0     0
+DeserializerBase.h                     0     0     0     0     1     0     0     0     0     0     1
+EepromBase.cpp                         0     0     0     0     0     0     0     0     0     0     0
+EepromBase.h                           0     0     2     0     0     0     0     0     0     0     2
+IDevice.h                              0     0     0     0     0     0     0     0     0     0     0
+ImagerBase.cpp                         0     0     0     0     0     0     0     0     0     0     0
+ImagerBase.h                           0     0     0     0     1     0     0     0     0     0     1
+SerializerBase.cpp                     0     0     0     0     0     0     0     0     0     0     0
+SerializerBase.h                       0     0     0     0     1     0     0     0     0     0     1
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\variants\variants                                                                      
+Assets.cpp                             0     0     0     0     0     0     0     0     0     0     0
+Assets.h                               0     0     0     0     0     0     0     0     0     0     0
+Components.h                           0     0     0     0     0     0     0     0     0     0     0
+Enums.h                                0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\variants\variants\Variant0                                                             
+VariantData.h                          0     0     2     0     0     0     0     0     0     0     2
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreLibs\variants\variants                                                                      
+VariantHelper.cpp                      0     0     9     0     0     0     0     0     0     0     9
+VariantHelper.h                        0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreServices\AppMIntgr\appm                                                                     
+IDataProviderAppM.h                    0     0     0     0     0     0     0     0     0     0     0
+JobAppM.cpp                            0     0     0     0     0     0     0     0     0     0     0
+JobAppM.h                              0     0     0     0     0     0     0     0     0     0     0
+JobScheduler.cpp                       0     0     3     0     0     0     0     0     0     0     3
+JobScheduler.h                         0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreServices\AppMIntgr\cfg\DataProvider                                                         
+DataProviderAppM.cpp                   0     0     0     0     0     0     0     0     0     0     0
+DataProviderAppM.h                     0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreServices\ErrMIntgr\errm                                                                     
+JobErrM.cpp                            0     0     0     0     0     0     0     0     0     0     0
+JobErrM.h                              0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreServices\SigMIntgr\cfg\DataProvider                                                         
+DataProviderSigM.cpp                   0     0     1     0     4     0     0     0     0     0     5
+DataProviderSigM.h                     0     0     0     0     1     0     0     0     0     0     1
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreServices\SigMIntgr\cfg                                                                      
+ME_Msg.h                               0     0     0     0     0     0     0     0     0     0     0
+ProjectRequests.h                      0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreServices\SigMIntgr\cfg\requests                                                             
+BaseRequest.cpp                        0     0     0     0     0     0     0     0     0     0     0
+BaseRequest.h                          0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoControl.h                       0     0     0     0     0     0     0     0     0     0     0
+ReqApplyConfig.cpp                     0     0     3     0     0     0     0     0     0     0     3
+ReqApplyConfig.h                       0     0     0     0     0     0     0     0     0     0     0
+ReqBootState.cpp                       0     0     0     0     0     0     0     0     0     0     0
+ReqBootState.h                         0     0     0     0     0     0     0     0     0     0     0
+ReqCamApplyCalib.cpp                   0     0     0     0     0     0     0     0     0     0     0
+ReqCamApplyCalib.h                     0     0     0     0     0     0     0     0     0     0     0
+ReqCamGetEeprom.cpp                    0     0     5     0     0     0     0     0     0     0     5
+ReqCamGetEeprom.h                      0     0     0     0     0     0     0     0     0     0     0
+ReqCamGetRegister.cpp                  0     0     0     0     4     0     0     0     0     0     4
+ReqCamGetRegister.h                    0     0     0     0     0     0     0     0     0     0     0
+ReqCamSetRegister.cpp                  0     0     0     0     0     0     0     0     0     0     0
+ReqCamSetRegister.h                    0     0     0     0     0     0     0     0     0     0     0
+ReqControl.cpp                         0     0     0     0     0     0     0     0     0     0     0
+ReqControl.h                           0     0     0     0     0     0     0     0     0     0     0
+ReqInformation.cpp                     0     0     2     0     0     0     0     0     0     0     2
+ReqInformation.h                       0     0     0     0     0     0     0     0     0     0     0
+ReqMCU_TRAGateway1.cpp                 0     0     0     0     0     0     0     0     0     0     0
+ReqMCU_TRAGateway1.h                   0     0     0     0     0     0     0     0     0     0     0
+ReqMCU_TRAGateway2.cpp                 0     0     0     0     0     0     0     0     0     0     0
+ReqMCU_TRAGateway2.h                   0     0     0     0     0     0     0     0     0     0     0
+ReqMCU_TRAGateway3.cpp                 0     0     2     0     0     0     0     0     0     0     2
+ReqMCU_TRAGateway3.h                   0     0     0     0     0     0     0     0     0     0     0
+ReqMCU_TRAGateway4.cpp                 0     0     0     0     0     0     0     0     0     0     0
+ReqMCU_TRAGateway4.h                   0     0     0     0     0     0     0     0     0     0     0
+ReqMisc.cpp                            0     0     0     0     0     0     0     0     0     0     0
+ReqMisc.h                              0     0     0     0     0     0     0     0     0     0     0
+ReqPerCErrorState.cpp                  0     0     1     0     0     0     0     0     0     0     1
+ReqPerCErrorState.h                    0     0     0     0     0     0     0     0     0     0     0
+ReqScreen.cpp                          0     0     0     0     2     0     0     0     0     0     2
+ReqScreen.h                            0     0     0     0     0     0     0     0     0     0     0
+ReqTRA.cpp                             0     0     1     0    22     0     0     0     0     0    23
+ReqTRA.h                               0     0     0     0     0     0     0     0     0     0     0
+ReqTestPattern.cpp                     0     0     0     0     0     0     0     0     0     0     0
+ReqTestPattern.h                       0     0     0     0     0     0     0     0     0     0     0
+ReqVehicleState.cpp                    0     0     2     0     0     0     0     0     0     0     2
+ReqVehicleState.h                      0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreServices\SigMIntgr\cfg\requests\algo                                                        
+LogAlgo.def                            0     0     4     0     0     0     0     0     0     0     4
+ReqAlgoEolDebug.cpp                    0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoEolDebug.h                      0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoEolPause.cpp                    0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoEolPause.h                      0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoEolResume.cpp                   0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoEolResume.h                     0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoEolStart.cpp                    0     0    14     0     0     0     0     0     0     0    14
+ReqAlgoEolStart.h                      0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoEolStatus.cpp                   0     0    75     0    27     0     0     0     0     0   102
+ReqAlgoEolStatus.h                     0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoEolStop.cpp                     0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoEolStop.h                       0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoOcDebug.cpp                     0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoOcDebug.h                       0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoOcPause.cpp                     0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoOcPause.h                       0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoOcResume.cpp                    0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoOcResume.h                      0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoOcStart.cpp                     0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoOcStart.h                       0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoOcStatus.cpp                    0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoOcStatus.h                      0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoOcStop.cpp                      0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoOcStop.h                        0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoScDebug.cpp                     0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoScDebug.h                       0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoScPause.cpp                     0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoScPause.h                       0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoScResume.cpp                    0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoScResume.h                      0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoScStart.cpp                     0     0     2     0     1     0     0     0     0     0     3
+ReqAlgoScStart.h                       0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoScStatus.cpp                    0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoScStatus.h                      0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoScStop.cpp                      0     0     0     0     1     0     0     0     0     0     1
+ReqAlgoScStop.h                        0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoTeolDebug.cpp                   0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoTeolDebug.h                     0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoTeolPause.cpp                   0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoTeolPause.h                     0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoTeolResume.cpp                  0     0     4     0     0     0     0     0     0     0     4
+ReqAlgoTeolResume.h                    0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoTeolStart.cpp                   0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoTeolStart.h                     0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoTeolStatus.cpp                  0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoTeolStatus.h                    0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoTeolStop.cpp                    0     0     0     0     0     0     0     0     0     0     0
+ReqAlgoTeolStop.h                      0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreServices\SigMIntgr\sigm                                                                     
+IDataProviderSigM.h                    0     0     0     0     1     0     0     0     0     0     1
+JobSigM.cpp                            0     0     2     0     1     0     0     0     0     0     3
+JobSigM.h                              0     0     2     0     0     0     0     0     0     0     2
+SigMTypes.h                            0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreServices\SysIntgr\cfg                                                                       
+JobSys.cpp                             0     0     0     0     0     0     0     0     0     0     0
+JobSys.h                               0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreServices\VarMIntgr\cfg\DataProvider                                                         
+DataProviderVarM.cpp                   0     0     0     0     0     0     0     0     0     0     0
+DataProviderVarM.h                     0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code\Framew
+ork\CoreServices\VarMIntgr\varm                                                                     
+FlashInMemory.cpp                      0     0     0     0     0     0     0     0     0     0     0
+IDataProviderVarM.h                    0     0     0     0     0     0     0     0     0     0     0
+JobVarM.cpp                            0     0     1     0     2     0     0     0     0     0     3
+JobVarM.h                              0     0     0     0     0     0     0     0     0     0     0
+VariantLoader.cpp                      0     0     0     0     0     0     0     0     0     0     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\Tools\QACPP\App
+\config\gcc                                                                                         
+*                                      -     -     -     -     -     -     -     -     -     -     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\Tools\QACPP\App
+\config\prlforceinclude                                                                             
+*                                      -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\host\win64\x86_64\usr\lib\gcc\aarch64-unknown-nto-qnx7.0.0\5.4.0\includ
+e                                                                                                   
+*                                      -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include\EGL                                            
+*                                      -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include\GLES2                                          
+*                                      -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include                                                
+*                                      -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include\c++\v1                                         
+*                                      -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include                                                
+*                                      -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include\hw                                             
+*                                      -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include                                                
+*                                      -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include\screen                                         
+*                                      -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include                                                
+*                                      -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include\sys                                            
+*                                      -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include                                                
+*                                      -     -     -     -     -     -     -     -     -     -     0
+
+CMA Messages                                                                                        
+Multi-Location                         0     0   102     0     2     0     0     0     0     0   104
+                                   ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+Total                                  0     0  4179     0   432     0     0     0     0    55  4666
+
+----------------------------------------------------------------------------------------------------
+Report File Name: C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\P
+uC\Tools\QACPP\App\reports\QACPP_findings_summary.txt                                               
+Date & Time:      2020-08-14 20:54:47
+----------------------------------------------------------------------------------------------------
+

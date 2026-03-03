@@ -1,0 +1,127 @@
+/// --------------------------------------------------------------------------
+/// @file OdOnnx.h
+/// @brief Contains ONNX based DNN based object detector class
+/// --------------------------------------------------------------------------
+/// @copyright MAGNA Electronics - C O N F I D E N T I A L <br>
+/// This document in its entirety is CONFIDENTIAL and may not be disclosed,
+/// disseminated or distributed to parties outside MAGNA Electronics
+/// without written permission from MAGNA Electronics.
+///
+/// @author Jignesh Vasoya (jignesh.vasoya@magna.com)
+/// --------------------------------------------------------------------------
+
+#ifndef ODONNX_H
+#define ODONNX_H
+
+
+#ifdef _WIN32
+    #include <MECL/mecl.h>
+    #include "onnxruntime_cxx_api.h"
+    #include <opencv2/imgproc.hpp>
+    #include <opencv2/highgui.hpp>
+    #include <opencv2/core.hpp>
+#else
+    #include "mecl/mecl.h"
+#endif // _WIN32
+#include "../common/THAConfig.h"
+#include "../common/THADefs.h"
+#include "../common/THAParams.h"
+#include "MatrixUtils.h"
+class COdOnnx
+{
+public:
+    COdOnnx();
+    virtual ~COdOnnx();
+
+    void Init( Ort::Env* i_environment, const std::string modelPath );
+#ifdef ENABLE_MULTI_DET_DNN
+    void Reinit( Ort::Env* i_environment, const std::string modelPath );
+#endif // ENABLE_MULTI_DET_DNN
+    /*
+    * Function to detect an object. It returns number of detected objects.
+    */
+    /* uint32_t Detect( const uint8_t* i_image_pu8,
+                      uint16_t i_ImgWidth_u16,
+                      uint16_t i_ImgHeight_u16 );*/
+    uint32_t Detect( const uint8_t* i_image_pu8,
+                     uint16_t i_ImgWidth_u16,
+                     uint16_t i_ImgHeight_u16,
+                     uint16_t i_UsrSelPntX_u16,
+                     uint16_t i_UsrSelPntY_u16,
+                     bool_t i_UsrSelCfm_b );
+    /*
+    * Function to clssify an image. It returns class ID.
+    */
+    uint32_t Classify( const uint8_t* i_Imag_pu8,
+                       float32_t& o_classProb_f32 ,
+                       Recti& i_rectTrailer_s,
+                       uint16_t i_ImgWidth_u16,
+                       uint16_t i_ImgHeight_u16 );
+
+    /*
+    * Function to release onnx object
+    */
+    void Release();
+private:
+
+    /*
+    * Private functions
+    */
+    std::vector<float32_t> preprocessImageONNX( cv::Mat image );
+    void BoxPredictionProcess( float32_t* pred_boxes,
+                               uint32_t totalDetection,
+                               uint32_t detSize );
+    void BoxPredictionProcessNms( float32_t* pred_boxes,
+                                  uint32_t totalDetection,
+                                  uint32_t detSize );
+
+    void softmax( float32_t* o_pScores_f32, const uint32_t& i_cntScores_u32 );
+    void MaxSupression();
+    static std::wstring to_wstring( std::string const& str );
+    bool_t ValidateAndUpdateBB( Recti& io_BB,
+                                int32_t i_imgW,
+                                int32_t i_imgH );
+public:
+    /*
+    * Public parameters
+    */
+    Ort::Session* m_Ortsession = NULL;
+    Ort::AllocatorWithDefaultOptions*  m_Ortallocator = NULL;
+    Ort::SessionOptions* m_Ortsession_options = NULL;
+    BBBox_t hitchBbox;
+    BBBox_t couplerBbox;
+    BBBox_t trailerBox;
+
+    mecl::core::ArrayList<ODInfo, MAX_DETECTIONS> m_Result;
+
+    //int32_t labelType;
+    int32_t detCount;
+    bool_t EnableGPU_b;
+
+    // Number of object classes (i.e. object types)
+    size_t numClasses;
+    // List of object class string
+    std::vector<std::string> classList;
+    // Enable/Disable cropping of input image for detection
+    bool_t m_EnableODONNXCrop = false;
+    uint8_t m_DetDNNModelType;
+private:
+
+    /*
+    * Private parameters (As per CTensorAPI)
+    */
+    DetectionObject_t* m_det = NULL;
+
+    /*
+    * Input, Output tensor para
+    */
+    std::vector<const char_t*> inputTensorNames;
+    std::vector<const char_t*> outputTensorNames;
+    std::vector<int64_t> m_inputNodeDims;
+    std::vector<std::vector<int64_t>> m_outputNodeDims;
+    uint16_t m_inputNodeChannel;
+    uint16_t m_inputNodeHeight;
+    uint16_t m_inputNodeWidth;
+};
+
+#endif // !ODONNX_H

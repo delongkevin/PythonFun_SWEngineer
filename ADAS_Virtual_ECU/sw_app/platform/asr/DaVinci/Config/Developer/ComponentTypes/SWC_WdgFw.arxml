@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This file was saved with a tool from Vector Informatik GmbH-->
+<AUTOSAR xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_00050.xsd" xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AR-PACKAGES>
+    <AR-PACKAGE UUID="62003436-177D-4630-9A20-3DA582AF7B79">
+      <SHORT-NAME>FCADT</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE UUID="E0ADE93B-7D28-4244-8B9F-A15DFC5F7196">
+          <SHORT-NAME>ComponentTypes</SHORT-NAME>
+          <ELEMENTS>
+            <APPLICATION-SW-COMPONENT-TYPE UUID="FDAAAA41-BA27-4E8B-B1E3-A4DCB3CB1806">
+              <SHORT-NAME>SWC_WdgFw</SHORT-NAME>
+              <PORTS>
+                <R-PORT-PROTOTYPE UUID="5CA6FBCF-9AA0-459A-A26A-C11720D5F7FC">
+                  <SHORT-NAME>R_WdgM_AliveSupervision_Safety_Task_00_10ms</SHORT-NAME>
+                  <REQUIRED-COM-SPECS>
+                    <CLIENT-COM-SPEC>
+                      <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/MICROSAR/WdgM_swc/Interfaces/WdgM_AliveSupervision/CheckpointReached</OPERATION-REF>
+                    </CLIENT-COM-SPEC>
+                  </REQUIRED-COM-SPECS>
+                  <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/MICROSAR/WdgM_swc/Interfaces/WdgM_AliveSupervision</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE UUID="1BC36682-D772-4B18-9DC7-41CAF7ACF428">
+                  <SHORT-NAME>R_WdgM_AliveSupervision_Safety_Task_01_10ms</SHORT-NAME>
+                  <REQUIRED-COM-SPECS>
+                    <CLIENT-COM-SPEC>
+                      <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/MICROSAR/WdgM_swc/Interfaces/WdgM_AliveSupervision/CheckpointReached</OPERATION-REF>
+                    </CLIENT-COM-SPEC>
+                  </REQUIRED-COM-SPECS>
+                  <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/MICROSAR/WdgM_swc/Interfaces/WdgM_AliveSupervision</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE UUID="8080D982-EBA5-4D9C-8B05-9B2AC86F200A">
+                  <SHORT-NAME>R_WdgM_AliveSupervision_Safety_Com_Task_10ms</SHORT-NAME>
+                  <ADMIN-DATA>
+                    <SDGS>
+                      <SDG GID="DV:DEV">
+                        <SD GID="DV:ImportModePreset">Keep</SD>
+                      </SDG>
+                    </SDGS>
+                  </ADMIN-DATA>
+                  <REQUIRED-COM-SPECS>
+                    <CLIENT-COM-SPEC>
+                      <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/MICROSAR/WdgM_swc/Interfaces/WdgM_AliveSupervision/CheckpointReached</OPERATION-REF>
+                    </CLIENT-COM-SPEC>
+                  </REQUIRED-COM-SPECS>
+                  <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/MICROSAR/WdgM_swc/Interfaces/WdgM_AliveSupervision</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE UUID="858A9A7B-663E-4EA0-A0E9-1BAD62EF6768">
+                  <SHORT-NAME>R_WdgM_AliveSupervision_Safety_Task_200ms</SHORT-NAME>
+                  <ADMIN-DATA>
+                    <SDGS>
+                      <SDG GID="DV:DEV">
+                        <SD GID="DV:ImportModePreset">Keep</SD>
+                      </SDG>
+                    </SDGS>
+                  </ADMIN-DATA>
+                  <REQUIRED-COM-SPECS>
+                    <CLIENT-COM-SPEC>
+                      <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/MICROSAR/WdgM_swc/Interfaces/WdgM_AliveSupervision/CheckpointReached</OPERATION-REF>
+                    </CLIENT-COM-SPEC>
+                  </REQUIRED-COM-SPECS>
+                  <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/MICROSAR/WdgM_swc/Interfaces/WdgM_AliveSupervision</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR UUID="701E720C-2523-4D3D-AC73-07CB770DA8AA">
+                  <SHORT-NAME>SWC_WdgFw_InternalBehavior</SHORT-NAME>
+                  <EVENTS>
+                    <TIMING-EVENT UUID="7A3D0E75-A877-4821-8C06-81ABE47AE214">
+                      <SHORT-NAME>TMT_Runnable</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/SWC_WdgFw/SWC_WdgFw_InternalBehavior/WdgFw_10ms</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <TIMING-EVENT UUID="A4026FA5-1CC7-4BEE-837A-15FE8C2BE7DF">
+                      <SHORT-NAME>TMT_WdgFw_Safety_Task_00_10ms_CP_10ms</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/SWC_WdgFw/SWC_WdgFw_InternalBehavior/WdgFw_Safety_Task_00_10ms_CP_10ms</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <TIMING-EVENT UUID="F6FDB088-FF0F-427D-A2AD-0D4C0B877D9B">
+                      <SHORT-NAME>TMT_WdgFw_Safety_Task_01_10ms_CP_10ms</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/SWC_WdgFw/SWC_WdgFw_InternalBehavior/WdgFw_Safety_Task_01_10ms_CP_10ms</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <TIMING-EVENT UUID="FF39C1F6-5E10-4D0B-A3CB-4AC6BD382B6C">
+                      <SHORT-NAME>TMT_WdgM_MainFunction_Call_Cntr_10ms</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/SWC_WdgFw/SWC_WdgFw_InternalBehavior/WdgM_MainFunction_Call_Cntr_10ms</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <TIMING-EVENT UUID="0660E3C5-8487-498D-A14F-439A0ACDAF05">
+                      <SHORT-NAME>TMT_WdgFw_Safety_Task_Com_10ms_CP_10ms</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/SWC_WdgFw/SWC_WdgFw_InternalBehavior/WdgFw_Safety_Task_Com_10ms_CP_10ms</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <TIMING-EVENT UUID="4976C1B5-874B-4FFC-9409-7F4198F9505D">
+                      <SHORT-NAME>TMT_WdgFw_Safety_Task_200ms_CP_200ms</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/SWC_WdgFw/SWC_WdgFw_InternalBehavior/WdgFw_Safety_Task_200ms_CP_200ms</START-ON-EVENT-REF>
+                      <PERIOD>0.2</PERIOD>
+                    </TIMING-EVENT>
+                  </EVENTS>
+                  <RUNNABLES>
+                    <RUNNABLE-ENTITY UUID="24120BF1-B6C7-4C43-AF99-DE737E862184">
+                      <SHORT-NAME>WdgFw_10ms</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SERVER-CALL-POINTS>
+                        <SYNCHRONOUS-SERVER-CALL-POINT UUID="F0C3569C-6D28-46DE-96DB-CF289BC03A39">
+                          <SHORT-NAME>SC_R_WdgM_AliveSupervision_Safety_Task_00_10ms_CheckpointReached</SHORT-NAME>
+                          <OPERATION-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/FCADT/ComponentTypes/SWC_WdgFw/R_WdgM_AliveSupervision_Safety_Task_00_10ms</CONTEXT-R-PORT-REF>
+                            <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/MICROSAR/WdgM_swc/Interfaces/WdgM_AliveSupervision/CheckpointReached</TARGET-REQUIRED-OPERATION-REF>
+                          </OPERATION-IREF>
+                          <TIMEOUT>0</TIMEOUT>
+                        </SYNCHRONOUS-SERVER-CALL-POINT>
+                        <SYNCHRONOUS-SERVER-CALL-POINT UUID="22661C8C-C9A9-4825-BAE2-74DD74FE3640">
+                          <SHORT-NAME>SC_R_WdgM_AliveSupervision_Safety_Task_01_10ms_CheckpointReached</SHORT-NAME>
+                          <OPERATION-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/FCADT/ComponentTypes/SWC_WdgFw/R_WdgM_AliveSupervision_Safety_Task_01_10ms</CONTEXT-R-PORT-REF>
+                            <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/MICROSAR/WdgM_swc/Interfaces/WdgM_AliveSupervision/CheckpointReached</TARGET-REQUIRED-OPERATION-REF>
+                          </OPERATION-IREF>
+                          <TIMEOUT>0</TIMEOUT>
+                        </SYNCHRONOUS-SERVER-CALL-POINT>
+                        <SYNCHRONOUS-SERVER-CALL-POINT UUID="04042077-8B21-445A-AECF-8B8BBC53F25C">
+                          <SHORT-NAME>SC_R_WdgM_AliveSupervision_Safety_Com_Task_10ms_CheckpointReached</SHORT-NAME>
+                          <OPERATION-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/FCADT/ComponentTypes/SWC_WdgFw/R_WdgM_AliveSupervision_Safety_Com_Task_10ms</CONTEXT-R-PORT-REF>
+                            <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/MICROSAR/WdgM_swc/Interfaces/WdgM_AliveSupervision/CheckpointReached</TARGET-REQUIRED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </SYNCHRONOUS-SERVER-CALL-POINT>
+                        <SYNCHRONOUS-SERVER-CALL-POINT UUID="CB98E4E4-898E-4656-B325-15EC9E30D8D8">
+                          <SHORT-NAME>SC_R_WdgM_AliveSupervision_Safety_Task_200ms_CheckpointReached</SHORT-NAME>
+                          <OPERATION-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/FCADT/ComponentTypes/SWC_WdgFw/R_WdgM_AliveSupervision_Safety_Task_200ms</CONTEXT-R-PORT-REF>
+                            <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/MICROSAR/WdgM_swc/Interfaces/WdgM_AliveSupervision/CheckpointReached</TARGET-REQUIRED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </SYNCHRONOUS-SERVER-CALL-POINT>
+                      </SERVER-CALL-POINTS>
+                      <SYMBOL>WdgFw_10ms</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="C3DF2BCB-98EC-4CD1-9F54-17593EF3AF77">
+                      <SHORT-NAME>WdgFw_Safety_Task_00_10ms_CP_10ms</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>WdgFw_Safety_Task_00_10ms_CP_10ms</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="CE91F100-DB1B-4A16-A71F-E0761CC85EDC">
+                      <SHORT-NAME>WdgFw_Safety_Task_01_10ms_CP_10ms</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>WdgFw_Safety_Task_01_10ms_CP_10ms</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="53339E56-14D3-4769-9599-89AB8943C0BD">
+                      <SHORT-NAME>WdgM_MainFunction_Call_Cntr_10ms</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>WdgM_MainFunction_Call_Cntr_10ms</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="E25AB897-D731-43A7-B234-A0BC01E2F252">
+                      <SHORT-NAME>WdgFw_Safety_Task_Com_10ms_CP_10ms</SHORT-NAME>
+                      <SYMBOL>WdgFw_Safety_Task_Com_10ms_CP_10ms</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="398C3CB5-1238-44BE-A23F-7A36CA3AA77C">
+                      <SHORT-NAME>WdgFw_Safety_Task_200ms_CP_200ms</SHORT-NAME>
+                      <SYMBOL>WdgFw_Safety_Task_200ms_CP_200ms</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                  </RUNNABLES>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </APPLICATION-SW-COMPONENT-TYPE>
+            <SWC-IMPLEMENTATION UUID="E12D657D-3C9C-4671-AA26-09194588F57D">
+              <SHORT-NAME>SWC_WdgFw_Implementation</SHORT-NAME>
+              <CODE-DESCRIPTORS>
+                <CODE UUID="4C8CCDF6-AB06-4C32-AA42-763E53D85C77">
+                  <SHORT-NAME>Default</SHORT-NAME>
+                  <ARTIFACT-DESCRIPTORS>
+                    <AUTOSAR-ENGINEERING-OBJECT>
+                      <CATEGORY>SWSRC</CATEGORY>
+                    </AUTOSAR-ENGINEERING-OBJECT>
+                  </ARTIFACT-DESCRIPTORS>
+                </CODE>
+              </CODE-DESCRIPTORS>
+              <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/FCADT/ComponentTypes/SWC_WdgFw/SWC_WdgFw_InternalBehavior</BEHAVIOR-REF>
+            </SWC-IMPLEMENTATION>
+          </ELEMENTS>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

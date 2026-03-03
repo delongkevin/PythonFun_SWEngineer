@@ -1,0 +1,83 @@
+
+include $(MCUSW_INSTALL_PATH)/build/Rules.make
+
+MODULE_NAME = ecum
+
+ifeq ($(MAKERULEDIR), )
+#Makerule path not defined, define this and assume relative path from ROOTDIR
+  MAKERULEDIR := $(PDK_INSTALL_PATH)/build/makerules
+  export MAKERULEDIR
+endif
+include $(MAKERULEDIR)/platform.mk
+
+#Accommodating Changes for introducing multiple Tool Chains
+SRCDIR = Implementation
+SRCDIR += ../GenData/$(CORE) ../GenData/$(CORE)/Components
+
+INCDIR = ../BswM/Implementation
+INCDIR += ../vDiagSecAcc/Implementation
+INCDIR += ../CanIf/Implementation
+INCDIR += ../Can_30_Mcan/Implementation
+INCDIR += ../CanSM/Implementation
+INCDIR += ../Com/Implementation
+INCDIR += ../ComM/Implementation
+INCDIR += ../Det/Implementation
+INCDIR += ../../../../bookshelf/SSM/inc
+INCDIR += ../stubs/$(CORE)
+INCDIR += ../GenData/$(CORE)
+INCDIR += ../GenData/$(CORE)/Components
+ifeq ($(CORE),$(filter $(CORE), mcu1_0))
+INCDIR += ../CanTrcv_30_Tja1043/Implementation
+INCDIR += ../CanNm/Implementation
+INCDIR += ../Nm/Implementation
+INCDIR += ../NvM/Implementation
+INCDIR += ../MemIf/Implementation
+INCDIR += ../I2c/Implementation
+INCDIR += ../Eep_30_XXi2c01/Implementation
+INCDIR += ../Ea/Implementation
+INCDIR += ../CanTp/Implementation
+INCDIR += ../Dem/Implementation
+INCDIR += ../Dcm/Implementation
+else ifeq ($(CORE),$(filter $(CORE), mcu3_1))
+INCDIR += ../CanTrcv_30_Generic/Implementation
+INCDIR += ../EthIf/Implementation
+INCDIR += ../EthSM/Implementation
+INCDIR += ../IpBase/Implementation
+INCDIR += ../TcpIp/Implementation
+INCDIR += ../SoAd/Implementation
+endif
+INCDIR += ../Os/Implementation
+INCDIR += ../PduR/Implementation
+INCDIR += ../VStdLib/Implementation
+INCDIR += ../Common/Implementation
+
+
+INCLUDE_INTERNAL_INTERFACES = ecum
+UtilsPriv_INCLUDE =
+
+#Static Files from SIP
+SRCS_COMMON += EcuM.c 
+#Generated Files
+SRCS_COMMON += EcuM_Cfg.c EcuM_Init_Cfg.c EcuM_Init_PBcfg.c EcuM_PBcfg.c
+
+
+PACKAGE_SRCS_COMMON = .
+CFLAGS_LOCAL_COMMON = $(MCUSW_CFLAGS)
+
+# Core/SoC/platform specific source files and CFLAGS
+# Example:
+#   SRCS_<core/SoC/platform-name> =
+#   CFLAGS_LOCAL_<core/SoC/platform-name> =
+
+# Include common make files
+ifeq ($(MAKERULEDIR), )
+#Makerule path not defined, define this and assume relative path from ROOTDIR
+  MAKERULEDIR := $(PDK_INSTALL_PATH)/build/makerules
+  export MAKERULEDIR
+endif
+include $(MAKERULEDIR)/common.mk
+
+# OBJs and libraries are built by using rule defined in rules_<target>.mk
+#     and need not be explicitly specified here
+
+# Nothing beyond this point

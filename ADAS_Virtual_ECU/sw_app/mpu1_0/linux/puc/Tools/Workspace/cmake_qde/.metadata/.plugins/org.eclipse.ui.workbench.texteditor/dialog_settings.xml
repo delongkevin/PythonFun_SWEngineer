@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="892" key="DIALOG_X_ORIGIN"/>
+		<item value="497" key="DIALOG_Y_ORIGIN"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="false" key="isRegEx"/>
+		<item value="onRun" key="selection"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="incremental"/>
+		<item value="true" key="wrap"/>
+		<item value="false" key="wholeword"/>
+		<list key="findhistory">
+			<item value="onrun"/>
+			<item value="run"/>
+			<item value="dataProviderEol_o"/>
+			<item value="dataProviderDms_o"/>
+			<item value="dataProviderOvl3D_o"/>
+			<item value="DataProviderOvl3D"/>
+			<item value="loadContext_v"/>
+			<item value="createContext_v"/>
+		</list>
+		<list key="replacehistory">
+			<item value="const"/>
+			<item value=""/>
+			<item value="mutex"/>
+			<item value="mutex_o"/>
+			<item value="e_Cpu1"/>
+			<item value="lockMutex_o"/>
+			<item value="length_u32"/>
+			<item value="i2cSlaveAddress_t.format_u32"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="336" key="DIALOG_WIDTH"/>
+		<item value="1|Segoe UI|9.0|0|WINDOWS|1|-15|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI" key="DIALOG_FONT_NAME"/>
+		<item value="454" key="DIALOG_HEIGHT"/>
+		<item value="818" key="DIALOG_X_ORIGIN"/>
+		<item value="445" key="DIALOG_Y_ORIGIN"/>
+	</section>
+</section>

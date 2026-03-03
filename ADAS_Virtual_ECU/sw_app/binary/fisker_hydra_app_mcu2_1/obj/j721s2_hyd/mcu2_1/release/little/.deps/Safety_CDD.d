@@ -1,0 +1,29 @@
+D:/L2H4060_Software/sw/binary/fisker_hydra_app_mcu2_1/obj/j721s2_hyd/mcu2_1/release/Safety_CDD.oer5f: \
+  Safety_CDD\Safety_CDD.c \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\stdio.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\__config \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c\sys\cdefs.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c\sys\_types.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\string.h \
+  ..\..\sw\platform\inc\PlatformDataTypes.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\stdint.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c\sys\stdint.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\stdbool.h \
+  D:\L2H4060_Software\sw\bookshelf\ErrorManager\gen\ErrorManagerDef.h \
+  D:\L2H4060_Software\sw\bookshelf\ErrorManager\inc\ErrorManagerTypes.h \
+  D:\L2H4060_Software\sw\bookshelf\ErrorManager\cfg\ErrorManagercfg.h \
+  D:\L2H4060_Software\sw\bookshelf\ErrorManager\gen\ErrorManagerShared.h \
+  D:\L2H4060_Software\sw\bookshelf\ErrorManager\inc\ErrorManagerSatellite.h \
+  Safety_CDD\Safety_CDD.h \
+  D:\L2H4060_Software\sw\bookshelf\FuSa\vim\vim_mainR5.h \
+  D:\L2H4060_Software\sw\bookshelf\main_domain\console_io\include\app_log.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\csl\soc\j721s2\src\cslr_intr_r5fss0_core1.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\csl\cslr.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\csl\tistdtypes.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\csl\csl_utils.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\csl\arch\cslr64.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\csl\arch\r5\src\interrupt_priv.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\csl\arch\r5\interrupt.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\csl\arch\r5\csl_vim.h \
+  C:\prjtools\ti-psdk-rtos-j721s2-08_05_00_11\pdk_j721s2_08_05_00_36\packages\ti\csl\arch\r5\cslr_vim.h \
+  D:\L2H4060_Software\sw\bookshelf\FuSa\magna\timers\timer_fusa_utils.h

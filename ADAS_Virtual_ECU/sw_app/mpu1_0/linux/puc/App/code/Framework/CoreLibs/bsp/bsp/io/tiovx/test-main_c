@@ -1,0 +1,1855 @@
+/*******************************************************************************
+ * main.c
+ *
+ * Surround-view OpenVX application
+ *
+ * Copyright (c) 2015-2020 Cogent Embedded Inc.
+ * ALL RIGHTS RESERVED.
+ *
+ * The source code contained or described herein and all documents related to the
+ * source code("Software") or their modified versions are owned by
+ * Cogent Embedded Inc. or its affiliates.
+ *
+ * No part of the Software may be used, copied, reproduced, modified, published,
+ * uploaded, posted, transmitted, distributed, or disclosed in any way without
+ * prior express written permission from Cogent Embedded Inc.
+ *
+ * Cogent Embedded Inc. grants a nonexclusive, non-transferable, royalty-free
+ * license to use the Software to Licensee without the right to sublicense.
+ * Licensee agrees not to distribute the Software to any third-party without
+ * the prior written permission of Cogent Embedded Inc.
+ *
+ * Unless otherwise agreed by Cogent Embedded Inc. in writing, you may not remove
+ * or alter this notice or any other notice embedded in Software in any way.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ *******************************************************************************/
+
+#define MODULE_TAG                      APP
+
+/*******************************************************************************
+ * Includes
+ ******************************************************************************/
+#include <stdint.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <screen/screen.h>
+
+#include <VX/vx.h>
+#include <VX/vxu.h>
+#include <VX/vx_khr_pipelining.h>
+#include <TI/tivx_task.h>
+#include <TI/tivx.h>
+#include <TI/j7_csitx.h>
+#include <TI/j7_imaging_aewb.h>
+#include <TI/tivx_obj_desc.h>
+
+//#include <tivx_utils_graph_perf.h>
+#include <utils/perf_stats/include/app_perf_stats.h>
+#include <app_init.h>
+
+#include <utils/sensors/include/app_sensors.h>
+#include <utils/remote_service/include/app_remote_service.h>
+#include <utils/ipc/include/app_ipc.h>
+#include <utils/iss/include/app_iss.h>
+
+#include <iss_sensors.h>
+#include <iss_sensor_if.h>
+
+/* #define APP_USE_FOR_RECORDING */
+//#define APP_USE_COGENT_ISP
+#define APP_AR0233_SENSOR
+
+/* #define APP_USE_CSITX */
+#define NUM_CAPT_CHANNELS                   (4U)
+//#define NUM_INTERMEDIATE_BUFS               (3u)
+#define NUM_INTERMEDIATE_BUFS               (4u)
+#define PIPE_DEPTH                          (4u)
+#define CAPT_INST_ID                        (0U)
+
+#define APP_PRINTF(f_, ...) printf((f_), ##__VA_ARGS__)
+#define APP_ASSERT(x)               assert((x))
+#define APP_ASSERT_VALID_REF(ref)   (APP_ASSERT(vxGetStatus((vx_reference)(ref))==VX_SUCCESS));
+
+
+/*******************************************************************************
+ * Tracing configuration
+ ******************************************************************************/
+
+/*******************************************************************************
+ * External declarations - tbd
+ ******************************************************************************/
+
+/**
+ * @brief   Load PNG file
+ *
+ * @param   path[in]            File name
+ * @param   width[in, out]      Image width; if non-zero on input, shall match the
+ *                              actual width of the image loaded from file
+ * @param   height[in, out]     Image height; if non-zero on input, shall match the
+ *                              actual width of the image loaded from file
+ * @param   format[in, out]     Image format; if non-zero on input, shall match the
+ *                              actual format of the image loaded from file
+ * @param   data[in, out]       Pointer to the pixel-data buffer; if NULL on input,
+ *                              the buffer will be allocated
+ *
+ * @return                      Negative on failure
+ */
+extern int load_png(const char *path, int *width, int *height, int *format, void **data);
+
+/*******************************************************************************
+ * Internal types definitions
+ ******************************************************************************/
+
+/**
+ * @brief   Application texture descriptor
+ */
+typedef struct app_tex_desc
+{
+    /**> Texture handle */
+    void                   *texture;
+
+    /**> Buffer address (search key) */
+    uint8_t                *addr;
+
+}   app_tex_desc_t;
+    
+
+/*******************************************************************************
+ * Static application data
+ ******************************************************************************/
+
+// Private TI API that allows to get access to storage buffer
+extern uint16_t ownReferenceGetObjDescId(vx_reference ref);
+
+#define SV_CAMERAS_NUMBER       4
+#define TRACE(tag, fmt, ...)     printf(#tag ": " fmt "\n", ##__VA_ARGS__)
+#define _b(fmt) fmt "\n"
+#define _x(fmt) fmt "\n"
+
+/**> Number of supported textures */
+#define APP_MAX_TEXTURES            (SV_CAMERAS_NUMBER * PIPE_DEPTH + PIPE_DEPTH)
+#define BUG(cond, fmt, ...)     if (1) { TRACE(BUG, fmt, ##__VA_ARGS__); exit(-1); }
+
+typedef struct app_data
+{
+    /**> Screen context */
+    screen_context_t    screen_ctx;
+    
+    /**> Number of textures allocated */
+    uint32_t            tex_num;
+
+    /**> Array of application textures (tbd - that linear search looks bad) */
+    app_tex_desc_t      texdesc[APP_MAX_TEXTURES];
+
+    
+    vx_uint32 inWidth;
+    vx_uint32 inHeight;
+    vx_uint32 inStride[2];
+
+    vx_uint32 outWidth;
+    vx_uint32 outHeight;
+
+    vx_context context;
+    vx_graph capture_graph;
+    vx_graph graph_display;
+    vx_node displayNode;
+    vx_node captureNode;
+
+    /* Display objects */
+    pthread_t display_thread;
+#if defined APP_USE_CSITX
+    vx_image sample_out_image;
+    vx_object_array output_image[PIPE_DEPTH];
+#else
+    vx_image output_image[PIPE_DEPTH];
+#endif
+    vx_user_data_object display_param_obj;
+
+    /* Multicam objects */
+    tivx_raw_image sample_raw_img;
+    tivx_raw_image raw_img;
+    vx_object_array capt_frames[PIPE_DEPTH];
+    vx_user_data_object capture_param_obj;
+
+    /* VISS Objects */
+    vx_image sample_nv12_img;
+    vx_image viss_nv12_out_img[PIPE_DEPTH];
+    vx_node vissNode;
+    vx_node node_aewb;
+    vx_user_data_object viss_configuration;
+    vx_distribution histogram;
+    vx_object_array histogram_arr;
+    vx_object_array ae_awb_result_arr;
+    vx_user_data_object ae_awb_result;
+    vx_object_array viss_out_frames[PIPE_DEPTH];
+    vx_user_data_object dcc_param_viss;
+
+    /* Aewb objects */
+    vx_object_array h3a_aew_af_arr;
+    vx_user_data_object h3a_aew_af;
+    tivx_aewb_config_t aewb_cfg;
+    tivx_ae_awb_params_t ae_awb_params;
+    vx_user_data_object aewb_config;
+    vx_user_data_object dcc_param_2a;
+    vx_object_array aewb_config_array;
+
+    /* chosen sensor */
+    uint32_t cam_dcc_id;
+    char *sensor_name;
+    vx_uint8 sensor_sel;
+    uint32_t is_enable_yuyv;
+    app_perf_point_t total_perf;
+    uint32_t stop_task;
+
+    
+    
+    tivx_vpac_cuc_isp_params_t params;
+    vx_object_array h3a_stats_arr;
+
+}   app_data_t;
+
+
+static app_data_t   __app;
+
+//texture_handler_t *__current_renderTexProp;
+
+static char availableSensorNames[ISS_SENSORS_MAX_SUPPORTED_SENSOR][ISS_SENSORS_MAX_NAME];
+static vx_uint8 num_sensors_found;
+static IssSensor_CreateParams sensorParams;
+
+/*
+ * Utility API used to add a graph parameter from a node, node parameter index
+ */
+static void add_graph_parameter_by_node_index(vx_graph graph, vx_node node,
+    vx_uint32 node_parameter_index)
+{
+    vx_parameter parameter = vxGetParameterByIndex(node, node_parameter_index);
+
+    vxAddParameterToGraph(graph, parameter);
+    vxReleaseParameter(&parameter);
+}
+
+/**
+ * @brief   Create capture interface
+ */
+static vx_status app_create_capture(app_data_t *obj)
+{
+    vx_status status = VX_SUCCESS;
+    tivx_capture_params_t capture_params;
+    uint32_t buf_id, loop_id;
+
+    /* Creating exemplar to use for raw image */
+    obj->sample_raw_img = tivxCreateRawImage(obj->context, &(sensorParams.sensorInfo.raw_params));
+    if ((status = vxGetStatus((vx_reference)obj->sample_raw_img)) != VX_SUCCESS)
+    {
+        APP_PRINTF("sample_raw_img create failed\n");
+    }
+
+    /* Creating object arrays to be used as output to capture node */
+    for (buf_id = 0; buf_id < PIPE_DEPTH; buf_id++)
+    {
+        obj->capt_frames[buf_id] = vxCreateObjectArray(obj->context, (vx_reference)obj->sample_raw_img, NUM_CAPT_CHANNELS);
+        if ((status = vxGetStatus((vx_reference)obj->capt_frames[buf_id])) != VX_SUCCESS)
+        {
+            TRACE(ERROR, _x("obj->capt_frames[#%d] create failed: %X"), buf_id, status);
+            return status;
+        }
+    }
+
+    tivxReleaseRawImage(&obj->sample_raw_img);
+
+    /* Capture initialization */
+    tivx_capture_params_init(&capture_params);
+    capture_params.numInst                          = 1U;
+    capture_params.numCh                            = NUM_CAPT_CHANNELS;
+    capture_params.instId[0U]                       = CAPT_INST_ID;
+    capture_params.instCfg[0U].enableCsiv2p0Support = (uint32_t)vx_true_e;
+    capture_params.instCfg[0U].numDataLanes         = sensorParams.sensorInfo.numDataLanes;
+    capture_params.instCfg[0U].numPixelsStrm0       = (uint32_t)1U;
+    for (loop_id = 0U; loop_id < capture_params.instCfg[0U].numDataLanes; loop_id++)
+    {
+        capture_params.instCfg[0U].dataLanesMap[loop_id] = sensorParams.sensorInfo.dataLanesMap[loop_id];
+    }
+
+    obj->capture_param_obj = vxCreateUserDataObject(obj->context, "tivx_capture_params_t", sizeof(tivx_capture_params_t), &capture_params);
+    if ((status = vxGetStatus((vx_reference)obj->capture_param_obj)) != VX_SUCCESS)
+    {
+        TRACE(ERROR, _x("capture_param_obj create failed: %X"), status);
+        return status;
+    }
+
+    obj->captureNode = tivxCaptureNode(obj->capture_graph, obj->capture_param_obj, obj->capt_frames[0]);
+    if ((status = vxGetStatus((vx_reference)obj->captureNode)) != VX_SUCCESS)
+    {
+        TRACE(ERROR, _x("captureNode create failed: %X"), status);
+        return status;
+    }
+
+    vxSetNodeTarget(obj->captureNode, VX_TARGET_STRING, TIVX_TARGET_CAPTURE1);
+    vxSetReferenceName((vx_reference)obj->captureNode, "Capture_node");
+
+    return status;
+}
+
+#if defined APP_USE_COGENT_ISP
+/* Creating cogente viss and aewb nodes */
+static vx_status app_create_cogente_viss_aewb(app_data_t *obj)
+{
+    uint32_t buf_id;
+    vx_status status = VX_SUCCESS;
+    vx_uint32 img_height, img_width;
+    /* Sensor Params */
+    uint32_t sensor_features_enabled = 0;
+    uint32_t sensor_features_supported = 0;
+    uint32_t sensor_dcc_enabled = 0;
+    uint32_t sensor_wdr_enabled = 0;
+    uint32_t sensor_exp_control_enabled = 0;
+    uint32_t sensor_gain_control_enabled = 0;
+    vx_bool replicate[] = { vx_false_e, vx_true_e, vx_false_e, vx_false_e, vx_true_e, vx_false_e, vx_false_e, vx_true_e, vx_false_e};
+
+    /*
+    Check for supported sensor features.
+    It is upto the application to decide which features should be enabled.
+    This demo app enables WDR, DCC and 2A if the sensor supports it.
+    */
+    sensor_features_supported = sensorParams.sensorInfo.features;
+
+    if(ISS_SENSOR_FEATURE_COMB_COMP_WDR_MODE == (sensor_features_supported & ISS_SENSOR_FEATURE_COMB_COMP_WDR_MODE))
+    {
+        APP_PRINTF("WDR mode is supported \n");
+        sensor_features_enabled |= ISS_SENSOR_FEATURE_COMB_COMP_WDR_MODE;
+        sensor_wdr_enabled = 1;
+    }else
+    {
+        APP_PRINTF("WDR mode is not supported. Defaulting to linear \n");
+        sensor_features_enabled |= ISS_SENSOR_FEATURE_LINEAR_MODE;
+        sensor_wdr_enabled = 0;
+    }
+
+    if(ISS_SENSOR_FEATURE_MANUAL_EXPOSURE == (sensor_features_supported & ISS_SENSOR_FEATURE_MANUAL_EXPOSURE))
+    {
+        APP_PRINTF("Expsoure control is supported \n");
+        sensor_features_enabled |= ISS_SENSOR_FEATURE_MANUAL_EXPOSURE;
+        sensor_exp_control_enabled = 1;
+    }
+
+    if(ISS_SENSOR_FEATURE_MANUAL_GAIN == (sensor_features_supported & ISS_SENSOR_FEATURE_MANUAL_GAIN))
+    {
+        APP_PRINTF("Gain control is supported \n");
+        sensor_features_enabled |= ISS_SENSOR_FEATURE_MANUAL_GAIN;
+        sensor_gain_control_enabled = 1;
+    }
+
+    if(ISS_SENSOR_FEATURE_CFG_UC1 == (sensor_features_supported & ISS_SENSOR_FEATURE_CFG_UC1))
+    {
+        if(0/* sensorObj->usecase_option == APP_SENSOR_FEATURE_CFG_UC1 */)
+        {
+            APP_PRINTF("CMS Usecase is supported \n");
+            sensor_features_enabled |= ISS_SENSOR_FEATURE_CFG_UC1;
+        }
+    }
+
+    if(ISS_SENSOR_FEATURE_DCC_SUPPORTED == (sensor_features_supported & ISS_SENSOR_FEATURE_DCC_SUPPORTED))
+    {
+        sensor_features_enabled |= ISS_SENSOR_FEATURE_DCC_SUPPORTED;
+        sensor_dcc_enabled = 1;
+    }else
+    {
+        sensor_dcc_enabled = 0;
+    }
+
+    APP_PRINTF("Sensor width = %d\n", sensorParams.sensorInfo.raw_params.width);
+    APP_PRINTF("Sensor height = %d\n", sensorParams.sensorInfo.raw_params.height);
+    APP_PRINTF("Sensor DCC ID = %d\n", sensorParams.dccId);
+    APP_PRINTF("Sensor Supported Features = 0x%x\n", sensor_features_supported);
+    APP_PRINTF("Sensor Enabled Features = 0x%x\n", sensor_features_enabled);
+    appInitImageSensor(obj->sensor_name, sensor_features_enabled, 0xF);/*Mask = 0xF for 4 cameras*/
+
+    /* Allocate sample NV12 image, using which object array of NV12
+     * would be created */
+    if (0 == obj->is_enable_yuyv)
+    {
+        obj->sample_nv12_img =
+            vxCreateImage(obj->context, obj->inWidth, obj->inHeight,
+            VX_DF_IMAGE_NV12);
+    }
+    else
+    {
+        obj->sample_nv12_img =
+            vxCreateImage(obj->context, obj->inWidth, obj->inHeight,
+            VX_DF_IMAGE_YUYV);
+    }
+
+    if (vxGetStatus((vx_reference)obj->sample_nv12_img) != VX_SUCCESS)
+    {
+        APP_PRINTF("sample_nv12_img create failed\n");
+        return VX_FAILURE;
+    }
+
+    for(buf_id = 0; buf_id < PIPE_DEPTH; buf_id++)
+    {
+        /* Allocate object array for the output frames */
+        obj->viss_out_frames[buf_id] = vxCreateObjectArray(obj->context,
+            (vx_reference)obj->sample_nv12_img, NUM_CAPT_CHANNELS);
+        if (vxGetStatus((vx_reference)obj->viss_out_frames[buf_id]) != VX_SUCCESS)
+        {
+            APP_PRINTF("viss_out_frames[buf_id] create failed\n");
+            return VX_FAILURE;
+        }
+
+        obj->viss_nv12_out_img[buf_id] = (vx_image)vxGetObjectArrayItem(obj->viss_out_frames[buf_id], 0);
+        if (vxGetStatus((vx_reference)obj->viss_nv12_out_img[buf_id]) != VX_SUCCESS)
+        {
+            APP_PRINTF("viss_nv12_out_img[buf_id] create failed\n");
+            return VX_FAILURE;
+        }
+    }
+
+    tivx_raw_image raw_image = (tivx_raw_image)obj->viss_nv12_out_img[0];
+    uint16_t objID = ownReferenceGetObjDescId((vx_reference)raw_image);
+    tivx_obj_desc_t *desc;
+
+    tivxGetObjDescList(&objID, &desc, 1);
+
+    tivx_obj_desc_image_t *img_desc = (tivx_obj_desc_image_t *)desc;
+
+    APP_PRINTF("stride[0] %d\n",
+               img_desc->imagepatch_addr[0].stride_y);
+    APP_PRINTF("stride[1] %d\n",
+               img_desc->imagepatch_addr[1].stride_y);
+    obj->inStride[0] = img_desc->imagepatch_addr[0].stride_y;
+    obj->inStride[1] = img_desc->imagepatch_addr[1].stride_y;
+
+    /* Sample image is no longer required */
+    vxReleaseImage(&obj->sample_nv12_img);
+
+    memset(&obj->params, 0, sizeof(obj->params));
+    tivx_vpac_cogent_hydra3_isp_params_init(&obj->params);
+
+    obj->params.sensor_dcc_id    = sensorParams.dccId;
+    obj->params.ee_mode          = 0;
+    obj->params.mux_output0      = 0;
+    obj->params.mux_output1      = 0;
+    obj->params.mux_output2      = 4;
+    obj->params.mux_output3      = 0;
+    obj->params.mux_output4      = 3;
+    obj->params.h3a_in           = 3;
+    obj->params.h3a_aewb_af_mode = 0;
+    obj->params.chroma_mode      = 0;
+    obj->params.enable_ctx       = 1;
+    obj->params.bypass_nsf4      = 0;
+    obj->params.bypass_glbce     = 0;
+
+    obj->viss_configuration = vxCreateUserDataObject(obj->context,
+                                                     "tivx_vpac_cogent_hydra3_isp_params_t",
+                                                     sizeof(tivx_vpac_cogent_hydra3_isp_params_t),
+                                                     &obj->params);
+
+    /* Create h3a_aew_af output buffer (uninitialized) */
+    vx_user_data_object h3a_stats_init = vxCreateUserDataObject(obj->context, "tivx_statistic_data_t", sizeof(tivx_statistic_data_t), NULL);
+    obj->h3a_stats_arr = vxCreateObjectArray(obj->context, (vx_reference)h3a_stats_init, NUM_CAPT_CHANNELS);
+    vxReleaseUserDataObject(&h3a_stats_init);
+
+    /* Get sample RAW Image */
+    obj->raw_img = (tivx_raw_image) vxGetObjectArrayItem(obj->capt_frames[0], 0);
+
+    img_width  = sensorParams.sensorInfo.raw_params.width;
+    img_height = sensorParams.sensorInfo.raw_params.height;
+
+    vx_user_data_object h3a_stats = (vx_user_data_object)vxGetObjectArrayItem(obj->h3a_stats_arr, 0);
+
+    obj->vissNode = tivxVpaccogent_hydra3_ispNode(
+        obj->capture_graph,
+        obj->viss_configuration,
+        obj->raw_img, NULL, NULL,
+        obj->viss_nv12_out_img[0], NULL, NULL,
+        h3a_stats, NULL);
+
+    if (vxGetStatus((vx_reference)obj->vissNode) != VX_SUCCESS)
+    {
+        APP_PRINTF("vissNode create failed\n");
+        return VX_FAILURE;
+    }
+
+    tivxSetNodeParameterNumBufByIndex(obj->vissNode, 4, NUM_INTERMEDIATE_BUFS);
+    tivxSetNodeParameterNumBufByIndex(obj->vissNode, 7, NUM_INTERMEDIATE_BUFS);
+
+    vxSetReferenceName((vx_reference)obj->vissNode, "Cogente_VISS_Processing");
+    vxSetNodeTarget(obj->vissNode, VX_TARGET_STRING, TIVX_TARGET_VPAC_COGENT_HYDRA3_ISP1);
+    vxReplicateNode(obj->capture_graph, obj->vissNode, replicate, 9);
+    vxReleaseUserDataObject(&h3a_stats);
+
+    return status;
+}
+#endif
+
+/* Creating viss and aewb nodes */
+static vx_status app_create_viss_aewb(app_data_t *obj)
+{
+    vx_status status = VX_SUCCESS;
+    tivx_vpac_viss_params_t viss_params;
+    tivx_ae_awb_params_t ae_awb_params;
+    uint32_t loop_id;
+
+    /* Sensor Params */
+    uint32_t sensor_features_enabled = 0;
+    uint32_t sensor_features_supported = 0;
+    uint32_t sensor_dcc_enabled = 0;
+    uint32_t sensor_wdr_enabled = 0;
+    uint32_t sensor_exp_control_enabled = 0;
+    uint32_t sensor_gain_control_enabled = 0;
+
+    /* DCC Params */
+    vx_size dcc_buff_size;
+    const vx_char dcc_viss_user_data_object_name[] = "dcc_viss";
+    uint8_t * dcc_viss_buf;
+    vx_map_id dcc_viss_buf_map_id;
+    vx_distribution histogram_exemplar;
+    vx_user_data_object ae_awb_result_exemplar;
+    vx_bool viss_prms_replicate[] =
+        {vx_false_e, vx_false_e, vx_false_e, vx_true_e, vx_false_e, vx_false_e,
+         vx_true_e, vx_false_e, vx_false_e, vx_true_e, vx_false_e};
+    vx_bool aewb_prms_replicate[] =
+        {vx_true_e, vx_true_e, vx_true_e, vx_false_e, vx_true_e, vx_false_e};
+
+    const vx_char dcc_2a_user_data_object_name[] = "dcc_2a";
+    vx_map_id dcc_2a_buf_map_id;
+    uint8_t * dcc_2a_buf;
+    vx_user_data_object h3a_aew_af_exemplar;
+    vx_user_data_object aewb_config_exemplar;
+    uint32_t buf_id;
+
+    /*
+    Check for supported sensor features.
+    It is upto the application to decide which features should be enabled.
+    This demo app enables WDR, DCC and 2A if the sensor supports it.
+    */
+    sensor_features_supported = sensorParams.sensorInfo.features;
+
+    if(ISS_SENSOR_FEATURE_COMB_COMP_WDR_MODE == (sensor_features_supported & ISS_SENSOR_FEATURE_COMB_COMP_WDR_MODE))
+    {
+        APP_PRINTF("WDR mode is supported \n");
+        sensor_features_enabled |= ISS_SENSOR_FEATURE_COMB_COMP_WDR_MODE;
+        sensor_wdr_enabled = 1;
+    }else
+    {
+        APP_PRINTF("WDR mode is not supported. Defaulting to linear \n");
+        sensor_features_enabled |= ISS_SENSOR_FEATURE_LINEAR_MODE;
+        sensor_wdr_enabled = 0;
+    }
+
+    if(ISS_SENSOR_FEATURE_MANUAL_EXPOSURE == (sensor_features_supported & ISS_SENSOR_FEATURE_MANUAL_EXPOSURE))
+    {
+        APP_PRINTF("Expsoure control is supported \n");
+        sensor_features_enabled |= ISS_SENSOR_FEATURE_MANUAL_EXPOSURE;
+        sensor_exp_control_enabled = 1;
+    }
+
+    if(ISS_SENSOR_FEATURE_MANUAL_GAIN == (sensor_features_supported & ISS_SENSOR_FEATURE_MANUAL_GAIN))
+    {
+        APP_PRINTF("Gain control is supported \n");
+        sensor_features_enabled |= ISS_SENSOR_FEATURE_MANUAL_GAIN;
+        sensor_gain_control_enabled = 1;
+    }
+
+    if(ISS_SENSOR_FEATURE_CFG_UC1 == (sensor_features_supported & ISS_SENSOR_FEATURE_CFG_UC1))
+    {
+        if(0)
+        {
+            APP_PRINTF("CMS Usecase is supported \n");
+            sensor_features_enabled |= ISS_SENSOR_FEATURE_CFG_UC1;
+        }
+    }
+
+    if(ISS_SENSOR_FEATURE_DCC_SUPPORTED == (sensor_features_supported & ISS_SENSOR_FEATURE_DCC_SUPPORTED))
+    {
+        sensor_features_enabled |= ISS_SENSOR_FEATURE_DCC_SUPPORTED;
+        sensor_dcc_enabled = 1;
+    }else
+    {
+        sensor_dcc_enabled = 0;
+    }
+
+    APP_PRINTF("Sensor width = %d\n", sensorParams.sensorInfo.raw_params.width);
+    APP_PRINTF("Sensor height = %d\n", sensorParams.sensorInfo.raw_params.height);
+    APP_PRINTF("Sensor DCC ID = %d\n", sensorParams.dccId);
+    APP_PRINTF("Sensor Supported Features = 0x%x\n", sensor_features_supported);
+    APP_PRINTF("Sensor Enabled Features = 0x%x\n", sensor_features_enabled);
+    appInitImageSensor(obj->sensor_name, sensor_features_enabled, 0xF);/*Mask = 0xF for 4 cameras*/
+
+    /* Allocate sample NV12 image, using which object array of NV12
+     * would be created */
+    if (0 == obj->is_enable_yuyv)
+    {
+        obj->sample_nv12_img =
+            vxCreateImage(obj->context, obj->inWidth, obj->inHeight,
+            VX_DF_IMAGE_NV12);
+    }
+    else
+    {
+        obj->sample_nv12_img =
+            vxCreateImage(obj->context, obj->inWidth, obj->inHeight,
+            VX_DF_IMAGE_YUYV);
+    }
+
+    if (vxGetStatus((vx_reference)obj->sample_nv12_img) != VX_SUCCESS)
+    {
+        APP_PRINTF("sample_nv12_img create failed\n");
+        return VX_FAILURE;
+    }
+
+    for(buf_id = 0; buf_id < PIPE_DEPTH; buf_id++)
+    {
+        /* Allocate object array for the output frames */
+        obj->viss_out_frames[buf_id] = vxCreateObjectArray(obj->context,
+            (vx_reference)obj->sample_nv12_img, NUM_CAPT_CHANNELS);
+        if (vxGetStatus((vx_reference)obj->viss_out_frames[buf_id]) != VX_SUCCESS)
+        {
+            APP_PRINTF("viss_out_frames[buf_id] create failed\n");
+            return VX_FAILURE;
+        }
+
+        obj->viss_nv12_out_img[buf_id] = (vx_image)vxGetObjectArrayItem(obj->viss_out_frames[buf_id], 0);
+        if (vxGetStatus((vx_reference)obj->viss_nv12_out_img[buf_id]) != VX_SUCCESS)
+        {
+            APP_PRINTF("viss_nv12_out_img[buf_id] create failed\n");
+            return VX_FAILURE;
+        }
+    }
+
+    tivx_raw_image raw_image = (tivx_raw_image)obj->viss_nv12_out_img[0];
+    uint16_t objID = ownReferenceGetObjDescId((vx_reference)raw_image);
+    tivx_obj_desc_t *desc;
+
+    tivxGetObjDescList(&objID, &desc, 1);
+
+    tivx_obj_desc_image_t *img_desc = (tivx_obj_desc_image_t *)desc;
+
+    APP_PRINTF("stride[0] %d\n",
+               img_desc->imagepatch_addr[0].stride_y);
+    APP_PRINTF("stride[1] %d\n",
+               img_desc->imagepatch_addr[1].stride_y);
+    obj->inStride[0] = img_desc->imagepatch_addr[0].stride_y;
+    obj->inStride[1] = img_desc->imagepatch_addr[1].stride_y;
+
+    /* Sample image is no longer required */
+    vxReleaseImage(&obj->sample_nv12_img);
+
+    memset(&viss_params, 0, sizeof(tivx_vpac_viss_params_t));
+
+    obj->viss_configuration =
+            vxCreateUserDataObject(obj->context, "tivx_vpac_viss_params_t",
+            sizeof(tivx_vpac_viss_params_t), NULL);
+    if (vxGetStatus((vx_reference)obj->viss_configuration) != VX_SUCCESS)
+    {
+        APP_PRINTF("viss_configuration create failed\n");
+        return VX_FAILURE;
+    }
+
+    /* VISS Initialize parameters */
+    tivx_vpac_viss_params_init(&viss_params);
+
+    viss_params.sensor_dcc_id = obj->cam_dcc_id;
+    viss_params.use_case = 0;
+    viss_params.ee_mode = 0;
+    viss_params.mux_output0 = 0;
+    viss_params.mux_output1 = 0;
+    if (0 == obj->is_enable_yuyv)
+    {
+        viss_params.mux_output2 = TIVX_VPAC_VISS_MUX2_NV12;
+    }
+    else
+    {
+        viss_params.mux_output2 = TIVX_VPAC_VISS_MUX2_YUV422;
+    }
+    viss_params.mux_output3 = 0;
+    viss_params.mux_output4 = 3;
+    viss_params.bypass_nsf4 = 1;
+    viss_params.h3a_in = 3;
+    viss_params.h3a_aewb_af_mode = 0;
+    viss_params.chroma_mode = 0;
+    viss_params.enable_ctx = 1;
+    if(sensor_wdr_enabled == 1)
+    {
+        viss_params.bypass_glbce = 0;
+    }else
+    {
+        viss_params.bypass_glbce = 1;
+    }
+
+
+    /* Create h3a_aew_af output buffer (uninitialized) */
+    h3a_aew_af_exemplar = vxCreateUserDataObject(obj->context, "tivx_h3a_data_t", sizeof(tivx_h3a_data_t), NULL);
+    if (vxGetStatus((vx_reference)h3a_aew_af_exemplar) != VX_SUCCESS)
+    {
+        APP_PRINTF("h3a_aew_af create failed\n");
+        return VX_FAILURE;
+    }
+
+    obj->h3a_aew_af_arr = vxCreateObjectArray(obj->context,
+        (vx_reference)h3a_aew_af_exemplar, NUM_CAPT_CHANNELS);
+    if (vxGetStatus((vx_reference)obj->h3a_aew_af_arr) != VX_SUCCESS)
+    {
+        APP_PRINTF("h3a_aew_af_arr create failed\n");
+        return VX_FAILURE;
+    }
+
+    obj->h3a_aew_af = (vx_user_data_object) vxGetObjectArrayItem(obj->h3a_aew_af_arr, 0);
+    if (vxGetStatus((vx_reference)obj->h3a_aew_af) != VX_SUCCESS)
+    {
+        APP_PRINTF("h3a_aew_af create failed\n");
+        return VX_FAILURE;
+    }
+
+    vxReleaseUserDataObject(&h3a_aew_af_exemplar);
+
+    vxCopyUserDataObject(obj->viss_configuration, 0,
+        sizeof(tivx_vpac_viss_params_t), &viss_params, VX_WRITE_ONLY,
+        VX_MEMORY_TYPE_HOST);
+
+    /* Create/Configure ae_awb_result input structure */
+    memset(&ae_awb_params, 0, sizeof(tivx_ae_awb_params_t));
+    ae_awb_result_exemplar =
+        vxCreateUserDataObject(obj->context, "tivx_ae_awb_params_t",
+        sizeof(tivx_ae_awb_params_t), NULL);
+    if (vxGetStatus((vx_reference)ae_awb_result_exemplar) != VX_SUCCESS)
+    {
+        APP_PRINTF("ae_awb_result_exemplar create failed\n");
+        return VX_FAILURE;
+    }
+
+    obj->ae_awb_result_arr = vxCreateObjectArray(obj->context,
+        (vx_reference)ae_awb_result_exemplar, NUM_CAPT_CHANNELS);
+    if (vxGetStatus((vx_reference)obj->ae_awb_result_arr) != VX_SUCCESS)
+    {
+        APP_PRINTF("obj->ae_awb_result_arr create failed\n");
+        return VX_FAILURE;
+    }
+
+    obj->ae_awb_result = (vx_user_data_object)vxGetObjectArrayItem(obj->ae_awb_result_arr, 0);
+    if (vxGetStatus((vx_reference)obj->ae_awb_result) != VX_SUCCESS)
+    {
+        APP_PRINTF("obj->ae_awb_result create failed\n");
+        return VX_FAILURE;
+    }
+
+    vxReleaseUserDataObject(&ae_awb_result_exemplar);
+
+    /* Get sample RAW Image */
+    obj->raw_img = (tivx_raw_image) vxGetObjectArrayItem(obj->capt_frames[0], 0);
+
+    if(sensor_dcc_enabled)
+    {
+        dcc_buff_size = appIssGetDCCSizeVISS(obj->sensor_name, sensor_wdr_enabled);
+
+        obj->dcc_param_viss = vxCreateUserDataObject(
+            obj->context,
+            (const vx_char*)&dcc_viss_user_data_object_name,
+            dcc_buff_size,
+            NULL
+        );
+        vxMapUserDataObject(
+                obj->dcc_param_viss,
+                0,
+                dcc_buff_size,
+                &dcc_viss_buf_map_id,
+                (void **)&dcc_viss_buf,
+                VX_WRITE_ONLY,
+                VX_MEMORY_TYPE_HOST,
+                0
+            );
+
+        status = appIssGetDCCBuffVISS(obj->sensor_name, sensor_wdr_enabled, dcc_viss_buf, dcc_buff_size);
+        if(status != VX_SUCCESS)
+        {
+            printf("Error getting VISS DCC buffer \n");
+            return VX_FAILURE;
+        }
+        vxUnmapUserDataObject(obj->dcc_param_viss, dcc_viss_buf_map_id);
+    }else
+    {
+        obj->dcc_param_viss = NULL;
+    }
+
+    histogram_exemplar = vxCreateDistribution(obj->context, 256, 0, 256);
+
+    obj->histogram_arr = vxCreateObjectArray(obj->context,
+            (vx_reference)histogram_exemplar, NUM_CAPT_CHANNELS);
+    if (vxGetStatus((vx_reference)obj->histogram_arr) != VX_SUCCESS)
+    {
+        APP_PRINTF("histogram_arr create failed\n");
+        return VX_FAILURE;
+    }
+
+    obj->histogram = (vx_distribution)vxGetObjectArrayItem(obj->histogram_arr, 0);
+    if (vxGetStatus((vx_reference)obj->histogram) != VX_SUCCESS)
+    {
+        APP_PRINTF("histogram create failed\n");
+        return VX_FAILURE;
+    }
+
+    vxReleaseDistribution(&histogram_exemplar);
+
+    obj->vissNode = tivxVpacVissNode(
+                         obj->capture_graph,
+                         obj->viss_configuration,
+                         NULL,
+                         obj->dcc_param_viss,
+                         obj->raw_img,
+                         NULL,
+                         NULL,
+                         obj->viss_nv12_out_img[0],
+                         NULL,
+                         NULL,
+                         obj->h3a_aew_af,
+                         NULL);
+    if (vxGetStatus((vx_reference)obj->vissNode) != VX_SUCCESS)
+    {
+        APP_PRINTF("vissNode create failed\n");
+        return VX_FAILURE;
+    }
+
+    //tivxSetNodeParameterNumBufByIndex(obj->vissNode, 6u, NUM_INTERMEDIATE_BUFS);
+    //tivxSetNodeParameterNumBufByIndex(obj->vissNode, 9u, NUM_INTERMEDIATE_BUFS);
+
+    vxSetReferenceName((vx_reference)obj->vissNode, "VISS_Processing");
+    vxSetNodeTarget(obj->vissNode, VX_TARGET_STRING,
+        TIVX_TARGET_VPAC_VISS1);
+    vxReplicateNode(obj->capture_graph, obj->vissNode, viss_prms_replicate, 11u);
+    obj->aewb_cfg.sensor_dcc_id = obj->cam_dcc_id;
+    obj->aewb_cfg.sensor_img_format = 0;
+    obj->aewb_cfg.sensor_img_phase = 3;
+    if(sensor_exp_control_enabled || sensor_gain_control_enabled )
+    {
+        obj->aewb_cfg.ae_mode = ALGORITHMS_ISS_AE_AUTO;
+    }
+    else
+    {
+        obj->aewb_cfg.ae_mode = ALGORITHMS_ISS_AE_DISABLED;
+    }
+    obj->aewb_cfg.awb_mode = ALGORITHMS_ISS_AWB_AUTO;
+    obj->aewb_cfg.awb_num_skip_frames = 9;
+    obj->aewb_cfg.ae_num_skip_frames = 9;
+    obj->aewb_cfg.channel_id = 0;
+
+    if (1) return status;
+    
+    if(sensor_dcc_enabled)
+    {
+        dcc_buff_size = appIssGetDCCSize2A(obj->sensor_name, sensor_wdr_enabled);
+
+        obj->dcc_param_2a = vxCreateUserDataObject(
+            obj->context,
+            (const vx_char*)&dcc_2a_user_data_object_name,
+            dcc_buff_size,
+            NULL
+        );
+
+        vxMapUserDataObject(
+            obj->dcc_param_2a,
+            0,
+            dcc_buff_size,
+            &dcc_2a_buf_map_id,
+            (void **)&dcc_2a_buf,
+            VX_WRITE_ONLY,
+            VX_MEMORY_TYPE_HOST,
+            0
+        );
+
+        status = appIssGetDCCBuff2A(obj->sensor_name, sensor_wdr_enabled,  dcc_2a_buf, dcc_buff_size);
+        if(status != VX_SUCCESS)
+        {
+            printf("Error getting 2A DCC buffer \n");
+            return VX_FAILURE;
+        }
+
+        vxUnmapUserDataObject(obj->dcc_param_2a, dcc_2a_buf_map_id);
+    }else
+    {
+        obj->dcc_param_2a = NULL;
+    }
+
+    /* Separate config for AEWB nodes to pass unique channel ID */
+    aewb_config_exemplar = vxCreateUserDataObject(obj->context, "tivx_aewb_config_t", sizeof(tivx_aewb_config_t), &obj->aewb_cfg);
+    obj->aewb_config_array = vxCreateObjectArray(obj->context, (vx_reference)aewb_config_exemplar, NUM_CAPT_CHANNELS);
+    vxReleaseUserDataObject(&aewb_config_exemplar);
+    for(loop_id=0;loop_id<NUM_CAPT_CHANNELS;loop_id++)
+    {
+        aewb_config_exemplar = (vx_user_data_object)vxGetObjectArrayItem(obj->aewb_config_array, loop_id);
+        obj->aewb_cfg.channel_id = loop_id;
+        vxCopyUserDataObject(aewb_config_exemplar, 0, sizeof(tivx_aewb_config_t), &obj->aewb_cfg, VX_WRITE_ONLY, VX_MEMORY_TYPE_HOST);
+        vxReleaseUserDataObject(&aewb_config_exemplar);
+    }
+    obj->aewb_config = (vx_user_data_object)vxGetObjectArrayItem(obj->aewb_config_array, 0);
+
+    obj->node_aewb = tivxAewbNode(obj->capture_graph,
+                                  obj->aewb_config,
+                                  obj->histogram,
+                                  obj->h3a_aew_af,
+                                  NULL,
+                                  obj->ae_awb_result,
+                                  obj->dcc_param_2a);
+    vxSetNodeTarget(obj->node_aewb, VX_TARGET_STRING, TIVX_TARGET_IPU1_0);
+
+    if(NULL != obj->node_aewb)
+        vxSetReferenceName((vx_reference)obj->node_aewb, "2A_AlgNode");
+    else
+    {
+        APP_PRINTF("tivxAewbNode returned NULL \n");
+        return VX_FAILURE;
+    }
+    APP_PRINTF("AEWB Set Reference done\n");
+
+    vxReplicateNode(obj->capture_graph, obj->node_aewb, aewb_prms_replicate, 6u);
+    tivxSetNodeParameterNumBufByIndex(obj->node_aewb, 4u, PIPE_DEPTH);
+
+    return status;
+}
+
+/*******************************************************************************
+ * Screen buffers handling
+ ******************************************************************************/
+
+/**
+ * @brief   Create texture wrapping external buffer
+ */
+static int app_create_texture(screen_context_t ctx, tivx_obj_desc_image_t *desc, app_tex_desc_t *texdesc, int render)
+{
+    screen_pixmap_t     pixmap;
+    screen_buffer_t     buffer;
+    int                 val, stride, format, offset[3];
+    int                 size[2], buf_size;
+    uint8_t            *addr[3];
+    int                 r;
+
+    /* ...pixmap creation */
+    if ((r = screen_create_pixmap(&pixmap, ctx)) != 0)
+    {
+        TRACE(ERROR, _x("failed to create pixmap: %d"), r);
+        return -(errno = ENOMEM);
+    }
+
+    val = SCREEN_USAGE_OPENGL_ES3 | SCREEN_USAGE_WRITE | SCREEN_USAGE_NATIVE | SCREEN_USAGE_READ;
+    if ((r = screen_set_pixmap_property_iv(pixmap, SCREEN_PROPERTY_USAGE, &val)) != 0)
+    {
+        TRACE(ERROR, _x("failed to set pixmap property: %d"), r);
+        goto error;
+    }
+
+    size[0] = desc->width;
+    size[1] = desc->height;
+
+    switch (desc->format)
+    {
+    case VX_DF_IMAGE_NV12:
+        format = SCREEN_FORMAT_NV12;
+        stride = desc->imagepatch_addr[0].stride_y;
+        buf_size = (stride * desc->height * 3) / 2;
+        size[0] = stride;
+        size[1] = desc->height;
+        break;
+    case VX_DF_IMAGE_RGBX:
+    case TIVX_DF_IMAGE_BGRX:
+        format = SCREEN_FORMAT_RGBA8888;
+        stride = desc->imagepatch_addr[0].stride_y;
+        buf_size = (stride * desc->height);
+        break;
+    case VX_DF_IMAGE_YUYV:
+        format = SCREEN_FORMAT_YUY2;
+        stride = desc->imagepatch_addr[0].stride_y;;
+        buf_size = (stride * desc->height);
+        break;
+    case VX_DF_IMAGE_UYVY:
+        format = SCREEN_FORMAT_UYVY;
+        stride = desc->imagepatch_addr[0].stride_y;;
+        buf_size = (stride * desc->height);
+        break;
+    default:
+        TRACE(ERROR, _x("invalid buffer format: %X"), desc->format);
+        goto error;
+    }
+
+    TRACE(1, _b("create texture: %d*%d, format=%X, stride=%d, size=%d"), size[0], size[1], format, stride, buf_size);
+    
+    if ((r = screen_set_pixmap_property_iv(pixmap, SCREEN_PROPERTY_FORMAT, &format)) != 0)
+    {
+        TRACE(ERROR, _x("failed to set format: %d"), r);
+        goto error;
+    }
+
+    if ((r = screen_set_pixmap_property_iv(pixmap, SCREEN_PROPERTY_BUFFER_SIZE, size)) != 0)
+    {
+        TRACE(ERROR, _x("failed to set size: %d"), r);
+        goto error;
+    }
+
+    /* ...create buffer for a pixmap */
+    if ((r = screen_create_buffer(&buffer)) != 0)
+    {
+        TRACE(ERROR, _x("failed to create buffer: %d"), r);
+        goto error;
+    }
+
+    if ((r = screen_set_buffer_property_iv(buffer, SCREEN_PROPERTY_SIZE, &buf_size)) != 0)
+    {
+        TRACE(ERROR, _x("failed to set buffer size: %d"), r);
+        goto error;
+    }
+
+    if ((r = screen_set_buffer_property_iv(buffer, SCREEN_PROPERTY_BUFFER_SIZE, size)) != 0)
+    {
+        TRACE(ERROR, _x("failed to set buffer dimensions: %d"), r);
+        goto error;
+    }
+
+    if ((r = screen_set_buffer_property_iv(buffer, SCREEN_PROPERTY_FORMAT, &format)) != 0)
+    {
+        TRACE(ERROR, _x("failed to set buffer format: %d"), r);
+        goto error;
+    }
+
+    if ((r = screen_set_buffer_property_iv(buffer, SCREEN_PROPERTY_STRIDE, &stride)) != 0)
+    {
+        TRACE(ERROR, _x("failed to set buffer stride: %d"), r);
+        goto error;
+    }
+
+    val = 1;
+    if ((r = screen_set_buffer_property_iv(buffer, SCREEN_PROPERTY_PHYSICALLY_CONTIGUOUS, &val)) != 0)
+    {
+        TRACE(ERROR, _x("failed to set buffer property: %d"), r);
+        goto error;
+    }
+
+    addr[0] = tivxMemShared2TargetPtr(&desc->mem_ptr[0]);
+    addr[1] = tivxMemShared2TargetPtr(&desc->mem_ptr[1]);
+    addr[2] = tivxMemShared2TargetPtr(&desc->mem_ptr[2]);
+    
+    offset[0] = 0;
+    offset[1] = (addr[1] ? (int)(addr[1] - addr[0]) : 0);
+    offset[2] = (addr[2] ? (int)(addr[2] - addr[0]) : 0);
+    
+    if ((r = screen_set_buffer_property_iv(buffer, SCREEN_PROPERTY_PLANAR_OFFSETS, offset)) != 0)
+    {
+        TRACE(ERROR, _x("failed to set buffer offsets: %d"), r);
+        goto error;
+    }
+
+    if ((r = screen_set_buffer_property_pv(buffer, SCREEN_PROPERTY_POINTER, (void **)addr)) != 0)
+    {
+        TRACE(ERROR, _x("failed to set buffer pointers: %d"), r);
+        goto error;
+    }
+
+    /* ...attach buffer to pixmap */
+    if ((r = screen_attach_pixmap_buffer(pixmap, buffer)) != 0)
+    {
+        TRACE(ERROR, _x("failed to set buffer pointers: %d"), r);
+        goto error;
+    }
+
+    texdesc->addr = addr[0];
+
+    return 0;
+    
+error:
+    /* ...destroy pixmap created */
+    (pixmap != NULL ? screen_destroy_pixmap(pixmap) : 0);
+    
+    return -(errno = EINVAL);
+}
+
+
+/*******************************************************************************
+ * Local buffers handling
+ ******************************************************************************/
+
+typedef struct app_buffer_s {
+
+    vx_reference image;
+
+
+} app_buffer_t;
+
+typedef struct app_buffer_queue_s {
+
+    pthread_mutex_t     lock;
+
+    pthread_cond_t      wait;
+
+    app_buffer_t buffers[PIPE_DEPTH];
+
+    int in_queue[PIPE_DEPTH];
+
+    int in_queue_num;
+
+    int last_filled;
+
+    int last_taken;
+
+} app_buffer_queue_t;
+
+app_buffer_queue_t *ready_queue;
+app_buffer_queue_t *busy_queue;
+
+int app_get_buffer(app_buffer_queue_t *queue, app_buffer_t *buffer)
+{
+    int i;
+
+    pthread_mutex_lock(&queue->lock);
+
+    while (queue->in_queue_num < 1)
+    {
+        pthread_cond_wait(&queue->wait, &queue->lock);
+    }
+
+    for (i = 0; i < PIPE_DEPTH; i++)
+    {
+        if (queue->in_queue[queue->last_taken])
+        {
+            queue->in_queue[queue->last_taken] = 0;
+            queue->in_queue_num--;
+            *buffer = queue->buffers[queue->last_taken];
+            queue->last_taken = (queue->last_taken + 1) % PIPE_DEPTH;
+
+            break;
+        }
+    }
+
+    pthread_mutex_unlock(&queue->lock);
+
+    if (i < PIPE_DEPTH)
+    {
+        return 1;
+    }
+
+    return 0;
+}
+
+
+int app_put_buffer(app_buffer_queue_t *queue, app_buffer_t *buffer)
+{
+    int i = 0;
+
+    pthread_mutex_lock(&queue->lock);
+
+    for (i = 0; i < PIPE_DEPTH; i++)
+    {
+        if (!queue->in_queue[queue->last_filled])
+        {
+            queue->in_queue[queue->last_filled] = 1;
+            queue->buffers[queue->last_filled] = *buffer;
+            queue->in_queue_num++;
+            pthread_cond_signal(&queue->wait);
+            queue->last_filled = (queue->last_filled + 1) % PIPE_DEPTH;
+            break;
+        }
+    }
+
+    pthread_mutex_unlock(&queue->lock);
+
+    if (i == PIPE_DEPTH)
+    {
+        return -1;
+    }
+
+    return 0;
+}
+
+/**
+ * @brief   Display thread
+ */
+static void * app_display_thread(void *arg)
+{
+    app_data_t *obj = arg;
+    int         i;
+    vx_status status = VX_SUCCESS;
+    tivx_display_params_t display_params;
+    vx_uint32 posX, posY, pipeId;
+    vx_graph_parameter_queue_params_t graph_parameters_queue_params_list_display[1];
+    uint32_t num_refs;
+    app_buffer_t used_buffer;
+    vx_user_data_object csitx_config;
+    tivx_csitx_params_t local_csitx_config;
+    uint32_t loopCnt;
+
+    obj->graph_display = vxCreateGraph(obj->context);
+    if (vxGetStatus((vx_reference)obj->graph_display) != VX_SUCCESS)
+    {
+        APP_PRINTF("graph_display create failed\n");
+        return NULL;
+    }
+
+    posX      = 0;
+    posY      = 0;
+    pipeId    = 0;
+
+#if !defined (APP_USE_CSITX)
+    /* Display initialization */
+    memset(&display_params, 0, sizeof(tivx_display_params_t));
+    display_params.opMode = TIVX_KERNEL_DISPLAY_ZERO_BUFFER_COPY_MODE;
+    display_params.pipeId = pipeId;
+    display_params.outWidth = obj->outWidth;
+    display_params.outHeight = obj->outHeight;
+    display_params.posX = posX;
+    display_params.posY = posY;
+
+    obj->display_param_obj = vxCreateUserDataObject(obj->context, "tivx_display_params_t",
+                                                    sizeof(tivx_display_params_t), &display_params);
+    if (vxGetStatus((vx_reference)obj->display_param_obj) != VX_SUCCESS)
+    {
+        APP_PRINTF("display_param_obj create failed\n");
+        return NULL;
+    }
+
+    obj->displayNode = tivxDisplayNode(obj->graph_display, obj->display_param_obj, obj->output_image[0]);
+    if (vxGetStatus((vx_reference)obj->display_param_obj) != VX_SUCCESS)
+    {
+        APP_PRINTF("displayNode create failed\n");
+        return NULL;
+    }
+
+    vxSetNodeTarget(obj->displayNode, VX_TARGET_STRING, TIVX_TARGET_DISPLAY1);
+#else
+    /* CSITX Config initialization */
+    tivx_csitx_params_init(&local_csitx_config);
+    local_csitx_config.numInst                          = 1U;
+    local_csitx_config.numCh                            = 1U;
+    local_csitx_config.instId[0U]                       = 0U;
+    local_csitx_config.instCfg[0U].rxCompEnable         = (uint32_t)vx_true_e;
+    local_csitx_config.instCfg[0U].rxv1p3MapEnable      = (uint32_t)vx_true_e;
+    local_csitx_config.instCfg[0U].laneBandSpeed        = TIVX_CSITX_LANE_BAND_SPEED_770_TO_870_MBPS;
+    local_csitx_config.instCfg[0U].numDataLanes         = 4U;
+    for (loopCnt = 0U; loopCnt < local_csitx_config.instCfg[0U].numDataLanes; loopCnt++)
+    {
+        local_csitx_config.instCfg[0U].lanePolarityCtrl[loopCnt] = 0u;
+    }
+    local_csitx_config.chVcNum[0]   = 0;
+    local_csitx_config.chInstMap[0] = 0;
+
+    csitx_config = vxCreateUserDataObject(obj->context, "tivx_csitx_params_t",
+                                          sizeof(tivx_csitx_params_t), &local_csitx_config);
+    obj->displayNode = tivxCsitxNode(obj->graph_display, csitx_config, obj->output_image[0]);
+
+    vxSetNodeTarget(obj->displayNode, VX_TARGET_STRING, TIVX_TARGET_CSITX);
+#endif
+    vxSetReferenceName((vx_reference)obj->displayNode, "Display_node");
+
+    /* Setting up pipelining parameters */
+    add_graph_parameter_by_node_index(obj->graph_display, obj->displayNode, 1);
+
+    int graph_parameter_num = 0;
+
+    /* Set graph schedule config such that graph parameter @ index 0 is enqueuable */
+    graph_parameters_queue_params_list_display[graph_parameter_num].graph_parameter_index = graph_parameter_num;
+    graph_parameters_queue_params_list_display[graph_parameter_num].refs_list_size = PIPE_DEPTH;
+    graph_parameters_queue_params_list_display[graph_parameter_num].refs_list = (vx_reference*)&obj->output_image[0];
+    graph_parameter_num++;
+
+    tivxSetGraphPipelineDepth(obj->graph_display, PIPE_DEPTH);
+
+    /* Schedule mode auto is used, here we don't need to call vxScheduleGraph
+     * Graph gets scheduled automatically as refs are enqueued to it
+     */
+    APP_PRINTF("before vxSetGraphScheduleConfig\n");
+    vxSetGraphScheduleConfig(obj->graph_display, VX_GRAPH_SCHEDULE_MODE_QUEUE_AUTO, 1, graph_parameters_queue_params_list_display);
+    APP_PRINTF("vxSetGraphScheduleConfig done\n");
+
+    status = vxVerifyGraph(obj->graph_display);
+    if (status != VX_SUCCESS)
+    {
+        APP_PRINTF("graph verification failed\n");
+        return NULL;
+    }
+
+    APP_PRINTF("app_create_graph exiting\n");
+
+    tivxExportGraphToDot(obj->graph_display, ".", "display");
+
+    /* make current EGL stuff */
+    for (i = 0; i < PIPE_DEPTH - 1; i++)
+    {
+        /* Get available output buffer from busy queue */
+        if (!app_get_buffer(busy_queue, &used_buffer))
+        {
+            APP_PRINTF("Failed to get buffer in display thread\n");
+            return NULL;
+        }
+
+        /* Enqueue buffer to display graph */
+        graph_parameter_num = 0;
+        vxGraphParameterEnqueueReadyRef(obj->graph_display, graph_parameter_num, (vx_reference*)&used_buffer.image, 1);
+        graph_parameter_num++;
+    }
+
+    while (1)
+    {
+#if defined APP_USE_CSITX
+        vx_object_array out_display;
+#else
+        vx_image out_display;
+#endif
+        app_buffer_t buf;
+
+        /* Dequeue buffer from display graph */
+        graph_parameter_num = 0;
+        /* Get output reference, waits until a frame is available */
+        vxGraphParameterDequeueDoneRef(obj->graph_display, graph_parameter_num, (vx_reference*)&out_display, 1, &num_refs);
+        graph_parameter_num++;
+
+        graph_parameter_num = 0;
+
+        buf.image = (vx_reference)out_display;
+
+        /* Submit output buffer to busy queue */
+        if (app_put_buffer(ready_queue, &buf))
+        {
+            APP_PRINTF("Failed to put buffer in display thread");
+            return NULL;
+        }
+
+        /* Get available output buffer from busy queue */
+        if (!app_get_buffer(busy_queue, &buf))
+        {
+            APP_PRINTF("Failed to get buffer in display thread");
+            return NULL;
+        }
+
+        /* Enqueue buffer to display graph */
+        graph_parameter_num = 0;
+        vxGraphParameterEnqueueReadyRef(obj->graph_display, graph_parameter_num, (vx_reference*)&buf.image, 1);
+        graph_parameter_num++;
+
+        if (obj->stop_task)
+        {
+            break;
+        }
+    }
+
+    {
+#if defined APP_USE_CSITX
+        vx_object_array out_display;
+#else
+        vx_image out_display;
+#endif
+        vxWaitGraph(obj->graph_display);
+
+        /* Dequeue buf for pipe down */
+        for (i = 0; i < PIPE_DEPTH - 1; i++)
+        {
+            APP_PRINTF("Dequeuing buffers from display graph # %d...\n", i);
+            graph_parameter_num = 0;
+            vxGraphParameterDequeueDoneRef(obj->graph_display, graph_parameter_num, (vx_reference*)&out_display, 1, &num_refs);
+            graph_parameter_num++;
+        }
+    }
+
+    return NULL;
+}
+
+static void __int_signal(int signo)
+{
+    printf("signal received: %d\n", signo);
+    __app.stop_task = 1;
+}
+
+/*******************************************************************************
+ * Window rendering interface
+ ******************************************************************************/
+
+/* Camera params */
+static const int CWidth = 1280, CHeight = 800;
+
+/* Display params */
+static const int DWidth = 1280, DHeight = 480;
+
+
+/*******************************************************************************
+ * Textures support
+ ******************************************************************************/
+
+
+/*******************************************************************************
+ * Jobs processing abstraction
+ ******************************************************************************/
+
+
+/*******************************************************************************
+ * Entry points
+ ******************************************************************************/
+
+static vx_status test_pixmap(app_data_t *app)
+{
+    uint32_t    v_id_t;
+    int         i_CameraID_t = 0;
+    int32_t     offset_aau32[PIPE_DEPTH][3];
+    void       *buffers_apv[PIPE_DEPTH];
+    int32_t     size_au32[2];
+    int32_t     stride_au32[3];
+    int32_t     bufsize_au32[3];
+    int32_t     format_u32;
+    
+    for (v_id_t = 0U; v_id_t < PIPE_DEPTH; v_id_t++)
+    {
+        vx_reference    v_outFrame_pv = vxGetObjectArrayItem(app->viss_out_frames[v_id_t], i_CameraID_t);
+        vx_status       v_status_t;
+        
+        if ((v_status_t = vxGetStatus(v_outFrame_pv)) != VX_SUCCESS)
+        {
+            printf("cam-%u: failed to get output frame-%u\n", i_CameraID_t, v_id_t);
+            return v_status_t;
+        }
+        
+        uint16_t                v_objID_u16 = ownReferenceGetObjDescId(v_outFrame_pv);
+        tivx_obj_desc_image_t*  v_desc_po;
+        tivxGetObjDescList(&v_objID_u16, (tivx_obj_desc_t **)&v_desc_po, 1);
+
+        uint8_t*   v_addr_apu32[3] = {
+            (uint8_t*)tivxMemShared2TargetPtr(&v_desc_po->mem_ptr[0]),
+            (uint8_t*)tivxMemShared2TargetPtr(&v_desc_po->mem_ptr[1]),
+            (uint8_t*)tivxMemShared2TargetPtr(&v_desc_po->mem_ptr[2])
+        };
+
+        buffers_apv[v_id_t] = v_addr_apu32[0];
+        offset_aau32[v_id_t][0] = 0;
+        offset_aau32[v_id_t][1] = (v_addr_apu32[1] ? (uint32_t)(v_addr_apu32[1] - v_addr_apu32[0]) : 0U);
+        offset_aau32[v_id_t][2] = (v_addr_apu32[2] ? (uint32_t)(v_addr_apu32[2] - v_addr_apu32[0]) : 0U);
+
+        printf("cam-%u: buf-%d: %p\n", i_CameraID_t, v_id_t, buffers_apv[v_id_t]);
+
+        if (v_id_t == 0U)
+        {
+            size_au32[0] = v_desc_po->width;
+            size_au32[1] = v_desc_po->height;
+            stride_au32[0] = v_desc_po->imagepatch_addr[0].stride_y;
+            stride_au32[1] = v_desc_po->imagepatch_addr[1].stride_y;
+            stride_au32[2] = v_desc_po->imagepatch_addr[2].stride_y;
+            bufsize_au32[0] = v_desc_po->mem_size[0];
+            bufsize_au32[1] = v_desc_po->mem_size[1];
+            bufsize_au32[2] = v_desc_po->mem_size[2];
+            format_u32 = (app->is_enable_yuyv ? SCREEN_FORMAT_YUY2 : SCREEN_FORMAT_NV12);
+        }
+
+        app_tex_desc_t  texdesc;
+        app_create_texture(app->screen_ctx, v_desc_po, &texdesc, 0);
+    }
+
+    /* ...create pixmaps */
+    BUG(1, _x("break"));
+    
+    return VX_SUCCESS;
+}
+
+/**
+ * @brief   Application entry point
+ */
+int TIOVXmain(void)
+{
+    app_data_t      *app = &__app;
+    
+    vx_status status = VX_FAILURE;
+    char* sensor_list[ISS_SENSORS_MAX_SUPPORTED_SENSOR];
+    vx_uint8 count = 0;
+    vx_uint8 selectedSensor = 0xFF;
+    vx_graph_parameter_queue_params_t graph_parameters_queue_params_list[2];
+    int graph_parameter_num = 0;
+    uint32_t num_refs, buf_id;
+    uint32_t iteration = 0;
+    pthread_mutexattr_t mattr;
+    int i;
+    int ret;
+
+    if (0) {
+        
+    struct sigaction sa = {0};
+    sa.sa_handler = __int_signal;
+
+    if (sigaction(SIGINT, &sa, 0))
+    {
+        printf("Can't setup sigaction\n");
+        return -1;
+    }
+    }
+    
+#if defined (APP_AR0233_SENSOR)
+    /* ...set sensor id - tbd; make it a macro of put to config */
+    app->sensor_sel = 1;
+    app->is_enable_yuyv = 1;
+#endif
+
+    /* ...to-be-understood */
+    pthread_mutexattr_init(&mattr);
+    pthread_mutexattr_settype(&mattr, PTHREAD_MUTEX_RECURSIVE);
+
+    ready_queue = (app_buffer_queue_t *) calloc(1, sizeof(app_buffer_queue_t));
+    pthread_cond_init(&ready_queue->wait, NULL);
+    pthread_mutex_init(&ready_queue->lock, &mattr);
+
+    busy_queue = (app_buffer_queue_t *) calloc(1, sizeof(app_buffer_queue_t));
+    pthread_cond_init(&busy_queue->wait, NULL);
+    pthread_mutex_init(&busy_queue->lock, &mattr);
+    pthread_mutexattr_destroy(&mattr);
+
+    /* Common runtime initialization */
+    status = appCommonInit();
+
+    /* ...TIVX initialization */
+    tivxInit();
+    tivxHostInit();
+
+    app->context = vxCreateContext();
+    if ((status = vxGetStatus((vx_reference)app->context)) != VX_SUCCESS)
+    {
+        TRACE(ERROR, _x("failed to create context: %X"), status);
+        return -1;
+    }
+
+    tivxHwaLoadKernels(app->context);
+    tivxImagingLoadKernels(app->context);
+
+    memset(availableSensorNames, 0, ISS_SENSORS_MAX_SUPPORTED_SENSOR * ISS_SENSORS_MAX_NAME);
+    for (count = 0; count < ISS_SENSORS_MAX_SUPPORTED_SENSOR; count++)
+    {
+        sensor_list[count] = availableSensorNames[count];
+    }
+    status = appEnumerateImageSensor(sensor_list, &num_sensors_found);
+    if (VX_SUCCESS != status)
+    {
+        TRACE(ERROR, _x("appCreateImageSensor failed: %X"), status);
+        return status;
+    }
+
+    selectedSensor = app->sensor_sel;
+    if (selectedSensor > (num_sensors_found - 1))
+    {
+        TRACE(ERROR, _x("invalid sensor selection: %d"), selectedSensor);
+        return VX_FAILURE;
+    }
+
+    app->sensor_name = sensor_list[selectedSensor];
+    TRACE(INIT, _b("sensor selected: %s"), app->sensor_name);
+
+    /* Get sensor parameters */
+    memset(&sensorParams, 0, sizeof(sensorParams));
+    status = appQueryImageSensor(app->sensor_name, &sensorParams);
+    if (VX_SUCCESS != status)
+    {
+        TRACE(ERROR, _x("appQueryImageSensor returned %d"), status);
+        return -1;
+    }
+
+    app->inWidth = sensorParams.sensorInfo.raw_params.width;
+    app->inHeight = sensorParams.sensorInfo.raw_params.height;
+    app->cam_dcc_id = sensorParams.dccId;
+
+    /* ...create execution graph */
+    if ((vx_true_e == tivxIsTargetEnabled(TIVX_TARGET_DISPLAY1)) &&
+        (vx_true_e == tivxIsTargetEnabled(TIVX_TARGET_CAPTURE1)) &&
+        (vx_true_e == tivxIsTargetEnabled(TIVX_TARGET_VPAC_VISS1)))
+    {
+        app->capture_graph = vxCreateGraph(app->context);
+        if ((status = vxGetStatus((vx_reference)app->capture_graph)) != VX_SUCCESS)
+        {
+            TRACE(ERROR, _x("graph create failed: %X"), status);
+            return status;
+        }
+        vxSetReferenceName((vx_reference)app->capture_graph, "CAPTURE");
+
+        /* ...create capture interface */
+        status = app_create_capture(app);
+        if (status != VX_SUCCESS)
+        {
+            TRACE(ERROR, _x("app_create_capture failed: %X"), status);
+            return status;
+        }
+
+        /* ...create ISP interface */
+#if defined APP_USE_COGENT_ISP
+        status = app_create_cogente_viss_aewb(app);
+#else
+        status = app_create_viss_aewb(app);
+#endif
+        if (status != VX_SUCCESS)
+        {
+            TRACE(ERROR, _x("ISP creation failed: %X"), status);
+            return status;
+        }
+
+        /* ...what is the meaninig of the index? - tbd */
+        add_graph_parameter_by_node_index(app->capture_graph, app->captureNode, 1);
+#if defined APP_USE_COGENT_ISP
+        add_graph_parameter_by_node_index(app->capture_graph, app->vissNode, 4);
+#else
+        add_graph_parameter_by_node_index(app->capture_graph, app->vissNode, 6);
+#endif
+        /* Set graph schedule config such that graph parameter @ index 0 is enqueuable */
+        graph_parameters_queue_params_list[graph_parameter_num].graph_parameter_index = graph_parameter_num;
+        graph_parameters_queue_params_list[graph_parameter_num].refs_list_size = PIPE_DEPTH;
+        graph_parameters_queue_params_list[graph_parameter_num].refs_list = (vx_reference*)&app->capt_frames[0];
+        graph_parameter_num++;
+
+        graph_parameters_queue_params_list[graph_parameter_num].graph_parameter_index = graph_parameter_num;
+        graph_parameters_queue_params_list[graph_parameter_num].refs_list_size = PIPE_DEPTH;
+        graph_parameters_queue_params_list[graph_parameter_num].refs_list = (vx_reference*)&app->viss_nv12_out_img[0];
+        graph_parameter_num++;
+
+        tivxSetGraphPipelineDepth(app->capture_graph, PIPE_DEPTH);
+
+        /* Schedule mode auto is used, here we don't need to call vxScheduleGraph
+         * Graph gets scheduled automatically as refs are enqueued to it
+         */
+        vxSetGraphScheduleConfig(app->capture_graph,
+                VX_GRAPH_SCHEDULE_MODE_QUEUE_AUTO,
+                                 2+0*graph_parameter_num,
+                graph_parameters_queue_params_list
+                );
+
+        TRACE(INIT, _b("Verifying capture graph..."));
+        status = vxVerifyGraph(app->capture_graph);
+        if (status != VX_SUCCESS)
+        {
+            TRACE(ERROR, _x("graph verification failed: %X"), status);
+            return status;
+        }
+
+        tivxExportGraphToDot(app->capture_graph, "/tmp", "capture_graph");
+        TRACE(INIT, _b("capture graph created"));
+    }
+    else
+    {
+        return -1;
+    }
+
+    status = appStartImageSensor(app->sensor_name, 0xF);
+    if (status != VX_SUCCESS)
+    {
+        TRACE(ERROR, _x("failed to start sensor: %X"), status);
+        return status;
+    }
+
+    screen_create_context(&app->screen_ctx, SCREEN_BUFFER_PROVIDER_CONTEXT);
+
+    // Wait for results (temporarily)
+    if (1)
+    {
+        vx_object_array out_capture_frames;
+        vx_image        out_viss_image;
+        vx_uint32       num_refs;
+        int             buf_id;
+        
+        /* Enqueue buf for pipe up but don't trigger graph execution */
+        for (buf_id = 0; buf_id < PIPE_DEPTH; buf_id++)
+        {
+            vxGraphParameterEnqueueReadyRef(app->capture_graph, 0, (vx_reference*)&app->capt_frames[buf_id], 1);
+            vxGraphParameterEnqueueReadyRef(app->capture_graph, 1, (vx_reference*)&app->viss_nv12_out_img[buf_id], 1);
+        }
+
+        printf("buffers enqueued: %u\n", num_refs);
+
+        /* Get output reference, waits until a frame is available */
+        vxGraphParameterDequeueDoneRef(app->capture_graph, 0, (vx_reference*)&out_capture_frames, 1, &num_refs);
+        vxGraphParameterDequeueDoneRef(app->capture_graph, 1, (vx_reference*)&out_viss_image, 1, &num_refs);
+
+        printf("buffers ready: %u\n", num_refs);
+    }
+
+    /* ...test_pixmap */
+    test_pixmap(app);
+    
+
+
+#if 1    
+    app->outWidth = 1920;
+    app->outHeight = 480;   
+#elif defined APP_USE_FOR_RECORDING
+    obj->outWidth = 2048;
+    obj->outHeight = 1280;
+#else
+    obj->outWidth = 1920;
+    obj->outHeight = 1080;
+#endif
+
+    /* ...output buffers creation */
+#if defined APP_USE_CSITX
+    app->sample_out_image = vxCreateImage(app->context, app->outWidth, app->outHeight, VX_DF_IMAGE_RGBX);
+#endif
+    for (i = 0; i < PIPE_DEPTH; i++)
+    {
+        app_buffer_t buf;
+
+#if defined APP_USE_CSITX
+        app->output_image[i] = vxCreateObjectArray(app->context, app->sample_out_image, 1);
+#else
+        app->output_image[i] = vxCreateImage(app->context, app->outWidth, app->outHeight, TIVX_DF_IMAGE_BGRX);
+#endif
+        if ((status = vxGetStatus((vx_reference)app->output_image[i])) != VX_SUCCESS)
+        {
+            TRACE(ERROR, _x("failed to create output-%d: %X"), i, status);
+            return status;
+        }
+
+        buf.image = (vx_reference)app->output_image[i];
+
+        /* ...put buffer into ready queue list */
+        app_put_buffer(ready_queue, &buf);
+    }
+
+    /* ...create screen */
+    screen_window_t native;
+    int             value;
+    int             size[2] = { DWidth, DHeight };
+    
+        
+    screen_create_window(&native, app->screen_ctx);
+    screen_set_window_property_iv(native, SCREEN_PROPERTY_FORMAT, (value = SCREEN_FORMAT_RGBA8888, &value));
+    screen_set_window_property_iv(native, SCREEN_PROPERTY_USAGE, (value = SCREEN_USAGE_OPENGL_ES2, &value));
+    screen_set_window_property_iv(native, SCREEN_PROPERTY_SWAP_INTERVAL, (value = 1, &value));
+    screen_set_window_property_iv(native, SCREEN_PROPERTY_SIZE, size);
+
+    screen_create_window_buffers(native, 2);
+    
+    /* Enqueue buf for pipe up but don't trigger graph execution */
+    for (buf_id = 0; buf_id < PIPE_DEPTH; buf_id++)
+    {
+        graph_parameter_num = 0;
+        vxGraphParameterEnqueueReadyRef(app->capture_graph, graph_parameter_num, (vx_reference*)&app->capt_frames[buf_id], 1);
+        graph_parameter_num++;
+        vxGraphParameterEnqueueReadyRef(app->capture_graph, graph_parameter_num, (vx_reference*)&app->viss_nv12_out_img[buf_id], 1);
+        graph_parameter_num++;
+    }
+
+    /* wait for graph instances to complete, compare output and
+     * recycle data buffers, schedule again */
+    app_buffer_t current_buffer;
+    app_buffer_t prev_buffer;
+    int first_time = 1;
+
+    /* ...buffer processing loop */
+    while (1)
+    {
+        vx_object_array     out_capture_frames;
+        vx_image            out_viss_image;
+        
+        graph_parameter_num = 0;
+
+        appPerfPointBegin(&app->total_perf);
+
+        /* Get output reference, waits until a frame is available */
+        vxGraphParameterDequeueDoneRef(app->capture_graph, 0, (vx_reference*)&out_capture_frames, 1, &num_refs);
+        vxGraphParameterDequeueDoneRef(app->capture_graph, 1, (vx_reference*)&out_viss_image, 1, &num_refs);
+
+        /* Get available output buffer from ready queue */
+        if (!app_get_buffer(ready_queue, &current_buffer))
+        {
+            TRACE(ERROR, _x("failed to get output buffer"));
+            return -1;
+        }
+        
+
+        if (!first_time)
+        {
+            /* Submit output buffer to busy queue */
+            if (app_put_buffer(busy_queue, &prev_buffer))
+            {
+                APP_PRINTF("Failed to put buffer");
+                return -1;
+            }
+        }
+
+        prev_buffer = current_buffer;
+
+        first_time = 0;
+        /* todo: mark frames as busy... do we need that right now? */
+
+        /* todo: check available free frames and submit to graph... do we need that? */
+#if 0
+        vxGraphParameterEnqueueReadyRef(app->capture_graph, graph_parameter_num, (vx_reference*)&out_capture_frames, 1);
+        graph_parameter_num++;
+        vxGraphParameterEnqueueReadyRef(app->capture_graph, graph_parameter_num, (vx_reference*)&out_viss_image, 1);
+        graph_parameter_num++;
+#endif
+        appPerfPointEnd(&app->total_perf);
+
+        if (iteration == 300)
+        {
+            appPerfStatsPrintAll();
+            //tivx_utils_graph_perf_print(app->capture_graph);
+            //tivx_utils_graph_perf_print(app->graph_display);
+            printf("\n");
+            appPerfPointPrintFPS(&app->total_perf);
+            printf("\n");
+            /* after first 'n' iteration reset performance stats */
+            appPerfStatsResetAll();
+            iteration = 0;
+        }
+
+        iteration++;
+
+        if(app->stop_task)
+        {
+            break;
+        }
+    }
+
+    /* ensure all graph processing is complete */
+    vxWaitGraph(app->capture_graph);
+
+    /* Dequeue buf for pipe down */
+    num_refs = 0xFF;
+    graph_parameter_num = 0;
+    while(num_refs > 0)
+    {
+        vx_object_array out_capture_frames;
+
+        vxGraphParameterCheckDoneRef(app->capture_graph, graph_parameter_num, &num_refs);
+        if(num_refs > 0)
+        {
+            vxGraphParameterDequeueDoneRef(
+                                app->capture_graph,
+                                graph_parameter_num,
+                                (vx_reference*)&out_capture_frames,
+                                1,
+                                &num_refs);
+        }
+    }
+
+    if (pthread_join(app->display_thread, NULL))
+    {
+        printf("Error while waiting display thread \n");
+        return -1;
+    }
+
+    appStopImageSensor(app->sensor_name, 0xF);
+
+    tivxHwaUnLoadKernels(app->context);
+    APP_PRINTF("tivxHwaUnLoadKernels done\n");
+
+    tivxImagingUnLoadKernels(app->context);
+    APP_PRINTF("tivxImagingUnLoadKernels done\n");
+
+    status = vxReleaseContext(&app->context);
+    if(VX_SUCCESS == status)
+    {
+        APP_PRINTF("vxReleaseContext done\n");
+    }
+    else
+    {
+        printf("Error: vxReleaseContext returned 0x%x \n", status);
+    }
+
+    appDeInitImageSensor(app->sensor_name);
+
+    tivxHostDeInit();
+    tivxDeInit();
+    appCommonDeInit();
+
+    return 0;
+}
+

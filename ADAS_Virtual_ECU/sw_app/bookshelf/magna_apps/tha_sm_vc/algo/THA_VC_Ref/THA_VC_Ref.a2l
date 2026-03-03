@@ -1,0 +1,1151 @@
+/******************************************************************************
+ *
+ *  ASAP2 file:     THA_VC_Ref.a2l
+ *
+ * Code generation for model "THA_VC_Ref".
+ *
+ * Model version              : 1.2042
+ * Simulink Coder version : 9.2 (R2019b) 18-Jul-2019
+ * C source code generated on : Thu Aug  7 17:42:34 2025
+ * 
+ * Target selection: ert.tlc
+ * Embedded hardware selection: Custom Processor->Custom Processor
+ * Code generation objectives: 
+ *    1. MISRA C:2012 guidelines
+ *    2. RAM efficiency
+ *    3. ROM efficiency
+ * Validation result: Not run
+ *
+ * (add additional file header information here)
+ *
+ ******************************************************************************/
+
+ASAP2_VERSION  1 31   /* Version 1.31 */
+
+/begin PROJECT ProjectName "Project Comment Goes Here"
+  
+  /begin HEADER "Header Comments go here"
+    
+  /end HEADER
+  
+  
+  /begin MODULE ModuleName  "Module Comment Goes Here"
+    
+    /begin MOD_PAR "MOD PAR Comment Goes Here"
+      
+    /end MOD_PAR
+    
+    /begin MOD_COMMON  "Mod Common Comment Here" 
+      BYTE_ORDER     MSB_LAST
+    /end MOD_COMMON
+    
+    /begin RECORD_LAYOUT Scalar_BOOLEAN
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_UBYTE
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_BYTE
+      FNC_VALUES  1 SBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_UWORD
+      FNC_VALUES  1 UWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_SWORD
+      FNC_VALUES 1 SWORD COLUMN_DIR DIRECT
+    /end RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_ULONG
+      FNC_VALUES  1 ULONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_LONG
+      FNC_VALUES  1 SLONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_FLOAT32_IEEE
+      FNC_VALUES  1 FLOAT32_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_FLOAT64_IEEE
+      FNC_VALUES  1 FLOAT64_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    
+    /begin RECORD_LAYOUT Lookup1D_BOOLEAN
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_BOOLEAN
+      AXIS_PTS_X  1 UBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_BYTE
+      FNC_VALUES  1 SBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_BYTE
+      AXIS_PTS_X  1 SBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_UBYTE
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_UBYTE
+      AXIS_PTS_X  1 UBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_UWORD
+      FNC_VALUES  1 UWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_UWORD
+      AXIS_PTS_X  1 UWORD INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_WORD
+      FNC_VALUES  1 SWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_WORD
+      AXIS_PTS_X  1 SWORD INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_ULONG
+      FNC_VALUES  1 ULONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_ULONG
+      AXIS_PTS_X  1 ULONG INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_SLONG
+      FNC_VALUES  1 SLONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_LONG
+      AXIS_PTS_X  1 SLONG INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_FLOAT32_IEEE
+      FNC_VALUES  1 FLOAT32_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_FLOAT32_IEEE
+      AXIS_PTS_X  1 FLOAT32_IEEE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_FLOAT64_IEEE
+      FNC_VALUES  1 FLOAT64_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_FLOAT64_IEEE
+      AXIS_PTS_X  1 FLOAT64_IEEE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_BOOLEAN
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_BOOLEAN
+      AXIS_PTS_X  1 UBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT    
+    
+    /begin RECORD_LAYOUT Lookup2D_UBYTE
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_UBYTE
+      AXIS_PTS_X  1 UBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_BYTE
+      FNC_VALUES  1 SBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_BYTE
+      AXIS_PTS_X  1 SBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_UWORD
+      FNC_VALUES  1 UWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_UWORD
+      AXIS_PTS_X  1 UWORD INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_WORD
+      FNC_VALUES  1 SWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_WORD
+      AXIS_PTS_X  1 SWORD INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_ULONG
+      FNC_VALUES  1 ULONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_ULONG
+      AXIS_PTS_X  1 ULONG INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_LONG
+      FNC_VALUES  1 SLONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_LONG
+      AXIS_PTS_X  1 SLONG INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_FLOAT32_IEEE
+      FNC_VALUES  1 FLOAT32_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_FLOAT32_IEEE
+      AXIS_PTS_X 1 FLOAT32_IEEE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_FLOAT64_IEEE
+      FNC_VALUES  1  FLOAT64_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_FLOAT64_IEEE
+      AXIS_PTS_X 1 FLOAT64_IEEE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_dpx_CplrPntRateLimitMax  
+      /* Long Identifier        */      "Max allowable change in coupler point per second."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_dpx_CplrPntRateLimitMax@ */ 
+      /* Record Layout          */      Scalar_LONG 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_int32_pixel_s 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      10000.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_Hz_StrCtrlLowPassFiltFreq  
+      /* Long Identifier        */      "Steering control low pass filter frequency."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_Hz_StrCtrlLowPassFiltFreq@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1000.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_M_AbortStrTrq  
+      /* Long Identifier        */      "Steering torque for maneuver abort."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_M_AbortStrTrq@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single_nm 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      2.5
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_M_SteerTweakTrq  
+      /* Long Identifier        */      "Steering tweak torque amplitude."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_M_SteerTweakTrq@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single_Nm 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      5.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_M_StrTrqValLimit  
+      /* Long Identifier        */      "Steering torque value limit."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_M_StrTrqValLimit@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single_Nm 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      50.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_dM_EpsRampOutSlewRate  
+      /* Long Identifier        */      "Slew rate at which EPS torque shall be set."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_dM_EpsRampOutSlewRate@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single_Nm_s 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      500.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_dM_TrqCtrlSlewRate  
+      /* Long Identifier        */      "Slew rate at which EPS torque shall be set."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_dM_TrqCtrlSlewRate@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single_Nm_s 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      2000.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_deg_LowerSteeringAngLim  
+      /* Long Identifier        */      "Lower steering angle limit of the vehicle."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_deg_LowerSteeringAngLim@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single_deg 
+      /* Lower Limit            */      -1200.0 
+      /* Upper Limit            */      0.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_deg_UpperSteeringAngLim  
+      /* Long Identifier        */      "Upper steering angle limit of the vehicle."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_deg_UpperSteeringAngLim@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single_deg 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1200.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_k_NumTweakPulse  
+      /* Long Identifier        */      "Number of PWM pulse, keep it single type"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_k_NumTweakPulse@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      10.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_k_SteerTrqCtrlKp  
+      /* Long Identifier        */      "Steer torque control Kp."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_k_SteerTrqCtrlKp@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      -10.0 
+      /* Upper Limit            */      10.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_k_TrqCtrlDMultiplier_CF55  
+      /* Long Identifier        */      "Torque controller Differential multiplier KeTHA_k_TrqCtrlDMultiplier"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_k_TrqCtrlDMultiplier_CF55@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      5.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_k_TrqCtrlDMultiplier_CF60_CF63  
+      /* Long Identifier        */      "Torque controller Differential multiplier KeTHA_k_TrqCtrlDMultiplier"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_k_TrqCtrlDMultiplier_CF60_CF63@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      5.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_k_TrqCtrlDMultiplier_WB144_CF63  
+      /* Long Identifier        */      "Torque controller Differential multiplier KeTHA_k_TrqCtrlDMultiplier"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_k_TrqCtrlDMultiplier_WB144_CF63@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      5.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_k_TrqCtrlIMultiplier_CF55  
+      /* Long Identifier        */      "Torque controller Integral multiplier KeTHA_k_TrqCtrlIMultiplier  for CF 55"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_k_TrqCtrlIMultiplier_CF55@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      5.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_k_TrqCtrlIMultiplier_CF60_CF63  
+      /* Long Identifier        */      "Torque controller Integral multiplier KeTHA_k_TrqCtrlIMultiplier"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_k_TrqCtrlIMultiplier_CF60_CF63@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      5.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_k_TrqCtrlIMultiplier_WB144_CF63  
+      /* Long Identifier        */      "Torque controller Integral multiplier KeTHA_k_TrqCtrlIMultiplier"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_k_TrqCtrlIMultiplier_WB144_CF63@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      5.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_k_TrqCtrlKd  
+      /* Long Identifier        */      "Steering wheel angle to steering torque controller - Derivative gain."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_k_TrqCtrlKd@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      10.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_k_TrqCtrlKi  
+      /* Long Identifier        */      "Steering wheel angle to steering torque controller - Integral gain."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_k_TrqCtrlKi@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      10.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_k_TrqCtrlPMultiplier_CF55  
+      /* Long Identifier        */      "Torque controller Propotional multiplier KeTHA_k_TrqCtrlPMultiplier for CF 55"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_k_TrqCtrlPMultiplier_CF55@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      5.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_k_TrqCtrlPMultiplier_CF60  
+      /* Long Identifier        */      "Torque controller Propotional multiplier KeTHA_k_TrqCtrlPMultiplier"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_k_TrqCtrlPMultiplier_CF60@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      5.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_k_TrqCtrlPMultiplier_CF63  
+      /* Long Identifier        */      "Torque controller Propotional multiplier KeTHA_k_TrqCtrlPMultiplier"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_k_TrqCtrlPMultiplier_CF63@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      5.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_k_TrqCtrlPMultiplier_WB144_CF63  
+      /* Long Identifier        */      "Torque controller Propotional multiplier KeTHA_k_TrqCtrlPMultiplier"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_k_TrqCtrlPMultiplier_WB144_CF63@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      5.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_mps_SpdThreshold  
+      /* Long Identifier        */      "THA speed limit threshold stability "
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_mps_SpdThreshold@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single_s 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      10.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_pct_StrDampDefault  
+      /* Long Identifier        */      "Default value of THA steering damping."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_pct_StrDampDefault@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single__ 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      100.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_s_SpdLimConfDur  
+      /* Long Identifier        */      "THA speed limit stability duration."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_s_SpdLimConfDur@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single_s 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      10.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_s_SteerTweakTime  
+      /* Long Identifier        */      "Steering tweak profile duration.
+      "
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_s_SteerTweakTime@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single_s 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      5.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_s_ThaSampleTime  
+      /* Long Identifier        */      "Sample time of THA feature for counter/timer operations within logic."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_s_ThaSampleTime@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single_s 
+      /* Lower Limit            */      0.001 
+      /* Upper Limit            */      1.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KsTHA_k_TrqCtrlDampGainTD  
+      /* Long Identifier        */      "Damping gain table data corresponding to vehicle speed [0,2,5,10]."
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KsTHA_k_TrqCtrlDampGainTD@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+      /* Array Size             */
+      NUMBER                            4
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KsTHA_k_TrqCtrlDiffGainTD_C55  
+      /* Long Identifier        */      "Differential gain table data corresponding to vehicle speed [0,2,5,10] for default variant 5."
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KsTHA_k_TrqCtrlDiffGainTD_C55@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+      /* Array Size             */
+      NUMBER                            4
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KsTHA_k_TrqCtrlDiffGainTD_C60_C63  
+      /* Long Identifier        */      "Differential gain table data corresponding to vehicle speed [0,2,5,10] for default variant 5."
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KsTHA_k_TrqCtrlDiffGainTD_C60_C63@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+      /* Array Size             */
+      NUMBER                            4
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KsTHA_k_TrqCtrlDiffGainTD_WB144_C63  
+      /* Long Identifier        */      "Differential gain table data corresponding to vehicle speed [0,2,5,10] for default variant 5."
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KsTHA_k_TrqCtrlDiffGainTD_WB144_C63@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+      /* Array Size             */
+      NUMBER                            4
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KsTHA_k_TrqCtrlIntExtSatTD  
+      /* Long Identifier        */      "Integrator external saturation table data corresponding to vehicle speed [0,2,5,10]."
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KsTHA_k_TrqCtrlIntExtSatTD@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      100.0
+      /* Array Size             */
+      NUMBER                            4
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KsTHA_k_TrqCtrlIntGainTD_C55  
+      /* Long Identifier        */      "Integrator gain table data corresponding to vehicle speed [0,2,5,10] for default variant 5.."
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KsTHA_k_TrqCtrlIntGainTD_C55@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+      /* Array Size             */
+      NUMBER                            4
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KsTHA_k_TrqCtrlIntGainTD_C60_C63  
+      /* Long Identifier        */      "Integrator gain table data corresponding to vehicle speed [0,2,5,10] for default variant 5.."
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KsTHA_k_TrqCtrlIntGainTD_C60_C63@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+      /* Array Size             */
+      NUMBER                            4
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KsTHA_k_TrqCtrlIntGainTD_WB144_C63  
+      /* Long Identifier        */      "Integrator gain table data corresponding to vehicle speed [0,2,5,10] for default variant 5.."
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KsTHA_k_TrqCtrlIntGainTD_WB144_C63@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+      /* Array Size             */
+      NUMBER                            4
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KsTHA_k_TrqCtrlPropGainTD_C55  
+      /* Long Identifier        */      "Kp gain LUT corresponding to vehicle speed [0,2,5,10] and steering angle [0,25,50,100,570] for default variant 5."
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KsTHA_k_TrqCtrlPropGainTD_C55@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+      /* Array Size             */
+      NUMBER                            20
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KsTHA_k_TrqCtrlPropGainTD_C60  
+      /* Long Identifier        */      "Kp gain LUT corresponding to vehicle speed [0,2,5,10] and steering angle [0,25,50,100,570] for default variant 5."
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KsTHA_k_TrqCtrlPropGainTD_C60@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+      /* Array Size             */
+      NUMBER                            20
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KsTHA_k_TrqCtrlPropGainTD_C63  
+      /* Long Identifier        */      "Kp gain LUT corresponding to vehicle speed [0,2,5,10] and steering angle [0,25,50,100,570] for default variant 5."
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KsTHA_k_TrqCtrlPropGainTD_C63@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+      /* Array Size             */
+      NUMBER                            20
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KsTHA_k_TrqCtrlPropGainTD_WB144_C63  
+      /* Long Identifier        */      "Kp gain LUT corresponding to vehicle speed [0,2,5,10] and steering angle [0,25,50,100,570] for default variant 5."
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KsTHA_k_TrqCtrlPropGainTD_WB144_C63@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+      /* Array Size             */
+      NUMBER                            20
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KsTHA_mps_DistSpdTD  
+      /* Long Identifier        */      "THA speed limit array for the longitudinal pixel difference between hitch and coupler/trailer of [60, 112, 137, 147, 155, 164]."
+      /* Type                   */      VAL_BLK 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KsTHA_mps_DistSpdTD@ */ 
+      /* Record Layout          */      Scalar_FLOAT32_IEEE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_single_km_hr 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      3.0
+      /* Array Size             */
+      NUMBER                            6
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_b_EnblTrlrAngStrTrqCalc  
+      /* Long Identifier        */      "Calibration to enable Steering torque calculation based on trailer angle."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_b_EnblTrlrAngStrTrqCalc@ */ 
+      /* Record Layout          */      Scalar_BOOLEAN 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_boolean 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_b_SpdCndEnable  
+      /* Long Identifier        */      "Calibration to enable updated torque control logic."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_b_SpdCndEnable@ */ 
+      /* Record Layout          */      Scalar_BOOLEAN 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_boolean 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_b_UseNewTrqCtrl  
+      /* Long Identifier        */      "Calibration to enable updated torque control logic."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_b_UseNewTrqCtrl@ */ 
+      /* Record Layout          */      Scalar_BOOLEAN 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_boolean 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeTHA_b_UsePreProcessor  
+      /* Long Identifier        */      "Calibration to enable updated torque control logic."
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeTHA_b_UsePreProcessor@ */ 
+      /* Record Layout          */      Scalar_BOOLEAN 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      THA_VC_Ref_CM_boolean 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      1.0
+    /end CHARACTERISTIC
+    
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeTHA_deg_RelAngle
+      /* Long identifier        */      "Initial angle made by coupler with Hitch when THA is engaged."
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      THA_VC_Ref_CM_single_deg
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -570.0
+      /* Upper limit            */      570.0
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeTHA_deg_RelAngle@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeTHA_deg_StrAngCmd
+      /* Long identifier        */      "Required steering angle calculated by steering control block of VC."
+      /* Data type              */      FLOAT32_IEEE
+      /* Conversion method      */      THA_VC_Ref_CM_single_deg
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -570.0
+      /* Upper limit            */      570.0
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeTHA_deg_StrAngCmd@ */
+    /end MEASUREMENT
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      THA_VC_Ref_CM_int32_pixel_s
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%10.0"
+      /* Units                  */      "pixel/s"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      THA_VC_Ref_CM_single
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      ""
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      THA_VC_Ref_CM_single_nm
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      "nm"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      THA_VC_Ref_CM_single_Nm
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      "Nm"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      THA_VC_Ref_CM_single_Nm_s
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      "Nm/s"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      THA_VC_Ref_CM_single_deg
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      "deg"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      THA_VC_Ref_CM_single_s
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      "s"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      THA_VC_Ref_CM_single__
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      "%"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      THA_VC_Ref_CM_single_km_hr
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%8.6"
+      /* Units                  */      "km/hr"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      THA_VC_Ref_CM_boolean
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%1.0"
+      /* Units                  */      ""
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin GROUP 
+      /* Name                   */       THA_VC_Ref
+      /* Long identifier        */       "THA_VC_Ref"
+      /* Root                    */       ROOT
+      /begin SUB_GROUP
+        Root_THA_VC_Controller
+        Root_THA_VC_InputProcessing
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       Root_THA_VC_Controller
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_Controller"
+      /begin SUB_GROUP
+        S1_THA_Distance_SpeedLimit_Processing
+        S1_THA_KM_SteerTorque_Processing
+        S1_THA_MnvrAbort_SteerTorque_Processing
+        S1_THA_SteerTweakProfile_Processing2
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        KeTHA_M_SteerTweakTrq
+        KeTHA_dM_EpsRampOutSlewRate
+        KeTHA_dM_TrqCtrlSlewRate
+        KeTHA_pct_StrDampDefault
+        KeTHA_s_SteerTweakTime
+        KeTHA_s_ThaSampleTime
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       Root_THA_VC_InputProcessing
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_InputProcessing"
+      /begin SUB_GROUP
+        S2_InitCplrAngSelect
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S1_THA_Distance_SpeedLimit_Processing
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_Controller/THA_Distance_SpeedLimit_Processing"
+      /begin SUB_GROUP
+        S9_DynamicRateLimiterX
+        S9_DynamicRateLimiterY
+        S9_enum_max_speed_output
+        S9_max_speed_decider
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        KeTHA_dpx_CplrPntRateLimitMax
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S1_THA_KM_SteerTorque_Processing
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_Controller/THA_KM_SteerTorque_Processing"
+      /begin SUB_GROUP
+        S10_PreProcessor
+        S10_STR_Control
+        S10_TrqControlOld
+        S10_TrqControl_PID_Error
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        KeTHA_Hz_StrCtrlLowPassFiltFreq
+        KeTHA_b_UseNewTrqCtrl
+        KeTHA_s_ThaSampleTime
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S1_THA_MnvrAbort_SteerTorque_Processing
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_Controller/THA_MnvrAbort_SteerTorque_Processing"
+      /begin REF_CHARACTERISTIC
+        KeTHA_M_AbortStrTrq
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S1_THA_SteerTweakProfile_Processing2
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_Controller/THA_SteerTweakProfile_Processing2"
+      /begin REF_CHARACTERISTIC
+        KeTHA_k_NumTweakPulse
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S2_InitCplrAngSelect
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_InputProcessing/InitCplrAngSelect"
+      /begin REF_MEASUREMENT
+        MeTHA_deg_RelAngle
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S9_DynamicRateLimiterX
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_Controller/THA_Distance_SpeedLimit_Processing/DynamicRateLimiterX"
+      /begin REF_CHARACTERISTIC
+        KeTHA_s_ThaSampleTime
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S9_DynamicRateLimiterY
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_Controller/THA_Distance_SpeedLimit_Processing/DynamicRateLimiterY"
+      /begin REF_CHARACTERISTIC
+        KeTHA_s_ThaSampleTime
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S9_enum_max_speed_output
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_Controller/THA_Distance_SpeedLimit_Processing/enum_max_speed_output"
+      /begin REF_CHARACTERISTIC
+        KeTHA_s_SpdLimConfDur
+        KeTHA_s_ThaSampleTime
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S9_max_speed_decider
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_Controller/THA_Distance_SpeedLimit_Processing/max_speed_decider"
+      /begin REF_CHARACTERISTIC
+        KsTHA_mps_DistSpdTD
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S10_PreProcessor
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_Controller/THA_KM_SteerTorque_Processing/PreProcessor"
+      /begin REF_CHARACTERISTIC
+        KeTHA_b_SpdCndEnable
+        KeTHA_b_UsePreProcessor
+        KeTHA_deg_UpperSteeringAngLim
+        KeTHA_mps_SpdThreshold
+        KeTHA_s_SteerTweakTime
+        KeTHA_s_ThaSampleTime
+      /end REF_CHARACTERISTIC
+      /begin REF_MEASUREMENT
+        MeTHA_deg_StrAngCmd
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S10_STR_Control
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_Controller/THA_KM_SteerTorque_Processing/STR_Control"
+      /begin REF_CHARACTERISTIC
+        KeTHA_b_EnblTrlrAngStrTrqCalc
+        KeTHA_b_SpdCndEnable
+        KeTHA_deg_LowerSteeringAngLim
+        KeTHA_deg_UpperSteeringAngLim
+        KeTHA_mps_SpdThreshold
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S10_TrqControlOld
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_Controller/THA_KM_SteerTorque_Processing/TrqControlOld"
+      /begin REF_CHARACTERISTIC
+        KeTHA_k_SteerTrqCtrlKp
+        KeTHA_k_TrqCtrlKd
+        KeTHA_k_TrqCtrlKi
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S10_TrqControl_PID_Error
+      /* Long identifier        */       "THA_VC_Ref/THA_VC_Controller/THA_KM_SteerTorque_Processing/TrqControl_PID_Error"
+      /begin REF_CHARACTERISTIC
+        KeTHA_M_StrTrqValLimit
+        KeTHA_dM_TrqCtrlSlewRate
+        KeTHA_k_TrqCtrlDMultiplier_CF55
+        KeTHA_k_TrqCtrlDMultiplier_CF60_CF63
+        KeTHA_k_TrqCtrlDMultiplier_WB144_CF63
+        KeTHA_k_TrqCtrlIMultiplier_CF55
+        KeTHA_k_TrqCtrlIMultiplier_CF60_CF63
+        KeTHA_k_TrqCtrlIMultiplier_WB144_CF63
+        KeTHA_k_TrqCtrlPMultiplier_CF55
+        KeTHA_k_TrqCtrlPMultiplier_CF60
+        KeTHA_k_TrqCtrlPMultiplier_CF63
+        KeTHA_k_TrqCtrlPMultiplier_WB144_CF63
+        KsTHA_k_TrqCtrlDampGainTD
+        KsTHA_k_TrqCtrlDiffGainTD_C55
+        KsTHA_k_TrqCtrlDiffGainTD_C60_C63
+        KsTHA_k_TrqCtrlDiffGainTD_WB144_C63
+        KsTHA_k_TrqCtrlIntExtSatTD
+        KsTHA_k_TrqCtrlIntGainTD_C55
+        KsTHA_k_TrqCtrlIntGainTD_C60_C63
+        KsTHA_k_TrqCtrlIntGainTD_WB144_C63
+        KsTHA_k_TrqCtrlPropGainTD_C55
+        KsTHA_k_TrqCtrlPropGainTD_C60
+        KsTHA_k_TrqCtrlPropGainTD_C63
+        KsTHA_k_TrqCtrlPropGainTD_WB144_C63
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    
+  /end MODULE
+  
+  
+/end PROJECT
+/* (add any file trailer comments here) */
+/* EOF THA_VC_Ref.a2l */

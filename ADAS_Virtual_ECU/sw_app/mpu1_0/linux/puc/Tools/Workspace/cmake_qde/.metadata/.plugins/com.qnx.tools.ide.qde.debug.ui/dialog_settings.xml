@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="${workspace_loc}/../../../App/code/Apps/DMSIntgr/dms/dms/sm/lib/qnx710_armv8_a72_gcc83/libfovio_dme_fis001.so" key="com.qnx.tools.ide.qde.internal.ui.launch.QDEUploadTab"/>
+</section>

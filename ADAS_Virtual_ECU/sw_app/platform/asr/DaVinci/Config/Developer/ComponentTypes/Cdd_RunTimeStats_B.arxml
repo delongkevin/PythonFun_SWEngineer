@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This file was saved with a tool from Vector Informatik GmbH-->
+<AUTOSAR xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_00050.xsd" xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AR-PACKAGES>
+    <AR-PACKAGE UUID="62003436-177D-4630-9A20-3DA582AF7B79">
+      <SHORT-NAME>FCADT</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE UUID="E0ADE93B-7D28-4244-8B9F-A15DFC5F7196">
+          <SHORT-NAME>ComponentTypes</SHORT-NAME>
+          <ELEMENTS>
+            <COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE UUID="C4C4CA7E-F9C9-4F11-A1C5-BE64BB3B5303">
+              <SHORT-NAME>Cdd_RunTimeStats_B</SHORT-NAME>
+              <PORTS>
+                <R-PORT-PROTOTYPE UUID="6275F1BD-860E-46A6-8FC7-A6D3EE21608C">
+                  <SHORT-NAME>RpPerformanceStatsEnable</SHORT-NAME>
+                  <ADMIN-DATA>
+                    <SDGS>
+                      <SDG GID="DV:DEV">
+                        <SD GID="DV:ImportModePreset">Keep</SD>
+                      </SDG>
+                    </SDGS>
+                  </ADMIN-DATA>
+                  <REQUIRED-COM-SPECS>
+                    <NONQUEUED-RECEIVER-COM-SPEC>
+                      <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/PortInterfaces/IF_PerformanceStatsEnable/RunTimeStatsEnable</DATA-ELEMENT-REF>
+                      <ALIVE-TIMEOUT>0</ALIVE-TIMEOUT>
+                      <ENABLE-UPDATE>false</ENABLE-UPDATE>
+                      <FILTER>
+                        <DATA-FILTER-TYPE>ALWAYS</DATA-FILTER-TYPE>
+                      </FILTER>
+                      <HANDLE-NEVER-RECEIVED>false</HANDLE-NEVER-RECEIVED>
+                      <INIT-VALUE>
+                        <NUMERICAL-VALUE-SPECIFICATION>
+                          <VALUE>0</VALUE>
+                        </NUMERICAL-VALUE-SPECIFICATION>
+                      </INIT-VALUE>
+                    </NONQUEUED-RECEIVER-COM-SPEC>
+                    <NONQUEUED-RECEIVER-COM-SPEC>
+                      <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/PortInterfaces/IF_PerformanceStatsEnable/StackUsageStatsEnable</DATA-ELEMENT-REF>
+                      <ALIVE-TIMEOUT>0</ALIVE-TIMEOUT>
+                      <ENABLE-UPDATE>false</ENABLE-UPDATE>
+                      <FILTER>
+                        <DATA-FILTER-TYPE>ALWAYS</DATA-FILTER-TYPE>
+                      </FILTER>
+                      <HANDLE-NEVER-RECEIVED>false</HANDLE-NEVER-RECEIVED>
+                      <INIT-VALUE>
+                        <NUMERICAL-VALUE-SPECIFICATION>
+                          <VALUE>0</VALUE>
+                        </NUMERICAL-VALUE-SPECIFICATION>
+                      </INIT-VALUE>
+                    </NONQUEUED-RECEIVER-COM-SPEC>
+                  </REQUIRED-COM-SPECS>
+                  <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PortInterfaces/IF_PerformanceStatsEnable</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR UUID="2DA67242-4DB6-4F53-BE7D-09C5F48255D8">
+                  <SHORT-NAME>Cdd_RunTimeStats_B_InternalBehavior</SHORT-NAME>
+                  <EVENTS>
+                    <TIMING-EVENT UUID="F8404A87-3790-4B17-B20C-1E710D6A952D">
+                      <SHORT-NAME>TMT_Cdd_RunTimeStat_B_Safety_Task_00_10ms_Start</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/Cdd_RunTimeStats_B/Cdd_RunTimeStats_B_InternalBehavior/Cdd_RunTimeStats_B_Safety_Task_00_10ms_Start</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <TIMING-EVENT UUID="68E8DD68-81E1-45B5-9C1D-DF634268732B">
+                      <SHORT-NAME>TMT_Cdd_RunTimeStat_B_Safety_Task_00_10ms_Stop</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/Cdd_RunTimeStats_B/Cdd_RunTimeStats_B_InternalBehavior/Cdd_RunTimeStats_B_Safety_Task_00_10ms_Stop</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <TIMING-EVENT UUID="48F99304-06AD-4BE1-8321-BAA70303E23B">
+                      <SHORT-NAME>TMT_Cdd_RunTimeStat_B_Safety_Task_01_10ms_Start</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/Cdd_RunTimeStats_B/Cdd_RunTimeStats_B_InternalBehavior/Cdd_RunTimeStats_B_Safety_Task_01_10ms_Start</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <TIMING-EVENT UUID="6D358013-618B-4C29-ADE0-45FAD46CE3D0">
+                      <SHORT-NAME>TMT_Cdd_RunTimeStat_B_Safety_Task_01_10ms_Stop</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/Cdd_RunTimeStats_B/Cdd_RunTimeStats_B_InternalBehavior/Cdd_RunTimeStats_B_Safety_Task_01_10ms_Stop</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <TIMING-EVENT UUID="8E0D2863-B62D-44BE-ACBF-31EBA8E0A7C3">
+                      <SHORT-NAME>TMT_Cdd_RunTimeStat_B_Safety_Task_01_10ms_Start_1</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/Cdd_RunTimeStats_B/Cdd_RunTimeStats_B_InternalBehavior/Cdd_RunTimeStats_B_Safety_Task_200ms_Start</START-ON-EVENT-REF>
+                      <PERIOD>0.2</PERIOD>
+                    </TIMING-EVENT>
+                    <TIMING-EVENT UUID="5143F3CC-041C-47D6-BAA3-A9C712D1A8E6">
+                      <SHORT-NAME>TMT_Cdd_RunTimeStat_B_Safety_Task_01_10ms_Start_1_1</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/Cdd_RunTimeStats_B/Cdd_RunTimeStats_B_InternalBehavior/Cdd_RunTimeStats_B_Safety_Task_200ms_Stop</START-ON-EVENT-REF>
+                      <PERIOD>0.2</PERIOD>
+                    </TIMING-EVENT>
+                    <TIMING-EVENT UUID="63C685E8-1E81-4078-A6C1-5E68337C9676">
+                      <SHORT-NAME>TMT_Cdd_RunTimeStat_B_Safety_Task_Init_Start_1</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/Cdd_RunTimeStats_B/Cdd_RunTimeStats_B_InternalBehavior/Cdd_RunTimeStats_B_Safety_WdgTask_10ms_Start</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <TIMING-EVENT UUID="852C13E5-6439-4C87-8C35-1CF60DA64301">
+                      <SHORT-NAME>TMT_Cdd_RunTimeStat_B_Safety_Task_Init_Start_2</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/Cdd_RunTimeStats_B/Cdd_RunTimeStats_B_InternalBehavior/Cdd_RunTimeStats_B_Safety_WdgTask_10ms_Stop</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <INIT-EVENT UUID="8A88170D-F457-4B42-B1C3-14468AE6CD00">
+                      <SHORT-NAME>Cdd_RunTimeStats_B_Safety_Task_Init_Start_InitEvent</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/Cdd_RunTimeStats_B/Cdd_RunTimeStats_B_InternalBehavior/Cdd_RunTimeStats_B_Safety_Task_Init_Start</START-ON-EVENT-REF>
+                    </INIT-EVENT>
+                    <INIT-EVENT UUID="B775B285-ACA2-4C3F-94E4-3258354D26D6">
+                      <SHORT-NAME>Cdd_RunTimeStats_B_Safety_Task_Init_Stop_InitEvent</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/Cdd_RunTimeStats_B/Cdd_RunTimeStats_B_InternalBehavior/Cdd_RunTimeStats_B_Safety_Task_Init_Stop</START-ON-EVENT-REF>
+                    </INIT-EVENT>
+                  </EVENTS>
+                  <RUNNABLES>
+                    <RUNNABLE-ENTITY UUID="6E4DBE8A-A250-4A84-884A-E40002426D03">
+                      <SHORT-NAME>Cdd_RunTimeStats_B_Safety_Task_00_10ms_Start</SHORT-NAME>
+                      <DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                        <VARIABLE-ACCESS UUID="E174C8E0-6054-4EF5-82A1-AC8F7BFDB406">
+                          <SHORT-NAME>REC_RpPerformanceStatsEnable_RunTimeStatsEnable</SHORT-NAME>
+                          <ACCESSED-VARIABLE>
+                            <AUTOSAR-VARIABLE-IREF>
+                              <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/FCADT/ComponentTypes/Cdd_RunTimeStats_B/RpPerformanceStatsEnable</PORT-PROTOTYPE-REF>
+                              <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/PortInterfaces/IF_PerformanceStatsEnable/RunTimeStatsEnable</TARGET-DATA-PROTOTYPE-REF>
+                            </AUTOSAR-VARIABLE-IREF>
+                          </ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                      </DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="E43FE9E6-FCCD-47BE-B7D9-E0731DB22122">
+                      <SHORT-NAME>Cdd_RunTimeStats_B_Safety_Task_00_10ms_Stop</SHORT-NAME>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="A02166A8-CAC1-440B-9AA8-DC8B6FB5F8EA">
+                      <SHORT-NAME>Cdd_RunTimeStats_B_Safety_Task_01_10ms_Start</SHORT-NAME>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="5C476D58-8A08-4C96-BB8B-65E30657781F">
+                      <SHORT-NAME>Cdd_RunTimeStats_B_Safety_Task_01_10ms_Stop</SHORT-NAME>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="58A606B5-1919-4581-9B77-6EF141271778">
+                      <SHORT-NAME>Cdd_RunTimeStats_B_Safety_Task_200ms_Start</SHORT-NAME>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="8BA1A753-A739-4A95-B37B-4B7AB2732660">
+                      <SHORT-NAME>Cdd_RunTimeStats_B_Safety_Task_200ms_Stop</SHORT-NAME>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="7BB66CDD-4398-44CA-9B86-292B6D97B5E5">
+                      <SHORT-NAME>Cdd_RunTimeStats_B_Safety_Task_Init_Start</SHORT-NAME>
+                      <ADMIN-DATA>
+                        <SDGS>
+                          <SDG GID="edve:RunnableKind">
+                            <SD>InitRunnable</SD>
+                          </SDG>
+                        </SDGS>
+                      </ADMIN-DATA>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="ED73768B-9A76-4AA0-87D8-E7365EDD459E">
+                      <SHORT-NAME>Cdd_RunTimeStats_B_Safety_Task_Init_Stop</SHORT-NAME>
+                      <ADMIN-DATA>
+                        <SDGS>
+                          <SDG GID="edve:RunnableKind">
+                            <SD>InitRunnable</SD>
+                          </SDG>
+                        </SDGS>
+                      </ADMIN-DATA>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="7F092B82-C7A0-476F-8F7A-5DC38E009BC1">
+                      <SHORT-NAME>Cdd_RunTimeStats_B_Safety_WdgTask_10ms_Start</SHORT-NAME>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="C85EEC9B-9513-4DAC-8D6D-815B6C07AB45">
+                      <SHORT-NAME>Cdd_RunTimeStats_B_Safety_WdgTask_10ms_Stop</SHORT-NAME>
+                    </RUNNABLE-ENTITY>
+                  </RUNNABLES>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE>
+            <SWC-IMPLEMENTATION UUID="35E3364F-A496-48F0-A0C5-EF4EF0BAAC5E">
+              <SHORT-NAME>Cdd_RunTimeStats_B_Implementation</SHORT-NAME>
+              <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/FCADT/ComponentTypes/Cdd_RunTimeStats_B/Cdd_RunTimeStats_B_InternalBehavior</BEHAVIOR-REF>
+            </SWC-IMPLEMENTATION>
+          </ELEMENTS>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

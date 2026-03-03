@@ -1,0 +1,100 @@
+Warning Summary results for analysed files:
+-------------------------------------------
+
+                            Levels
+File Name                       9     8     7     6     5     4     3     2     1     0 Total
+--------------------------- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code
+\Apps\EOLIntgr\EOL                                                                           
+flcompare.c                     0     0     0     0     0     5     0     0     0     0     5
+flcompare.h                     0     0     0     0     0     4     0     0     0     0     4
+svd.c                           0     0     0     0     0    56     0     6     0     0    62
+svd.h                           0     0     0     0     0     2     0     0     0     0     2
+vgg.h                           0     0     0     0     0     1     0     0     0     0     1
+vgg_H_from_x_lin.c              0     0     0     0     1    33     0    21     0     0    55
+vgg_condition_2d.c              0     0     0     0     0     5     0     3     0     0     8
+vgg_conditioner_from_pts.c      0     0     0     0     0     4     0     3     0     0     7
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code
+\Framework\CoreLibs\mecl\mecl\core                                                           
+MeclTypes.h                     0     0     0     0     0     1     0     0     0     0     1
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code
+\Framework\CoreLibs\platform\platform                                                        
+PlatformAPI.h                   0     0     0     0     0     1     0     0     0     0     1
+PlatformDefines.h               0     0     0     0     0     3     0     0     0     0     3
+PlatformHelper.h                0     0     0     1     0     1     0     0     0     0     2
+PlatformSpecs.h                 0     0     0     1     0     3     0     0     0     0     4
+PlatformSpecsQnx64.h            0     0     0     0     0    26     0     0     0     0    26
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code
+\Framework\CoreLibs\platform\platform\qnx                                                    
+StdLibTypes_QNX.h               0     0     0     2     0     2     0     0     0     0     4
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code
+\Framework\CoreLibs\platform\platform\stdlib                                                 
+ME_Assert.h                     0     0     0     0     0     6     0     0     0     0     6
+ME_Condvar.h                    0     0     0     0     0     1     0     0     0     0     1
+ME_Debugger.h                   0     0     0     0     0     1     0     0     0     0     1
+ME_Directory.h                  0     0     0     0     0     1     0     0     0     0     1
+ME_File.h                       0     0     0     0     0     1     0     0     0     0     1
+ME_IO.h                         0     0     0     0     0     1     0     0     0     0     1
+ME_Interrupt.h                  0     0     0     0     0     1     0     0     0     0     1
+ME_Mutex.h                      0     0     0     0     0     1     0     0     0     0     1
+ME_Process.h                    0     0     0     0     0     1     0     0     0     0     1
+ME_Semaphore.h                  0     0     0     0     0     1     0     0     0     0     1
+ME_SharedMemory.h               0     0     0     0     0     1     0     0     0     0     1
+ME_Socket.h                     0     0     0     0     0     2     0     0     0     0     2
+ME_String.h                     0     0     0     0     0     1     0     0     0     0     1
+ME_Thread.h                     0     0     0     0     0     1     0     0     0     0     1
+ME_Time.h                       0     0     0     0     0     1     0     0     0     0     1
+StdLibTypes.h                   0     0     0     1     0     1     0     0     0     0     2
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code
+\Framework\CoreLibs\platform\platform\stdlib\memory                                          
+PlatformMemory.h                0     0     0     0     0     1     0     0     0     0     1
+tlsf.h                          0     0     0     0     0     1     0     0     0     0     1
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\App\code
+\Framework\CoreLibs\platform\platform\stdlib\utils                                           
+ME_Profiler.h                   0     0     0     0     0    15     0     1     0     0    16
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\Tools\QA
+C\App\config\gcc                                                                             
+*                               -     -     -     -     -     -     -     -     -     -     0
+
+C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\Tools\QA
+C\App\config\prlforceinclude                                                                 
+*                               -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\host\win64\x86_64\usr\lib\gcc\aarch64-unknown-nto-qnx7.0.0\5.4.0
+\include                                                                                     
+*                               -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include                                         
+*                               -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include\aarch64                                 
+*                               -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include                                         
+*                               -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include\sys                                     
+*                               -     -     -     -     -     -     -     -     -     -     0
+
+C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include                                         
+*                               -     -     -     -     -     -     -     -     -     -     0
+
+CMA Messages                                                                                 
+Multi-Location                  0     0     0     0     0     0     0     0     0     0     0
+                            ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- -----
+Total                           0     0     0     5     1   186     0    34     0     0   226
+
+---------------------------------------------------------------------------------------------
+Report File Name: C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480
+_780B\PuC\Tools\QAC\App\reports\QAC_findings_summary.txt                                     
+Date & Time:      2020-08-14 08:06:21
+---------------------------------------------------------------------------------------------
+

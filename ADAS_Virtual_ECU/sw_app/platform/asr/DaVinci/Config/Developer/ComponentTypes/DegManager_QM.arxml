@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This file was saved with a tool from Vector Informatik GmbH-->
+<AUTOSAR xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_00050.xsd" xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AR-PACKAGES>
+    <AR-PACKAGE UUID="79F6F8D3-4876-4369-8095-EE339B3F8CA0">
+      <SHORT-NAME>Pkg_DegManager_QM</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE UUID="E74D1357-B25E-4DDF-9199-0EFDEE2544BE">
+          <SHORT-NAME>ComponentTypes</SHORT-NAME>
+          <ELEMENTS>
+            <APPLICATION-SW-COMPONENT-TYPE UUID="A235D827-C5F4-4F82-BF3B-5DFA5E5B56D8">
+              <SHORT-NAME>DegManager_QM</SHORT-NAME>
+              <PORTS>
+                <P-PORT-PROTOTYPE UUID="1FC572F2-BA99-411E-845E-C35F580A331A">
+                  <SHORT-NAME>P_FID_Output_QM</SHORT-NAME>
+                  <PROVIDED-COM-SPECS>
+                    <NONQUEUED-SENDER-COM-SPEC>
+                      <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/Pkg_DegManager_QM/PortInterfaces/P_FID_Output_QM_SR/FID_QM</DATA-ELEMENT-REF>
+                      <INIT-VALUE>
+                        <ARRAY-VALUE-SPECIFICATION>
+                          <ELEMENTS>
+                            <NUMERICAL-VALUE-SPECIFICATION>
+                              <VALUE>0</VALUE>
+                            </NUMERICAL-VALUE-SPECIFICATION>
+                          </ELEMENTS>
+                        </ARRAY-VALUE-SPECIFICATION>
+                      </INIT-VALUE>
+                    </NONQUEUED-SENDER-COM-SPEC>
+                  </PROVIDED-COM-SPECS>
+                  <PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/Pkg_DegManager_QM/PortInterfaces/P_FID_Output_QM_SR</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE UUID="1B1BF78B-01B3-49F0-A628-9047A429CFD8">
+                  <SHORT-NAME>R_Errors_QM</SHORT-NAME>
+                  <REQUIRED-COM-SPECS>
+                    <NONQUEUED-RECEIVER-COM-SPEC>
+                      <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/Pkg_ErrorMgrAgg_1_0_QM/PortInterfaces/P_Errors_QM_SR/Errors_QM</DATA-ELEMENT-REF>
+                      <ALIVE-TIMEOUT>0</ALIVE-TIMEOUT>
+                      <ENABLE-UPDATE>false</ENABLE-UPDATE>
+                      <HANDLE-NEVER-RECEIVED>false</HANDLE-NEVER-RECEIVED>
+                      <INIT-VALUE>
+                        <CONSTANT-REFERENCE>
+                          <CONSTANT-REF DEST="CONSTANT-SPECIFICATION">/Pkg_ErrorMgrAgg_1_0_QM/Constant/init_Errors_QM</CONSTANT-REF>
+                        </CONSTANT-REFERENCE>
+                      </INIT-VALUE>
+                    </NONQUEUED-RECEIVER-COM-SPEC>
+                  </REQUIRED-COM-SPECS>
+                  <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/Pkg_ErrorMgrAgg_1_0_QM/PortInterfaces/P_Errors_QM_SR</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE UUID="7D45C0DF-03FE-40FF-8139-014B62589F76">
+                  <SHORT-NAME>R_Errors_B</SHORT-NAME>
+                  <REQUIRED-COM-SPECS>
+                    <NONQUEUED-RECEIVER-COM-SPEC>
+                      <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/Pkg_ErrorMgrAgg_1_0_B/PortInterfaces/P_Errors_B_SR/Errors_B</DATA-ELEMENT-REF>
+                      <ALIVE-TIMEOUT>0</ALIVE-TIMEOUT>
+                      <ENABLE-UPDATE>false</ENABLE-UPDATE>
+                      <HANDLE-NEVER-RECEIVED>false</HANDLE-NEVER-RECEIVED>
+                      <INIT-VALUE>
+                        <CONSTANT-REFERENCE>
+                          <CONSTANT-REF DEST="CONSTANT-SPECIFICATION">/Pkg_ErrorMgrAgg_1_0_B/Constant/init_Errors_B</CONSTANT-REF>
+                        </CONSTANT-REFERENCE>
+                      </INIT-VALUE>
+                    </NONQUEUED-RECEIVER-COM-SPEC>
+                  </REQUIRED-COM-SPECS>
+                  <REQUIRED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/Pkg_ErrorMgrAgg_1_0_B/PortInterfaces/P_Errors_B_SR</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+                <P-PORT-PROTOTYPE UUID="3891E48B-9789-493F-874E-C8412E5F1937">
+                  <SHORT-NAME>P_RES_Output_QM</SHORT-NAME>
+                  <PROVIDED-COM-SPECS>
+                    <NONQUEUED-SENDER-COM-SPEC>
+                      <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/Pkg_DegManager_QM/PortInterfaces/P_RES_Output_QM_SR/RES_QM</DATA-ELEMENT-REF>
+                    </NONQUEUED-SENDER-COM-SPEC>
+                  </PROVIDED-COM-SPECS>
+                  <PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/Pkg_DegManager_QM/PortInterfaces/P_RES_Output_QM_SR</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <R-PORT-PROTOTYPE UUID="F4FBE556-2F04-4ED0-B135-9DB02932B2B9">
+                  <SHORT-NAME>R_IPC</SHORT-NAME>
+                  <ADMIN-DATA>
+                    <SDGS>
+                      <SDG GID="DV:DEV">
+                        <SD GID="DV:ImportModePreset">Keep</SD>
+                      </SDG>
+                    </SDGS>
+                  </ADMIN-DATA>
+                  <REQUIRED-COM-SPECS>
+                    <CLIENT-COM-SPEC>
+                      <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/IPC_SWC/PortInterfaces/IF_IpcTxData/IPC_Write_v</OPERATION-REF>
+                    </CLIENT-COM-SPEC>
+                  </REQUIRED-COM-SPECS>
+                  <REQUIRED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/IPC_SWC/PortInterfaces/IF_IpcTxData</REQUIRED-INTERFACE-TREF>
+                </R-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR UUID="21A36A6F-9304-4F33-B4E6-5C55E217874D">
+                  <SHORT-NAME>DegManager_QM_InternalBehavior</SHORT-NAME>
+                  <EVENTS>
+                    <TIMING-EVENT UUID="DFD3F784-00E3-42C5-B8BE-6E1A8B352A6D">
+                      <SHORT-NAME>TMT_RE_Periodic_DegManager_QM</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/Pkg_DegManager_QM/ComponentTypes/DegManager_QM/DegManager_QM_InternalBehavior/RE_Periodic_DegManager_QM</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <INIT-EVENT UUID="454B1F28-C276-4039-B364-85F3EFDB7E7F">
+                      <SHORT-NAME>InitEvent</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/Pkg_DegManager_QM/ComponentTypes/DegManager_QM/DegManager_QM_InternalBehavior/RE_Init_DegManager_QM</START-ON-EVENT-REF>
+                    </INIT-EVENT>
+                  </EVENTS>
+                  <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                  <PORT-API-OPTIONS>
+                    <PORT-API-OPTION>
+                      <ENABLE-TAKE-ADDRESS>false</ENABLE-TAKE-ADDRESS>
+                      <INDIRECT-API>false</INDIRECT-API>
+                      <PORT-REF DEST="P-PORT-PROTOTYPE">/Pkg_DegManager_QM/ComponentTypes/DegManager_QM/P_FID_Output_QM</PORT-REF>
+                    </PORT-API-OPTION>
+                    <PORT-API-OPTION>
+                      <ENABLE-TAKE-ADDRESS>false</ENABLE-TAKE-ADDRESS>
+                      <INDIRECT-API>false</INDIRECT-API>
+                      <PORT-REF DEST="R-PORT-PROTOTYPE">/Pkg_DegManager_QM/ComponentTypes/DegManager_QM/R_Errors_B</PORT-REF>
+                    </PORT-API-OPTION>
+                    <PORT-API-OPTION>
+                      <ENABLE-TAKE-ADDRESS>false</ENABLE-TAKE-ADDRESS>
+                      <INDIRECT-API>false</INDIRECT-API>
+                      <PORT-REF DEST="R-PORT-PROTOTYPE">/Pkg_DegManager_QM/ComponentTypes/DegManager_QM/R_Errors_QM</PORT-REF>
+                    </PORT-API-OPTION>
+                    <PORT-API-OPTION>
+                      <ENABLE-TAKE-ADDRESS>false</ENABLE-TAKE-ADDRESS>
+                      <INDIRECT-API>false</INDIRECT-API>
+                      <PORT-REF DEST="P-PORT-PROTOTYPE">/Pkg_DegManager_QM/ComponentTypes/DegManager_QM/P_RES_Output_QM</PORT-REF>
+                    </PORT-API-OPTION>
+                    <PORT-API-OPTION>
+                      <ENABLE-TAKE-ADDRESS>false</ENABLE-TAKE-ADDRESS>
+                      <INDIRECT-API>false</INDIRECT-API>
+                      <PORT-REF DEST="R-PORT-PROTOTYPE">/Pkg_DegManager_QM/ComponentTypes/DegManager_QM/R_IPC</PORT-REF>
+                    </PORT-API-OPTION>
+                  </PORT-API-OPTIONS>
+                  <RUNNABLES>
+                    <RUNNABLE-ENTITY UUID="5F87180B-7390-42F7-9259-2E06771D2DFB">
+                      <SHORT-NAME>RE_Periodic_DegManager_QM</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL">Periodic Runnable of Satellite</L-2>
+                      </DESC>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                        <VARIABLE-ACCESS UUID="698B3F60-D107-4945-965C-2C37DFF90AC1">
+                          <SHORT-NAME>REC_R_Errors_QM_Errors_QM</SHORT-NAME>
+                          <ACCESSED-VARIABLE>
+                            <AUTOSAR-VARIABLE-IREF>
+                              <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/Pkg_DegManager_QM/ComponentTypes/DegManager_QM/R_Errors_QM</PORT-PROTOTYPE-REF>
+                              <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Pkg_ErrorMgrAgg_1_0_QM/PortInterfaces/P_Errors_QM_SR/Errors_QM</TARGET-DATA-PROTOTYPE-REF>
+                            </AUTOSAR-VARIABLE-IREF>
+                          </ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                        <VARIABLE-ACCESS UUID="289B3BC4-D9D6-45D2-A6C3-47626109ED32">
+                          <SHORT-NAME>REC_R_Errors_B_Errors_B</SHORT-NAME>
+                          <ACCESSED-VARIABLE>
+                            <AUTOSAR-VARIABLE-IREF>
+                              <PORT-PROTOTYPE-REF DEST="R-PORT-PROTOTYPE">/Pkg_DegManager_QM/ComponentTypes/DegManager_QM/R_Errors_B</PORT-PROTOTYPE-REF>
+                              <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Pkg_ErrorMgrAgg_1_0_B/PortInterfaces/P_Errors_B_SR/Errors_B</TARGET-DATA-PROTOTYPE-REF>
+                            </AUTOSAR-VARIABLE-IREF>
+                          </ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                      </DATA-RECEIVE-POINT-BY-ARGUMENTS>
+                      <DATA-SEND-POINTS>
+                        <VARIABLE-ACCESS UUID="2A1A541A-4C15-41E5-83CA-207BDC79BBD0">
+                          <SHORT-NAME>SEND_P_FID_Output_QM_FID_QM</SHORT-NAME>
+                          <ACCESSED-VARIABLE>
+                            <AUTOSAR-VARIABLE-IREF>
+                              <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/Pkg_DegManager_QM/ComponentTypes/DegManager_QM/P_FID_Output_QM</PORT-PROTOTYPE-REF>
+                              <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Pkg_DegManager_QM/PortInterfaces/P_FID_Output_QM_SR/FID_QM</TARGET-DATA-PROTOTYPE-REF>
+                            </AUTOSAR-VARIABLE-IREF>
+                          </ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                        <VARIABLE-ACCESS UUID="910DB317-F029-463E-997A-CBBF7E9FC093">
+                          <SHORT-NAME>SEND_P_RES_Output_QM_RES_QM</SHORT-NAME>
+                          <ACCESSED-VARIABLE>
+                            <AUTOSAR-VARIABLE-IREF>
+                              <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/Pkg_DegManager_QM/ComponentTypes/DegManager_QM/P_RES_Output_QM</PORT-PROTOTYPE-REF>
+                              <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/Pkg_DegManager_QM/PortInterfaces/P_RES_Output_QM_SR/RES_QM</TARGET-DATA-PROTOTYPE-REF>
+                            </AUTOSAR-VARIABLE-IREF>
+                          </ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                      </DATA-SEND-POINTS>
+                      <SERVER-CALL-POINTS>
+                        <SYNCHRONOUS-SERVER-CALL-POINT UUID="5E6ED644-498E-4C70-AC4A-7AF17FB63D25">
+                          <SHORT-NAME>SC_R_IPC_IPC_Write_v</SHORT-NAME>
+                          <OPERATION-IREF>
+                            <CONTEXT-R-PORT-REF DEST="R-PORT-PROTOTYPE">/Pkg_DegManager_QM/ComponentTypes/DegManager_QM/R_IPC</CONTEXT-R-PORT-REF>
+                            <TARGET-REQUIRED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/IPC_SWC/PortInterfaces/IF_IpcTxData/IPC_Write_v</TARGET-REQUIRED-OPERATION-REF>
+                          </OPERATION-IREF>
+                        </SYNCHRONOUS-SERVER-CALL-POINT>
+                      </SERVER-CALL-POINTS>
+                      <SYMBOL>RE_Periodic_DegManager_QM</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="3F2A1D84-D8B6-4FCE-9407-3FEC89404BEA">
+                      <SHORT-NAME>RE_Init_DegManager_QM</SHORT-NAME>
+                      <DESC>
+                        <L-2 L="FOR-ALL">Init Runnable</L-2>
+                      </DESC>
+                      <ADMIN-DATA>
+                        <SDGS>
+                          <SDG GID="edve:RunnableKind">
+                            <SD>InitRunnable</SD>
+                          </SDG>
+                        </SDGS>
+                      </ADMIN-DATA>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>RE_Init_DegManager_QM</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                  </RUNNABLES>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </APPLICATION-SW-COMPONENT-TYPE>
+            <SWC-IMPLEMENTATION UUID="7B647DB6-5715-4C4D-82D0-5C0A0DFA5630">
+              <SHORT-NAME>DegManager_QM_Implementation</SHORT-NAME>
+              <CODE-DESCRIPTORS>
+                <CODE UUID="D3DDF94F-A89C-4FB8-AE14-4D72B767F012">
+                  <SHORT-NAME>Default</SHORT-NAME>
+                  <ARTIFACT-DESCRIPTORS>
+                    <AUTOSAR-ENGINEERING-OBJECT>
+                      <CATEGORY>SWSRC</CATEGORY>
+                    </AUTOSAR-ENGINEERING-OBJECT>
+                  </ARTIFACT-DESCRIPTORS>
+                </CODE>
+              </CODE-DESCRIPTORS>
+              <PROGRAMMING-LANGUAGE>C</PROGRAMMING-LANGUAGE>
+              <VENDOR-ID>0</VENDOR-ID>
+              <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/Pkg_DegManager_QM/ComponentTypes/DegManager_QM/DegManager_QM_InternalBehavior</BEHAVIOR-REF>
+            </SWC-IMPLEMENTATION>
+          </ELEMENTS>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

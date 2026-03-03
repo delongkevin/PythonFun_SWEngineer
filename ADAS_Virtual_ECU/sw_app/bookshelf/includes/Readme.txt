@@ -1,0 +1,3 @@
+The general idea is that the actual headers which have the various defines will be with the modules
+The reference to that header file can be included into CommonDataTypeRef.h that way everybody can just include one file and get the types - specifically for modules like IPC, SigMgr transporting data across multiple cores
+Ideally this needs to be moved outside of the windows folder such that the definitions are shared between A72 and R5

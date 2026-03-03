@@ -1,0 +1,150 @@
+** Compiler Personality for gcc 4.6 onwards
+
+* substitute headers
+-i "config\gcc"
+-q "config\gcc"
+
+* gcc include directories, obtained with 'gcc -c -v -E -dM test.c'
+-i "C:\QNX\ver_7.0.0\host\win64\x86_64\usr\lib\gcc\aarch64-unknown-nto-qnx7.0.0\5.4.0\include"
+-i "C:\QNX\ver_7.0.0\target\qnx7\usr\include"
+-q "C:\QNX\ver_7.0.0\host\win64\x86_64\usr\lib\gcc\aarch64-unknown-nto-qnx7.0.0\5.4.0\include"
+-q "C:\QNX\ver_7.0.0\target\qnx7\usr\include"
+-i "C:\QNX\qnx700\host\win64\x86_64\usr\lib\gcc\aarch64-unknown-nto-qnx7.0.0\5.4.0\include"
+-i "C:\QNX\qnx700\target\qnx7\usr\include"
+-q "C:\QNX\qnx700\host\win64\x86_64\usr\lib\gcc\aarch64-unknown-nto-qnx7.0.0\5.4.0\include"
+-q "C:\QNX\qnx700\target\qnx7\usr\include"
+
+* Other possible qnx installation dir
+-i "C:\prjtools\QNX\qnx700\host\win64\x86_64\usr\lib\gcc\aarch64-unknown-nto-qnx7.0.0\5.4.0\include"
+-i "C:\prjtools\QNX\qnx700\target\qnx7\usr\include"
+-q "C:\prjtools\QNX\qnx700\host\win64\x86_64\usr\lib\gcc\aarch64-unknown-nto-qnx7.0.0\5.4.0\include"
+-q "C:\prjtools\QNX\qnx700\target\qnx7\usr\include"
+
+* Other possible qnx installation dir
+-i "C:\prjtools\QNX\ver_7.0.0\host\win64\x86_64\usr\lib\gcc\aarch64-unknown-nto-qnx7.0.0\5.4.0\include"
+-i "C:\prjtools\QNX\ver_7.0.0\target\qnx7\usr\include"
+-q "C:\prjtools\QNX\ver_7.0.0\host\win64\x86_64\usr\lib\gcc\aarch64-unknown-nto-qnx7.0.0\5.4.0\include"
+-q "C:\prjtools\QNX\ver_7.0.0\target\qnx7\usr\include"
+
+* Other possible qnx installation dir
+-i "C:\prjtools\qnx\Toyota_EV7.0\host\win64\x86_64\usr\lib\gcc\aarch64-unknown-nto-qnx7.0.0\5.4.0\include"
+-i "C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include"
+-q "C:\prjtools\qnx\Toyota_EV7.0\host\win64\x86_64\usr\lib\gcc\aarch64-unknown-nto-qnx7.0.0\5.4.0\include"
+-q "C:\prjtools\qnx\Toyota_EV7.0\target\qnx7\usr\include"
+
+* prlforceinclude
+-i "config\prlforceinclude"
+-q "config\prlforceinclude"
+
+* GCC internal macros
+-fi "config\gcc\GCC_C_ntoaarch64le.h"
+-fi "config\prlforceinclude\prlgcc.h"
+
+* implicit macros, obtained with 'gcc -c -v -E -dM test.c'
+-D "_PRL_STRINGIFY(x)=#x"
+
+* for some installations of gcc these implicit macros may not be included in 'gcc -c -v -E -dM test.c' output
+-D__STDC__=1
+
+* bypass int type definition macros in compiler_gnu.h
+-D "_lint"
+
+* platform specific
+-D "PLATFORM=aarch64le" 
+
+* type sizes
+-size int=32
+-size ldouble=96
+-size longlong=64
+-size short=16
+-size double=64
+-size float=32
+-size dataptr=32
+-size char=8
+-size long=32
+-size codeptr=32
+-align double=8
+-align short=2
+-align float=4
+-align int=4
+-align dataptr=4
+-align long=4
+-align ldouble=12
+-align longlong=8
+-align codeptr=4
+
+* intrinsic types
+*-it "size_t=unsigned int"
+-it "size_t=unsigned long long"
+*-it "ptrdiff_t=int"
+-it "ptrdiff_t=long"
+
+* intrinsic wchar_t type
+*-it "wchar_t=unsigned short"
+-it "wchar_t=unsigned int"
+
+* compiler behaviour
+-ar-
+-bits-
+-fpc+
+-na 31
+-sl+
+-u+
+-xc-
+-xn 31
+
+* parsing extensions
+-ex asm
+-ex c++
+-ex longlong
+
+* extension keywords
+-D"__FUNCTION__=_PRL_STRINGIFY(__FUNCTION__)"
+-D"__PRETTY_FUNCTION__=_PRL_STRINGIFY(__PRETTY_FUNCTION__)"
+-D"__builtin_constant_p(exp)=1"
+-D"__builtin_types_compatible_p(a,b)=1"
+-D"__func__=_PRL_STRINGIFY(__func__)"
+-D"__g77_ulongint=unsigned long"
+-D"__must_be_array(x)=0"
+-D"__thread="
+-D"__typeof=typeof"
+-D"_thread="
+-D"typeof(x)=__typeof__(x)"
+-D_Complex=
+-D_Static_assert=_ignore_semi
+-D__alignof=__alignof__
+-D__asm=asm
+-D__asm__=asm
+-D__attribute=__attribute__
+-D__attribute__=_ignore_paren
+-D__cdecl=
+-D__complex__=
+-D__const=const
+-D__const__=const
+-D__extension__=
+-D__g77_integer=int
+-D__g77_longint=long
+-D__g77_uinteger=unsigned
+-D__imag__=
+-D__inline=inline
+-D__inline__=inline
+-D__null=0
+-D__real__=
+-D__restrict=restrict
+-D__restrict__=restrict
+-D__signed=signed
+-D__signed__=signed
+-D__volatile=volatile
+-D__volatile__=volatile
+-D_QAC_=
+-D__ARM_NEON__=
+-Drestrict=
+
+* C99
+-D "_Pragma=_ignore_paren"
+
+* statement expressions
+-D"__WAIT_INT(status)=(status)"
+
+* cpuinline.h causes parsing problem with asm in __cpu_membarrier(), just ignore
+-D"__cpu_membarrier()=0"

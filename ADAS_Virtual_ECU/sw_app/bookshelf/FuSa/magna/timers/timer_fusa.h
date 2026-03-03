@@ -1,0 +1,12 @@
+#ifndef _TIMER_FUSA_H_
+#define _TIMER_FUSA_H_
+
+#define TIMERS_SAFETY_MCU_TIMER_1_FREQ_HZ (19200000.0f)
+#define TIMERS_SAFETY_GTC_TIMER_FREQ_HZ   (200000000.0f)
+#define TIMERS_SAFETY_TIMER_19_FREQ_HZ    (19200000U)
+#define GTC_TIMER_ERROR_MAX_ALLOWANCE 1.05f
+#define GTC_TIMER_ERROR_MIN_ALLOWANCE 0.95f
+
+void Timers_SafetyChecks_MainFunction(void);
+
+#endif

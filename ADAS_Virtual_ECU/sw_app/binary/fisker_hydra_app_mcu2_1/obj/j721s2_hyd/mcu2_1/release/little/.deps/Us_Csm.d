@@ -1,0 +1,32 @@
+D:/L2H4060_Software/sw/binary/fisker_hydra_app_mcu2_1/obj/j721s2_hyd/mcu2_1/release/./App/USS/Us_Csm/Us_Csm.oer5f: \
+  App\USS\Us_Csm\Us_Csm.c \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\Us_Csm\Us_Csm_Main.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\Us_Csm\Us_Csm_Conf.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\Us_Csm\Us_Csm_Types.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\stdio.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\__config \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c\sys\cdefs.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c\sys\_types.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\stdint.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c\sys\stdint.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\string.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\math.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c\alloca.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\US_Includes\US_FeatureConf.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\Us_Csm\Us_Csm_IntModule.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\US_Includes\Us_Hsd_CsmIf.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\Us_Csm\Us_Csm_Types.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\US_Includes\Us_Platform_CsmIf.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\US_Includes\Us_Dsi3Trcv_CsmIf.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\Us_Csm\Us_SnrDrv_CsmIf.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\US_Includes\Us_SnrCntrl_CsmIf.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\US_Includes\Us_ObjDet_CsmIf.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\US_Includes\Us_Calib_CsmIf.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\Us_Csm\Us_Csm_Rules_If.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\Us_Csm\Us_Csm_Actions_If.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\US_Includes\US_Data_Typedefs_Global.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\US_Includes\US_ME_Typedefs_Global.h \
+  ..\..\sw\platform\inc\PlatformDataTypes.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\stdbool.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\US_Includes\US_PlatformCfg_Global.h \
+  D:\L2H4060_Software\sw\mcu2_1\App\USS\US_Includes\US_Data_Typedefs_Global.h

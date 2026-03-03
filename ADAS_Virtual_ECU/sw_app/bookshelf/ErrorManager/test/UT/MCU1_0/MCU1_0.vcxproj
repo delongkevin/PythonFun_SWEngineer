@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{468c33ce-cb1b-4c7b-90a7-780412418c1c}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v142</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <ProjectName>MCU1_0</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\SSM\cfg\SSM_Cfg.h" />
+    <ClInclude Include="..\..\..\..\SSM\inc\SSM_Defs.h" />
+    <ClInclude Include="..\..\..\..\SSM\inc\SSM_Master.h" />
+    <ClInclude Include="..\..\..\..\SSM\inc\SSM_Master_app.h" />
+    <ClInclude Include="..\..\..\..\SSM\inc\SSM_Slave.h" />
+    <ClInclude Include="..\..\..\..\SSM\inc\SSM_Slave_app.h" />
+    <ClInclude Include="..\..\..\cfg\DegManagercfg.h" />
+    <ClInclude Include="..\..\..\cfg\ErrorManagercfg.h" />
+    <ClInclude Include="..\..\..\gen\DegManagerDef.h" />
+    <ClInclude Include="..\..\..\gen\ErrorManagerAggregatorDef.h" />
+    <ClInclude Include="..\..\..\gen\ErrorManagerDef.h" />
+    <ClInclude Include="..\..\..\gen\ErrorManagerSatelliteDef.h" />
+    <ClInclude Include="..\..\..\gen\ErrorManagerShared.h" />
+    <ClInclude Include="..\..\..\gen\ErrorManager_RteOutStubs.h" />
+    <ClInclude Include="..\..\..\inc\DegManager.h" />
+    <ClInclude Include="..\..\..\inc\DegManager_app.h" />
+    <ClInclude Include="..\..\..\inc\DegManager_Rte.h" />
+    <ClInclude Include="..\..\..\inc\ErrorManagerAggregator.h" />
+    <ClInclude Include="..\..\..\inc\ErrorManagerAggregatorApp.h" />
+    <ClInclude Include="..\..\..\inc\ErrorManagerSatellite.h" />
+    <ClInclude Include="..\..\..\inc\ErrorManagerSatelliteApp.h" />
+    <ClInclude Include="..\..\..\inc\ErrorManagerTypes.h" />
+    <ClInclude Include="..\..\..\inc\ErrorManager_Rte.h" />
+    <ClInclude Include="..\..\support\ErrorManagerTestDef.h" />
+    <ClInclude Include="..\..\support\TestSupportDefs.h" />
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\DegradationManager\ASIL_A\DegManager_A.c" />
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\DegradationManager\ASIL_B\DegManager_B.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\DegradationManager\ASIL_C\DegManager_C.c" />
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\DegradationManager\ASIL_D\DegManager_D.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\DegradationManager\QM\DegManager_QM.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\ErrorMgr\ErrorMgrAgg_1_0_A\ErrorMgrAgg_1_0_A.c" />
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\ErrorMgr\ErrorMgrAgg_1_0_B\ErrorMgrAgg_1_0_B.c" />
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\ErrorMgr\ErrorMgrAgg_1_0_C\ErrorMgrAgg_1_0_C.c" />
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\ErrorMgr\ErrorMgrAgg_1_0_D\ErrorMgrAgg_1_0_D.c" />
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\ErrorMgr\ErrorMgrAgg_1_0_QM\ErrorMgrAgg_1_0_QM.c" />
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\ErrorMgr\ErrorMgrSat_1_0_A\ErrorMgrSat_1_0_A.c" />
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\ErrorMgr\ErrorMgrSat_1_0_B\ErrorMgrSat_1_0_B.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\ErrorMgr\ErrorMgrSat_1_0_C\ErrorMgrSat_1_0_C.c" />
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\ErrorMgr\ErrorMgrSat_1_0_D\ErrorMgrSat_1_0_D.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\mcu1_0\source\ErrorMgr\ErrorMgrSat_1_0_QM\ErrorMgrSat_1_0_QM.c" />
+    <ClCompile Include="..\..\..\..\..\autosar\vector_stack\Crc\Implementation\Crc.c" />
+    <ClCompile Include="..\..\..\..\..\autosar\vector_stack\E2EXf\Implementation\E2EXf.c" />
+    <ClCompile Include="..\..\..\..\..\autosar\vector_stack\E2E\Implementation\E2E.c" />
+    <ClCompile Include="..\..\..\..\..\autosar\vector_stack\E2E\Implementation\E2E_P01.c" />
+    <ClCompile Include="..\..\..\..\..\autosar\vector_stack\E2E\Implementation\E2E_SM.c" />
+    <ClCompile Include="..\..\..\..\..\autosar\vector_stack\GenData\mcu1_0\ComXf.c" />
+    <ClCompile Include="..\..\..\..\..\autosar\vector_stack\GenData\mcu1_0\E2EXf_LCfg.c" />
+    <ClCompile Include="..\..\..\..\..\autosar\vector_stack\GenData\mcu1_0\Rte.c" />
+    <ClCompile Include="..\..\..\..\..\autosar\vector_stack\GenData\mcu1_0\Rte_OsApplication.c" />
+    <ClCompile Include="..\..\..\..\..\autosar\vector_stack\GenData\mcu1_0\Rte_OsApplication_QM.c" />
+    <ClCompile Include="..\..\..\..\..\autosar\vector_stack\GenData\mcu1_0\Rte_OsApplication_Safety.c" />
+    <ClCompile Include="..\..\..\..\SSM\src\SSM_Master.c" />
+    <ClCompile Include="..\..\..\..\SSM\src\SSM_Master_app.c" />
+    <ClCompile Include="..\..\..\..\SSM\src\SSM_Slave.c" />
+    <ClCompile Include="..\..\..\..\SSM\src\SSM_Slave_app.c" />
+    <ClCompile Include="..\..\..\gen\DegManagerDef.c" />
+    <ClCompile Include="..\..\..\gen\ErrorManagerAggregatorDef.c" />
+    <ClCompile Include="..\..\..\gen\ErrorManagerCallbacks.c" />
+    <ClCompile Include="..\..\..\gen\ErrorManagerDef.c" />
+    <ClCompile Include="..\..\..\gen\ErrorManagerSatelliteDef.c" />
+    <ClCompile Include="..\..\..\src\DegManager.c" />
+    <ClCompile Include="..\..\..\src\DegManager_app.c" />
+    <ClCompile Include="..\..\..\src\ErrorManagerAggregator.c" />
+    <ClCompile Include="..\..\..\src\ErrorManagerAggregatorApp.c" />
+    <ClCompile Include="..\..\..\src\ErrorManagerSatellite.c" />
+    <ClCompile Include="..\..\..\src\ErrorManagerSatelliteApp.c" />
+    <ClCompile Include="..\..\support\ErrSatelliteStubs_C.c" />
+    <ClCompile Include="..\..\support\Rte_Stubs.c" />
+    <ClCompile Include="..\..\tests\CommonTestFramework.cpp" />
+    <ClCompile Include="..\..\tests\satelliteTests.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemDefinitionGroup />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.4\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets" Condition="Exists('..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.4\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" />
+  </ImportGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;BUILD_MCU1_0;TEST_FRAMEWORK_ENABLED_RAND_42315ADdsf;LOCAL_INLINE=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\support\;$(ProjectDir)..\..\..\..\..\autosar\vector_stack\CRC\Implementation;$(ProjectDir)..\..\..\..\..\autosar\vector_stack\E2E\Implementation;$(ProjectDir)..\..\..\..\..\autosar\vector_stack\E2EXf\Implementation;$(ProjectDir)..\..\..\..\..\autosar\vector_stack\VStdLib\Implementation;$(ProjectDir)..\..\..\..\..\autosar\vector_stack\Common\Implementation;$(ProjectDir)..\..\..\..\..\autosar\vector_stack\COM\Implementation;$(ProjectDir)..\..\..\..\..\autosar\vector_stack\OS\Implementation;$(ProjectDir)..\..\..\..\..\autosar\vector_stack\GenData\mcu1_0\Components;$(ProjectDir)..\..\..\..\..\autosar\vector_stack\GenData\mcu1_0;$(ProjectDir)..\..\..\inc\;$(ProjectDir)..\..\..\gen\;$(ProjectDir)..\..\..\cfg\;$(ProjectDir)..\..\..\..\..\includes\;$(ProjectDir)..\..\..\..\..\magna_basesw\SSM\inc;$(ProjectDir)..\..\..\..\..\magna_basesw\SSM\cfg;$(ProjectDir)..\..\..\..\..\magna_basesw\ipc_manager\inc;$(ProjectDir)..\..\..\..\..\magna_basesw\ipc_manager\cfg;$(ProjectDir)..\..\..\..\..\autosar\vector_stack\Nvm\Implementation;$(ProjectDir)..\..\..\..\..\magna_basesw\CalDataProvider\inc;$(ProjectDir);$(ProjectDir)..\..\..\..\..\sdk\pdk_jacinto_07_03_00_29\packages;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>X64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>X64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
+  </ItemDefinitionGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.4\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.1.8.1.4\build\native\Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn.targets'))" />
+  </Target>
+</Project>

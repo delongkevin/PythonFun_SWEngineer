@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This file was saved with a tool from Vector Informatik GmbH-->
+<AUTOSAR xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_00050.xsd" xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AR-PACKAGES>
+    <AR-PACKAGE UUID="62003436-177D-4630-9A20-3DA582AF7B79">
+      <SHORT-NAME>FCADT</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE UUID="E0ADE93B-7D28-4244-8B9F-A15DFC5F7196">
+          <SHORT-NAME>ComponentTypes</SHORT-NAME>
+          <ELEMENTS>
+            <COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE UUID="C4931E48-CC13-4C75-A042-325785B2D987">
+              <SHORT-NAME>CDD_PMIC</SHORT-NAME>
+              <PORTS>
+                <P-PORT-PROTOTYPE UUID="A0DC97F9-5580-4974-8FE1-23BDF9F1C012">
+                  <SHORT-NAME>PpMCUDeviceRegReadWrite</SHORT-NAME>
+                  <PROVIDED-COM-SPECS>
+                    <SERVER-COM-SPEC>
+                      <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/FCADT/PortInterfaces/IF_MCUDeviceRegReadWrite/MCUReadDeviceReg</OPERATION-REF>
+                      <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                    </SERVER-COM-SPEC>
+                    <SERVER-COM-SPEC>
+                      <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/FCADT/PortInterfaces/IF_MCUDeviceRegReadWrite/MCUReadDeviceRegData</OPERATION-REF>
+                      <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                    </SERVER-COM-SPEC>
+                    <SERVER-COM-SPEC>
+                      <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/FCADT/PortInterfaces/IF_MCUDeviceRegReadWrite/MCUWriteDeviceReg</OPERATION-REF>
+                      <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                    </SERVER-COM-SPEC>
+                  </PROVIDED-COM-SPECS>
+                  <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/FCADT/PortInterfaces/IF_MCUDeviceRegReadWrite</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <P-PORT-PROTOTYPE UUID="F8C8487F-D54C-4135-B08B-C536613C2C56">
+                  <SHORT-NAME>PpPMICFaultstatus</SHORT-NAME>
+                  <ADMIN-DATA>
+                    <SDGS>
+                      <SDG GID="DV:DEV">
+                        <SD GID="DV:ImportModePreset">Keep</SD>
+                      </SDG>
+                    </SDGS>
+                  </ADMIN-DATA>
+                  <PROVIDED-COM-SPECS>
+                    <NONQUEUED-SENDER-COM-SPEC>
+                      <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/PortInterfaces/IF_PMICFaultstatus/Sts</DATA-ELEMENT-REF>
+                      <INIT-VALUE>
+                        <ARRAY-VALUE-SPECIFICATION>
+                          <ELEMENTS>
+                            <NUMERICAL-VALUE-SPECIFICATION>
+                              <VALUE>0</VALUE>
+                            </NUMERICAL-VALUE-SPECIFICATION>
+                            <NUMERICAL-VALUE-SPECIFICATION>
+                              <VALUE>0</VALUE>
+                            </NUMERICAL-VALUE-SPECIFICATION>
+                            <NUMERICAL-VALUE-SPECIFICATION>
+                              <VALUE>0</VALUE>
+                            </NUMERICAL-VALUE-SPECIFICATION>
+                            <NUMERICAL-VALUE-SPECIFICATION>
+                              <VALUE>0</VALUE>
+                            </NUMERICAL-VALUE-SPECIFICATION>
+                            <NUMERICAL-VALUE-SPECIFICATION>
+                              <VALUE>0</VALUE>
+                            </NUMERICAL-VALUE-SPECIFICATION>
+                            <NUMERICAL-VALUE-SPECIFICATION>
+                              <VALUE>0</VALUE>
+                            </NUMERICAL-VALUE-SPECIFICATION>
+                            <NUMERICAL-VALUE-SPECIFICATION>
+                              <VALUE>0</VALUE>
+                            </NUMERICAL-VALUE-SPECIFICATION>
+                            <NUMERICAL-VALUE-SPECIFICATION>
+                              <VALUE>0</VALUE>
+                            </NUMERICAL-VALUE-SPECIFICATION>
+                          </ELEMENTS>
+                        </ARRAY-VALUE-SPECIFICATION>
+                      </INIT-VALUE>
+                    </NONQUEUED-SENDER-COM-SPEC>
+                  </PROVIDED-COM-SPECS>
+                  <PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PortInterfaces/IF_PMICFaultstatus</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+                <P-PORT-PROTOTYPE UUID="92C261D4-E7D9-4D1E-80FF-486ECF0725A7">
+                  <SHORT-NAME>PpWDGFaultStatus</SHORT-NAME>
+                  <ADMIN-DATA>
+                    <SDGS>
+                      <SDG GID="DV:DEV">
+                        <SD GID="DV:ImportModePreset">Keep</SD>
+                      </SDG>
+                    </SDGS>
+                  </ADMIN-DATA>
+                  <PROVIDED-COM-SPECS>
+                    <NONQUEUED-SENDER-COM-SPEC>
+                      <DATA-ELEMENT-REF DEST="VARIABLE-DATA-PROTOTYPE">/PortInterfaces/IF_WDGFaultStatus/Sts</DATA-ELEMENT-REF>
+                      <INIT-VALUE>
+                        <ARRAY-VALUE-SPECIFICATION>
+                          <ELEMENTS>
+                            <NUMERICAL-VALUE-SPECIFICATION>
+                              <VALUE>0</VALUE>
+                            </NUMERICAL-VALUE-SPECIFICATION>
+                            <NUMERICAL-VALUE-SPECIFICATION>
+                              <VALUE>0</VALUE>
+                            </NUMERICAL-VALUE-SPECIFICATION>
+                          </ELEMENTS>
+                        </ARRAY-VALUE-SPECIFICATION>
+                      </INIT-VALUE>
+                    </NONQUEUED-SENDER-COM-SPEC>
+                  </PROVIDED-COM-SPECS>
+                  <PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/PortInterfaces/IF_WDGFaultStatus</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR UUID="1B37C2E4-8133-40BD-91B7-E711A2D21C9F">
+                  <SHORT-NAME>CDD_PMIC_InternalBehavior</SHORT-NAME>
+                  <EVENTS>
+                    <INIT-EVENT UUID="924B6EF3-DFAC-46E7-BE31-9989A329C8C3">
+                      <SHORT-NAME>InitEvent</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/CDD_PMIC/CDD_PMIC_InternalBehavior/RE_PMIC_Init</START-ON-EVENT-REF>
+                    </INIT-EVENT>
+                    <TIMING-EVENT UUID="D9AD3CC6-C1D3-4C93-BA01-ED1CDD5C6E3D">
+                      <SHORT-NAME>TMT_RE_PMIC_Main</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/CDD_PMIC/CDD_PMIC_InternalBehavior/RE_PMIC_Main</START-ON-EVENT-REF>
+                      <PERIOD>0.01</PERIOD>
+                    </TIMING-EVENT>
+                    <OPERATION-INVOKED-EVENT UUID="D483195B-20D1-466D-AF9B-11B331590C99">
+                      <SHORT-NAME>OIT_RE_MCUReadDeviceReg_PpMCUDeviceRegReadWrite_MCUReadDeviceReg</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/CDD_PMIC/CDD_PMIC_InternalBehavior/RE_MCUReadDeviceReg</START-ON-EVENT-REF>
+                      <OPERATION-IREF>
+                        <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/FCADT/ComponentTypes/CDD_PMIC/PpMCUDeviceRegReadWrite</CONTEXT-P-PORT-REF>
+                        <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/FCADT/PortInterfaces/IF_MCUDeviceRegReadWrite/MCUReadDeviceReg</TARGET-PROVIDED-OPERATION-REF>
+                      </OPERATION-IREF>
+                    </OPERATION-INVOKED-EVENT>
+                    <OPERATION-INVOKED-EVENT UUID="D74AB969-2E7B-4120-A675-9D6AEE60B479">
+                      <SHORT-NAME>OIT_RE_MCUReadDeviceRegData_PpMCUDeviceRegReadWrite_MCUReadDeviceRegData</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/CDD_PMIC/CDD_PMIC_InternalBehavior/RE_MCUReadDeviceRegData</START-ON-EVENT-REF>
+                      <OPERATION-IREF>
+                        <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/FCADT/ComponentTypes/CDD_PMIC/PpMCUDeviceRegReadWrite</CONTEXT-P-PORT-REF>
+                        <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/FCADT/PortInterfaces/IF_MCUDeviceRegReadWrite/MCUReadDeviceRegData</TARGET-PROVIDED-OPERATION-REF>
+                      </OPERATION-IREF>
+                    </OPERATION-INVOKED-EVENT>
+                    <OPERATION-INVOKED-EVENT UUID="E91B1F05-8B53-486B-AA3A-F8BFDE289E9D">
+                      <SHORT-NAME>OIT_RE_MCUWriteDeviceReg_PpMCUDeviceRegReadWrite_MCUWriteDeviceReg</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/CDD_PMIC/CDD_PMIC_InternalBehavior/RE_MCUWriteDeviceReg</START-ON-EVENT-REF>
+                      <OPERATION-IREF>
+                        <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/FCADT/ComponentTypes/CDD_PMIC/PpMCUDeviceRegReadWrite</CONTEXT-P-PORT-REF>
+                        <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/FCADT/PortInterfaces/IF_MCUDeviceRegReadWrite/MCUWriteDeviceReg</TARGET-PROVIDED-OPERATION-REF>
+                      </OPERATION-IREF>
+                    </OPERATION-INVOKED-EVENT>
+                  </EVENTS>
+                  <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                  <PORT-API-OPTIONS>
+                    <PORT-API-OPTION>
+                      <ENABLE-TAKE-ADDRESS>false</ENABLE-TAKE-ADDRESS>
+                      <INDIRECT-API>false</INDIRECT-API>
+                      <PORT-REF DEST="P-PORT-PROTOTYPE">/FCADT/ComponentTypes/CDD_PMIC/PpMCUDeviceRegReadWrite</PORT-REF>
+                    </PORT-API-OPTION>
+                  </PORT-API-OPTIONS>
+                  <RUNNABLES>
+                    <RUNNABLE-ENTITY UUID="A4903D36-7C18-4F8E-B343-C621CA45278B">
+                      <SHORT-NAME>RE_PMIC_Init</SHORT-NAME>
+                      <ADMIN-DATA>
+                        <SDGS>
+                          <SDG GID="edve:RunnableKind">
+                            <SD>InitRunnable</SD>
+                          </SDG>
+                        </SDGS>
+                      </ADMIN-DATA>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>RE_PMIC_Init</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="712DC456-174E-47EE-8E03-2321AFC07B1B">
+                      <SHORT-NAME>RE_PMIC_Main</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <DATA-SEND-POINTS>
+                        <VARIABLE-ACCESS UUID="81712A02-C19D-4462-889C-FB314F3E7942">
+                          <SHORT-NAME>SEND_PpPMICFaultstatus_Sts</SHORT-NAME>
+                          <ACCESSED-VARIABLE>
+                            <AUTOSAR-VARIABLE-IREF>
+                              <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/FCADT/ComponentTypes/CDD_PMIC/PpPMICFaultstatus</PORT-PROTOTYPE-REF>
+                              <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/PortInterfaces/IF_PMICFaultstatus/Sts</TARGET-DATA-PROTOTYPE-REF>
+                            </AUTOSAR-VARIABLE-IREF>
+                          </ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                        <VARIABLE-ACCESS UUID="82B27AA9-389F-4FE7-9F19-17C5956CF41D">
+                          <SHORT-NAME>SEND_PpWDGFaultStatus_Sts</SHORT-NAME>
+                          <ACCESSED-VARIABLE>
+                            <AUTOSAR-VARIABLE-IREF>
+                              <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/FCADT/ComponentTypes/CDD_PMIC/PpWDGFaultStatus</PORT-PROTOTYPE-REF>
+                              <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/PortInterfaces/IF_WDGFaultStatus/Sts</TARGET-DATA-PROTOTYPE-REF>
+                            </AUTOSAR-VARIABLE-IREF>
+                          </ACCESSED-VARIABLE>
+                        </VARIABLE-ACCESS>
+                      </DATA-SEND-POINTS>
+                      <SYMBOL>RE_PMIC_Main</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="B56C3B71-19AA-47DC-82B7-A2A4FC45ADE9">
+                      <SHORT-NAME>RE_MCUReadDeviceReg</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>true</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>RE_MCUReadDeviceReg</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="89B0412A-A558-4121-B001-2ABB2360B4E2">
+                      <SHORT-NAME>RE_MCUReadDeviceRegData</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>true</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>RE_MCUReadDeviceRegData</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="33B9C4D0-2B3B-4DB4-9018-273B818B5EF1">
+                      <SHORT-NAME>RE_MCUWriteDeviceReg</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>true</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>RE_MCUWriteDeviceReg</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                  </RUNNABLES>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE>
+            <SWC-IMPLEMENTATION UUID="E9028C70-82F6-4D05-80D2-924FB8177F14">
+              <SHORT-NAME>CDD_PMIC_Implementation</SHORT-NAME>
+              <CODE-DESCRIPTORS>
+                <CODE UUID="9B1B7148-C4D6-4F80-99B5-140E8C5D2E86">
+                  <SHORT-NAME>Default</SHORT-NAME>
+                  <ARTIFACT-DESCRIPTORS>
+                    <AUTOSAR-ENGINEERING-OBJECT>
+                      <CATEGORY>SWSRC</CATEGORY>
+                    </AUTOSAR-ENGINEERING-OBJECT>
+                  </ARTIFACT-DESCRIPTORS>
+                </CODE>
+              </CODE-DESCRIPTORS>
+              <PROGRAMMING-LANGUAGE>C</PROGRAMMING-LANGUAGE>
+              <VENDOR-ID>0</VENDOR-ID>
+              <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/FCADT/ComponentTypes/CDD_PMIC/CDD_PMIC_InternalBehavior</BEHAVIOR-REF>
+            </SWC-IMPLEMENTATION>
+          </ELEMENTS>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+    <AR-PACKAGE UUID="9D298E7E-B119-48B9-827F-84CEBC78342C">
+      <SHORT-NAME>ComponentTypes</SHORT-NAME>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

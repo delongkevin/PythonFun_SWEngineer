@@ -1,0 +1,181 @@
+** Compiler Personality for g++ 4.6 onwards
+
+* substitute headers
+-si "config\gcc"
+-q "config\gcc"
+
+* prlforceinclude
+-si "config\prlforceinclude"
+-q "config\prlforceinclude"
+
+* gcc include directories, obtained with 'g++ -c -v -E -dM test.cpp'
+-i "C:\prjtools\QNX\Toyota_EV7.0\host\win64\x86_64\usr\lib\gcc\aarch64-unknown-nto-qnx7.0.0\5.4.0\include"
+-i "C:\prjtools\QNX\Toyota_EV7.0\target\qnx7\usr\include\c++\v1"
+-i "C:\prjtools\QNX\Toyota_EV7.0\target\qnx7\usr\include"
+-q "C:\prjtools\QNX\Toyota_EV7.0\host\win64\x86_64\usr\lib\gcc\aarch64-unknown-nto-qnx7.0.0\5.4.0\include"
+-q "C:\prjtools\QNX\Toyota_EV7.0\target\qnx7\usr\include\c++\v1"
+-q "C:\prjtools\QNX\Toyota_EV7.0\target\qnx7\usr\include"
+
+*-si "config\gcc"
+*-si "config\gcc\tr1_impl"
+
+** forced includes
+* GCC internal macros
+-fi "config\gcc\GCC_CPP_ntoaarch64le.h"
+
+* prlforceinclude
+-fi "config\prlforceinclude\prlg++.h"
+-fi "config\prlforceinclude\qacpp_boost.h"
+-fi "config\prlforceinclude\qacpp_complex.h"
+-fi "config\prlforceinclude\qacpp_inttypes.h"
+-fi "config\prlforceinclude\qacpp_typeof.h"
+
+* implicit macros, obtained with 'g++ -c -v -E -dM test.cpp'
+-sd "_PRL_STRINGIFY(x)=#x"
+
+* for some installations of g++ these implicit macros may not be included in 'g++ -c -v -E -dM test.cpp' output
+-sd "__cplusplus"
+-sd "__STDC__"
+*-sd "_GNU_SOURCE"
+-sd "_QNX_SOURCE"
+
+* bypass int type definition macros in compiler_gnu.h
+-sd "_lint"
+
+* platform specific
+-sd "PLATFORM=aarch64le" 
+-sd "_LIBCPP_HAS_NO_INT128"
+*-sd "_LIBCPP_HAS_NO_THREADS"
+*-sd "_LIBCPP_HAS_NO_CONSTEXPR"
+
+* type sizes
+-size char=8
+-size codeptr=32
+-size dataptr=32
+-size double=64
+-size float=32
+-size int=32
+-size ldouble=96
+-size long=32
+-size longlong=64
+-size short=16
+-align codeptr=4
+-align dataptr=4
+-align double=8
+-align float=4
+-align int=4
+-align ldouble=12
+-align long=4
+-align longlong=8
+-align short=2
+
+* intrinsic types
+-it "ptrdiff_t=long"
+-it "size_t=unsigned long long"
+
+* parsing extensions
+-accd-
+-atncrb-
+-dpft-
+-duc99dilt+
+-ifn-
+-ptp-
+-sdep-
+
+* default values from QACPP project generator ...
+*-audi-
+*-aicpm-
+*-atanpc-
+*-afpcd-
+*-ailc+
+*-nsaec-
+*-c++03a-
+*-c++03dt-
+*-c++03nm-
+*-ifn-
+*-sig- 
+*-rvrb+
+*-pp32bt-
+*-sl
+*-sa+
+*-mrtnd 200
+
+* extension keywords
+-SD "_Complex="
+-SD "__FUNCTION__=_PRL_STRINGIFY(__FUNCTION__)"
+-SD "__PRETTY_FUNCTION__=_PRL_STRINGIFY(__PRETTY_FUNCTION__)"
+-SD "__alignof=__alignof__"
+-SD "__alignof__(x)=1"
+-SD "__asm=_ignore_paren"
+-SD "__asm__=_ignore_paren"
+-SD "__attribute__=_ignore_paren"
+-SD "__attribute=__attribute__"
+-SD "__const=const"
+-SD "__const__=const"
+-SD "__declspec(x)=__attribute__((x))"
+-SD "__decltype=decltype"
+-SD "__extension__="
+-SD "__func__=_PRL_STRINGIFY(__func__)"
+-SD "__imag__="
+-SD "__inline=inline"
+-SD "__inline__=inline"
+-SD "__null=0"
+-SD "__real__="
+-SD "__restrict="
+-SD "__restrict__="
+-SD "__signed=signed"
+-SD "__signed__=signed"
+-SD "__thread="
+-SD "__volatile=volatile"
+-SD "__volatile__=volatile"
+-SD "asm=_ignore_paren"
+
+* tr1 functions 
+-SD "__has_assign(x)=0"
+-SD "__has_copy(x)=0"
+-SD "__has_finalizer(x)=0"
+-SD "__has_nothrow_assign(x)=0"
+-SD "__has_nothrow_constructor(x)=0"
+-SD "__has_nothrow_copy(x)=0"
+-SD "__has_trivial_assign(x)=0"
+-SD "__has_trivial_constructor(x)=0"
+-SD "__has_trivial_copy(x)=0"
+-SD "__has_trivial_destructor(x)=0"
+-SD "__has_user_destructor(x)=0"
+-SD "__has_virtual_destructor(x)=0"
+-SD "__is_abstract(x)=0"
+-SD "__is_base_of(x,y)=0"
+-SD "__is_class(x)=0"
+-SD "__is_convertible_to(x,y)=0"
+-SD "__is_delegate(x)=0"
+-SD "__is_empty(x)=0"
+-SD "__is_enum(x)=0"
+-SD "__is_interface_class(x)=0"
+-SD "__is_pod(x)=0"
+-SD "__is_polymorphic(x)=0"
+-SD "__is_ref_array(x)=0"
+-SD "__is_ref_class(x)=0"
+-SD "__is_sealed(x)=0" 
+-SD "__is_simple_value_class(x)=0"
+-SD "__is_union(x)=0"
+-SD "__is_value_class(x)=0" 
+-SD "__must_be_array(x)=0"
+
+* Updates for TR1 MATH
+-SD _GLIBCXX_USE_C99_MATH_TR1
+
+* C '1x
+-SD "_Pragma=_ignore_paren"
+
+* problems with std templates ...
+-SD "__is_final(x)=0"
+-SD "__is_trivially_constructible(type, argtypes...)=0"
+-SD "__is_trivially_assignable(totype, fromtype)=0"
+*-SD "__is_literal(x)=0"
+-SD "__is_literal_type(x)=0"
+-SD "__is_standard_layout(x)=0"
+-SD "__is_trivially_copyable(x)=0"
+-SD "__underlying_type(x)=int"
+*-SD "__atomic_load_n(value, argtypes...)=0"
+-SD "bind(__f, __bound_args)=function<void()>()"
+

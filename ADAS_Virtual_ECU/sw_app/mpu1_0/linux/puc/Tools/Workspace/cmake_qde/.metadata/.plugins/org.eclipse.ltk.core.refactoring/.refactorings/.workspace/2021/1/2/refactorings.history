@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;puc_app/code/Framework/CoreLibs/sensor/cfg/CameraZyrichLite.cpp.bak&apos;" deleteContents="false" description="Delete resource &apos;puc_app/code/Framework/CoreLibs/sensor/cfg/CameraZyrichLite.cpp.bak&apos;" element1="/puc_app/code/Framework/CoreLibs/sensor/cfg/CameraZyrichLite.cpp.bak" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1610451807871"/>
+</session>

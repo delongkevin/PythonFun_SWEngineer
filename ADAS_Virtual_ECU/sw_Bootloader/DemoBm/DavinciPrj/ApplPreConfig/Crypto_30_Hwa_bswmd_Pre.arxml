@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AUTOSAR xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_4-0-3.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://autosar.org/schema/r4.0">
+	<AR-PACKAGES>
+		<AR-PACKAGE>
+			<SHORT-NAME>MICROSAR</SHORT-NAME>
+			<AR-PACKAGES>
+				<AR-PACKAGE>
+					<SHORT-NAME>Crypto_30_Hwa</SHORT-NAME>
+					<ELEMENTS>
+						<ECUC-MODULE-CONFIGURATION-VALUES>
+							<SHORT-NAME>Crypto_Pre</SHORT-NAME>
+							<DESC>
+								<L-2 L="EN">Generated pre-configuration for Crypto</L-2>
+							</DESC>
+							<DEFINITION-REF DEST="ECUC-MODULE-DEF">/MICROSAR/Crypto_30_Hwa/Crypto</DEFINITION-REF>
+							<CONTAINERS>
+								<ECUC-CONTAINER-VALUE>
+									<SHORT-NAME>CryptoKeys</SHORT-NAME>
+									<DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/Crypto_30_Hwa/Crypto/CryptoKeys</DEFINITION-REF>
+								</ECUC-CONTAINER-VALUE>
+								<ECUC-CONTAINER-VALUE>
+									<SHORT-NAME>CryptoKeyElements</SHORT-NAME>
+									<DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/Crypto_30_Hwa/Crypto/CryptoKeyElements</DEFINITION-REF>
+								</ECUC-CONTAINER-VALUE>
+								<ECUC-CONTAINER-VALUE>
+									<SHORT-NAME>CryptoKeyTypes</SHORT-NAME>
+									<DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/Crypto_30_Hwa/Crypto/CryptoKeyTypes</DEFINITION-REF>
+								</ECUC-CONTAINER-VALUE>
+								<ECUC-CONTAINER-VALUE>
+									<SHORT-NAME>CryptoDriverObjects</SHORT-NAME>
+									<DEFINITION-REF DEST="ECUC-PARAM-CONF-CONTAINER-DEF">/MICROSAR/Crypto_30_Hwa/Crypto/CryptoDriverObjects</DEFINITION-REF>
+								</ECUC-CONTAINER-VALUE>
+							</CONTAINERS>
+						</ECUC-MODULE-CONFIGURATION-VALUES>
+					</ELEMENTS>
+				</AR-PACKAGE>
+			</AR-PACKAGES>
+		</AR-PACKAGE>
+	</AR-PACKAGES>
+</AUTOSAR>

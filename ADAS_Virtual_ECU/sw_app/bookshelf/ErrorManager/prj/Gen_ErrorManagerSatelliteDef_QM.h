@@ -1,0 +1,2 @@
+/* initialized Errormmgr satellite generated objects */
+void ErrorManagerSatelliteDef_Init_QM(void);

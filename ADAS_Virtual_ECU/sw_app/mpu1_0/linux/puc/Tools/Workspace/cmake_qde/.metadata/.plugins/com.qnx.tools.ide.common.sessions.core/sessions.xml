@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<sessions>
+<session id="1" name="bin.puc_app.out" sourceMemento="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;sourceLookupDirector&gt;&#13;&#10;&lt;sourceContainers duplicates=&quot;false&quot;/&gt;&#13;&#10;&lt;/sourceLookupDirector&gt;&#13;&#10;" startTime="1613721526287">
+<property name="shlib" value="C:\Users\MEE_MRACHO\qnx700\target\qnx7\aarch64le\lib;C:\Users\MEE_MRACHO\qnx700\target\qnx7\aarch64le\usr\lib;C:\Users\MEE_MRACHO\qnx700\target\qnx7\aarch64le\usr\lib\valgrind"/>
+<property name="binary" value="C:/_mks/L2H0480/KP03_ProductEngineering/40_Software/20_Construction/L2H0480_780B/PuC/App/build/libs/qnx/profile/puc_app.out"/>
+<property name="sampling" value="false"/>
+<property advanced="true" name="session.storage.dir" value="C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\Tools\Workspace\cmake_qde\.metadata\.plugins\com.qnx.tools.ide.common.sessions.core\sessions\1"/>
+<property name="project" value="puc_app"/>
+<property name="tool" value="profiler2"/>
+</session>
+<session id="2" name="bin.puc_app.out" sourceMemento="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;sourceLookupDirector&gt;&#13;&#10;&lt;sourceContainers duplicates=&quot;false&quot;/&gt;&#13;&#10;&lt;/sourceLookupDirector&gt;&#13;&#10;" startTime="1613721744822">
+<property name="shlib" value="C:\Users\MEE_MRACHO\qnx700\target\qnx7\aarch64le\lib;C:\Users\MEE_MRACHO\qnx700\target\qnx7\aarch64le\usr\lib;C:\Users\MEE_MRACHO\qnx700\target\qnx7\aarch64le\usr\lib\valgrind"/>
+<property name="binary" value="C:/_mks/L2H0480/KP03_ProductEngineering/40_Software/20_Construction/L2H0480_780B/PuC/App/build/libs/qnx/profile/puc_app.out"/>
+<property name="sampling" value="false"/>
+<property advanced="true" name="session.storage.dir" value="C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\Tools\Workspace\cmake_qde\.metadata\.plugins\com.qnx.tools.ide.common.sessions.core\sessions\2"/>
+<property name="project" value="puc_app"/>
+<property name="tool" value="profiler2"/>
+</session>
+<session id="3" name="bin.puc_app.out" sourceMemento="&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&#13;&#10;&lt;sourceLookupDirector&gt;&#13;&#10;&lt;sourceContainers duplicates=&quot;false&quot;&gt;&#13;&#10;&lt;container memento=&quot;&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;UTF-8&amp;quot; standalone=&amp;quot;no&amp;quot;?&amp;gt;&amp;#13;&amp;#10;&amp;lt;default/&amp;gt;&amp;#13;&amp;#10;&quot; typeId=&quot;org.eclipse.debug.core.containerType.default&quot;/&gt;&#13;&#10;&lt;/sourceContainers&gt;&#13;&#10;&lt;/sourceLookupDirector&gt;&#13;&#10;" startTime="1613723148987">
+<property name="shlib" value="C:\Users\MEE_MRACHO\qnx700\target\qnx7\aarch64le\lib;C:\Users\MEE_MRACHO\qnx700\target\qnx7\aarch64le\usr\lib;C:\Users\MEE_MRACHO\qnx700\target\qnx7\aarch64le\usr\lib\valgrind"/>
+<property name="binary" value="C:/_mks/L2H0480/KP03_ProductEngineering/40_Software/20_Construction/L2H0480_780B/PuC/App/build/libs/qnx/profile/puc_app.out"/>
+<property name="sampling" value="false"/>
+<property advanced="true" name="session.storage.dir" value="C:\_mks\L2H0480\KP03_ProductEngineering\40_Software\20_Construction\L2H0480_780B\PuC\Tools\Workspace\cmake_qde\.metadata\.plugins\com.qnx.tools.ide.common.sessions.core\sessions\3"/>
+<property name="errorMessage" value="Program is not instrumented or instrumented code was not executed"/>
+<property name="project" value="puc_app"/>
+<property name="tool" value="profiler2"/>
+</session>
+</sessions>

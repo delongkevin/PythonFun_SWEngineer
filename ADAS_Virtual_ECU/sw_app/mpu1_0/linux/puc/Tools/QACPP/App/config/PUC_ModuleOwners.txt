@@ -1,0 +1,9 @@
+************************************************************************************************************************************************************************************************************************
+Module Name                              ## Responsible                                                                                                     ##  Project Lead, to be informed in CC
+************************************************************************************************************************************************************************************************************************
+Apps\CamMIntgr                           ## Octavio.Chiman@magna.com;                                                                                       ##  GangadharReddy.Yadiki@magna.com;Ravi.Dronadula@magna.com
+Apps\CCFIntgr                            ## Octavio.Chiman@magna.com;GangadharReddy.Yadiki@magna.com                                                        ##  GangadharReddy.Yadiki@magna.com;Ravi.Dronadula@magna.com
+Apps\OVLIntgr                            ## Octavio.Chiman@magna.com;Bhagyashri.Doke@magna.com;Gajanan.Kuchgave@magna.com;GangadharReddy.Yadiki@magna.com   ##  GangadharReddy.Yadiki@magna.com;Ravi.Dronadula@magna.com
+Framework\CoreLibs                       ## Octavio.Chiman@magna.com;Bhagyashri.Doke@magna.com;Gajanan.Kuchgave@magna.com;GangadharReddy.Yadiki@magna.com   ##  GangadharReddy.Yadiki@magna.com;Ravi.Dronadula@magna.com
+Framework\CoreServices                   ## Octavio.Chiman@magna.com;Bhagyashri.Doke@magna.com;Gajanan.Kuchgave@magna.com;GangadharReddy.Yadiki@magna.com   ##  GangadharReddy.Yadiki@magna.com;Ravi.Dronadula@magna.com
+************************************************************************************************************************************************************************************************************************

@@ -1,0 +1,12 @@
+import pandas as pd
+import os
+import sys
+from ErrorMgr_ArxmlGen import GenerateArxml
+from ErrorMgrCommon import coreList,AsilList,CoreDefEnums,ERRORMGR_ADDITIONALDATASIZE_COUNT_VALUE
+from ErrorMgrExcelDataParser import ParseErrorManagerExcelfile
+from DegradationMgr_Gen import Generate_DegardationMatrix
+from ErrorMgrCommon import GenerateIncludeGaurds,CloseIncludeGaurds,AddFileHeaders
+
+
+def GenerateDocumentation(DocumentationFolder,mParsedData):
+    test=1

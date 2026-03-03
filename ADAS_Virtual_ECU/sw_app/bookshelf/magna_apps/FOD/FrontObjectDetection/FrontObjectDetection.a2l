@@ -1,0 +1,960 @@
+/******************************************************************************
+ *
+ *  ASAP2 file:     FrontObjectDetection.a2l
+ *
+ * Code generation for model "FrontObjectDetection".
+ *
+ * Model version              : 1.61
+ * Simulink Coder version : 9.2 (R2019b) 18-Jul-2019
+ * C source code generated on : Thu Sep 26 17:23:17 2024
+ * 
+ * Target selection: ert.tlc
+ * Embedded hardware selection: ARM Compatible->ARM Cortex
+ * Code generation objectives: 
+ *    1. MISRA C:2012 guidelines
+ *    2. RAM efficiency
+ *    3. ROM efficiency
+ * Validation result: Not run
+ *
+ * (add additional file header information here)
+ *
+ ******************************************************************************/
+
+ASAP2_VERSION  1 31   /* Version 1.31 */
+
+/begin PROJECT ProjectName "Project Comment Goes Here"
+  
+  /begin HEADER "Header Comments go here"
+    
+  /end HEADER
+  
+  
+  /begin MODULE ModuleName  "Module Comment Goes Here"
+    
+    /begin MOD_PAR "MOD PAR Comment Goes Here"
+      
+    /end MOD_PAR
+    
+    /begin MOD_COMMON  "Mod Common Comment Here" 
+      BYTE_ORDER     MSB_LAST
+    /end MOD_COMMON
+    
+    /begin RECORD_LAYOUT Scalar_BOOLEAN
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_UBYTE
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_BYTE
+      FNC_VALUES  1 SBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_UWORD
+      FNC_VALUES  1 UWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_SWORD
+      FNC_VALUES 1 SWORD COLUMN_DIR DIRECT
+    /end RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_ULONG
+      FNC_VALUES  1 ULONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_LONG
+      FNC_VALUES  1 SLONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_FLOAT32_IEEE
+      FNC_VALUES  1 FLOAT32_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Scalar_FLOAT64_IEEE
+      FNC_VALUES  1 FLOAT64_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    
+    /begin RECORD_LAYOUT Lookup1D_BOOLEAN
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_BOOLEAN
+      AXIS_PTS_X  1 UBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_BYTE
+      FNC_VALUES  1 SBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_BYTE
+      AXIS_PTS_X  1 SBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_UBYTE
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_UBYTE
+      AXIS_PTS_X  1 UBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_UWORD
+      FNC_VALUES  1 UWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_UWORD
+      AXIS_PTS_X  1 UWORD INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_WORD
+      FNC_VALUES  1 SWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_WORD
+      AXIS_PTS_X  1 SWORD INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_ULONG
+      FNC_VALUES  1 ULONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_ULONG
+      AXIS_PTS_X  1 ULONG INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_SLONG
+      FNC_VALUES  1 SLONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_LONG
+      AXIS_PTS_X  1 SLONG INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_FLOAT32_IEEE
+      FNC_VALUES  1 FLOAT32_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_FLOAT32_IEEE
+      AXIS_PTS_X  1 FLOAT32_IEEE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_FLOAT64_IEEE
+      FNC_VALUES  1 FLOAT64_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup1D_X_FLOAT64_IEEE
+      AXIS_PTS_X  1 FLOAT64_IEEE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_BOOLEAN
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_BOOLEAN
+      AXIS_PTS_X  1 UBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT    
+    
+    /begin RECORD_LAYOUT Lookup2D_UBYTE
+      FNC_VALUES  1 UBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_UBYTE
+      AXIS_PTS_X  1 UBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_BYTE
+      FNC_VALUES  1 SBYTE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_BYTE
+      AXIS_PTS_X  1 SBYTE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_UWORD
+      FNC_VALUES  1 UWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_UWORD
+      AXIS_PTS_X  1 UWORD INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_WORD
+      FNC_VALUES  1 SWORD COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_WORD
+      AXIS_PTS_X  1 SWORD INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_ULONG
+      FNC_VALUES  1 ULONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_ULONG
+      AXIS_PTS_X  1 ULONG INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_LONG
+      FNC_VALUES  1 SLONG COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_LONG
+      AXIS_PTS_X  1 SLONG INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_FLOAT32_IEEE
+      FNC_VALUES  1 FLOAT32_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_FLOAT32_IEEE
+      AXIS_PTS_X 1 FLOAT32_IEEE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_FLOAT64_IEEE
+      FNC_VALUES  1  FLOAT64_IEEE COLUMN_DIR DIRECT
+    /end   RECORD_LAYOUT
+    
+    /begin RECORD_LAYOUT Lookup2D_X_FLOAT64_IEEE
+      AXIS_PTS_X 1 FLOAT64_IEEE INDEX_INCR DIRECT
+    /end   RECORD_LAYOUT
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_CenterWarnLatThreshold  
+      /* Long Identifier        */      "Parameter to decide center region"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_CenterWarnLatThreshold@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_DistZone1  
+      /* Long Identifier        */      "Warning Zone 1 Dist"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_DistZone1@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_DistZone2  
+      /* Long Identifier        */      "Warning Zone 2 Dist"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_DistZone2@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_DistZone3  
+      /* Long Identifier        */      "Warning Zone 3 Dist"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_DistZone3@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_DistZone4  
+      /* Long Identifier        */      "Warning Zone 4 Dist"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_DistZone4@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_DistZone5  
+      /* Long Identifier        */      "Warning Zone 5 Dist"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_DistZone5@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_DistZone6  
+      /* Long Identifier        */      "Warning Zone 6 Dist"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_DistZone6@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      0.0 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_HalfVehicleWidth  
+      /* Long Identifier        */      "Ego Vehicle Car Half Width"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_HalfVehicleWidth@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_sec 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_SideDetectionRange  
+      /* Long Identifier        */      "FOD Lateral Detection range"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_SideDetectionRange@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_FIL_x  
+      /* Long Identifier        */      "X-coordinate for FIL Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_FIL_x@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_FIL_y  
+      /* Long Identifier        */      "Y-coordinate for FIL Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_FIL_y@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_FIR_x  
+      /* Long Identifier        */      "X-coordinate for FIR Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_FIR_x@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_FIR_y  
+      /* Long Identifier        */      "Y-coordinate for FIR Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_FIR_y@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_FOL_x  
+      /* Long Identifier        */      "X-coordinate for FOL Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_FOL_x@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_FOL_y  
+      /* Long Identifier        */      "Y-coordinate for FOL Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_FOL_y@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_FOR_x  
+      /* Long Identifier        */      "X-coordinate for FOR Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_FOR_x@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_FOR_y  
+      /* Long Identifier        */      "Y-coordinate for FOR Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_FOR_y@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_FSL_x  
+      /* Long Identifier        */      "X-coordinate for FSL Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_FSL_x@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_FSL_y  
+      /* Long Identifier        */      "Y-coordinate for FSL Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_FSL_y@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_FSR_x  
+      /* Long Identifier        */      "X-coordinate for FSR Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_FSR_x@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_FSR_y  
+      /* Long Identifier        */      "Y-coordinate for FSR Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_FSR_y@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_RIL_x  
+      /* Long Identifier        */      "X-coordinate for RIL Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_RIL_x@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_RIL_y  
+      /* Long Identifier        */      "Y-coordinate for RIL Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_RIL_y@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_RIR_x  
+      /* Long Identifier        */      "X-coordinate for RIR Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_RIR_x@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_RIR_y  
+      /* Long Identifier        */      "Y-coordinate for RIR Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_RIR_y@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_ROL_x  
+      /* Long Identifier        */      "X-coordinate for ROL Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_ROL_x@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_ROL_y  
+      /* Long Identifier        */      "Y-coordinate for ROL Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_ROL_y@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_ROR_x  
+      /* Long Identifier        */      "X-coordinate for ROR Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_ROR_x@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_ROR_y  
+      /* Long Identifier        */      "Y-coordinate for ROR Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_ROR_y@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_RSL_x  
+      /* Long Identifier        */      "X-coordinate for RSL Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_RSL_x@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_RSL_y  
+      /* Long Identifier        */      "Y-coordinate for RSL Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_RSL_y@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_RSR_x  
+      /* Long Identifier        */      "X-coordinate for RSR Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_RSR_x@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_VehContour_RSR_y  
+      /* Long Identifier        */      "Y-coordinate for RSR Edge"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_VehContour_RSR_y@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_cm_WarnOffset  
+      /* Long Identifier        */      "Warn Offset Distance "
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_cm_WarnOffset@ */ 
+      /* Record Layout          */      Scalar_SWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_int16_cm 
+      /* Lower Limit            */      -32768 
+      /* Upper Limit            */      32767
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_ms_DbncTimeThsd  
+      /* Long Identifier        */      "Debounce time for detected object"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_ms_DbncTimeThsd@ */ 
+      /* Record Layout          */      Scalar_UWORD 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_uint16_msec 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      65535
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_b_DbncEnabld  
+      /* Long Identifier        */      "Debounce for FOD Distance enabled"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_b_DbncEnabld@ */ 
+      /* Record Layout          */      Scalar_BOOLEAN 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_boolean 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      1
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_pct_ObjConfidenceThd  
+      /* Long Identifier        */      "Detected Object Confidence threshold"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_pct_ObjConfidenceThd@ */ 
+      /* Record Layout          */      Scalar_UBYTE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_uint8_pct 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      255
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_pct_ObjConfidenceThd_Closer  
+      /* Long Identifier        */      "Detected Object Confidence threshold closer objects"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_pct_ObjConfidenceThd_Closer@ */ 
+      /* Record Layout          */      Scalar_UBYTE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_uint8_pct 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      255
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_pct_ObjConfidenceThd_Far  
+      /* Long Identifier        */      "Detected Object Confidence threshold for farther objects"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_pct_ObjConfidenceThd_Far@ */ 
+      /* Record Layout          */      Scalar_UBYTE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_uint8_pct 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      255
+    /end CHARACTERISTIC
+    
+    
+    /begin CHARACTERISTIC
+      /* Name                   */      KeFOD_pct_ObjConfidenceThd_Nearest  
+      /* Long Identifier        */      "Detected Object Confidence threshold for nearest objects"
+      /* Type                   */      VALUE 
+      /* ECU Address            */      0x0000 /* @ECU_Address@KeFOD_pct_ObjConfidenceThd_Nearest@ */ 
+      /* Record Layout          */      Scalar_UBYTE 
+      /* Maximum Difference     */      0 
+      /* Conversion Method      */      FrontObjectDetection_CM_uint8_pct 
+      /* Lower Limit            */      0 
+      /* Upper Limit            */      255
+    /end CHARACTERISTIC
+    
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeFOD_cm_FrntSideMinXDist
+      /* Long identifier        */      ""
+      /* Data type              */      SWORD
+      /* Conversion method      */      FrontObjectDetection_CM_int16
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -32768
+      /* Upper limit            */      32767
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeFOD_cm_FrntSideMinXDist@ */
+    /end MEASUREMENT
+    
+    
+    /begin MEASUREMENT
+      /* Name                   */      MeFOD_cm_FrntCenterMinXDist
+      /* Long identifier        */      ""
+      /* Data type              */      SWORD
+      /* Conversion method      */      FrontObjectDetection_CM_int16
+      /* Resolution (Not used)  */      0
+      /* Accuracy (Not used)    */      0
+      /* Lower limit            */      -32768
+      /* Upper limit            */      32767
+      ECU_ADDRESS                       0x0000 /* @ECU_Address@MeFOD_cm_FrntCenterMinXDist@ */
+    /end MEASUREMENT
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      FrontObjectDetection_CM_int16
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%5.0"
+      /* Units                  */      ""
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      FrontObjectDetection_CM_int16_cm
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%5.0"
+      /* Units                  */      "cm"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      FrontObjectDetection_CM_int16_sec
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%5.0"
+      /* Units                  */      "sec"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      FrontObjectDetection_CM_uint16_msec
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%5.0"
+      /* Units                  */      "msec"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      FrontObjectDetection_CM_boolean
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%1.0"
+      /* Units                  */      ""
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin COMPU_METHOD
+      /* Name of CompuMethod    */      FrontObjectDetection_CM_uint8_pct
+      /* Long identifier        */      "Q = V"
+      /* Conversion Type        */      RAT_FUNC
+      /* Format                 */      "%3.0"
+      /* Units                  */      "pct"
+      /* Coefficients           */      COEFFS 0 1 0 0 0 1
+    /end COMPU_METHOD
+    
+    /begin GROUP 
+      /* Name                   */       FrontObjectDetection
+      /* Long identifier        */       "FrontObjectDetection"
+      /* Root                    */       ROOT
+      /begin SUB_GROUP
+        Root_InputProcessing
+        Root_ObjectMinDistanceCalculator
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       Root_InputProcessing
+      /* Long identifier        */       "FrontObjectDetection/InputProcessing"
+      /begin SUB_GROUP
+        S1_VrntTunParam
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       Root_ObjectMinDistanceCalculator
+      /* Long identifier        */       "FrontObjectDetection/ObjectMinDistanceCalculator"
+      /begin SUB_GROUP
+        S3_CalcMinDistance
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S1_VrntTunParam
+      /* Long identifier        */       "FrontObjectDetection/InputProcessing/VrntTunParam"
+      /begin REF_CHARACTERISTIC
+        KeFOD_cm_DistZone1
+        KeFOD_cm_DistZone2
+        KeFOD_cm_DistZone3
+        KeFOD_cm_DistZone4
+        KeFOD_cm_DistZone5
+        KeFOD_cm_DistZone6
+        KeFOD_cm_HalfVehicleWidth
+        KeFOD_cm_VehContour_FIL_x
+        KeFOD_cm_VehContour_FIL_y
+        KeFOD_cm_VehContour_FIR_x
+        KeFOD_cm_VehContour_FIR_y
+        KeFOD_cm_VehContour_FOL_x
+        KeFOD_cm_VehContour_FOL_y
+        KeFOD_cm_VehContour_FOR_x
+        KeFOD_cm_VehContour_FOR_y
+        KeFOD_cm_VehContour_FSL_x
+        KeFOD_cm_VehContour_FSL_y
+        KeFOD_cm_VehContour_FSR_x
+        KeFOD_cm_VehContour_FSR_y
+        KeFOD_cm_VehContour_RIL_x
+        KeFOD_cm_VehContour_RIL_y
+        KeFOD_cm_VehContour_RIR_x
+        KeFOD_cm_VehContour_RIR_y
+        KeFOD_cm_VehContour_ROL_x
+        KeFOD_cm_VehContour_ROL_y
+        KeFOD_cm_VehContour_ROR_x
+        KeFOD_cm_VehContour_ROR_y
+        KeFOD_cm_VehContour_RSL_x
+        KeFOD_cm_VehContour_RSL_y
+        KeFOD_cm_VehContour_RSR_x
+        KeFOD_cm_VehContour_RSR_y
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S3_CalcMinDistance
+      /* Long identifier        */       "FrontObjectDetection/ObjectMinDistanceCalculator/CalcMinDistance"
+      /begin SUB_GROUP
+        S6_CalculateMinDistances
+        S6_FromtMinDist
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        KeFOD_cm_CenterWarnLatThreshold
+        KeFOD_cm_DistZone2
+        KeFOD_cm_DistZone4
+        KeFOD_cm_DistZone6
+        KeFOD_cm_SideDetectionRange
+        KeFOD_cm_WarnOffset
+        KeFOD_pct_ObjConfidenceThd
+        KeFOD_pct_ObjConfidenceThd_Closer
+        KeFOD_pct_ObjConfidenceThd_Far
+        KeFOD_pct_ObjConfidenceThd_Nearest
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S6_FromtMinDist
+      /* Long identifier        */       "FrontObjectDetection/ObjectMinDistanceCalculator/CalcMinDistance/FromtMinDist"
+      /begin SUB_GROUP
+        S9_FrontCenterDistAvg
+        S9_FrontLeftDistAvg
+      /end SUB_GROUP
+      /begin REF_CHARACTERISTIC
+        KeFOD_b_DbncEnabld
+        KeFOD_ms_DbncTimeThsd
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S6_CalculateMinDistances
+      /* Long identifier        */       "FrontObjectDetection/ObjectMinDistanceCalculator/CalcMinDistance/CalculateMinDistances"
+      /begin SUB_GROUP
+        S8_UpdateDistNoDetection
+      /end SUB_GROUP
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S9_FrontCenterDistAvg
+      /* Long identifier        */       "FrontObjectDetection/ObjectMinDistanceCalculator/CalcMinDistance/FromtMinDist/FrontCenterDistAvg"
+      /begin REF_MEASUREMENT
+        MeFOD_cm_FrntCenterMinXDist
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S9_FrontLeftDistAvg
+      /* Long identifier        */       "FrontObjectDetection/ObjectMinDistanceCalculator/CalcMinDistance/FromtMinDist/FrontLeftDistAvg"
+      /begin REF_MEASUREMENT
+        MeFOD_cm_FrntSideMinXDist
+      /end REF_MEASUREMENT
+    /end GROUP
+    
+    /begin GROUP 
+      /* Name                   */       S8_UpdateDistNoDetection
+      /* Long identifier        */       "FrontObjectDetection/ObjectMinDistanceCalculator/CalcMinDistance/CalculateMinDistances/UpdateDistNoDetection"
+      /begin REF_CHARACTERISTIC
+        KeFOD_cm_DistZone2
+      /end REF_CHARACTERISTIC
+    /end GROUP
+    
+    
+  /end MODULE
+  
+  
+/end PROJECT
+/* (add any file trailer comments here) */
+/* EOF FrontObjectDetection.a2l */

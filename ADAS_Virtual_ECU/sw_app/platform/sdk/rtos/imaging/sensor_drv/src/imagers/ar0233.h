@@ -1,0 +1,29 @@
+/*
+ * ON Semiconductor AR0233 sensor camera wizard 2048x1280@30/BGGR/MIPI
+ *
+ * Copyright (C) 2019-2020 Cogent Embedded, Inc.
+ */
+
+//#define AR0233_DISPLAY_PATTERN_FIXED
+//#define AR0233_DISPLAY_PATTERN_COLOR_BAR
+#define AR0233_EMBEDDED_LINE
+
+// This is not required for psdk 7.01 with 2x pixels/clock patch on CSIRX
+#undef BANDWIDTH_WORKAROUND
+
+#define AR0233_DEFAULT_WIDTH	1920
+#define AR0233_DEFAULT_HEIGHT	1280
+
+#define AR0233_DELAY		0xffff
+#define AR0233_EMB_LINES	8
+#define AR0233_EMB_PADDED	(priv->emb_enable ? AR0233_EMB_LINES : 0) /* embedded data (SOF) and stats (EOF) */
+
+#define AR0233_MAX_WIDTH	2048
+#define AR0233_MAX_HEIGHT	1280
+#define AR0233_SENSOR_WIDTH	2072
+#define AR0233_SENSOR_HEIGHT	1296
+
+#define AR0233_X_START		((AR0233_SENSOR_WIDTH - AR0233_DEFAULT_WIDTH) / 2)
+#define AR0233_Y_START		((AR0233_SENSOR_HEIGHT - AR0233_DEFAULT_HEIGHT) / 2)
+#define AR0233_X_END		(AR0233_X_START + AR0233_DEFAULT_WIDTH - 1)
+#define AR0233_Y_END		(AR0233_Y_START + AR0233_DEFAULT_HEIGHT - 1)

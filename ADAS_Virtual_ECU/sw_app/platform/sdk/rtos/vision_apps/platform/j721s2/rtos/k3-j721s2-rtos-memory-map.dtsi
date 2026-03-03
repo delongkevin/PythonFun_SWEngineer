@@ -1,0 +1,67 @@
+
+ 
+ /* 
+  * IMPORTANT NOTE: Follow below instructions to apply the updated memory map to linux dtsi file, 
+  * 
+  * 1. Copy the memory sections, from the generated dts file, to the file shown below under reserved_memory: reserved-memory { ... } 
+  *     ${LINUX_KERNEL_PATH}/arch/arm64/boot/dts/ti/k3-j721e-rtos-memory-map.dtsi
+  * 
+  * 2. Rebuild the dtb, dtbo from PSDK Linux install directory 
+  *      make linux-dtbs 
+  * 
+  * 3. Install the dtb, dtbo to the rootfs/boot folder on SD card 
+  *      sudo make linux-dtbs_intall; sync 
+  * 
+   */
+
+
+	vision_apps_main_r5fss0_core0_memory_region: vision-apps-r5f-memory@92000000 {
+		compatible = "shared-dma-pool";
+		reg = <0x00 0x92000000 0x00 0x03000000>;
+		no-map;
+	};
+	vision_apps_main_r5fss0_core1_memory_region: vision-apps-r5f-memory@95000000 {
+		compatible = "shared-dma-pool";
+		reg = <0x00 0x95000000 0x00 0x01000000>;
+		no-map;
+	};
+	vision_apps_main_r5fss1_core0_memory_region: vision-apps-r5f-memory@96000000 {
+		compatible = "shared-dma-pool";
+		reg = <0x00 0x96000000 0x00 0x01000000>;
+		no-map;
+	};
+	vision_apps_main_r5fss1_core1_memory_region: vision-apps-r5f-memory@97000000 {
+		compatible = "shared-dma-pool";
+		reg = <0x00 0x97000000 0x00 0x01000000>;
+		no-map;
+	};
+	vision_apps_c71_0_memory_region: vision-apps-c71_0-memory@98000000 {
+		compatible = "shared-dma-pool";
+		reg = <0x00 0x98000000 0x00 0x05000000>;
+		no-map;
+	};
+	vision_apps_mcu_r5fss0_core0_memory_region: vision-apps-r5f-memory@9d000000 {
+		compatible = "shared-dma-pool";
+		reg = <0x00 0x9d000000 0x00 0x01000000>;
+		no-map;
+	};
+	vision_apps_rtos_ipc_memory_region: vision-apps-rtos-ipc-memory-region@9e000000 {
+		compatible = "shared-dma-pool";
+		reg = <0x00 0x9e000000 0x00 0x02000000>;
+		no-map;
+	};
+	vision_apps_memory_region: vision-apps-dma-memory@a0000000 {
+		compatible = "shared-dma-pool";
+		reg = <0x00 0xa0000000 0x00 0x06000000>;
+		no-map;
+	};
+	vision_apps_shared_region: vision_apps_shared-memories {
+		compatible = "dma-heap-carveout";
+		reg = <0x00 0xa6000000 0x00 0x10000000>;
+	};
+	vision_apps_core_heaps_lo: vision-apps-core-heap-memory-lo@b6000000 {
+		compatible = "shared-dma-pool";
+		reg = <0x00 0xb6000000 0x00 0x07800000>;
+		no-map;
+	};
+

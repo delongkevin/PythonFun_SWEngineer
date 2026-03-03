@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--This file was saved with a tool from Vector Informatik GmbH-->
+<AUTOSAR xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_00050.xsd" xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <AR-PACKAGES>
+    <AR-PACKAGE UUID="62003436-177D-4630-9A20-3DA582AF7B79">
+      <SHORT-NAME>FCADT</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE UUID="E0ADE93B-7D28-4244-8B9F-A15DFC5F7196">
+          <SHORT-NAME>ComponentTypes</SHORT-NAME>
+          <ELEMENTS>
+            <COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE UUID="AE1B2581-49E0-474C-8946-D7D41389CA2F">
+              <SHORT-NAME>CDD_E2EWrapper</SHORT-NAME>
+              <PORTS>
+                <P-PORT-PROTOTYPE UUID="8042C71B-CA1E-480F-9FEB-2131E3A35F8E">
+                  <SHORT-NAME>PpE2EServices</SHORT-NAME>
+                  <PROVIDED-COM-SPECS>
+                    <SERVER-COM-SPEC>
+                      <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/FCADT/PortInterfaces/IF_E2EServices/ME_E2E_Check</OPERATION-REF>
+                      <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                    </SERVER-COM-SPEC>
+                    <SERVER-COM-SPEC>
+                      <OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/FCADT/PortInterfaces/IF_E2EServices/ME_E2E_Protect</OPERATION-REF>
+                      <QUEUE-LENGTH>1</QUEUE-LENGTH>
+                    </SERVER-COM-SPEC>
+                  </PROVIDED-COM-SPECS>
+                  <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/FCADT/PortInterfaces/IF_E2EServices</PROVIDED-INTERFACE-TREF>
+                </P-PORT-PROTOTYPE>
+              </PORTS>
+              <INTERNAL-BEHAVIORS>
+                <SWC-INTERNAL-BEHAVIOR UUID="11E636BF-D91D-4508-B04B-116032BA23CC">
+                  <SHORT-NAME>CDD_E2EWrapper_InternalBehavior</SHORT-NAME>
+                  <EVENTS>
+                    <INIT-EVENT UUID="3FA93212-9F1C-40B2-BC44-6522F4DD0F3D">
+                      <SHORT-NAME>InitEvent</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/CDD_E2EWrapper/CDD_E2EWrapper_InternalBehavior/RE_E2EWrapper_Init</START-ON-EVENT-REF>
+                    </INIT-EVENT>
+                    <OPERATION-INVOKED-EVENT UUID="68982D5D-7E94-4536-A922-34137F74B216">
+                      <SHORT-NAME>OIT_RE_E2EWrapperCheck_PpE2EServices_ME_E2E_Check</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/CDD_E2EWrapper/CDD_E2EWrapper_InternalBehavior/RE_E2EWrapperCheck</START-ON-EVENT-REF>
+                      <OPERATION-IREF>
+                        <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/FCADT/ComponentTypes/CDD_E2EWrapper/PpE2EServices</CONTEXT-P-PORT-REF>
+                        <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/FCADT/PortInterfaces/IF_E2EServices/ME_E2E_Check</TARGET-PROVIDED-OPERATION-REF>
+                      </OPERATION-IREF>
+                    </OPERATION-INVOKED-EVENT>
+                    <OPERATION-INVOKED-EVENT UUID="42856789-AE4B-4703-891D-7FAC71767B4D">
+                      <SHORT-NAME>OIT_RE_E2EWrapperProtect_PpE2EServices_ME_E2E_Protect</SHORT-NAME>
+                      <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/FCADT/ComponentTypes/CDD_E2EWrapper/CDD_E2EWrapper_InternalBehavior/RE_E2EWrapperProtect</START-ON-EVENT-REF>
+                      <OPERATION-IREF>
+                        <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/FCADT/ComponentTypes/CDD_E2EWrapper/PpE2EServices</CONTEXT-P-PORT-REF>
+                        <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/FCADT/PortInterfaces/IF_E2EServices/ME_E2E_Protect</TARGET-PROVIDED-OPERATION-REF>
+                      </OPERATION-IREF>
+                    </OPERATION-INVOKED-EVENT>
+                  </EVENTS>
+                  <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                  <PORT-API-OPTIONS>
+                    <PORT-API-OPTION>
+                      <ENABLE-TAKE-ADDRESS>false</ENABLE-TAKE-ADDRESS>
+                      <ERROR-HANDLING>NO-TRANSFORMER-ERROR-HANDLING</ERROR-HANDLING>
+                      <INDIRECT-API>false</INDIRECT-API>
+                      <PORT-REF DEST="P-PORT-PROTOTYPE">/FCADT/ComponentTypes/CDD_E2EWrapper/PpE2EServices</PORT-REF>
+                    </PORT-API-OPTION>
+                  </PORT-API-OPTIONS>
+                  <RUNNABLES>
+                    <RUNNABLE-ENTITY UUID="7128949C-F6D3-41C2-9F66-F996AD9B7FA9">
+                      <SHORT-NAME>RE_E2EWrapper_Init</SHORT-NAME>
+                      <ADMIN-DATA>
+                        <SDGS>
+                          <SDG GID="edve:RunnableKind">
+                            <SD>InitRunnable</SD>
+                          </SDG>
+                        </SDGS>
+                      </ADMIN-DATA>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>RE_E2EWrapper_Init</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="DDAFB75B-314E-478B-940B-B567A5147C3C">
+                      <SHORT-NAME>RE_E2EWrapperCheck</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>true</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>RE_E2EWrapperCheck</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                    <RUNNABLE-ENTITY UUID="57E0FD7F-F6C3-401E-B703-8D217E79BCAC">
+                      <SHORT-NAME>RE_E2EWrapperProtect</SHORT-NAME>
+                      <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                      <CAN-BE-INVOKED-CONCURRENTLY>true</CAN-BE-INVOKED-CONCURRENTLY>
+                      <SYMBOL>RE_E2EWrapperProtect</SYMBOL>
+                    </RUNNABLE-ENTITY>
+                  </RUNNABLES>
+                  <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                </SWC-INTERNAL-BEHAVIOR>
+              </INTERNAL-BEHAVIORS>
+            </COMPLEX-DEVICE-DRIVER-SW-COMPONENT-TYPE>
+            <SWC-IMPLEMENTATION UUID="7302E264-79E2-407F-8D68-27804F5BE1B1">
+              <SHORT-NAME>CDD_E2EWrapper_Implementation</SHORT-NAME>
+              <CODE-DESCRIPTORS>
+                <CODE UUID="6234D226-0830-4570-8196-32F7B46AF430">
+                  <SHORT-NAME>Default</SHORT-NAME>
+                  <ARTIFACT-DESCRIPTORS>
+                    <AUTOSAR-ENGINEERING-OBJECT>
+                      <CATEGORY>SWSRC</CATEGORY>
+                    </AUTOSAR-ENGINEERING-OBJECT>
+                  </ARTIFACT-DESCRIPTORS>
+                </CODE>
+              </CODE-DESCRIPTORS>
+              <PROGRAMMING-LANGUAGE>C</PROGRAMMING-LANGUAGE>
+              <VENDOR-ID>0</VENDOR-ID>
+              <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/FCADT/ComponentTypes/CDD_E2EWrapper/CDD_E2EWrapper_InternalBehavior</BEHAVIOR-REF>
+            </SWC-IMPLEMENTATION>
+          </ELEMENTS>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+    <AR-PACKAGE UUID="9D298E7E-B119-48B9-827F-84CEBC78342C">
+      <SHORT-NAME>ComponentTypes</SHORT-NAME>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

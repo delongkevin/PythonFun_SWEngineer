@@ -1,0 +1,107 @@
+//--------------------------------------------------------------------------
+/// @file AppCfg.cpp
+/// @brief Contains
+///
+///
+///
+/// --------------------------------------------------------------------------
+/// @copyright MAGNA Electronics - C O N F I D E N T I A L <br>
+/// This document in its entirety is CONFIDENTIAL and may not be disclosed,
+/// disseminated or distributed to parties outside MAGNA Electronics
+/// without written permission from MAGNA Electronics.
+///
+/// @author Michael Schulte (michael.schulte@magna.com)
+///
+//  --------------------------------------------------------------------------
+
+
+/* ------------------------- FILE INCLUSION -------------------------- */
+
+#include "DataProviderEol.h"
+//#include "EolTypes.h"
+
+//#include "app/App.h"
+//#include "app/cfg/PrjMain.h"
+#include "JobEol.h"
+
+
+
+#ifdef EOL_HARDCODED_INPUT_IMAGE
+#ifdef FORD
+#include "Ford_P558_WB142_85in_Front_P0Y0R0_160128_au8.h"
+#else
+#include "Chrysler_RU_FrontPlusThree_au8.h"
+#endif
+#endif
+void F_AppCfg_v(app::App& b_App_ro)
+{
+  shmdata::EolSegment_t *v_SegmentEol_pt = static_cast<shmdata::EolSegment_t *>(b_App_ro.getOutputProvider_pv());
+  prjcontainer::OutputProvider<shmdata::EolSegment_t, shmdata::EolData_s> v_OutputProvider_o(v_SegmentEol_pt);
+
+#if defined(USE_EOL) && (USE_EOL == DO_USE_EOL)
+#ifdef EOL_HARDCODED_INPUT_IMAGE
+#ifdef FORD
+  eol::EolInitData_s v_EolInitData_s = {Ford_P558_WB142_85in_Front_P0Y0R0_160128_au8, eol::e_EndOfLineCalibration, static_cast<uint8_t>(eol::e_FrontCamAlgo), -3, -2, -1, 2806.0F, NULL};
+  EOL_DEBUG_PRINTF(("eol img: %p, size: %u\n",&Ford_P558_WB142_85in_Front_P0Y0R0_160128_au8[0], sizeof(Ford_P558_WB142_85in_Front_P0Y0R0_160128_au8)));
+#elif defined(MAZDA)
+  eol::EolInitData_s v_EolInitData_s = {Ford_P558_WB142_85in_Front_P0Y0R0_160128_au8, eol::e_EndOfLineCalibration, static_cast<uint8_t>(eol::e_FrontCamAlgo), -3, -2, -1, 2806.0F, NULL};
+  EOL_DEBUG_PRINTF(("eol img: %p, size: %u\n",&Ford_P558_WB142_85in_Front_P0Y0R0_160128_au8[0], sizeof(Ford_P558_WB142_85in_Front_P0Y0R0_160128_au8)));
+#else
+  eol::EolInitData_s v_EolInitData_s = {Chrysler_RU_FrontPlusThree_au8, eol::e_ServiceCalibration, static_cast<uint8_t>(eol::e_FrontCamAlgo), -3, -2, -2, 2412.0F, NULL};
+  EOL_DEBUG_PRINTF(("eol img: %p, size: %u\n",&Chrysler_RU_FrontPlusThree_au8[0], sizeof(Chrysler_RU_FrontPlusThree_au8)));
+#endif
+#else
+  eol::EolInitData_s v_EolInitData_s = {NULL, eol::e_EndOfLineCalibration, static_cast<uint8_t>(eol::e_FrontCamAlgo), -3, -2, -2, 2412.0F, NULL};
+#endif
+
+  eol::DataProviderEol v_DPEol_o( b_App_ro.getInputProvider_ro());
+
+  eol::JobEol v_JobEol_o(v_DPEol_o, &v_EolInitData_s);
+  app::App::AppExecutor v_Exec_o(b_App_ro, v_JobEol_o, v_SegmentEol_pt->cntrl_s, &v_OutputProvider_o);
+
+#ifndef PIKEOSDEBUG
+  b_App_ro.waitForRunState_v();
+  // TODO is sleep here really still necessary?
+  b_App_ro.getWaiter_ro().sleepMs_v(200U);
+
+  if (b_App_ro.waitForProjectionsAvailable_b())
+  {
+    b_App_ro.run_v(v_Exec_o);
+  }
+#else
+  b_App_ro.run_v(v_Exec_o);
+#endif
+
+#elif defined(USE_EOL) && (USE_EOL == DO_NOT_USE_EOL)
+  // just pretend TAD is there - but application does nothing
+  v_SegmentEol_pt->setAvailable_v();
+  while(1)
+  {
+    i_App_ro.getWaiter_ro().waitForNextFrame_v();
+  }
+#else
+//#error("USE_EOL has to be defined!")
+#endif
+}
+
+prjcontainer::AppId_e F_AppId_e(void)
+{
+  return prjcontainer::e_AppEol;
+}
+
+extern "C"
+{
+// PRQA S 4038 ++ // We cannot and will not handle exceptions here
+// Exceptions are handled by PikeOS internally
+// The error handler in App should catch internal errors (but not using a c++ kind of catch handler)
+
+sint32_t main(sint32_t i_argc_s32, const char_t** i_argv_pac)
+{
+  app::PrjMain v_PrjMain_o;
+
+  v_PrjMain_o.main_v(i_argc_s32, i_argv_pac);
+
+  return 0;
+}
+}
+

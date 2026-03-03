@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://autosar.org/schema/r4.0 AUTOSAR_00050.xsd">
+  <AR-PACKAGES>
+    <AR-PACKAGE UUID="ff55d029-386d-43a2-b3c2-dfef4c7a5e36">
+      <SHORT-NAME>MICROSAR</SHORT-NAME>
+      <AR-PACKAGES>
+        <AR-PACKAGE UUID="3062557e-c5eb-49d1-9ce0-511c461112ef">
+          <SHORT-NAME>vRoE</SHORT-NAME>
+          <AR-PACKAGES>
+            <AR-PACKAGE UUID="018967f1-16d3-408c-89ef-e2122bbd325a">
+              <SHORT-NAME>Cdd_swc</SHORT-NAME>
+              <AR-PACKAGES>
+                <AR-PACKAGE UUID="93650d59-382b-4e1b-aa09-5b8e7e9dec73">
+                  <SHORT-NAME>DataTypes</SHORT-NAME>
+                  <ELEMENTS>
+                    <IMPLEMENTATION-DATA-TYPE UUID="2583c566-42f9-470c-acc5-fa543ef1712e">
+                      <SHORT-NAME>vRoE_MessageType</SHORT-NAME>
+                      <CATEGORY>ARRAY</CATEGORY>
+                      <SW-DATA-DEF-PROPS>
+                        <SW-DATA-DEF-PROPS-VARIANTS>
+                          <SW-DATA-DEF-PROPS-CONDITIONAL>
+                            <SW-CALIBRATION-ACCESS>READ-ONLY</SW-CALIBRATION-ACCESS>
+                          </SW-DATA-DEF-PROPS-CONDITIONAL>
+                        </SW-DATA-DEF-PROPS-VARIANTS>
+                      </SW-DATA-DEF-PROPS>
+                      <SUB-ELEMENTS>
+                        <IMPLEMENTATION-DATA-TYPE-ELEMENT UUID="fcb0405d-5b5b-4ac3-82b6-b790855743bf">
+                          <SHORT-NAME>vRoE_MessageTypeElement</SHORT-NAME>
+                          <CATEGORY>TYPE_REFERENCE</CATEGORY>
+                          <ARRAY-SIZE>8</ARRAY-SIZE>
+                          <ARRAY-SIZE-SEMANTICS>FIXED-SIZE</ARRAY-SIZE-SEMANTICS>
+                          <SW-DATA-DEF-PROPS>
+                            <SW-DATA-DEF-PROPS-VARIANTS>
+                              <SW-DATA-DEF-PROPS-CONDITIONAL>
+                                <IMPLEMENTATION-DATA-TYPE-REF DEST="IMPLEMENTATION-DATA-TYPE">/AUTOSAR_Platform/ImplementationDataTypes/uint8</IMPLEMENTATION-DATA-TYPE-REF>
+                              </SW-DATA-DEF-PROPS-CONDITIONAL>
+                            </SW-DATA-DEF-PROPS-VARIANTS>
+                          </SW-DATA-DEF-PROPS>
+                        </IMPLEMENTATION-DATA-TYPE-ELEMENT>
+                      </SUB-ELEMENTS>
+                    </IMPLEMENTATION-DATA-TYPE>
+                    <IMPLEMENTATION-DATA-TYPE UUID="a42d1daa-9e27-41e4-8d49-421af5586101">
+                      <SHORT-NAME>vRoE_ActivationStateType</SHORT-NAME>
+                      <CATEGORY>TYPE_REFERENCE</CATEGORY>
+                      <SW-DATA-DEF-PROPS>
+                        <SW-DATA-DEF-PROPS-VARIANTS>
+                          <SW-DATA-DEF-PROPS-CONDITIONAL>
+                            <COMPU-METHOD-REF DEST="COMPU-METHOD">/MICROSAR/vRoE/Cdd_swc/DataTypes/CompuMethods/vRoE_ActivationStateType</COMPU-METHOD-REF>
+                            <DATA-CONSTR-REF DEST="DATA-CONSTR">/MICROSAR/vRoE/Cdd_swc/DataTypes/DataConstrs/vRoE_ActivationStateType_Constr</DATA-CONSTR-REF>
+                            <IMPLEMENTATION-DATA-TYPE-REF DEST="IMPLEMENTATION-DATA-TYPE">/AUTOSAR_Platform/ImplementationDataTypes/uint8</IMPLEMENTATION-DATA-TYPE-REF>
+                          </SW-DATA-DEF-PROPS-CONDITIONAL>
+                        </SW-DATA-DEF-PROPS-VARIANTS>
+                      </SW-DATA-DEF-PROPS>
+                    </IMPLEMENTATION-DATA-TYPE>
+                    <IMPLEMENTATION-DATA-TYPE UUID="3cafc2d9-c732-4d0d-a3ea-528f49048bee">
+                      <SHORT-NAME>vRoE_ActivationStateArrayType</SHORT-NAME>
+                      <CATEGORY>ARRAY</CATEGORY>
+                      <SW-DATA-DEF-PROPS>
+                        <SW-DATA-DEF-PROPS-VARIANTS>
+                          <SW-DATA-DEF-PROPS-CONDITIONAL>
+                            <SW-CALIBRATION-ACCESS>READ-ONLY</SW-CALIBRATION-ACCESS>
+                          </SW-DATA-DEF-PROPS-CONDITIONAL>
+                        </SW-DATA-DEF-PROPS-VARIANTS>
+                      </SW-DATA-DEF-PROPS>
+                      <SUB-ELEMENTS>
+                        <IMPLEMENTATION-DATA-TYPE-ELEMENT UUID="798e4fee-7f4d-47b9-9c0a-293bedbad90f">
+                          <SHORT-NAME>vRoE_ActivationStateArrayTypeElement</SHORT-NAME>
+                          <CATEGORY>TYPE_REFERENCE</CATEGORY>
+                          <ARRAY-SIZE>1</ARRAY-SIZE>
+                          <ARRAY-SIZE-SEMANTICS>FIXED-SIZE</ARRAY-SIZE-SEMANTICS>
+                          <SW-DATA-DEF-PROPS>
+                            <SW-DATA-DEF-PROPS-VARIANTS>
+                              <SW-DATA-DEF-PROPS-CONDITIONAL>
+                                <IMPLEMENTATION-DATA-TYPE-REF DEST="IMPLEMENTATION-DATA-TYPE">/MICROSAR/vRoE/Cdd_swc/DataTypes/vRoE_ActivationStateType</IMPLEMENTATION-DATA-TYPE-REF>
+                              </SW-DATA-DEF-PROPS-CONDITIONAL>
+                            </SW-DATA-DEF-PROPS-VARIANTS>
+                          </SW-DATA-DEF-PROPS>
+                        </IMPLEMENTATION-DATA-TYPE-ELEMENT>
+                      </SUB-ELEMENTS>
+                    </IMPLEMENTATION-DATA-TYPE>
+                    <IMPLEMENTATION-DATA-TYPE UUID="30e48ccf-7213-47fb-a535-74f3bc296bc7">
+                      <SHORT-NAME>vRoE_OpStatusType</SHORT-NAME>
+                      <CATEGORY>TYPE_REFERENCE</CATEGORY>
+                      <SW-DATA-DEF-PROPS>
+                        <SW-DATA-DEF-PROPS-VARIANTS>
+                          <SW-DATA-DEF-PROPS-CONDITIONAL>
+                            <COMPU-METHOD-REF DEST="COMPU-METHOD">/MICROSAR/vRoE/Cdd_swc/DataTypes/CompuMethods/vRoE_OpStatusType</COMPU-METHOD-REF>
+                            <DATA-CONSTR-REF DEST="DATA-CONSTR">/MICROSAR/vRoE/Cdd_swc/DataTypes/DataConstrs/vRoE_OpStatusType_Constr</DATA-CONSTR-REF>
+                            <IMPLEMENTATION-DATA-TYPE-REF DEST="IMPLEMENTATION-DATA-TYPE">/AUTOSAR_Platform/ImplementationDataTypes/uint8</IMPLEMENTATION-DATA-TYPE-REF>
+                          </SW-DATA-DEF-PROPS-CONDITIONAL>
+                        </SW-DATA-DEF-PROPS-VARIANTS>
+                      </SW-DATA-DEF-PROPS>
+                    </IMPLEMENTATION-DATA-TYPE>
+                    <IMPLEMENTATION-DATA-TYPE UUID="e2c72b31-31f3-4364-955d-574d3f22f740">
+                      <SHORT-NAME>vRoE_NegativeResponseCodeType</SHORT-NAME>
+                      <CATEGORY>TYPE_REFERENCE</CATEGORY>
+                      <SW-DATA-DEF-PROPS>
+                        <SW-DATA-DEF-PROPS-VARIANTS>
+                          <SW-DATA-DEF-PROPS-CONDITIONAL>
+                            <COMPU-METHOD-REF DEST="COMPU-METHOD">/MICROSAR/vRoE/Cdd_swc/DataTypes/CompuMethods/vRoE_NegativeResponseCodeType</COMPU-METHOD-REF>
+                            <DATA-CONSTR-REF DEST="DATA-CONSTR">/MICROSAR/vRoE/Cdd_swc/DataTypes/DataConstrs/vRoE_NegativeResponseCodeType_Constr</DATA-CONSTR-REF>
+                            <IMPLEMENTATION-DATA-TYPE-REF DEST="IMPLEMENTATION-DATA-TYPE">/AUTOSAR_Platform/ImplementationDataTypes/uint8</IMPLEMENTATION-DATA-TYPE-REF>
+                          </SW-DATA-DEF-PROPS-CONDITIONAL>
+                        </SW-DATA-DEF-PROPS-VARIANTS>
+                      </SW-DATA-DEF-PROPS>
+                    </IMPLEMENTATION-DATA-TYPE>
+                  </ELEMENTS>
+                  <AR-PACKAGES>
+                    <AR-PACKAGE UUID="712eb065-df77-41ad-b8a4-19c0f6d77193">
+                      <SHORT-NAME>DataConstrs</SHORT-NAME>
+                      <ELEMENTS>
+                        <DATA-CONSTR UUID="318894be-cf4d-4684-be1a-d1add57c0c9d">
+                          <SHORT-NAME>vRoE_ActivationStateType_Constr</SHORT-NAME>
+                          <DATA-CONSTR-RULES>
+                            <DATA-CONSTR-RULE>
+                              <INTERNAL-CONSTRS>
+                                <LOWER-LIMIT INTERVAL-TYPE="CLOSED">0</LOWER-LIMIT>
+                                <UPPER-LIMIT INTERVAL-TYPE="CLOSED">1</UPPER-LIMIT>
+                              </INTERNAL-CONSTRS>
+                            </DATA-CONSTR-RULE>
+                          </DATA-CONSTR-RULES>
+                        </DATA-CONSTR>
+                        <DATA-CONSTR UUID="404c6475-2d72-4207-8406-b311f2e653d5">
+                          <SHORT-NAME>vRoE_OpStatusType_Constr</SHORT-NAME>
+                          <DATA-CONSTR-RULES>
+                            <DATA-CONSTR-RULE>
+                              <INTERNAL-CONSTRS>
+                                <LOWER-LIMIT INTERVAL-TYPE="CLOSED">0</LOWER-LIMIT>
+                                <UPPER-LIMIT INTERVAL-TYPE="CLOSED">64</UPPER-LIMIT>
+                              </INTERNAL-CONSTRS>
+                            </DATA-CONSTR-RULE>
+                          </DATA-CONSTR-RULES>
+                        </DATA-CONSTR>
+                        <DATA-CONSTR UUID="7b64806a-e50a-49cf-b537-3d856e6da12c">
+                          <SHORT-NAME>vRoE_NegativeResponseCodeType_Constr</SHORT-NAME>
+                          <DATA-CONSTR-RULES>
+                            <DATA-CONSTR-RULE>
+                              <INTERNAL-CONSTRS>
+                                <LOWER-LIMIT INTERVAL-TYPE="CLOSED">0</LOWER-LIMIT>
+                                <UPPER-LIMIT INTERVAL-TYPE="CLOSED">49</UPPER-LIMIT>
+                              </INTERNAL-CONSTRS>
+                            </DATA-CONSTR-RULE>
+                          </DATA-CONSTR-RULES>
+                        </DATA-CONSTR>
+                      </ELEMENTS>
+                    </AR-PACKAGE>
+                    <AR-PACKAGE UUID="d8dd2a8a-21d8-4373-9699-15729274774e">
+                      <SHORT-NAME>CompuMethods</SHORT-NAME>
+                      <ELEMENTS>
+                        <COMPU-METHOD UUID="a9c03f5a-04c1-4b43-b9e0-fe852da6eff5">
+                          <SHORT-NAME>vRoE_ActivationStateType</SHORT-NAME>
+                          <CATEGORY>TEXTTABLE</CATEGORY>
+                          <COMPU-INTERNAL-TO-PHYS>
+                            <COMPU-SCALES>
+                              <COMPU-SCALE>
+                                <SHORT-LABEL>VROE_STATE_ENABLED</SHORT-LABEL>
+                                <LOWER-LIMIT INTERVAL-TYPE="CLOSED">0</LOWER-LIMIT>
+                                <UPPER-LIMIT INTERVAL-TYPE="CLOSED">0</UPPER-LIMIT>
+                                <COMPU-CONST>
+                                  <VT>VROE_STATE_ENABLED</VT>
+                                </COMPU-CONST>
+                              </COMPU-SCALE>
+                              <COMPU-SCALE>
+                                <SHORT-LABEL>VROE_STATE_DISABLED</SHORT-LABEL>
+                                <LOWER-LIMIT INTERVAL-TYPE="CLOSED">1</LOWER-LIMIT>
+                                <UPPER-LIMIT INTERVAL-TYPE="CLOSED">1</UPPER-LIMIT>
+                                <COMPU-CONST>
+                                  <VT>VROE_STATE_DISABLED</VT>
+                                </COMPU-CONST>
+                              </COMPU-SCALE>
+                            </COMPU-SCALES>
+                          </COMPU-INTERNAL-TO-PHYS>
+                        </COMPU-METHOD>
+                        <COMPU-METHOD UUID="2542ba7b-be51-449d-bda1-63daa2cbb4c5">
+                          <SHORT-NAME>vRoE_OpStatusType</SHORT-NAME>
+                          <CATEGORY>TEXTTABLE</CATEGORY>
+                          <COMPU-INTERNAL-TO-PHYS>
+                            <COMPU-SCALES>
+                              <COMPU-SCALE>
+                                <SHORT-LABEL>VROE_INITIAL</SHORT-LABEL>
+                                <LOWER-LIMIT INTERVAL-TYPE="CLOSED">0</LOWER-LIMIT>
+                                <UPPER-LIMIT INTERVAL-TYPE="CLOSED">0</UPPER-LIMIT>
+                                <COMPU-CONST>
+                                  <VT>VROE_INITIAL</VT>
+                                </COMPU-CONST>
+                              </COMPU-SCALE>
+                              <COMPU-SCALE>
+                                <SHORT-LABEL>VROE_PENDING</SHORT-LABEL>
+                                <LOWER-LIMIT INTERVAL-TYPE="CLOSED">1</LOWER-LIMIT>
+                                <UPPER-LIMIT INTERVAL-TYPE="CLOSED">1</UPPER-LIMIT>
+                                <COMPU-CONST>
+                                  <VT>VROE_PENDING</VT>
+                                </COMPU-CONST>
+                              </COMPU-SCALE>
+                              <COMPU-SCALE>
+                                <SHORT-LABEL>VROE_CANCEL</SHORT-LABEL>
+                                <LOWER-LIMIT INTERVAL-TYPE="CLOSED">2</LOWER-LIMIT>
+                                <UPPER-LIMIT INTERVAL-TYPE="CLOSED">2</UPPER-LIMIT>
+                                <COMPU-CONST>
+                                  <VT>VROE_CANCEL</VT>
+                                </COMPU-CONST>
+                              </COMPU-SCALE>
+                              <COMPU-SCALE>
+                                <SHORT-LABEL>VROE_FORCE_RCRRP_OK</SHORT-LABEL>
+                                <LOWER-LIMIT INTERVAL-TYPE="CLOSED">3</LOWER-LIMIT>
+                                <UPPER-LIMIT INTERVAL-TYPE="CLOSED">3</UPPER-LIMIT>
+                                <COMPU-CONST>
+                                  <VT>VROE_FORCE_RCRRP_OK</VT>
+                                </COMPU-CONST>
+                              </COMPU-SCALE>
+                              <COMPU-SCALE>
+                                <SHORT-LABEL>VROE_FORCE_RCRRP_NOT_OK</SHORT-LABEL>
+                                <LOWER-LIMIT INTERVAL-TYPE="CLOSED">64</LOWER-LIMIT>
+                                <UPPER-LIMIT INTERVAL-TYPE="CLOSED">64</UPPER-LIMIT>
+                                <COMPU-CONST>
+                                  <VT>VROE_FORCE_RCRRP_NOT_OK</VT>
+                                </COMPU-CONST>
+                              </COMPU-SCALE>
+                            </COMPU-SCALES>
+                          </COMPU-INTERNAL-TO-PHYS>
+                        </COMPU-METHOD>
+                        <COMPU-METHOD UUID="12ea2d3e-5d0a-4adb-b5b4-944a3a3b3861">
+                          <SHORT-NAME>vRoE_NegativeResponseCodeType</SHORT-NAME>
+                          <CATEGORY>TEXTTABLE</CATEGORY>
+                          <COMPU-INTERNAL-TO-PHYS>
+                            <COMPU-SCALES>
+                              <COMPU-SCALE>
+                                <SHORT-LABEL>VROE_E_CONDITIONSNOTCORRECT</SHORT-LABEL>
+                                <LOWER-LIMIT INTERVAL-TYPE="CLOSED">34</LOWER-LIMIT>
+                                <UPPER-LIMIT INTERVAL-TYPE="CLOSED">34</UPPER-LIMIT>
+                                <COMPU-CONST>
+                                  <VT>VROE_E_CONDITIONSNOTCORRECT</VT>
+                                </COMPU-CONST>
+                              </COMPU-SCALE>
+                              <COMPU-SCALE>
+                                <SHORT-LABEL>VROE_E_REQUESTOUTOFRANGE</SHORT-LABEL>
+                                <LOWER-LIMIT INTERVAL-TYPE="CLOSED">49</LOWER-LIMIT>
+                                <UPPER-LIMIT INTERVAL-TYPE="CLOSED">49</UPPER-LIMIT>
+                                <COMPU-CONST>
+                                  <VT>VROE_E_REQUESTOUTOFRANGE</VT>
+                                </COMPU-CONST>
+                              </COMPU-SCALE>
+                            </COMPU-SCALES>
+                          </COMPU-INTERNAL-TO-PHYS>
+                        </COMPU-METHOD>
+                      </ELEMENTS>
+                    </AR-PACKAGE>
+                  </AR-PACKAGES>
+                </AR-PACKAGE>
+                <AR-PACKAGE UUID="5a1e2fe3-9770-4f9e-89ab-a43b2e060d18">
+                  <SHORT-NAME>Interfaces</SHORT-NAME>
+                  <ELEMENTS>
+                    <SENDER-RECEIVER-INTERFACE UUID="e7b96963-07ca-4a28-9892-9b6e20eecaa9">
+                      <SHORT-NAME>RoEMessageSRI</SHORT-NAME>
+                      <IS-SERVICE>true</IS-SERVICE>
+                      <SERVICE-KIND>VENDOR-SPECIFIC</SERVICE-KIND>
+                      <DATA-ELEMENTS>
+                        <VARIABLE-DATA-PROTOTYPE UUID="1256c59e-7684-453c-91ab-91fd2cb39046">
+                          <SHORT-NAME>Data</SHORT-NAME>
+                          <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/MICROSAR/vRoE/Cdd_swc/DataTypes/vRoE_MessageType</TYPE-TREF>
+                        </VARIABLE-DATA-PROTOTYPE>
+                      </DATA-ELEMENTS>
+                    </SENDER-RECEIVER-INTERFACE>
+                    <CLIENT-SERVER-INTERFACE UUID="138ba7bf-f7c4-4093-a3ab-8a5ba51927df">
+                      <SHORT-NAME>RoEActivationCSI</SHORT-NAME>
+                      <IS-SERVICE>true</IS-SERVICE>
+                      <SERVICE-KIND>VENDOR-SPECIFIC</SERVICE-KIND>
+                      <OPERATIONS>
+                        <CLIENT-SERVER-OPERATION UUID="4cf0a3da-0645-4c48-b644-e66523a9d617">
+                          <SHORT-NAME>WriteData</SHORT-NAME>
+                          <DESC>
+                            <L-2 L="FOR-ALL"/>
+                          </DESC>
+                          <ARGUMENTS>
+                            <ARGUMENT-DATA-PROTOTYPE UUID="3c652b47-9559-48c8-95ba-3f2436eb9487">
+                              <SHORT-NAME>data</SHORT-NAME>
+                              <DESC>
+                                <L-2 L="FOR-ALL"/>
+                              </DESC>
+                              <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/MICROSAR/vRoE/Cdd_swc/DataTypes/vRoE_ActivationStateArrayType</TYPE-TREF>
+                              <DIRECTION>IN</DIRECTION>
+                            </ARGUMENT-DATA-PROTOTYPE>
+                            <ARGUMENT-DATA-PROTOTYPE UUID="29797533-b82e-41c0-8930-ca6f35053cc6">
+                              <SHORT-NAME>opStatus</SHORT-NAME>
+                              <DESC>
+                                <L-2 L="FOR-ALL"/>
+                              </DESC>
+                              <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/MICROSAR/vRoE/Cdd_swc/DataTypes/vRoE_OpStatusType</TYPE-TREF>
+                              <DIRECTION>IN</DIRECTION>
+                            </ARGUMENT-DATA-PROTOTYPE>
+                            <ARGUMENT-DATA-PROTOTYPE UUID="5294656c-a1b2-4c92-a301-e4a823855520">
+                              <SHORT-NAME>errorCode</SHORT-NAME>
+                              <DESC>
+                                <L-2 L="FOR-ALL"/>
+                              </DESC>
+                              <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/MICROSAR/vRoE/Cdd_swc/DataTypes/vRoE_NegativeResponseCodeType</TYPE-TREF>
+                              <DIRECTION>OUT</DIRECTION>
+                            </ARGUMENT-DATA-PROTOTYPE>
+                          </ARGUMENTS>
+                          <POSSIBLE-ERROR-REFS>
+                            <POSSIBLE-ERROR-REF DEST="APPLICATION-ERROR">/MICROSAR/vRoE/Cdd_swc/Interfaces/RoEActivationCSI/E_NOT_OK</POSSIBLE-ERROR-REF>
+                            <POSSIBLE-ERROR-REF DEST="APPLICATION-ERROR">/MICROSAR/vRoE/Cdd_swc/Interfaces/RoEActivationCSI/DCM_E_PENDING</POSSIBLE-ERROR-REF>
+                          </POSSIBLE-ERROR-REFS>
+                        </CLIENT-SERVER-OPERATION>
+                        <CLIENT-SERVER-OPERATION UUID="df0fb711-b485-475c-bcc7-9ca0db571cc1">
+                          <SHORT-NAME>ReadData</SHORT-NAME>
+                          <DESC>
+                            <L-2 L="FOR-ALL"/>
+                          </DESC>
+                          <ARGUMENTS>
+                            <ARGUMENT-DATA-PROTOTYPE UUID="7705b691-5166-4536-a332-63eb5b4038fe">
+                              <SHORT-NAME>opStatus</SHORT-NAME>
+                              <DESC>
+                                <L-2 L="FOR-ALL"/>
+                              </DESC>
+                              <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/MICROSAR/vRoE/Cdd_swc/DataTypes/vRoE_OpStatusType</TYPE-TREF>
+                              <DIRECTION>IN</DIRECTION>
+                            </ARGUMENT-DATA-PROTOTYPE>
+                            <ARGUMENT-DATA-PROTOTYPE UUID="e998210f-dd2f-44ed-9b90-4e3e8d4daead">
+                              <SHORT-NAME>data</SHORT-NAME>
+                              <DESC>
+                                <L-2 L="FOR-ALL"/>
+                              </DESC>
+                              <TYPE-TREF DEST="IMPLEMENTATION-DATA-TYPE">/MICROSAR/vRoE/Cdd_swc/DataTypes/vRoE_ActivationStateArrayType</TYPE-TREF>
+                              <DIRECTION>OUT</DIRECTION>
+                            </ARGUMENT-DATA-PROTOTYPE>
+                          </ARGUMENTS>
+                          <POSSIBLE-ERROR-REFS>
+                            <POSSIBLE-ERROR-REF DEST="APPLICATION-ERROR">/MICROSAR/vRoE/Cdd_swc/Interfaces/RoEActivationCSI/E_NOT_OK</POSSIBLE-ERROR-REF>
+                            <POSSIBLE-ERROR-REF DEST="APPLICATION-ERROR">/MICROSAR/vRoE/Cdd_swc/Interfaces/RoEActivationCSI/DCM_E_PENDING</POSSIBLE-ERROR-REF>
+                          </POSSIBLE-ERROR-REFS>
+                        </CLIENT-SERVER-OPERATION>
+                      </OPERATIONS>
+                      <POSSIBLE-ERRORS>
+                        <APPLICATION-ERROR UUID="d1880779-34c4-47c7-9920-23e0e618e664">
+                          <SHORT-NAME>E_NOT_OK</SHORT-NAME>
+                          <ERROR-CODE>1</ERROR-CODE>
+                        </APPLICATION-ERROR>
+                        <APPLICATION-ERROR UUID="513768e3-4407-4d9a-92f2-db35bc8a0992">
+                          <SHORT-NAME>DCM_E_PENDING</SHORT-NAME>
+                          <ERROR-CODE>10</ERROR-CODE>
+                        </APPLICATION-ERROR>
+                      </POSSIBLE-ERRORS>
+                    </CLIENT-SERVER-INTERFACE>
+                  </ELEMENTS>
+                </AR-PACKAGE>
+                <AR-PACKAGE UUID="9dee8f2f-cd30-4e9e-b320-a4c9a19c5303">
+                  <SHORT-NAME>ComponentTypes</SHORT-NAME>
+                  <ELEMENTS>
+                    <SERVICE-SW-COMPONENT-TYPE UUID="dfb3df88-f6ed-4963-a836-876d6ccc3167">
+                      <SHORT-NAME>vRoE</SHORT-NAME>
+                      <CATEGORY>SERVICE_COMPONENT</CATEGORY>
+                      <PORTS>
+                        <P-PORT-PROTOTYPE UUID="46e7041e-7fdb-425e-8b34-2d51bdfcd8e2">
+                          <SHORT-NAME>RoEMessage</SHORT-NAME>
+                          <PROVIDED-INTERFACE-TREF DEST="SENDER-RECEIVER-INTERFACE">/MICROSAR/vRoE/Cdd_swc/Interfaces/RoEMessageSRI</PROVIDED-INTERFACE-TREF>
+                        </P-PORT-PROTOTYPE>
+                        <P-PORT-PROTOTYPE UUID="5b2bc1d5-0f7a-4dd1-a43b-ba11a5d71935">
+                          <SHORT-NAME>RoEActivation</SHORT-NAME>
+                          <PROVIDED-INTERFACE-TREF DEST="CLIENT-SERVER-INTERFACE">/MICROSAR/vRoE/Cdd_swc/Interfaces/RoEActivationCSI</PROVIDED-INTERFACE-TREF>
+                        </P-PORT-PROTOTYPE>
+                      </PORTS>
+                      <INTERNAL-BEHAVIORS>
+                        <SWC-INTERNAL-BEHAVIOR UUID="27db5935-9a50-47ca-99ae-f03ca63dc52b">
+                          <SHORT-NAME>vRoEInternalBehavior</SHORT-NAME>
+                          <EVENTS>
+                            <TIMING-EVENT UUID="4293b199-fd70-4fb6-ae9e-cbd36e2af497">
+                              <SHORT-NAME>Timer_vRoE_MainFunction</SHORT-NAME>
+                              <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/MICROSAR/vRoE/Cdd_swc/ComponentTypes/vRoE/vRoEInternalBehavior/vRoE_MainFunction</START-ON-EVENT-REF>
+                              <PERIOD>0.2</PERIOD>
+                            </TIMING-EVENT>
+                            <OPERATION-INVOKED-EVENT UUID="8ee81256-8dd3-486e-958a-cc1d9c2cfa4c">
+                              <SHORT-NAME>OpEventSetActivationState_WriteData_RoEActivation</SHORT-NAME>
+                              <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/MICROSAR/vRoE/Cdd_swc/ComponentTypes/vRoE/vRoEInternalBehavior/SetActivationState</START-ON-EVENT-REF>
+                              <OPERATION-IREF>
+                                <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/MICROSAR/vRoE/Cdd_swc/ComponentTypes/vRoE/RoEActivation</CONTEXT-P-PORT-REF>
+                                <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/MICROSAR/vRoE/Cdd_swc/Interfaces/RoEActivationCSI/WriteData</TARGET-PROVIDED-OPERATION-REF>
+                              </OPERATION-IREF>
+                            </OPERATION-INVOKED-EVENT>
+                            <OPERATION-INVOKED-EVENT UUID="97c7ef88-c3e9-416a-bdc7-a1af7e39e20a">
+                              <SHORT-NAME>OpEventGetActivationState_ReadData_RoEActivation</SHORT-NAME>
+                              <START-ON-EVENT-REF DEST="RUNNABLE-ENTITY">/MICROSAR/vRoE/Cdd_swc/ComponentTypes/vRoE/vRoEInternalBehavior/GetActivationState</START-ON-EVENT-REF>
+                              <OPERATION-IREF>
+                                <CONTEXT-P-PORT-REF DEST="P-PORT-PROTOTYPE">/MICROSAR/vRoE/Cdd_swc/ComponentTypes/vRoE/RoEActivation</CONTEXT-P-PORT-REF>
+                                <TARGET-PROVIDED-OPERATION-REF DEST="CLIENT-SERVER-OPERATION">/MICROSAR/vRoE/Cdd_swc/Interfaces/RoEActivationCSI/ReadData</TARGET-PROVIDED-OPERATION-REF>
+                              </OPERATION-IREF>
+                            </OPERATION-INVOKED-EVENT>
+                          </EVENTS>
+                          <HANDLE-TERMINATION-AND-RESTART>NO-SUPPORT</HANDLE-TERMINATION-AND-RESTART>
+                          <PORT-API-OPTIONS>
+                            <PORT-API-OPTION>
+                              <ENABLE-TAKE-ADDRESS>true</ENABLE-TAKE-ADDRESS>
+                              <INDIRECT-API>false</INDIRECT-API>
+                              <PORT-REF DEST="P-PORT-PROTOTYPE">/MICROSAR/vRoE/Cdd_swc/ComponentTypes/vRoE/RoEMessage</PORT-REF>
+                            </PORT-API-OPTION>
+                            <PORT-API-OPTION>
+                              <ENABLE-TAKE-ADDRESS>true</ENABLE-TAKE-ADDRESS>
+                              <INDIRECT-API>false</INDIRECT-API>
+                              <PORT-REF DEST="P-PORT-PROTOTYPE">/MICROSAR/vRoE/Cdd_swc/ComponentTypes/vRoE/RoEActivation</PORT-REF>
+                            </PORT-API-OPTION>
+                          </PORT-API-OPTIONS>
+                          <RUNNABLES>
+                            <RUNNABLE-ENTITY UUID="cdb317ed-a453-4743-a239-3501e9667d7b">
+                              <SHORT-NAME>vRoE_MainFunction</SHORT-NAME>
+                              <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                              <CAN-BE-INVOKED-CONCURRENTLY>false</CAN-BE-INVOKED-CONCURRENTLY>
+                              <DATA-SEND-POINTS>
+                                <VARIABLE-ACCESS UUID="0566b96a-7209-44f1-a1da-ba3d6ec12929">
+                                  <SHORT-NAME>DataSendPointvRoE_MainFunction_RoEMessage_Data</SHORT-NAME>
+                                  <ACCESSED-VARIABLE>
+                                    <AUTOSAR-VARIABLE-IREF>
+                                      <PORT-PROTOTYPE-REF DEST="P-PORT-PROTOTYPE">/MICROSAR/vRoE/Cdd_swc/ComponentTypes/vRoE/RoEMessage</PORT-PROTOTYPE-REF>
+                                      <TARGET-DATA-PROTOTYPE-REF DEST="VARIABLE-DATA-PROTOTYPE">/MICROSAR/vRoE/Cdd_swc/Interfaces/RoEMessageSRI/Data</TARGET-DATA-PROTOTYPE-REF>
+                                    </AUTOSAR-VARIABLE-IREF>
+                                  </ACCESSED-VARIABLE>
+                                </VARIABLE-ACCESS>
+                              </DATA-SEND-POINTS>
+                              <SYMBOL>vRoE_MainFunction</SYMBOL>
+                            </RUNNABLE-ENTITY>
+                            <RUNNABLE-ENTITY UUID="059daf03-f2a2-479f-be4a-b2f67d25828b">
+                              <SHORT-NAME>SetActivationState</SHORT-NAME>
+                              <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                              <CAN-BE-INVOKED-CONCURRENTLY>true</CAN-BE-INVOKED-CONCURRENTLY>
+                              <SYMBOL>vRoE_SetActivationState</SYMBOL>
+                            </RUNNABLE-ENTITY>
+                            <RUNNABLE-ENTITY UUID="0f9751c8-dde1-4785-91cf-c34a4f1ea48c">
+                              <SHORT-NAME>GetActivationState</SHORT-NAME>
+                              <MINIMUM-START-INTERVAL>0</MINIMUM-START-INTERVAL>
+                              <CAN-BE-INVOKED-CONCURRENTLY>true</CAN-BE-INVOKED-CONCURRENTLY>
+                              <SYMBOL>vRoE_GetActivationState</SYMBOL>
+                            </RUNNABLE-ENTITY>
+                          </RUNNABLES>
+                          <SUPPORTS-MULTIPLE-INSTANTIATION>false</SUPPORTS-MULTIPLE-INSTANTIATION>
+                        </SWC-INTERNAL-BEHAVIOR>
+                      </INTERNAL-BEHAVIORS>
+                    </SERVICE-SW-COMPONENT-TYPE>
+                    <SWC-IMPLEMENTATION UUID="bd6ee658-babd-4983-9847-073a7dd3dfd0">
+                      <SHORT-NAME>vRoEImplementation</SHORT-NAME>
+                      <PROGRAMMING-LANGUAGE>C</PROGRAMMING-LANGUAGE>
+                      <RESOURCE-CONSUMPTION UUID="f75aff22-c46c-4e46-8dc1-8afe29791a46">
+                        <SHORT-NAME>vRoEResourceConsumption</SHORT-NAME>
+                        <MEMORY-SECTIONS>
+                          <MEMORY-SECTION UUID="c78d20a2-651d-426e-95f2-dddc6b73d785">
+                            <SHORT-NAME>vRoE_START_SEC_CODE</SHORT-NAME>
+                            <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/MICROSAR_MemMap/SwAddrMethods/CODE</SW-ADDRMETHOD-REF>
+                            <SYMBOL>CODE</SYMBOL>
+                          </MEMORY-SECTION>
+                          <MEMORY-SECTION UUID="610c1882-d5b5-4acd-a93f-cfed9ade7ec8">
+                            <SHORT-NAME>vRoE_START_SEC_CONST_UNSPECIFIED</SHORT-NAME>
+                            <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                            <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/MICROSAR_MemMap/SwAddrMethods/CONST</SW-ADDRMETHOD-REF>
+                            <SYMBOL>CONST_UNSPECIFIED</SYMBOL>
+                          </MEMORY-SECTION>
+                          <MEMORY-SECTION UUID="848d1fe6-e3a1-41de-be93-e08e0b988675">
+                            <SHORT-NAME>vRoE_START_SEC_VAR_NOINIT_UNSPECIFIED</SHORT-NAME>
+                            <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                            <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/MICROSAR_MemMap/SwAddrMethods/VAR_NO_INIT</SW-ADDRMETHOD-REF>
+                            <SYMBOL>VAR_NOINIT_UNSPECIFIED</SYMBOL>
+                          </MEMORY-SECTION>
+                          <MEMORY-SECTION UUID="6100aaf9-d76e-4eea-a608-cf55d0b10ac4">
+                            <SHORT-NAME>vRoE_START_SEC_VAR_INIT_UNSPECIFIED</SHORT-NAME>
+                            <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                            <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/MICROSAR_MemMap/SwAddrMethods/VAR_INIT</SW-ADDRMETHOD-REF>
+                            <SYMBOL>VAR_INIT_UNSPECIFIED</SYMBOL>
+                          </MEMORY-SECTION>
+                          <MEMORY-SECTION UUID="8d1c8c72-9ee5-4bbc-989f-df8c7715e078">
+                            <SHORT-NAME>vRoE_START_SEC_VAR_ZERO_INIT_UNSPECIFIED</SHORT-NAME>
+                            <ALIGNMENT>UNSPECIFIED</ALIGNMENT>
+                            <SW-ADDRMETHOD-REF DEST="SW-ADDR-METHOD">/MICROSAR_MemMap/SwAddrMethods/VAR_CLEARED</SW-ADDRMETHOD-REF>
+                            <SYMBOL>VAR_ZERO_INIT_UNSPECIFIED</SYMBOL>
+                          </MEMORY-SECTION>
+                        </MEMORY-SECTIONS>
+                      </RESOURCE-CONSUMPTION>
+                      <BEHAVIOR-REF DEST="SWC-INTERNAL-BEHAVIOR">/MICROSAR/vRoE/Cdd_swc/ComponentTypes/vRoE/vRoEInternalBehavior</BEHAVIOR-REF>
+                    </SWC-IMPLEMENTATION>
+                  </ELEMENTS>
+                </AR-PACKAGE>
+              </AR-PACKAGES>
+            </AR-PACKAGE>
+          </AR-PACKAGES>
+        </AR-PACKAGE>
+      </AR-PACKAGES>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

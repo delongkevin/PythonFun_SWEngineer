@@ -1,0 +1,48 @@
+D:/L2H4060_Software/sw/binary/bookshelf/magna_apps/tha_sm_vc/mcu2_1/obj/j721s2/mcu2_1/release/./algo/THA_SM_Ref/THA_SM_Ref.oer5f: \
+  algo\THA_SM_Ref\THA_SM_Ref.c algo\THA_SM_Ref\THA_SM_Ref.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\math.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c++\v1\__config \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c\sys\_types.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c\sys\cdefs.h \
+  C:\prjtools\ti-cgt-armllvm_1.3.0.LTS\include\c\alloca.h \
+  algo\_sharedutils\rtwtypes.h algo\THA_SM_Ref\THA_SM_Ref_types.h \
+  algo\_sharedutils\TeTHA_e_HitchDetctStatus.h \
+  algo\_sharedutils\rtwtypes.h \
+  algo\_sharedutils\TeTHA_e_CplrDetctStatus.h \
+  algo\_sharedutils\TeTHA_e_ScreenRequest.h \
+  algo\_sharedutils\TeSVS_e_DispView2.h \
+  D:\L2H4060_Software\sw\bookshelf\magna_apps\common_includes\TeVBII_e_CmdIgnSts.h \
+  D:\L2H4060_Software\sw\bookshelf\magna_apps\common_includes\TeVBII_e_TrailerConnectionSts.h \
+  D:\L2H4060_Software\sw\bookshelf\magna_apps\common_includes\TeVBII_e_TrlrPrsntSts.h \
+  D:\L2H4060_Software\sw\bookshelf\magna_apps\common_includes\TeVBII_e_TchScrSts.h \
+  D:\L2H4060_Software\sw\bookshelf\magna_apps\common_includes\TeVBII_e_GearEngagedForDsply.h \
+  D:\L2H4060_Software\sw\bookshelf\magna_apps\common_includes\TeVBII_e_VehStandStillSts.h \
+  D:\L2H4060_Software\sw\bookshelf\magna_apps\common_includes\TeVBII_e_WhlSpnSts.h \
+  D:\L2H4060_Software\sw\bookshelf\magna_apps\common_includes\TeVBII_e_VehEPBSts.h \
+  algo\_sharedutils\TeVBII_e_BsmTHABrkResp.h \
+  algo\_sharedutils\TeVBII_e_LwsAngleType.h \
+  algo\_sharedutils\TeVBII_e_EpsTHADrvTrqOvrd.h \
+  algo\_sharedutils\TeVBII_e_EpsTHASteerTrqResp.h \
+  algo\_sharedutils\TeVBII_e_THASteerTouchStatus.h \
+  D:\L2H4060_Software\sw\bookshelf\magna_apps\common_includes\TeVBII_e_EngineSts.h \
+  D:\L2H4060_Software\sw\bookshelf\magna_apps\common_includes\TeVBII_e_EssEngState.h \
+  algo\_sharedutils\TeVBII_e_EcmTHAResp.h \
+  algo\_sharedutils\TePRX_e_VehLineCfg.h \
+  algo\_sharedutils\TePRX_e_Wheelbase.h \
+  algo\_sharedutils\TePRX_e_SteerRatRackPinionTyp.h \
+  algo\_sharedutils\TeAP_e_FrntRearParkSts.h \
+  algo\_sharedutils\TeAP_e_AutoParkStatus.h \
+  D:\L2H4060_Software\sw\bookshelf\magna_apps\trsc\algo\_sharedutils\TeTRSC_e_TRSCSts.h \
+  D:\L2H4060_Software\sw\bookshelf\magna_apps\trsc\algo\_sharedutils\rtwtypes.h \
+  algo\_sharedutils\TeTHA_e_THARmpUpDwnSpd.h \
+  algo\_sharedutils\TeTHA_e_THASteerTrqReq.h \
+  algo\_sharedutils\TeTHA_e_PamVol.h \
+  algo\_sharedutils\TeTHA_e_PamChimeTyp.h \
+  algo\_sharedutils\TeTHA_e_PamChimeRepRateSts.h \
+  algo\_sharedutils\TeTHA_e_THAStateInfo.h \
+  algo\_sharedutils\TeTHA_e_EPBReq.h \
+  algo\_sharedutils\TeTHA_e_THASpdLimReq.h \
+  algo\_sharedutils\TeTHA_e_THAState.h \
+  algo\_sharedutils\TeTHA_e_RearBrkSupprInfo.h \
+  algo\_sharedutils\THA_CalibParams.h \
+  algo\THA_SM_Ref\THA_SM_Ref_private.h

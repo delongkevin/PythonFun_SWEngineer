@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;puc_app/code/Apps/OVL3DIntgr/IDataProviderOvl3d.h&apos; to &apos;IDataProviderOvl3D.h&apos;" description="Rename resource &apos;IDataProviderOvl3d.h&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="code/Apps/OVL3DIntgr/IDataProviderOvl3d.h" name="IDataProviderOvl3D.h" stamp="1634149652321" updateReferences="true"/>
+</session>
