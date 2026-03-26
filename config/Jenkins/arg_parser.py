@@ -377,7 +377,7 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Magna Electronics &ndash; Software Test Report &ndash; {report_timestamp}</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='5' fill='%23DA291C'/%3E%3Ctext x='18' y='27' font-family='Arial Black%2CHelvetica Neue%2Csans-serif' font-size='24' font-weight='900' fill='%23fff' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='5' fill='%23DA291C'/%3E%3Ctext x='18' y='27' font-family='Arial%20Black%2CHelvetica%20Neue%2Csans-serif' font-size='24' font-weight='900' fill='%23fff' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
 <style>
 /* ── RESET ── */
 *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
