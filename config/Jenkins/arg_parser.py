@@ -636,6 +636,10 @@ table td{{
   vertical-align:middle;line-height:1.45;
   word-break:break-word;overflow-wrap:anywhere
 }}
+/* First column (label cells) – never wrap so text stays readable at any window width */
+table td:first-child{{
+  white-space:nowrap;word-break:normal;overflow-wrap:normal;min-width:220px
+}}
 /* Cells classified as "short status" by JS – never wrap (PASS / FAIL / OK / #) */
 table td.td-nowrap{{
   white-space:nowrap;word-break:normal;overflow-wrap:normal;
