@@ -220,8 +220,14 @@ def remove_empty_sections(html):
     return html
 
 def generate_html_report(html_files, source_paths, destination_path, keyword):
-    """Generates a professional, self-contained HTML report with a statistics dashboard,
-    consolidated failure summary, live search, and per-report collapsible sections."""
+    """Generates a professional HTML report with a statistics dashboard, consolidated
+    failure summary, live search, and per-report collapsible sections.
+
+    Text and log content is embedded inline so the HTML file is portable on its own.
+    Images are stored in a 'report_images/' subfolder next to the HTML file and
+    referenced by relative URL, keeping the HTML file size small.  The 'report_images/'
+    folder must travel with the HTML file for images to display correctly.
+    """
 
     try:
         logging.info("Starting report generation...")
@@ -342,7 +348,7 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
         circ = 339.3
         pass_arc = round((total_passed / total_executed) * circ, 1) if total_executed > 0 else 0.0
         fail_arc = round((total_failed / total_executed) * circ, 1) if total_executed > 0 else 0.0
-        fail_offset = round(-pass_arc, 1)   # shift fail segment past pass segment
+        fail_arc_offset = round(-pass_arc, 1)   # negative offset shifts fail arc past the pass arc
 
         consolidated_failures = (
             all_failures_html
@@ -929,7 +935,7 @@ window.addEventListener('DOMContentLoaded', function() {{
               <!-- fail arc (offset starts right after pass arc) -->
               <circle cx="65" cy="65" r="54" fill="none" stroke="#ef5350" stroke-width="16"
                 stroke-dasharray="{fail_arc} {circ}"
-                stroke-dashoffset="{fail_offset}"
+                stroke-dashoffset="{fail_arc_offset}"
                 transform="rotate(-90 65 65)"/>
             </svg>
             <div class="donut-center">
@@ -1000,7 +1006,9 @@ window.addEventListener('DOMContentLoaded', function() {{
       <div class="card-body" id="body-images">
         <p class="img-note">
           &#x2139; Images are stored in the <strong>report_images/</strong> subfolder alongside this file.
-          Keep that folder with the HTML to display images correctly. Click any thumbnail to open at full resolution.
+          <strong>Do not delete or move the report_images/ folder</strong> — doing so will break all image links.
+          When sharing this report, always include the report_images/ folder.
+          Click any thumbnail to open at full resolution in a new tab.
         </p>
         <div class="img-grid">
           {image_tags if image_tags else '<p class="muted-note">No images found.</p>'}
@@ -1262,6 +1270,12 @@ def copy_and_embed_files(source_paths, destination_path, delete_after_embedding=
                 try:
                     if file_ext in ["png", "jpg", "jpeg", "gif"]:
                         # ── Images: copy to flat report_images/ subfolder ──────────
+                        # Hash the source first to skip copying duplicate content
+                        src_hash = get_file_hash(src_file)
+                        if src_hash in embedded_hashes:
+                            logging.info(f"Skipping duplicate image (source): {filename}")
+                            continue
+
                         os.makedirs(images_dir, exist_ok=True)
                         unique_filename = get_unique_filename(images_dir, filename)
                         dest_file = os.path.join(images_dir, unique_filename)
@@ -1270,13 +1284,7 @@ def copy_and_embed_files(source_paths, destination_path, delete_after_embedding=
                         if not os.path.exists(dest_file):
                             continue
 
-                        file_hash = get_file_hash(dest_file)
-                        if file_hash in embedded_hashes:
-                            logging.info(f"Skipping duplicate image: {unique_filename}")
-                            os.remove(dest_file)
-                            continue
-
-                        embedded_hashes.add(file_hash)
+                        embedded_hashes.add(src_hash)
                         copied_files.append(dest_file)
 
                         # Relative URL path (forward slashes for HTML on all OS)
@@ -1300,6 +1308,12 @@ def copy_and_embed_files(source_paths, destination_path, delete_after_embedding=
 
                     elif file_ext in ["txt", "html"]:
                         # ── Text/HTML: preserve folder structure, embed inline ─────
+                        # Hash the source first to skip copying duplicate content
+                        src_hash = get_file_hash(src_file)
+                        if src_hash in embedded_hashes:
+                            logging.info(f"Skipping duplicate text file (source): {filename}")
+                            continue
+
                         relative_path = os.path.relpath(root, source_path)
                         dest_dir = os.path.join(destination_path, relative_path)
                         os.makedirs(dest_dir, exist_ok=True)
@@ -1310,13 +1324,7 @@ def copy_and_embed_files(source_paths, destination_path, delete_after_embedding=
                         if not os.path.exists(dest_file):
                             continue
 
-                        file_hash = get_file_hash(dest_file)
-                        if file_hash in embedded_hashes:
-                            logging.info(f"Skipping duplicate text file: {unique_filename}")
-                            os.remove(dest_file)
-                            continue
-
-                        embedded_hashes.add(file_hash)
+                        embedded_hashes.add(src_hash)
                         copied_files.append(dest_file)
 
                         encoding = detect_encoding(dest_file)
