@@ -1,4 +1,5 @@
 import os
+import html as html_escape_lib
 import argparse
 import shutil
 import base64
@@ -90,44 +91,26 @@ def find_html_files(source_paths):
 def extract_summary_data(soup):
     """Extracts executed, passed, and failed test case counts from the summary table."""
     executed_count, pass_count, fail_count = 0, 0, 0
-    
+
     overview_table = soup.find("table", class_="OverviewTable")
     if overview_table:
         rows = overview_table.find_all("tr")
         for row in rows:
             cells = row.find_all("td")
+            if len(cells) < 2:
+                continue  # skip header/blank rows that have no value cell
             row_text = [cell.get_text(strip=True) for cell in cells]
-            if "Executed test cases" in row_text[0]:
-                executed_count = int(row_text[1])
-            elif "Test cases passed" in row_text[0]:
-                pass_count = int(row_text[1])
-            elif "Test cases failed" in row_text[0]:
-                fail_count = int(row_text[1])
-    
+            try:
+                if "Executed test cases" in row_text[0]:
+                    executed_count = int(row_text[1])
+                elif "Test cases passed" in row_text[0]:
+                    pass_count = int(row_text[1])
+                elif "Test cases failed" in row_text[0]:
+                    fail_count = int(row_text[1])
+            except (ValueError, IndexError):
+                pass  # non-numeric or missing cell — skip silently
+
     return executed_count, pass_count, fail_count
-
-def extract_failed_tests(soup):
-    """Extracts failed test cases from the report using BeautifulSoup."""
-    failed_tests = ""
-    failure_sections = soup.find_all("table", class_="FailureTable")  # Ensure correct class
-    
-    for section in failure_sections:
-        failed_tests += str(section)
-
-    return failed_tests if failed_tests else "<p>No failed tests found.</p>"
-
-def extract_keyword_from_tables(soup, keyword):
-    """Extracts table rows that contain the given keyword."""
-    keyword_lower = keyword.lower()
-    extracted_rows = []
-
-    for table in soup.find_all("table"):
-        for row in table.find_all("tr"):
-            cells = row.find_all(["th", "td"])
-            if any(keyword_lower in cell.get_text(strip=True).lower() for cell in cells):
-                extracted_rows.append(str(row))
-
-    return f"<table border='1'>{''.join(extracted_rows)}</table>" if extracted_rows else "<p>No matching keyword data found.</p>"
 
 def append_to_excel(test_name, pass_count, fail_count):
     """Appends test data to an Excel sheet while ensuring correct headers exist."""
@@ -220,155 +203,868 @@ def remove_empty_sections(html):
     return html
 
 def generate_html_report(html_files, source_paths, destination_path, keyword):
-    """Generates a structured, navigable HTML report with a fixed left navigation column and toggle functionality."""
-    
+    """Generates a professional HTML report with a statistics dashboard, consolidated
+    failure summary, live search, and per-report collapsible sections.
+
+    Text and log content is embedded inline so the HTML file is portable on its own.
+    Images are stored in a 'report_images/' subfolder next to the HTML file and
+    referenced by relative URL, keeping the HTML file size small.  The 'report_images/'
+    folder must travel with the HTML file for images to display correctly.
+    """
+
     try:
         logging.info("Starting report generation...")
 
-        # Copy files and get copied file list
         text_content, image_tags, copied_files = copy_and_embed_files(source_paths, destination_path)
 
         seen_files = set()
-        statistics_table_html = ""
-        failed_tests_html = ""
-        keyword_table_rows_html = ""
         navigation_links = ""
         report_sections_html = ""
+        all_failures_html = ""
+
+        # Aggregate statistics across every embedded report
+        total_executed = 0
+        total_passed = 0
+        total_failed = 0
 
         for index, html_file in enumerate(html_files):
             if html_file in seen_files:
-                continue  # Skip duplicate files
+                continue
 
             try:
                 logging.info(f"Processing HTML file: {html_file}")
-                with open(html_file, 'r', encoding='utf-8') as file:
-                    soup = BeautifulSoup(file, 'html.parser')
+                with open(html_file, 'r', encoding='utf-8') as f:
+                    soup = BeautifulSoup(f, 'html.parser')
 
-                    file_title = os.path.basename(html_file).replace("_", " ").replace(".html", "").title()
-                    section_id = f"section-{index}"
+                file_title = html_escape_lib.escape(
+                    os.path.basename(html_file)
+                    .replace("_", " ")
+                    .replace(".html", "")
+                    .title()
+                )
+                section_id = f"section-{index}"
 
-                    # Add navigation link to sidebar
-                    navigation_links += f'<li><a href="javascript:void(0);" onclick="toggleSection(\'{section_id}\')">{file_title}</a></li>'
+                # Per-file statistics — guard against malformed summary rows
+                try:
+                    executed, passed, failed = extract_summary_data(soup)
+                except Exception as e:
+                    logging.warning(
+                        f"Failed to extract summary data from {html_file}: {e}. "
+                        "Using zero values for executed/passed/failed."
+                    )
+                    executed, passed, failed = 0, 0, 0
+                total_executed += executed
+                total_passed += passed
+                total_failed += failed
 
-                    # Create a <details> section for each report file
-                    section_content = f"""
-                    <details id="{section_id}">
-                        <summary>{file_title}</summary>
-                        {extract_statistics_table(soup)}
-                        {extract_failed_tests(soup)}
-                        {extract_keyword_from_tables(soup, keyword)}
-                    </details>
-                    """
+                # Sidebar navigation badge
+                if failed > 0:
+                    nav_badge_cls = "nb-fail"
+                    nav_badge_txt = f"FAIL ({failed})"
+                elif passed > 0:
+                    nav_badge_cls = "nb-pass"
+                    nav_badge_txt = "PASS"
+                else:
+                    nav_badge_cls = "nb-neutral"
+                    nav_badge_txt = "—"
 
-                    report_sections_html += section_content  # Add to report body
-                    seen_files.add(html_file)
+                navigation_links += (
+                    f'<li class="nav-item">'
+                    f'<a class="nav-link" href="javascript:void(0);" onclick="showSection(\'{section_id}\')">'
+                    f'<span class="nav-title">{file_title}</span>'
+                    f'<span class="nav-badge {nav_badge_cls}">{nav_badge_txt}</span>'
+                    f'</a></li>'
+                )
+
+                # Consolidated failures panel content
+                failed_html = extract_failed_tests(soup)
+                if failed > 0:
+                    all_failures_html += (
+                        f'<div class="failure-group">'
+                        f'<div class="fg-title">{file_title}'
+                        f'<span class="badge badge-fail">{failed} FAILED</span>'
+                        f'</div>'
+                        f'<div class="fg-body">{failed_html}</div>'
+                        f'</div>'
+                    )
+
+                # Per-section header badges
+                sbadges = ""
+                if failed > 0:
+                    sbadges += f'<span class="sec-badge sec-fail">{failed} Failed</span>'
+                if passed > 0:
+                    sbadges += f'<span class="sec-badge sec-pass">{passed} Passed</span>'
+
+                stats_html = extract_statistics_table(soup)
+                kw_html = extract_keyword_from_tables(soup, keyword)
+
+                report_sections_html += (
+                    f'<div class="report-card" id="{section_id}">'
+                    f'<div class="card-hdr" onclick="toggleCard(\'{section_id}\')">'
+                    f'<div class="card-hdr-left">'
+                    f'<span class="card-icon">&#x1F4CB;</span>'
+                    f'<span class="card-title">{file_title}</span>'
+                    f'{sbadges}'
+                    f'</div>'
+                    f'<span class="chevron" id="chv-{section_id}">&#9660;</span>'
+                    f'</div>'
+                    f'<div class="card-body" id="body-{section_id}">'
+                    f'<div class="mini-stats-row">'
+                    f'<span class="ms ms-exec">&#x25CF; Executed: <strong>{executed}</strong></span>'
+                    f'<span class="ms ms-pass">&#x25CF; Passed: <strong>{passed}</strong></span>'
+                    f'<span class="ms ms-fail">&#x25CF; Failed: <strong>{failed}</strong></span>'
+                    f'</div>'
+                    f'{stats_html}'
+                    f'{failed_html}'
+                    f'{kw_html}'
+                    f'</div>'
+                    f'</div>'
+                )
+
+                seen_files.add(html_file)
 
             except Exception as e:
                 logging.error(f"Error processing {html_file}: {e}")
 
         logging.info(f"Total HTML reports added: {len(seen_files)}")
 
-        # **Final Report Template with Fixed Navigation and JavaScript for Toggle**
+        # Derived metrics — clamp fractions to [0, 1] so malformed totals
+        # never produce bars/arcs outside a valid range.
+        report_timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
+        num_reports = len(seen_files)
+
+        if total_executed > 0:
+            raw_pass = total_passed / total_executed
+            raw_fail = total_failed / total_executed
+            pass_frac = min(max(raw_pass, 0.0), 1.0)
+            fail_frac = min(max(raw_fail, 0.0), 1.0)
+            # Normalize when the two fractions sum beyond 1 (malformed counts)
+            total_frac = pass_frac + fail_frac
+            if total_frac > 1.0:
+                pass_frac /= total_frac
+                fail_frac /= total_frac
+            pass_rate = round(pass_frac * 100, 1)
+            fail_rate = round(fail_frac * 100, 1)
+        else:
+            pass_frac = 0.0
+            fail_frac = 0.0
+            pass_rate = 0.0
+            fail_rate = 0.0
+
+        # SVG donut chart (circle r=54, circumference ≈ 339.3)
+        circ = 339.3
+        pass_arc = round(pass_frac * circ, 1)
+        fail_arc = round(fail_frac * circ, 1)
+        fail_arc_offset = round(-pass_arc, 1)   # negative offset shifts fail arc past the pass arc
+
+        consolidated_failures = (
+            all_failures_html
+            if all_failures_html
+            else '<p class="no-failures">&#x2714; No test failures detected across all embedded reports.</p>'
+        )
+
+        files_list_html = (
+            '<ul class="file-list">'
+            + "".join(f'<li>&#x1F4C4; {os.path.basename(f)}</li>' for f in copied_files)
+            + "</ul>"
+            if copied_files
+            else '<p class="muted-note">No copied files.</p>'
+        )
+
         html_template = f"""<!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Software Test Report</title>
-            <style>
-                body {{ font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; }}
-                .sidebar {{
-                    width: 250px;
-                    height: 100vh;
-                    position: fixed;
-                    background-color: #333;
-                    color: white;
-                    padding: 20px;
-                    overflow-y: auto;
-                }}
-                .sidebar h2 {{ text-align: center; font-size: 18px; }}
-                .sidebar ul {{
-                    list-style-type: none;
-                    padding: 0;
-                }}
-                .sidebar ul li {{
-                    padding: 8px;
-                    border-bottom: 1px solid #555;
-                }}
-                .sidebar ul li a {{
-                    text-decoration: none;
-                    color: white;
-                    display: block;
-                }}
-                .sidebar ul li a:hover {{
-                    background-color: #555;
-                }}
-                .content {{
-                    margin-left: 270px;
-                    padding: 20px;
-                    width: calc(100% - 270px);
-                }}
-                h1, h2, h3 {{ margin: 10px 0; }}
-                pre {{ white-space: pre-wrap; word-wrap: break-word; margin: 5px 0; }}
-                details {{ margin-bottom: 5px; }}
-                summary {{ padding: 5px; background: #eee; border-radius: 3px; cursor: pointer; }}
-            </style>
-            <script>
-                function toggleSection(id) {{
-                    var section = document.getElementById(id);
-                    if (section) {{
-                        section.open = !section.open;
-                        section.scrollIntoView({{ behavior: 'smooth', block: 'start' }});
-                    }}
-                }}
-            </script>
-        </head>
-        <body>
-        
-            <div class="sidebar">
-                <h2>Navigation</h2>
-                <ul>
-                    <li><a href="javascript:void(0);" onclick="toggleSection('logs')">Logs & Info</a></li>
-                    <li><a href="javascript:void(0);" onclick="toggleSection('images')">Embedded Images</a></li>
-                    <li><a href="javascript:void(0);" onclick="toggleSection('copied-files')">Copied Files</a></li>
-                    {navigation_links}
-                </ul>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Software Test Report &ndash; {report_timestamp}</title>
+<style>
+/* ── RESET ── */
+*,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
+
+/* ── CUSTOM PROPERTIES ── */
+:root{{
+  --sw: 285px;
+  --hdr: #0b1f35;
+  --accent: #1565c0;
+  --pass-dk: #1b5e20; --pass-md: #2e7d32; --pass-bg: #e8f5e9; --pass-bd: #43a047;
+  --fail-dk: #7f0000; --fail-md: #c62828; --fail-bg: #ffebee; --fail-bd: #ef5350;
+  --exec-dk: #0d47a1; --exec-bg: #e3f2fd; --exec-bd: #1e88e5;
+  --rate-dk: #4a148c; --rate-bg: #f3e5f5; --rate-bd: #8e24aa;
+  --warn-dk: #e65100; --warn-bg: #fff3e0;
+  --bdr: #dde1e7; --bg: #eef0f4; --card: #ffffff;
+  --txt: #1a1a2e; --muted: #6b7280; --sbg: #0b1f35;
+}}
+
+/* ── BODY LAYOUT ── */
+body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  font-size:14px;color:var(--txt);background:var(--bg);display:flex;min-height:100vh}}
+
+/* ══════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════ */
+.sidebar{{
+  width:var(--sw);min-height:100vh;background:var(--sbg);
+  position:fixed;top:0;left:0;overflow-y:auto;z-index:200;
+  display:flex;flex-direction:column;
+  box-shadow:3px 0 12px rgba(0,0,0,0.35)
+}}
+.sb-brand{{padding:22px 20px 16px;background:#061222;border-bottom:1px solid rgba(255,255,255,0.07)}}
+.sb-brand .brand-icon{{font-size:26px}}
+.sb-brand h2{{color:#fff;font-size:15px;font-weight:700;margin-top:8px;letter-spacing:.3px}}
+.sb-brand .brand-sub{{color:rgba(255,255,255,.4);font-size:11px;margin-top:3px}}
+
+/* Sidebar quick stats */
+.sb-kpi{{
+  display:flex;justify-content:space-around;
+  padding:14px 12px;
+  background:rgba(21,101,192,.18);
+  border-bottom:1px solid rgba(255,255,255,.06)
+}}
+.sb-kpi .kpi{{text-align:center}}
+.sb-kpi .kpi-num{{font-size:22px;font-weight:800;line-height:1}}
+.sb-kpi .kpi-lbl{{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.8px}}
+.kn-exec{{color:#64b5f6}} .kn-pass{{color:#66bb6a}} .kn-fail{{color:#ef9a9a}}
+
+.nav-section-lbl{{
+  padding:14px 20px 4px;color:rgba(255,255,255,.3);
+  font-size:10px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase
+}}
+.nav-list{{list-style:none;padding:0 8px}}
+.nav-item .nav-link{{
+  display:flex;align-items:center;justify-content:space-between;
+  color:rgba(255,255,255,.72);text-decoration:none;
+  padding:7px 12px;border-radius:6px;margin-bottom:2px;font-size:12.5px;
+  border-left:3px solid transparent;transition:all .15s
+}}
+.nav-item .nav-link:hover{{color:#fff;background:rgba(255,255,255,.09);border-left-color:var(--accent)}}
+.nav-title{{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+.nav-badge{{font-size:9px;font-weight:700;padding:2px 7px;border-radius:8px;margin-left:6px;
+  flex-shrink:0;text-transform:uppercase;letter-spacing:.3px}}
+.nb-fail{{background:var(--fail-md);color:#fff}}
+.nb-pass{{background:var(--pass-md);color:#fff}}
+.nb-neutral{{background:rgba(255,255,255,.15);color:rgba(255,255,255,.55)}}
+
+/* ══════════════════════════════════════
+   MAIN WRAPPER
+══════════════════════════════════════ */
+.main-wrap{{margin-left:var(--sw);flex:1;display:flex;flex-direction:column;min-width:0}}
+
+/* ── PAGE HEADER ── */
+.page-hdr{{
+  background:linear-gradient(135deg,#0b1f35 0%,#1a3a5c 100%);
+  padding:26px 36px;display:flex;align-items:flex-start;
+  justify-content:space-between;box-shadow:0 4px 16px rgba(0,0,0,.3)
+}}
+.page-hdr h1{{color:#fff;font-size:24px;font-weight:700;letter-spacing:-.3px}}
+.page-hdr .hdr-sub{{color:rgba(255,255,255,.5);font-size:12px;margin-top:5px}}
+.hdr-pill{{
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;font-size:12px;
+  white-space:nowrap;margin-top:4px
+}}
+
+/* ── CONTENT AREA ── */
+.content{{padding:28px 36px}}
+
+/* ══════════════════════════════════════
+   STATS DASHBOARD
+══════════════════════════════════════ */
+.stats-dash{{
+  background:var(--card);border-radius:12px;
+  box-shadow:0 2px 10px rgba(0,0,0,.08);
+  padding:26px 30px;margin-bottom:24px;border:1px solid var(--bdr)
+}}
+.dash-title{{
+  font-size:11px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:1.3px;
+  margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid var(--bdr)
+}}
+.stats-row{{display:flex;gap:16px;align-items:stretch;flex-wrap:wrap}}
+
+.stat-card{{
+  flex:1;min-width:140px;border-radius:10px;padding:20px 20px 16px;
+  border:1px solid var(--bdr);display:flex;flex-direction:column;
+  position:relative;overflow:hidden
+}}
+.stat-card::before{{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px
+}}
+.sc-exec::before{{background:var(--exec-bd)}} .sc-exec{{background:linear-gradient(150deg,#fff 55%,#dceeff)}}
+.sc-pass::before{{background:var(--pass-bd)}} .sc-pass{{background:linear-gradient(150deg,#fff 55%,#e2f5e6)}}
+.sc-fail::before{{background:var(--fail-bd)}} .sc-fail{{background:linear-gradient(150deg,#fff 55%,#fde9ec)}}
+.sc-rate::before{{background:var(--rate-bd)}} .sc-rate{{background:linear-gradient(150deg,#fff 55%,#f0e8fb)}}
+
+.sc-icon{{font-size:22px;margin-bottom:8px}}
+.sc-num{{font-size:42px;font-weight:800;line-height:1;margin-bottom:4px;letter-spacing:-1.5px}}
+.sc-exec .sc-num{{color:var(--exec-dk)}} .sc-pass .sc-num{{color:var(--pass-dk)}}
+.sc-fail .sc-num{{color:var(--fail-dk)}} .sc-rate .sc-num{{color:var(--rate-dk)}}
+.sc-lbl{{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}}
+.sc-bar{{margin-top:12px;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden}}
+.sc-bar-fill{{height:100%;border-radius:3px;transition:width .4s}}
+.fill-exec{{background:var(--exec-bd);width:100%}}
+.fill-pass{{background:var(--pass-bd)}}
+.fill-fail{{background:var(--fail-bd)}}
+.fill-rate{{background:var(--rate-bd)}}
+
+/* Donut chart */
+.donut-area{{
+  width:200px;flex-shrink:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center
+}}
+.donut-wrap{{position:relative;width:130px;height:130px}}
+.donut-center{{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  text-align:center;pointer-events:none
+}}
+.donut-center .dc-num{{font-size:24px;font-weight:800;color:var(--pass-dk);line-height:1}}
+.donut-center .dc-sub{{font-size:10px;color:var(--muted);font-weight:600;
+  text-transform:uppercase;letter-spacing:.5px}}
+.donut-legend{{display:flex;gap:14px;margin-top:10px}}
+.dl-item{{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);font-weight:600}}
+.dl-dot{{width:9px;height:9px;border-radius:50%;flex-shrink:0}}
+
+/* ══════════════════════════════════════
+   FAILURES PANEL
+══════════════════════════════════════ */
+.fail-panel{{
+  background:var(--card);border-radius:12px;
+  border:2px solid var(--fail-bd);
+  box-shadow:0 2px 14px rgba(198,40,40,.14);
+  margin-bottom:24px;overflow:hidden
+}}
+.fail-panel-hdr{{
+  background:linear-gradient(90deg,#7f0000 0%,#b71c1c 100%);
+  color:#fff;padding:14px 24px;display:flex;align-items:center;
+  justify-content:space-between;cursor:pointer;user-select:none
+}}
+.fail-panel-hdr h2{{font-size:15px;font-weight:700;display:flex;align-items:center;gap:10px}}
+.fail-count-badge{{
+  background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);
+  color:#fff;padding:2px 10px;border-radius:10px;font-size:12px
+}}
+.fail-panel-body{{padding:20px 24px;display:none}}
+.fail-panel-body.open{{display:block}}
+
+.failure-group{{margin-bottom:20px}}
+.failure-group:last-child{{margin-bottom:0}}
+.fg-title{{
+  font-size:13px;font-weight:700;color:var(--fail-dk);
+  padding:9px 14px;background:var(--fail-bg);
+  border-left:4px solid var(--fail-bd);border-radius:0 5px 5px 0;
+  margin-bottom:8px;display:flex;align-items:center;gap:10px
+}}
+.fg-body{{padding-left:4px}}
+
+/* ══════════════════════════════════════
+   SEARCH BAR
+══════════════════════════════════════ */
+.search-wrap{{margin-bottom:20px}}
+.search-box{{
+  background:var(--card);border:2px solid var(--bdr);border-radius:8px;
+  padding:11px 18px;display:flex;align-items:center;gap:12px;
+  box-shadow:0 1px 4px rgba(0,0,0,.06);transition:border-color .2s
+}}
+.search-box:focus-within{{border-color:var(--accent);box-shadow:0 0 0 3px rgba(21,101,192,.12)}}
+.search-icon{{color:var(--muted);font-size:15px;flex-shrink:0}}
+.search-box input{{
+  flex:1;border:none;outline:none;font-size:14px;color:var(--txt);background:transparent
+}}
+.search-box input::placeholder{{color:#adb5bd}}
+.search-hint{{font-size:11px;color:var(--muted);margin-top:5px;padding-left:4px;min-height:16px}}
+
+/* ══════════════════════════════════════
+   REPORT CARDS
+══════════════════════════════════════ */
+.section-heading{{
+  font-size:11px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:1.3px;
+  margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--bdr)
+}}
+.report-card{{
+  background:var(--card);border-radius:10px;border:1px solid var(--bdr);
+  box-shadow:0 1px 6px rgba(0,0,0,.06);margin-bottom:14px;overflow:hidden;
+  transition:box-shadow .2s
+}}
+.report-card:hover{{box-shadow:0 3px 14px rgba(0,0,0,.1)}}
+
+.card-hdr{{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:13px 20px;cursor:pointer;background:#f6f8fb;
+  border-bottom:1px solid var(--bdr);user-select:none
+}}
+.card-hdr:hover{{background:#edf1f7}}
+.card-hdr-left{{display:flex;align-items:center;gap:10px;flex:1;min-width:0}}
+.card-icon{{font-size:15px;flex-shrink:0}}
+.card-title{{
+  font-size:14px;font-weight:700;color:#1a3a5c;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}}
+.sec-badge{{
+  font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;
+  flex-shrink:0;text-transform:uppercase;letter-spacing:.3px
+}}
+.sec-fail{{background:var(--fail-bg);color:var(--fail-dk);border:1px solid var(--fail-bd)}}
+.sec-pass{{background:var(--pass-bg);color:var(--pass-dk);border:1px solid var(--pass-bd)}}
+.chevron{{color:var(--muted);font-size:12px;transition:transform .25s;flex-shrink:0;margin-left:10px}}
+.chevron.open{{transform:rotate(180deg)}}
+.card-body{{padding:20px 24px;display:none}}
+.card-body.open{{display:block}}
+
+/* Mini stats inside card */
+.mini-stats-row{{
+  display:flex;gap:22px;margin-bottom:16px;
+  padding:10px 14px;background:#f6f8fb;
+  border-radius:6px;border:1px solid var(--bdr)
+}}
+.ms{{font-size:12.5px;font-weight:600}}
+.ms-exec{{color:var(--exec-dk)}} .ms-pass{{color:var(--pass-dk)}} .ms-fail{{color:var(--fail-dk)}}
+
+/* ══════════════════════════════════════
+   TABLES  (apply to ALL tables in report)
+══════════════════════════════════════ */
+.tbl-wrap{{width:100%;overflow-x:auto;border-radius:7px;
+  border:1px solid var(--bdr);margin:12px 0;
+  box-shadow:0 1px 4px rgba(0,0,0,.05)}}
+table{{width:100%;border-collapse:collapse;font-size:13px;table-layout:auto}}
+table th{{
+  background:#1a3a5c;color:#fff;padding:9px 14px;
+  text-align:left;font-size:11px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.6px;white-space:nowrap
+}}
+table td{{
+  padding:8px 14px;border-bottom:1px solid #f0f1f3;
+  vertical-align:middle;line-height:1.45;
+  word-break:break-word;overflow-wrap:anywhere
+}}
+/* Cells classified as "short status" by JS – never wrap (PASS / FAIL / OK / #) */
+table td.td-nowrap{{
+  white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  width:1%;font-weight:700;text-align:center
+}}
+table tr:last-child td{{border-bottom:none}}
+table tr:nth-child(even) td{{background:#fafbfc}}
+table tr:hover td{{background:#eef4fb !important}}
+
+/* Fail / Pass row highlighting – applied by JS */
+table tr.row-fail td{{background:var(--fail-bg) !important;color:var(--fail-dk) !important;font-weight:500}}
+table tr.row-pass td{{background:var(--pass-bg) !important;color:var(--pass-dk) !important}}
+
+/* Headings generated by extract functions */
+.card-body h2,.fg-body h2,.fail-panel-body h2{{
+  font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;
+  color:#1a3a5c;margin:18px 0 8px;padding-bottom:6px;
+  border-bottom:2px solid var(--accent);display:flex;align-items:center;gap:8px
+}}
+.card-body h2:first-child,.fg-body h2:first-child{{margin-top:0}}
+
+/* ══════════════════════════════════════
+   BADGES
+══════════════════════════════════════ */
+.badge{{
+  display:inline-block;padding:2px 8px;border-radius:10px;
+  font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px
+}}
+.badge-fail{{background:var(--fail-bd);color:#fff}}
+.badge-pass{{background:var(--pass-bd);color:#fff}}
+.badge-neutral{{background:#e5e7eb;color:var(--muted)}}
+
+/* ══════════════════════════════════════
+   PRE / CODE
+══════════════════════════════════════ */
+pre{{
+  background:#1e1e2e;color:#cdd6f4;border-radius:6px;padding:16px;
+  font-size:12px;font-family:"Consolas","Courier New",monospace;
+  white-space:pre-wrap;word-break:break-all;
+  max-height:450px;overflow-y:auto;margin:8px 0;line-height:1.5
+}}
+
+/* ══════════════════════════════════════
+   IMAGES  (relative-path gallery cards)
+══════════════════════════════════════ */
+.img-note{{
+  font-size:12px;color:var(--accent);background:var(--exec-bg);
+  border:1px solid var(--exec-bd);border-radius:6px;
+  padding:9px 14px;margin-bottom:14px;display:flex;align-items:center;gap:8px
+}}
+.img-grid{{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;margin-top:4px
+}}
+.img-figure{{
+  border:1px solid var(--bdr);border-radius:8px;overflow:hidden;
+  background:#fff;box-shadow:0 1px 5px rgba(0,0,0,.08);
+  transition:box-shadow .2s;display:flex;flex-direction:column
+}}
+.img-figure:hover{{box-shadow:0 5px 18px rgba(0,0,0,.16)}}
+.img-thumb-link{{
+  display:block;overflow:hidden;background:#f6f8fb;height:180px;flex-shrink:0
+}}
+.img-figure img{{
+  width:100%;height:180px;object-fit:contain;display:block;
+  transition:transform .3s
+}}
+.img-figure:hover img{{transform:scale(1.04)}}
+.img-figcap{{
+  padding:8px 10px;border-top:1px solid var(--bdr);
+  display:flex;flex-direction:column;gap:3px
+}}
+.img-name{{
+  font-size:11.5px;color:var(--txt);font-weight:600;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block
+}}
+.img-open-link{{
+  font-size:10.5px;color:var(--accent);text-decoration:none;
+  display:inline-flex;align-items:center;gap:3px
+}}
+.img-open-link:hover{{text-decoration:underline}}
+
+/* ══════════════════════════════════════
+   MISC HELPERS
+══════════════════════════════════════ */
+.no-failures{{
+  color:var(--pass-dk);background:var(--pass-bg);border:1px solid var(--pass-bd);
+  border-radius:6px;padding:12px 18px;font-size:13px;font-weight:600;
+  display:flex;align-items:center;gap:8px
+}}
+.muted-note{{color:var(--muted);font-style:italic;font-size:13px;padding:8px 0}}
+.file-list{{list-style:none}}
+.file-list li{{
+  padding:6px 0;border-bottom:1px solid #f5f5f5;font-size:13px;color:var(--muted);
+  display:flex;align-items:center;gap:8px
+}}
+.file-list li:last-child{{border-bottom:none}}
+.hidden{{display:none !important}}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+.report-footer{{
+  text-align:center;padding:20px;font-size:11px;color:var(--muted);
+  border-top:1px solid var(--bdr);margin-top:24px
+}}
+
+/* ══════════════════════════════════════
+   PRINT
+══════════════════════════════════════ */
+@media print{{
+  .sidebar,.search-wrap,.page-hdr{{display:none!important}}
+  .main-wrap{{margin-left:0!important}}
+  .card-body,.fail-panel-body{{display:block!important}}
+  .stats-dash,.fail-panel,.report-card{{break-inside:avoid}}
+}}
+</style>
+<script>
+/* ── CARD TOGGLE ── */
+function toggleCard(id) {{
+  var body = document.getElementById('body-' + id);
+  var chv  = document.getElementById('chv-'  + id);
+  if (!body) return;
+  var open = body.classList.toggle('open');
+  if (chv) chv.classList.toggle('open', open);
+}}
+
+/* ── SHOW + SCROLL TO SECTION ── */
+function showSection(id) {{
+  var body = document.getElementById('body-' + id);
+  var chv  = document.getElementById('chv-'  + id);
+  if (!body) return;
+  body.classList.add('open');
+  if (chv) chv.classList.add('open');
+  var card = document.getElementById(id);
+  if (card) card.scrollIntoView({{behavior:'smooth',block:'start'}});
+}}
+
+/* ── FAILURES PANEL TOGGLE ── */
+function toggleFailPanel() {{
+  var body = document.getElementById('fail-panel-body');
+  if (!body) return;
+  body.classList.toggle('open');
+}}
+
+/* ── LIVE SEARCH ── */
+function searchReports() {{
+  var q     = document.getElementById('searchInput').value.toLowerCase().trim();
+  var cards = document.querySelectorAll('.report-card');
+  var vis   = 0;
+  cards.forEach(function(card) {{
+    if (!q) {{
+      card.classList.remove('hidden');
+      vis++;
+      return;
+    }}
+    if (card.textContent.toLowerCase().includes(q)) {{
+      card.classList.remove('hidden');
+      vis++;
+      var body = card.querySelector('.card-body');
+      var chv  = card.querySelector('.chevron');
+      if (body) body.classList.add('open');
+      if (chv)  chv.classList.add('open');
+    }} else {{
+      card.classList.add('hidden');
+    }}
+  }});
+  var hint = document.getElementById('searchHint');
+  if (hint) {{
+    hint.textContent = q
+      ? (vis + ' of ' + cards.length + ' report(s) match \u201c' + q + '\u201d')
+      : '';
+  }}
+}}
+
+/* ── HIGHLIGHT FAIL / PASS ROWS ── */
+function styleTableRows() {{
+  /* Status keywords that must never wrap */
+  var STATUS_RE = new RegExp('^(fail|pass|ok|error|skip|n/a|yes|no|[0-9]{1,5})$', 'i');
+  document.querySelectorAll('table tbody tr').forEach(function(row) {{
+    var t = row.textContent.toLowerCase();
+    if (t.includes('fail')) {{
+      row.classList.add('row-fail');
+    }} else if (t.includes('pass') || t.includes(' ok') || t.includes('success')) {{
+      row.classList.add('row-pass');
+    }}
+    /* Tag short status-value cells so they never word-wrap */
+    row.querySelectorAll('td').forEach(function(td) {{
+      var val = td.textContent.trim();
+      if (STATUS_RE.test(val)) {{
+        td.classList.add('td-nowrap');
+      }}
+    }});
+  }});
+}}
+
+/* ── WRAP TABLES IN SCROLLABLE DIV ── */
+function wrapTables() {{
+  document.querySelectorAll(
+    '.card-body table, .fg-body table, .fail-panel-body table'
+  ).forEach(function(tbl) {{
+    if (tbl.parentNode.classList.contains('tbl-wrap')) return;
+    var w = document.createElement('div');
+    w.className = 'tbl-wrap';
+    tbl.parentNode.insertBefore(w, tbl);
+    w.appendChild(tbl);
+  }});
+}}
+
+window.addEventListener('DOMContentLoaded', function() {{
+  styleTableRows();
+  wrapTables();
+  /* Open the failures panel by default when there are failures */
+  var fpBody = document.getElementById('fail-panel-body');
+  if (fpBody && document.querySelector('.failure-group')) {{
+    fpBody.classList.add('open');
+  }}
+}});
+</script>
+</head>
+<body>
+
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<nav class="sidebar">
+  <div class="sb-brand">
+    <div class="brand-icon">&#x1F4CA;</div>
+    <h2>Software Test Report</h2>
+    <div class="brand-sub">Jenkins Pipeline &bull; Consolidated</div>
+  </div>
+
+  <div class="sb-kpi">
+    <div class="kpi"><div class="kpi-num kn-exec">{total_executed}</div><div class="kpi-lbl">Executed</div></div>
+    <div class="kpi"><div class="kpi-num kn-pass">{total_passed}</div><div class="kpi-lbl">Passed</div></div>
+    <div class="kpi"><div class="kpi-num kn-fail">{total_failed}</div><div class="kpi-lbl">Failed</div></div>
+  </div>
+
+  <div class="nav-section-lbl">Quick Jump</div>
+  <ul class="nav-list">
+    <li class="nav-item">
+      <a class="nav-link" href="javascript:void(0);" onclick="toggleFailPanel()">
+        <span class="nav-title">&#x26A0; Failure Summary</span>
+        <span class="nav-badge nb-fail">{total_failed}</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="javascript:void(0);" onclick="showSection('logs')">
+        <span class="nav-title">&#x1F4C4; Logs &amp; Info</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="javascript:void(0);" onclick="showSection('images')">
+        <span class="nav-title">&#x1F5BC; Embedded Images</span>
+      </a>
+    </li>
+  </ul>
+
+  <div class="nav-section-lbl">Embedded Reports ({num_reports})</div>
+  <ul class="nav-list">
+    {navigation_links}
+  </ul>
+</nav>
+
+<!-- ══════════════ MAIN CONTENT ══════════════ -->
+<div class="main-wrap">
+
+  <header class="page-hdr">
+    <div>
+      <h1>&#x1F4CA; Software Test Report</h1>
+      <div class="hdr-sub">
+        Consolidated Jenkins Pipeline Report &nbsp;&bull;&nbsp;
+        {num_reports} embedded report(s) &nbsp;&bull;&nbsp;
+        Generated: {report_timestamp}
+      </div>
+    </div>
+    <div class="hdr-pill">&#x1F552; {report_timestamp}</div>
+  </header>
+
+  <div class="content">
+
+    <!-- ══ STATISTICS DASHBOARD ══ -->
+    <div class="stats-dash">
+      <div class="dash-title">&#x1F4C8; Executive Test Summary &mdash; All Reports Combined</div>
+      <div class="stats-row">
+        <div class="stat-card sc-exec">
+          <div class="sc-icon">&#x1F3AF;</div>
+          <div class="sc-num">{total_executed}</div>
+          <div class="sc-lbl">Total Executed</div>
+          <div class="sc-bar"><div class="sc-bar-fill fill-exec"></div></div>
+        </div>
+        <div class="stat-card sc-pass">
+          <div class="sc-icon">&#x2705;</div>
+          <div class="sc-num">{total_passed}</div>
+          <div class="sc-lbl">Tests Passed</div>
+          <div class="sc-bar"><div class="sc-bar-fill fill-pass" style="width:{pass_rate}%"></div></div>
+        </div>
+        <div class="stat-card sc-fail">
+          <div class="sc-icon">&#x274C;</div>
+          <div class="sc-num">{total_failed}</div>
+          <div class="sc-lbl">Tests Failed</div>
+          <div class="sc-bar"><div class="sc-bar-fill fill-fail" style="width:{fail_rate}%"></div></div>
+        </div>
+        <div class="stat-card sc-rate">
+          <div class="sc-icon">&#x1F4AF;</div>
+          <div class="sc-num">{pass_rate}%</div>
+          <div class="sc-lbl">Pass Rate</div>
+          <div class="sc-bar"><div class="sc-bar-fill fill-rate" style="width:{pass_rate}%"></div></div>
+        </div>
+        <!-- SVG Donut Chart (self-contained, no CDN) -->
+        <div class="donut-area">
+          <div class="donut-wrap">
+            <svg viewBox="0 0 130 130" width="130" height="130" aria-label="Pass/Fail donut chart">
+              <!-- background ring -->
+              <circle cx="65" cy="65" r="54" fill="none" stroke="#e5e7eb" stroke-width="16"/>
+              <!-- pass arc -->
+              <circle cx="65" cy="65" r="54" fill="none" stroke="#43a047" stroke-width="16"
+                stroke-dasharray="{pass_arc} {circ}"
+                stroke-dashoffset="0"
+                transform="rotate(-90 65 65)"/>
+              <!-- fail arc (offset starts right after pass arc) -->
+              <circle cx="65" cy="65" r="54" fill="none" stroke="#ef5350" stroke-width="16"
+                stroke-dasharray="{fail_arc} {circ}"
+                stroke-dashoffset="{fail_arc_offset}"
+                transform="rotate(-90 65 65)"/>
+            </svg>
+            <div class="donut-center">
+              <div class="dc-num">{pass_rate}%</div>
+              <div class="dc-sub">Pass Rate</div>
             </div>
+          </div>
+          <div class="donut-legend">
+            <div class="dl-item"><div class="dl-dot" style="background:#43a047"></div>Pass</div>
+            <div class="dl-item"><div class="dl-dot" style="background:#ef5350"></div>Fail</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <div class="content">
-                <h1>Software Test Report</h1>
+    <!-- ══ CONSOLIDATED FAILURES PANEL ══ -->
+    <div class="fail-panel">
+      <div class="fail-panel-hdr" onclick="toggleFailPanel()">
+        <h2>
+          &#x26A0;&#xFE0F; Consolidated Failure Summary
+          <span class="fail-count-badge">{total_failed} Failure(s) Across All Reports</span>
+        </h2>
+        <span style="font-size:12px;opacity:.7">&#x25BC; expand / collapse</span>
+      </div>
+      <div class="fail-panel-body" id="fail-panel-body">
+        {consolidated_failures}
+      </div>
+    </div>
 
-                <details id="logs">
-                    <summary>Logs & Additional Information</summary>
-                    <div>{text_content if text_content else "<p>No logs available</p>"}</div>
-                </details>
+    <!-- ══ SEARCH ══ -->
+    <div class="search-wrap">
+      <div class="search-box">
+        <span class="search-icon">&#x1F50D;</span>
+        <input type="text" id="searchInput"
+          placeholder="Search reports by name, test case, keyword, status&hellip;"
+          oninput="searchReports()">
+      </div>
+      <div class="search-hint" id="searchHint"></div>
+    </div>
 
-                <details id="images">
-                    <summary>Embedded Images</summary>
-                    <div>{image_tags if image_tags else "<p>No images found</p>"}</div>
-                </details>
+    <!-- ══ INDIVIDUAL REPORT CARDS ══ -->
+    <div class="section-heading">&#x1F4CB; Embedded Reports ({num_reports} total)</div>
+    {report_sections_html}
 
-                <details id="copied-files">
-                    <summary>Copied Files</summary>
-                    <ul>
-                        {''.join(f"<li>{os.path.basename(file)}</li>" for file in copied_files) if copied_files else "<p>No copied files</p>"}
-                    </ul>
-                </details>
+    <!-- ══ LOGS ══ -->
+    <div class="report-card" id="logs">
+      <div class="card-hdr" onclick="toggleCard('logs')">
+        <div class="card-hdr-left">
+          <span class="card-icon">&#x1F4C4;</span>
+          <span class="card-title">Logs &amp; Additional Information</span>
+        </div>
+        <span class="chevron" id="chv-logs">&#9660;</span>
+      </div>
+      <div class="card-body" id="body-logs">
+        {text_content if text_content else '<p class="muted-note">No logs available.</p>'}
+      </div>
+    </div>
 
-                {report_sections_html} <!-- Inject report sections -->
+    <!-- ══ IMAGES ══ -->
+    <div class="report-card" id="images">
+      <div class="card-hdr" onclick="toggleCard('images')">
+        <div class="card-hdr-left">
+          <span class="card-icon">&#x1F5BC;</span>
+          <span class="card-title">Embedded Images</span>
+        </div>
+        <span class="chevron" id="chv-images">&#9660;</span>
+      </div>
+      <div class="card-body" id="body-images">
+        <p class="img-note">
+          &#x2139; Images are stored in the <strong>report_images/</strong> subfolder alongside this file.
+          <strong>Do not delete or move the report_images/ folder</strong> — doing so will break all image links.
+          When sharing this report, always include the report_images/ folder.
+          Click any thumbnail to open at full resolution in a new tab.
+        </p>
+        <div class="img-grid">
+          {image_tags if image_tags else '<p class="muted-note">No images found.</p>'}
+        </div>
+      </div>
+    </div>
 
-            </div>
+    <!-- ══ COPIED FILES ══ -->
+    <div class="report-card" id="copied-files">
+      <div class="card-hdr" onclick="toggleCard('copied-files')">
+        <div class="card-hdr-left">
+          <span class="card-icon">&#x1F4C1;</span>
+          <span class="card-title">Copied Files</span>
+        </div>
+        <span class="chevron" id="chv-copied-files">&#9660;</span>
+      </div>
+      <div class="card-body" id="body-copied-files">
+        {files_list_html}
+      </div>
+    </div>
 
-        </body>
-        </html>"""
+    <div class="report-footer">
+      Software Test Report &bull; Jenkins Pipeline &bull; {report_timestamp}
+      &bull; {num_reports} report(s) embedded
+    </div>
 
-        # **Minify & Remove Empty Sections Before Saving**
-        html_template = minify_html(remove_empty_sections(html_template))
+  </div><!-- /content -->
+</div><!-- /main-wrap -->
+</body>
+</html>"""
 
         output_path = os.path.join(destination_path, "Software_Test_Report.html")
-
-        with open(output_path, "w", encoding="utf-8") as html_file:
-            html_file.write(html_template)
+        with open(output_path, "w", encoding="utf-8") as html_out:
+            html_out.write(html_template)
 
         logging.info(f"Report successfully generated at {output_path}")
 
@@ -436,25 +1132,6 @@ def extract_keyword_table(soup, keyword):
 
     return keyword_tables
 
-def extract_statistics_table(soup):
-    """Extracts the Statistics table from the HTML content."""
-    statistics_table = []
-    start_write = False
-
-    for div in soup.find_all('div'):
-        if "Statistics" in div.get_text():
-            start_write = True
-        
-        if "Warnings occured during test execution." in div.get_text() and start_write:
-            start_write = False
-        
-        if start_write and div.find('table'):
-            table = div.find('table')
-            for row in table.find_all('tr'):
-                columns = row.find_all('td')
-                statistics_table.append([col.get_text(strip=True) for col in columns])
-    
-    return statistics_table
 
 def extract_statistics_table(soup):
     # Locate the statistics table (modify class or ID if needed)
@@ -547,27 +1224,41 @@ def get_unique_filename(dest_dir, filename):
 
     return new_filename
 
-def get_file_hash(file_path):
-    """Generate a hash for a file to detect duplicates."""
-    hasher = hashlib.md5()  # Using MD5 for simplicity; SHA256 can also be used.
+def get_file_hash(file_path, chunk_size=65536):
+    """Generate an MD5 hash for a file using chunked reads to avoid memory spikes
+    on large images or log files."""
+    hasher = hashlib.md5()
     with open(file_path, "rb") as f:
-        hasher.update(f.read())  # Read and hash the entire file
+        while True:
+            chunk = f.read(chunk_size)
+            if not chunk:
+                break
+            hasher.update(chunk)
     return hasher.hexdigest()
 
 def copy_and_embed_files(source_paths, destination_path, delete_after_embedding=True):
-    """Copies and embeds ONLY images and text files, renaming them if necessary to avoid overwriting.
-    Prevents duplicate embedding by checking file hashes.
+    """Copies and embeds text/HTML files inline and images as relative-path gallery cards.
+
+    Images are placed in a flat 'report_images/' subfolder next to the HTML output so
+    that the report file itself stays small.  Text and HTML files are still embedded
+    inline so the report is self-contained for log/trace data.  Only embedded text
+    files are deleted after processing; image files are intentionally kept because the
+    HTML references them by relative path.
     """
-    
+
     image_tags = ""
     text_content = ""
     image_count = 0
     text_count = 0
-    copied_files = []  # List of successfully copied files
-    embedded_hashes = set()  # Track unique files by content hash
+    copied_files = []          # All successfully copied files (for the "Copied Files" section)
+    text_files_to_delete = []  # Only text/HTML files are deleted after inline embedding
+    embedded_hashes = set()    # Deduplicate by content hash
 
     if not os.path.exists(destination_path):
         os.makedirs(destination_path)
+
+    # Flat subfolder that sits next to the HTML output file
+    images_dir = os.path.join(destination_path, "report_images")
 
     for source_path in source_paths:
         if not os.path.exists(source_path):
@@ -578,68 +1269,99 @@ def copy_and_embed_files(source_paths, destination_path, delete_after_embedding=
             for filename in files:
                 file_ext = filename.lower().split(".")[-1]
 
-                # **Only process files with allowed extensions**
                 if file_ext not in ALLOWED_EXTENSIONS:
                     logging.info(f"Skipping unsupported file: {filename}")
                     continue
 
                 src_file = os.path.join(root, filename)
 
-                # Preserve folder structure
-                relative_path = os.path.relpath(root, source_path)
-                dest_dir = os.path.join(destination_path, relative_path)
-                os.makedirs(dest_dir, exist_ok=True)
-
-                # Get a unique filename to prevent overwriting
-                unique_filename = get_unique_filename(dest_dir, filename)
-                dest_file = os.path.join(dest_dir, unique_filename)
-
                 try:
-                    shutil.copy2(src_file, dest_file)  # Copy file
+                    if file_ext in ["png", "jpg", "jpeg", "gif"]:
+                        # ── Images: copy to flat report_images/ subfolder ──────────
+                        # Hash the source first to skip copying duplicate content
+                        src_hash = get_file_hash(src_file)
+                        if src_hash in embedded_hashes:
+                            logging.info(f"Skipping duplicate image (source): {filename}")
+                            continue
 
-                    # **Verify File Exists After Copying**
-                    if os.path.exists(dest_file):
-                        file_hash = get_file_hash(dest_file)  # Compute hash
+                        os.makedirs(images_dir, exist_ok=True)
+                        unique_filename = get_unique_filename(images_dir, filename)
+                        dest_file = os.path.join(images_dir, unique_filename)
+                        shutil.copy2(src_file, dest_file)
 
-                        if file_hash in embedded_hashes:
-                            logging.info(f"Skipping duplicate file: {unique_filename}")
-                            continue  # Don't embed duplicate content
-                        
-                        embedded_hashes.add(file_hash)  # Mark file as embedded
-                        copied_files.append(dest_file)  # Store successfully copied file
+                        if not os.path.exists(dest_file):
+                            continue
 
-                        # Embed images into report
-                        if file_ext in ["png", "jpg", "jpeg", "gif"]:
-                            with open(dest_file, "rb") as img_file:
-                                base64_str = base64.b64encode(img_file.read()).decode('utf-8')
-                                mime_type = f"image/{file_ext}"
-                                image_tags += f'<img src="data:{mime_type};base64,{base64_str}" alt="{unique_filename}" style="max-width: 100%; display: block; margin: 10px 0;"><br>\n'
-                            image_count += 1
+                        embedded_hashes.add(src_hash)
+                        copied_files.append(dest_file)
 
-                        # Embed text into report
-                        elif file_ext in ["txt", "html"]:
-                            encoding = detect_encoding(dest_file)
-                            with open(dest_file, "r", encoding=encoding, errors="replace") as txt_file:
-                                text_content += f"<h3>{unique_filename}</h3><pre>{txt_file.read()}</pre><br>"
-                            text_count += 1
+                        # Relative URL path (forward slashes for HTML on all OS).
+                        # Escape the filename for safe use in HTML attributes and text.
+                        safe_name = html_escape_lib.escape(unique_filename, quote=True)
+                        rel_url = "report_images/" + unique_filename
+                        image_tags += (
+                            f'<figure class="img-figure">'
+                            f'<a class="img-thumb-link" href="{rel_url}" target="_blank"'
+                            f'   rel="noopener noreferrer"'
+                            f'   title="Click to open full size: {safe_name}">'
+                            f'<img src="{rel_url}" alt="{safe_name}" loading="lazy">'
+                            f'</a>'
+                            f'<div class="img-figcap">'
+                            f'<span class="img-name" title="{safe_name}">{safe_name}</span>'
+                            f'<a class="img-open-link" href="{rel_url}" target="_blank"'
+                            f'   rel="noopener noreferrer">'
+                            f'&#x1F517; Open full size</a>'
+                            f'</div>'
+                            f'</figure>\n'
+                        )
+                        image_count += 1
+                        # NOTE: image files are NOT added to text_files_to_delete –
+                        # they must remain on disk so the HTML links resolve correctly.
+
+                    elif file_ext in ["txt", "html"]:
+                        # ── Text/HTML: preserve folder structure, embed inline ─────
+                        # Hash the source first to skip copying duplicate content
+                        src_hash = get_file_hash(src_file)
+                        if src_hash in embedded_hashes:
+                            logging.info(f"Skipping duplicate text file (source): {filename}")
+                            continue
+
+                        relative_path = os.path.relpath(root, source_path)
+                        dest_dir = os.path.join(destination_path, relative_path)
+                        os.makedirs(dest_dir, exist_ok=True)
+                        unique_filename = get_unique_filename(dest_dir, filename)
+                        dest_file = os.path.join(dest_dir, unique_filename)
+                        shutil.copy2(src_file, dest_file)
+
+                        if not os.path.exists(dest_file):
+                            continue
+
+                        embedded_hashes.add(src_hash)
+                        copied_files.append(dest_file)
+
+                        encoding = detect_encoding(dest_file)
+                        with open(dest_file, "r", encoding=encoding, errors="replace") as txt_file:
+                            text_content += f"<h3>{unique_filename}</h3><pre>{txt_file.read()}</pre><br>"
+                        text_count += 1
+                        text_files_to_delete.append(dest_file)
 
                 except Exception as e:
-                    logging.error(f"Failed to copy {src_file} to {dest_file}: {e}")
+                    logging.error(f"Failed to process {src_file}: {e}")
 
-    logging.info(f"Total text/HTML files copied: {text_count}")
-    logging.info(f"Total image files copied: {image_count}")
+    logging.info(f"Total text/HTML files embedded: {text_count}")
+    logging.info(f"Total image files linked: {image_count}")
     logging.info(f"Total successfully copied files: {len(copied_files)}")
 
-    # **Delete copied files if flag is set**
+    # Delete only the inline-embedded text/HTML files (images stay for the links)
     if delete_after_embedding:
-        for file_path in copied_files:
+        for file_path in text_files_to_delete:
             try:
                 os.remove(file_path)
-                logging.info(f"Deleted file: {file_path}")
+                logging.info(f"Deleted embedded text file: {file_path}")
             except Exception as e:
                 logging.error(f"Failed to delete {file_path}: {e}")
 
-    return text_content, image_tags, copied_files  # Return copied file list
+    return text_content, image_tags, copied_files
 
 def getCPULoadResults():
     script_name = "CPU_Load_Graph_Parser.py"
