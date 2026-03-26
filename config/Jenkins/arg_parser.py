@@ -1,4 +1,5 @@
 import os
+import html as html_escape_lib
 import argparse
 import shutil
 import base64
@@ -90,44 +91,26 @@ def find_html_files(source_paths):
 def extract_summary_data(soup):
     """Extracts executed, passed, and failed test case counts from the summary table."""
     executed_count, pass_count, fail_count = 0, 0, 0
-    
+
     overview_table = soup.find("table", class_="OverviewTable")
     if overview_table:
         rows = overview_table.find_all("tr")
         for row in rows:
             cells = row.find_all("td")
+            if len(cells) < 2:
+                continue  # skip header/blank rows that have no value cell
             row_text = [cell.get_text(strip=True) for cell in cells]
-            if "Executed test cases" in row_text[0]:
-                executed_count = int(row_text[1])
-            elif "Test cases passed" in row_text[0]:
-                pass_count = int(row_text[1])
-            elif "Test cases failed" in row_text[0]:
-                fail_count = int(row_text[1])
-    
+            try:
+                if "Executed test cases" in row_text[0]:
+                    executed_count = int(row_text[1])
+                elif "Test cases passed" in row_text[0]:
+                    pass_count = int(row_text[1])
+                elif "Test cases failed" in row_text[0]:
+                    fail_count = int(row_text[1])
+            except (ValueError, IndexError):
+                pass  # non-numeric or missing cell — skip silently
+
     return executed_count, pass_count, fail_count
-
-def extract_failed_tests(soup):
-    """Extracts failed test cases from the report using BeautifulSoup."""
-    failed_tests = ""
-    failure_sections = soup.find_all("table", class_="FailureTable")  # Ensure correct class
-    
-    for section in failure_sections:
-        failed_tests += str(section)
-
-    return failed_tests if failed_tests else "<p>No failed tests found.</p>"
-
-def extract_keyword_from_tables(soup, keyword):
-    """Extracts table rows that contain the given keyword."""
-    keyword_lower = keyword.lower()
-    extracted_rows = []
-
-    for table in soup.find_all("table"):
-        for row in table.find_all("tr"):
-            cells = row.find_all(["th", "td"])
-            if any(keyword_lower in cell.get_text(strip=True).lower() for cell in cells):
-                extracted_rows.append(str(row))
-
-    return f"<table border='1'>{''.join(extracted_rows)}</table>" if extracted_rows else "<p>No matching keyword data found.</p>"
 
 def append_to_excel(test_name, pass_count, fail_count):
     """Appends test data to an Excel sheet while ensuring correct headers exist."""
@@ -253,7 +236,7 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
                 with open(html_file, 'r', encoding='utf-8') as f:
                     soup = BeautifulSoup(f, 'html.parser')
 
-                file_title = (
+                file_title = html_escape_lib.escape(
                     os.path.basename(html_file)
                     .replace("_", " ")
                     .replace(".html", "")
@@ -261,8 +244,15 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
                 )
                 section_id = f"section-{index}"
 
-                # Per-file statistics
-                executed, passed, failed = extract_summary_data(soup)
+                # Per-file statistics — guard against malformed summary rows
+                try:
+                    executed, passed, failed = extract_summary_data(soup)
+                except Exception as e:
+                    logging.warning(
+                        f"Failed to extract summary data from {html_file}: {e}. "
+                        "Using zero values for executed/passed/failed."
+                    )
+                    executed, passed, failed = 0, 0, 0
                 total_executed += executed
                 total_passed += passed
                 total_failed += failed
@@ -338,16 +328,33 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
 
         logging.info(f"Total HTML reports added: {len(seen_files)}")
 
-        # Derived metrics
-        pass_rate = round((total_passed / total_executed * 100), 1) if total_executed > 0 else 0.0
-        fail_rate = round((total_failed / total_executed * 100), 1) if total_executed > 0 else 0.0
+        # Derived metrics — clamp fractions to [0, 1] so malformed totals
+        # never produce bars/arcs outside a valid range.
         report_timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
         num_reports = len(seen_files)
 
+        if total_executed > 0:
+            raw_pass = total_passed / total_executed
+            raw_fail = total_failed / total_executed
+            pass_frac = min(max(raw_pass, 0.0), 1.0)
+            fail_frac = min(max(raw_fail, 0.0), 1.0)
+            # Normalize when the two fractions sum beyond 1 (malformed counts)
+            total_frac = pass_frac + fail_frac
+            if total_frac > 1.0:
+                pass_frac /= total_frac
+                fail_frac /= total_frac
+            pass_rate = round(pass_frac * 100, 1)
+            fail_rate = round(fail_frac * 100, 1)
+        else:
+            pass_frac = 0.0
+            fail_frac = 0.0
+            pass_rate = 0.0
+            fail_rate = 0.0
+
         # SVG donut chart (circle r=54, circumference ≈ 339.3)
         circ = 339.3
-        pass_arc = round((total_passed / total_executed) * circ, 1) if total_executed > 0 else 0.0
-        fail_arc = round((total_failed / total_executed) * circ, 1) if total_executed > 0 else 0.0
+        pass_arc = round(pass_frac * circ, 1)
+        fail_arc = round(fail_frac * circ, 1)
         fail_arc_offset = round(-pass_arc, 1)   # negative offset shifts fail arc past the pass arc
 
         consolidated_failures = (
@@ -1110,25 +1117,6 @@ def extract_keyword_table(soup, keyword):
 
     return keyword_tables
 
-def extract_statistics_table(soup):
-    """Extracts the Statistics table from the HTML content."""
-    statistics_table = []
-    start_write = False
-
-    for div in soup.find_all('div'):
-        if "Statistics" in div.get_text():
-            start_write = True
-        
-        if "Warnings occured during test execution." in div.get_text() and start_write:
-            start_write = False
-        
-        if start_write and div.find('table'):
-            table = div.find('table')
-            for row in table.find_all('tr'):
-                columns = row.find_all('td')
-                statistics_table.append([col.get_text(strip=True) for col in columns])
-    
-    return statistics_table
 
 def extract_statistics_table(soup):
     # Locate the statistics table (modify class or ID if needed)
@@ -1221,11 +1209,16 @@ def get_unique_filename(dest_dir, filename):
 
     return new_filename
 
-def get_file_hash(file_path):
-    """Generate a hash for a file to detect duplicates."""
-    hasher = hashlib.md5()  # Using MD5 for simplicity; SHA256 can also be used.
+def get_file_hash(file_path, chunk_size=65536):
+    """Generate an MD5 hash for a file using chunked reads to avoid memory spikes
+    on large images or log files."""
+    hasher = hashlib.md5()
     with open(file_path, "rb") as f:
-        hasher.update(f.read())  # Read and hash the entire file
+        while True:
+            chunk = f.read(chunk_size)
+            if not chunk:
+                break
+            hasher.update(chunk)
     return hasher.hexdigest()
 
 def copy_and_embed_files(source_paths, destination_path, delete_after_embedding=True):
@@ -1287,17 +1280,21 @@ def copy_and_embed_files(source_paths, destination_path, delete_after_embedding=
                         embedded_hashes.add(src_hash)
                         copied_files.append(dest_file)
 
-                        # Relative URL path (forward slashes for HTML on all OS)
+                        # Relative URL path (forward slashes for HTML on all OS).
+                        # Escape the filename for safe use in HTML attributes and text.
+                        safe_name = html_escape_lib.escape(unique_filename, quote=True)
                         rel_url = "report_images/" + unique_filename
                         image_tags += (
                             f'<figure class="img-figure">'
                             f'<a class="img-thumb-link" href="{rel_url}" target="_blank"'
-                            f'   title="Click to open full size: {unique_filename}">'
-                            f'<img src="{rel_url}" alt="{unique_filename}" loading="lazy">'
+                            f'   rel="noopener noreferrer"'
+                            f'   title="Click to open full size: {safe_name}">'
+                            f'<img src="{rel_url}" alt="{safe_name}" loading="lazy">'
                             f'</a>'
                             f'<div class="img-figcap">'
-                            f'<span class="img-name" title="{unique_filename}">{unique_filename}</span>'
-                            f'<a class="img-open-link" href="{rel_url}" target="_blank">'
+                            f'<span class="img-name" title="{safe_name}">{safe_name}</span>'
+                            f'<a class="img-open-link" href="{rel_url}" target="_blank"'
+                            f'   rel="noopener noreferrer">'
                             f'&#x1F517; Open full size</a>'
                             f'</div>'
                             f'</figure>\n'
