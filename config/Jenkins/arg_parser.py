@@ -376,7 +376,8 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Software Test Report &ndash; {report_timestamp}</title>
+<title>Magna Electronics &ndash; Software Test Report &ndash; {report_timestamp}</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='5' fill='%23DA291C'/%3E%3Ctext x='18' y='27' font-family='Arial%20Black%2CHelvetica%20Neue%2Csans-serif' font-size='24' font-weight='900' fill='%23fff' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
 <style>
 /* ── RESET ── */
 *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
@@ -384,15 +385,15 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
 /* ── CUSTOM PROPERTIES ── */
 :root{{
   --sw: 285px;
-  --hdr: #0b1f35;
-  --accent: #1565c0;
+  --hdr: #231F20;
+  --accent: #DA291C;
   --pass-dk: #1b5e20; --pass-md: #2e7d32; --pass-bg: #e8f5e9; --pass-bd: #43a047;
-  --fail-dk: #7f0000; --fail-md: #c62828; --fail-bg: #ffebee; --fail-bd: #ef5350;
+  --fail-dk: #b71c1c; --fail-md: #c62828; --fail-bg: #fdf0f0; --fail-bd: #e57373;
   --exec-dk: #0d47a1; --exec-bg: #e3f2fd; --exec-bd: #1e88e5;
   --rate-dk: #4a148c; --rate-bg: #f3e5f5; --rate-bd: #8e24aa;
   --warn-dk: #e65100; --warn-bg: #fff3e0;
-  --bdr: #dde1e7; --bg: #eef0f4; --card: #ffffff;
-  --txt: #1a1a2e; --muted: #6b7280; --sbg: #0b1f35;
+  --bdr: #dde1e7; --bg: #f0f2f5; --card: #ffffff;
+  --txt: #231F20; --muted: #6b7280; --sbg: #231F20;
 }}
 
 /* ── BODY LAYOUT ── */
@@ -408,16 +409,16 @@ body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica 
   display:flex;flex-direction:column;
   box-shadow:3px 0 12px rgba(0,0,0,0.35)
 }}
-.sb-brand{{padding:22px 20px 16px;background:#061222;border-bottom:1px solid rgba(255,255,255,0.07)}}
-.sb-brand .brand-icon{{font-size:26px}}
+.sb-brand{{padding:22px 20px 16px;background:#1a1212;border-bottom:3px solid var(--accent)}}
+.sb-brand .brand-icon{{font-size:26px;line-height:1}}
 .sb-brand h2{{color:#fff;font-size:15px;font-weight:700;margin-top:8px;letter-spacing:.3px}}
-.sb-brand .brand-sub{{color:rgba(255,255,255,.4);font-size:11px;margin-top:3px}}
+.sb-brand .brand-sub{{color:rgba(255,255,255,.5);font-size:11px;margin-top:3px}}
 
 /* Sidebar quick stats */
 .sb-kpi{{
   display:flex;justify-content:space-around;
   padding:14px 12px;
-  background:rgba(21,101,192,.18);
+  background:rgba(218,41,28,.15);
   border-bottom:1px solid rgba(255,255,255,.06)
 }}
 .sb-kpi .kpi{{text-align:center}}
@@ -451,12 +452,12 @@ body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica 
 
 /* ── PAGE HEADER ── */
 .page-hdr{{
-  background:linear-gradient(135deg,#0b1f35 0%,#1a3a5c 100%);
+  background:linear-gradient(135deg,#231F20 0%,#3d3030 60%,#5a2020 100%);
   padding:26px 36px;display:flex;align-items:flex-start;
-  justify-content:space-between;box-shadow:0 4px 16px rgba(0,0,0,.3)
+  justify-content:space-between;box-shadow:0 4px 16px rgba(0,0,0,.35)
 }}
-.page-hdr h1{{color:#fff;font-size:24px;font-weight:700;letter-spacing:-.3px}}
-.page-hdr .hdr-sub{{color:rgba(255,255,255,.5);font-size:12px;margin-top:5px}}
+.page-hdr h1{{color:#fff;font-size:24px;font-weight:700;letter-spacing:-.3px;display:flex;align-items:center;gap:12px}}
+.page-hdr .hdr-sub{{color:rgba(255,255,255,.6);font-size:12px;margin-top:6px}}
 .hdr-pill{{
   background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);
   color:rgba(255,255,255,.7);border-radius:20px;padding:6px 14px;font-size:12px;
@@ -528,18 +529,18 @@ body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica 
 ══════════════════════════════════════ */
 .fail-panel{{
   background:var(--card);border-radius:12px;
-  border:2px solid var(--fail-bd);
-  box-shadow:0 2px 14px rgba(198,40,40,.14);
+  border:1px solid var(--fail-bd);
+  box-shadow:0 2px 8px rgba(183,28,28,.10);
   margin-bottom:24px;overflow:hidden
 }}
 .fail-panel-hdr{{
-  background:linear-gradient(90deg,#7f0000 0%,#b71c1c 100%);
+  background:linear-gradient(90deg,#9b2a2a 0%,#c62828 100%);
   color:#fff;padding:14px 24px;display:flex;align-items:center;
   justify-content:space-between;cursor:pointer;user-select:none
 }}
-.fail-panel-hdr h2{{font-size:15px;font-weight:700;display:flex;align-items:center;gap:10px}}
+.fail-panel-hdr h2{{font-size:15px;font-weight:700;display:flex;align-items:center;gap:10px;color:#fff}}
 .fail-count-badge{{
-  background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);
+  background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);
   color:#fff;padding:2px 10px;border-radius:10px;font-size:12px
 }}
 .fail-panel-body{{padding:20px 24px;display:none}}
@@ -548,9 +549,9 @@ body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica 
 .failure-group{{margin-bottom:20px}}
 .failure-group:last-child{{margin-bottom:0}}
 .fg-title{{
-  font-size:13px;font-weight:700;color:var(--fail-dk);
-  padding:9px 14px;background:var(--fail-bg);
-  border-left:4px solid var(--fail-bd);border-radius:0 5px 5px 0;
+  font-size:13px;font-weight:700;color:#fff;
+  padding:9px 14px;background:var(--fail-md);
+  border-left:4px solid var(--fail-dk);border-radius:0 5px 5px 0;
   margin-bottom:8px;display:flex;align-items:center;gap:10px
 }}
 .fg-body{{padding-left:4px}}
@@ -564,7 +565,7 @@ body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica 
   padding:11px 18px;display:flex;align-items:center;gap:12px;
   box-shadow:0 1px 4px rgba(0,0,0,.06);transition:border-color .2s
 }}
-.search-box:focus-within{{border-color:var(--accent);box-shadow:0 0 0 3px rgba(21,101,192,.12)}}
+.search-box:focus-within{{border-color:var(--accent);box-shadow:0 0 0 3px rgba(218,41,28,.12)}}
 .search-icon{{color:var(--muted);font-size:15px;flex-shrink:0}}
 .search-box input{{
   flex:1;border:none;outline:none;font-size:14px;color:var(--txt);background:transparent
@@ -596,7 +597,7 @@ body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica 
 .card-hdr-left{{display:flex;align-items:center;gap:10px;flex:1;min-width:0}}
 .card-icon{{font-size:15px;flex-shrink:0}}
 .card-title{{
-  font-size:14px;font-weight:700;color:#1a3a5c;
+  font-size:14px;font-weight:700;color:var(--txt);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis
 }}
 .sec-badge{{
@@ -627,7 +628,7 @@ body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica 
   box-shadow:0 1px 4px rgba(0,0,0,.05)}}
 table{{width:100%;border-collapse:collapse;font-size:13px;table-layout:auto}}
 table th{{
-  background:#1a3a5c;color:#fff;padding:9px 14px;
+  background:var(--txt);color:#fff;padding:9px 14px;
   text-align:left;font-size:11px;font-weight:700;
   text-transform:uppercase;letter-spacing:.6px;white-space:nowrap
 }}
@@ -636,9 +637,9 @@ table td{{
   vertical-align:middle;line-height:1.45;
   word-break:break-word;overflow-wrap:anywhere
 }}
-/* First column (label cells in statistics tables) – never wrap so text stays readable at any window width */
-.stats-table td:first-child{{
-  white-space:nowrap;word-break:normal;overflow-wrap:normal;min-width:220px
+/* First column (label cells) – never wrap so text stays readable at any window width */
+table td:first-child{{
+  white-space:nowrap;word-break:normal;overflow-wrap:normal
 }}
 /* Cells classified as "short status" by JS – never wrap (PASS / FAIL / OK / #) */
 table td.td-nowrap{{
@@ -648,15 +649,17 @@ table td.td-nowrap{{
 table tr:last-child td{{border-bottom:none}}
 table tr:nth-child(even) td{{background:#fafbfc}}
 table tr:hover td{{background:#eef4fb !important}}
-
-/* Fail / Pass row highlighting – applied by JS */
-table tr.row-fail td{{background:var(--fail-bg) !important;color:var(--fail-dk) !important;font-weight:500}}
-table tr.row-pass td{{background:var(--pass-bg) !important;color:var(--pass-dk) !important}}
+/* Fail / Pass row highlighting – applied by JS; white text ensures readability on coloured backgrounds */
+table tr.row-fail td{{background:var(--fail-md) !important;color:#fff !important;font-weight:600}}
+table tr.row-pass td{{background:var(--pass-md) !important;color:#fff !important;font-weight:500}}
+/* Keep colours intact on hover – prevent generic light-blue hover from making white text unreadable */
+table tr.row-fail:hover td{{background:var(--fail-dk) !important;color:#fff !important}}
+table tr.row-pass:hover td{{background:var(--pass-dk) !important;color:#fff !important}}
 
 /* Headings generated by extract functions */
 .card-body h2,.fg-body h2,.fail-panel-body h2{{
   font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;
-  color:#1a3a5c;margin:18px 0 8px;padding-bottom:6px;
+  color:var(--txt);margin:18px 0 8px;padding-bottom:6px;
   border-bottom:2px solid var(--accent);display:flex;align-items:center;gap:8px
 }}
 .card-body h2:first-child,.fg-body h2:first-child{{margin-top:0}}
@@ -738,6 +741,25 @@ pre{{
 }}
 .file-list li:last-child{{border-bottom:none}}
 .hidden{{display:none !important}}
+
+/* ══════════════════════════════════════
+   EMBEDDED HTML REPORT IFRAMES
+   Individual HTML reports are rendered in
+   sandboxed iframes so their original styling
+   and interactivity are fully preserved.
+══════════════════════════════════════ */
+.embedded-report-title{{
+  font-size:13px;font-weight:700;color:var(--txt);
+  margin:18px 0 6px;display:flex;align-items:center;gap:6px
+}}
+.embedded-report-title:first-child{{margin-top:0}}
+.embedded-report-wrap{{
+  border:1px solid var(--bdr);border-radius:8px;overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);margin:0 0 16px;background:#fff
+}}
+.embedded-report-frame{{
+  width:100%;height:640px;border:none;display:block;background:#fff
+}}
 
 /* ══════════════════════════════════════
    FOOTER
@@ -865,9 +887,14 @@ window.addEventListener('DOMContentLoaded', function() {{
 <!-- ══════════════ SIDEBAR ══════════════ -->
 <nav class="sidebar">
   <div class="sb-brand">
-    <div class="brand-icon">&#x1F4CA;</div>
-    <h2>Software Test Report</h2>
-    <div class="brand-sub">Jenkins Pipeline &bull; Consolidated</div>
+    <div class="brand-icon">
+      <svg viewBox="0 0 40 40" width="40" height="40" aria-label="Magna Electronics">
+        <rect width="40" height="40" rx="6" fill="#DA291C"/>
+        <text x="20" y="30" font-family="'Arial Black','Helvetica Neue',sans-serif" font-size="28" font-weight="900" fill="#fff" text-anchor="middle">M</text>
+      </svg>
+    </div>
+    <h2>Magna Electronics</h2>
+    <div class="brand-sub">ADAS &bull; Surround View Camera System</div>
   </div>
 
   <div class="sb-kpi">
@@ -907,9 +934,16 @@ window.addEventListener('DOMContentLoaded', function() {{
 
   <header class="page-hdr">
     <div>
-      <h1>&#x1F4CA; Software Test Report</h1>
+      <h1>
+        <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" style="flex-shrink:0">
+          <rect width="32" height="32" rx="5" fill="#DA291C"/>
+          <text x="16" y="24" font-family="'Arial Black','Helvetica Neue',sans-serif" font-size="22" font-weight="900" fill="#fff" text-anchor="middle">M</text>
+        </svg>
+        Magna Electronics &ndash; Software Test Report
+      </h1>
       <div class="hdr-sub">
-        Consolidated Jenkins Pipeline Report &nbsp;&bull;&nbsp;
+        ADAS &bull; Surround View Camera System &nbsp;&bull;&nbsp;
+        Jenkins CI/CD Pipeline &nbsp;&bull;&nbsp;
         {num_reports} embedded report(s) &nbsp;&bull;&nbsp;
         Generated: {report_timestamp}
       </div>
@@ -921,7 +955,7 @@ window.addEventListener('DOMContentLoaded', function() {{
 
     <!-- ══ STATISTICS DASHBOARD ══ -->
     <div class="stats-dash">
-      <div class="dash-title">&#x1F4C8; Executive Test Summary &mdash; All Reports Combined</div>
+      <div class="dash-title">&#x1F4C8; Executive Test Summary &mdash; ADAS Surround View Camera &mdash; All Reports Combined</div>
       <div class="stats-row">
         <div class="stat-card sc-exec">
           <div class="sc-icon">&#x1F3AF;</div>
@@ -1057,7 +1091,8 @@ window.addEventListener('DOMContentLoaded', function() {{
     </div>
 
     <div class="report-footer">
-      Software Test Report &bull; Jenkins Pipeline &bull; {report_timestamp}
+      Magna Electronics &bull; ADAS Surround View Camera System &bull;
+      Software Test Report &bull; Jenkins CI/CD &bull; {report_timestamp}
       &bull; {num_reports} report(s) embedded
     </div>
 
@@ -1142,9 +1177,6 @@ def extract_statistics_table(soup):
     statistics_table = soup.find("table", class_="OverviewTable")  # Adjust class if necessary
 
     if statistics_table:
-        # Add stats-table class so the label-column no-wrap CSS rule applies only here
-        existing_classes = statistics_table.get("class", [])
-        statistics_table["class"] = existing_classes + ["stats-table"]
         return f"<h2>Test Statistics</h2>{str(statistics_table)}"
     else:
         return "<p><b>No statistics table found in the report.</b></p>"
@@ -1346,11 +1378,32 @@ def copy_and_embed_files(source_paths, destination_path, delete_after_embedding=
                         embedded_hashes.add(src_hash)
                         copied_files.append(dest_file)
 
-                        encoding = detect_encoding(dest_file)
-                        with open(dest_file, "r", encoding=encoding, errors="replace") as txt_file:
-                            text_content += f"<h3>{unique_filename}</h3><pre>{txt_file.read()}</pre><br>"
                         text_count += 1
-                        text_files_to_delete.append(dest_file)
+                        if file_ext == "html":
+                            # ── HTML reports: render in an iframe so their original
+                            #    styling and interactivity are fully preserved.
+                            #    The file stays on disk; only the <src> path is embedded.
+                            rel_url = os.path.relpath(dest_file, destination_path).replace("\\", "/")
+                            safe_title = html_escape_lib.escape(unique_filename, quote=True)
+                            text_content += (
+                                f'<h3 class="embedded-report-title">'
+                                f'{safe_title}</h3>'
+                                f'<div class="embedded-report-wrap">'
+                                f'<iframe src="{rel_url}" class="embedded-report-frame"'
+                                f' title="{safe_title}" loading="lazy"></iframe>'
+                                f'</div>\n'
+                            )
+                            # Do NOT mark for deletion – the iframe src must stay on disk.
+                        else:
+                            # ── Plain text: HTML-escape content so angle brackets and
+                            #    special chars are displayed literally, not rendered.
+                            encoding = detect_encoding(dest_file)
+                            with open(dest_file, "r", encoding=encoding, errors="replace") as txt_file:
+                                text_content += (
+                                    f'<h3>{html_escape_lib.escape(unique_filename)}</h3>'
+                                    f'<pre>{html_escape_lib.escape(txt_file.read())}</pre><br>'
+                                )
+                            text_files_to_delete.append(dest_file)
 
                 except Exception as e:
                     logging.error(f"Failed to process {src_file}: {e}")
