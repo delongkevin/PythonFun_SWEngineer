@@ -625,7 +625,7 @@ body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica 
 .tbl-wrap{{width:100%;overflow-x:auto;border-radius:7px;
   border:1px solid var(--bdr);margin:12px 0;
   box-shadow:0 1px 4px rgba(0,0,0,.05)}}
-table{{width:100%;border-collapse:collapse;font-size:13px}}
+table{{width:100%;border-collapse:collapse;font-size:13px;table-layout:auto}}
 table th{{
   background:#1a3a5c;color:#fff;padding:9px 14px;
   text-align:left;font-size:11px;font-weight:700;
@@ -633,7 +633,13 @@ table th{{
 }}
 table td{{
   padding:8px 14px;border-bottom:1px solid #f0f1f3;
-  vertical-align:middle;line-height:1.45;word-break:break-word
+  vertical-align:middle;line-height:1.45;
+  word-break:break-word;overflow-wrap:anywhere
+}}
+/* Cells classified as "short status" by JS – never wrap (PASS / FAIL / OK / #) */
+table td.td-nowrap{{
+  white-space:nowrap;word-break:normal;overflow-wrap:normal;
+  width:1%;font-weight:700;text-align:center
 }}
 table tr:last-child td{{border-bottom:none}}
 table tr:nth-child(even) td{{background:#fafbfc}}
@@ -807,6 +813,8 @@ function searchReports() {{
 
 /* ── HIGHLIGHT FAIL / PASS ROWS ── */
 function styleTableRows() {{
+  /* Status keywords that must never wrap */
+  var STATUS_RE = new RegExp('^(fail|pass|ok|error|skip|n/a|yes|no|[0-9]{1,5})$', 'i');
   document.querySelectorAll('table tbody tr').forEach(function(row) {{
     var t = row.textContent.toLowerCase();
     if (t.includes('fail')) {{
@@ -814,6 +822,13 @@ function styleTableRows() {{
     }} else if (t.includes('pass') || t.includes(' ok') || t.includes('success')) {{
       row.classList.add('row-pass');
     }}
+    /* Tag short status-value cells so they never word-wrap */
+    row.querySelectorAll('td').forEach(function(td) {{
+      var val = td.textContent.trim();
+      if (STATUS_RE.test(val)) {{
+        td.classList.add('td-nowrap');
+      }}
+    }});
   }});
 }}
 
