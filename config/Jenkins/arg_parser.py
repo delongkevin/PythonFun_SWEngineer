@@ -636,6 +636,10 @@ table td{{
   vertical-align:middle;line-height:1.45;
   word-break:break-word;overflow-wrap:anywhere
 }}
+/* First column (label cells in statistics tables) – never wrap so text stays readable at any window width */
+.stats-table td:first-child{{
+  white-space:nowrap;word-break:normal;overflow-wrap:normal;min-width:220px
+}}
 /* Cells classified as "short status" by JS – never wrap (PASS / FAIL / OK / #) */
 table td.td-nowrap{{
   white-space:nowrap;word-break:normal;overflow-wrap:normal;
@@ -1138,6 +1142,9 @@ def extract_statistics_table(soup):
     statistics_table = soup.find("table", class_="OverviewTable")  # Adjust class if necessary
 
     if statistics_table:
+        # Add stats-table class so the label-column no-wrap CSS rule applies only here
+        existing_classes = statistics_table.get("class", [])
+        statistics_table["class"] = existing_classes + ["stats-table"]
         return f"<h2>Test Statistics</h2>{str(statistics_table)}"
     else:
         return "<p><b>No statistics table found in the report.</b></p>"
