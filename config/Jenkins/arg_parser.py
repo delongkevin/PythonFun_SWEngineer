@@ -1,4 +1,5 @@
 import os
+import copy
 import html as html_escape_lib
 import argparse
 import shutil
@@ -277,7 +278,7 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
                 )
 
                 # Consolidated failures panel content
-                failed_html = extract_failed_tests(soup)
+                failed_html = extract_failed_tests(soup, source_filename=html_file)
                 if failed > 0:
                     all_failures_html += (
                         f'<div class="failure-group">'
@@ -296,7 +297,7 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
                     sbadges += f'<span class="sec-badge sec-pass">{passed} Passed</span>'
 
                 stats_html = extract_statistics_table(soup)
-                kw_html = extract_keyword_from_tables(soup, keyword)
+                kw_html = extract_keyword_from_tables(soup, keyword, source_filename=html_file)
 
                 report_sections_html += (
                     f'<div class="report-card" id="{section_id}">'
@@ -377,7 +378,7 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Magna Electronics &ndash; Software Test Report &ndash; {report_timestamp}</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'%3E%3Crect width='36' height='36' rx='5' fill='%23DA291C'/%3E%3Ctext x='18' y='27' font-family='Arial%20Black%2CHelvetica%20Neue%2Csans-serif' font-size='24' font-weight='900' fill='%23fff' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAADfUlEQVR42u3Vz0/bdRzH8Wfpty0/VgoFWsaP0cL4MRt+bHWo0bHE7WC8SIx48GIyspPePflHcDAxwWgyanYwRokCmcYxf+FgLS3Nsq6DWpy03++3BfqL9lu+Lf16wCzxwBIv82Af188nn7zyyufz/kBVVVXV/51O07QoAIoC774NH3wI7vFnFkAAHAAUFXj0EJKJZ96A5vF4mJmZYWpqivn5eZaXlzEajaQzGT765DMG+vpwj41w88uvePGimysTl/j085uIksw7b72J3dbGF19/w1Y0SqvVyhuvv8Z3t+9QUBTeu36NmY9ncQ0N4h4dYfaGB0tjI+9fv/akAUKhEF6vF6vVysrKCouLi0xOThKXZGKiRDqbRS/oiYkSm5EoF0aG8QWCGAwG7nrX0TSNtXU/r068QiqdJp3JIid3EWWZH+78hCjLdJ4+zT1/gOTePjFR4vHODme6uqgJh8MsLS1ht9vJ5XKYzWbm5uYAkOQEgl6PoBf4bc1La4sVSU7gCwTR6XRcPD/GejDIn7EYLdZmWqzN+IP3mb3hoVwu09bawq3lH9HpdAD4AhsMPzdEfV0da+sBAGo8Hg9+v5+xsTFWV1cZHx9nYWGBVCqFlEhgNptxDQ2gqiovuC+wu7/PXa+PSqXCr6tr5PMFKpUKu3v7bP2+Ta3JRK+jB0EQaLfZcI8OUygo7MTjSIkkvkCQgqLgC2xQqVQQDAYD09PTuFwuurq6cLlcOBwOIpEIdlsbzRYLg/1nsbW10ed0kM5kALh6eYJzg/18e+t7+pxOisUikeg2l19+iauXJ7j98y+camjg+fOj6HQ1AHS027kycQk5meR+6CHpTOb4Ev6Xc6DmaYvJ3T1iovSvDjxUVQAy2SwxUUQtlU7cd6iqx6/gJHIyydle55MQR0dHGAwCtaZa6utqiUsymqbRaDajFIuUSiUOVZVzA/3sxEX6nA4ymSy5fJ5TDfUYBIFSuYyiFFH/DvrUBrK5A5K7exzk8xzk8+QODiiXj4hLEvf8GxQUBVFOICUSFBSFXkcPlUrleK4dHhITJfZSKSyNZkLhTZqbmshmc8Ql+R+TcPukAN2dHXR3dhB6tImmaTRZLHS023kQztFkacRgMGAyGqk1mWg0mwlvRVDV48ptra10d3YQ/eMxsbiIs+cMAGqphKDXYzQayRcK1c+wqqqqir8AD3aZgbtTlrkAAAAASUVORK5CYII=">
 <style>
 /* ── RESET ── */
 *,*::before,*::after{{box-sizing:border-box;margin:0;padding:0}}
@@ -649,12 +650,6 @@ table td.td-nowrap{{
   white-space:nowrap;word-break:normal;overflow-wrap:normal;
   width:1%;font-weight:700;text-align:center
 }}
-/* ── Nested sub-tables (e.g. "Check of expected values") ──────────────
-   Force every column to have a floor width so cells never collapse to
-   single-character vertical stacking (the "B y t e s" / "Re su lt" bug). */
-table td > table{{min-width:320px;width:auto}}
-table td > table th{{white-space:nowrap;min-width:80px}}
-table td > table td{{min-width:80px;white-space:nowrap;word-break:normal;overflow-wrap:normal}}
 table tr:last-child td{{border-bottom:none}}
 table tr:nth-child(even) td{{background:#fafbfc}}
 table tr:hover td{{background:#eef4fb !important;color:var(--txt) !important}}
@@ -759,6 +754,11 @@ pre{{
 }}
 .file-list li:last-child{{border-bottom:none}}
 .hidden{{display:none !important}}
+/* ── Report link note (filename reference under tables) ── */
+.report-link-note{{
+  font-size:11.5px;color:var(--muted);font-style:italic;
+  display:inline-flex;align-items:center;gap:4px
+}}
 
 /* ══════════════════════════════════════
    EMBEDDED HTML REPORT IFRAMES
@@ -892,11 +892,6 @@ function wrapTables() {{
 window.addEventListener('DOMContentLoaded', function() {{
   styleTableRows();
   wrapTables();
-  /* Open the failures panel by default when there are failures */
-  var fpBody = document.getElementById('fail-panel-body');
-  if (fpBody && document.querySelector('.failure-group')) {{
-    fpBody.classList.add('open');
-  }}
 }});
 </script>
 </head>
@@ -906,10 +901,7 @@ window.addEventListener('DOMContentLoaded', function() {{
 <nav class="sidebar">
   <div class="sb-brand">
     <div class="brand-icon">
-      <svg viewBox="0 0 40 40" width="40" height="40" aria-label="Magna Electronics">
-        <rect width="40" height="40" rx="6" fill="#DA291C"/>
-        <text x="20" y="30" font-family="'Arial Black','Helvetica Neue',sans-serif" font-size="28" font-weight="900" fill="#fff" text-anchor="middle">M</text>
-      </svg>
+      <img src="data:image/png;base64,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" width="80" height="80" alt="Magna Electronics" style="display:block">
     </div>
     <h2>Magna Electronics</h2>
     <div class="brand-sub">ADAS &bull; Surround View Camera System</div>
@@ -953,10 +945,7 @@ window.addEventListener('DOMContentLoaded', function() {{
   <header class="page-hdr">
     <div>
       <h1>
-        <svg viewBox="0 0 32 32" width="32" height="32" aria-hidden="true" style="flex-shrink:0">
-          <rect width="32" height="32" rx="5" fill="#DA291C"/>
-          <text x="16" y="24" font-family="'Arial Black','Helvetica Neue',sans-serif" font-size="22" font-weight="900" fill="#fff" text-anchor="middle">M</text>
-        </svg>
+        <img src="data:image/png;base64,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" width="36" height="36" alt="Magna Electronics" style="flex-shrink:0;display:block">
         Magna Electronics &ndash; Software Test Report
       </h1>
       <div class="hdr-sub">
@@ -1190,47 +1179,203 @@ def extract_keyword_table(soup, keyword):
     return keyword_tables
 
 
-def extract_statistics_table(soup):
-    # Locate the statistics table (modify class or ID if needed)
-    statistics_table = soup.find("table", class_="OverviewTable")  # Adjust class if necessary
+def _cell_plain_text(cell):
+    """Return plain text of a BeautifulSoup cell tag, stripping any nested
+    <table> elements so sub-table content doesn't bleed into the output column."""
+    clone = copy.deepcopy(cell)
+    for nested in clone.find_all("table"):
+        nested.decompose()
+    return clone.get_text(separator=" ", strip=True)
 
-    if statistics_table:
-        return f"<h2>Test Statistics</h2>{str(statistics_table)}"
-    else:
+
+def extract_statistics_table(soup):
+    """Extracts the OverviewTable and renders it as a clean, flat two-column table.
+
+    The raw source HTML is parsed and re-rendered so that any inline styles,
+    nested elements, or class names from the original test tool are stripped.
+    This prevents distorted column widths in the consolidated report.
+    """
+    statistics_table = soup.find("table", class_="OverviewTable")
+    if not statistics_table:
         return "<p><b>No statistics table found in the report.</b></p>"
 
-def extract_failed_tests(soup):
-    failed_tests = []
+    rows_html = ""
+    for row in statistics_table.find_all("tr"):
+        # Only process rows that belong directly to the OverviewTable itself
+        if row.find_parent("table") is not statistics_table:
+            continue
+        cells = row.find_all(["th", "td"], recursive=False)
+        if not cells:
+            continue
+        is_header = bool(row.find("th", recursive=False))
+        cell_texts = [html_escape_lib.escape(_cell_plain_text(c)) for c in cells]
+        if is_header:
+            rows_html += "<tr>" + "".join(f"<th>{t}</th>" for t in cell_texts) + "</tr>"
+        else:
+            rows_html += "<tr>" + "".join(f"<td>{t}</td>" for t in cell_texts) + "</tr>"
+
+    if not rows_html:
+        return "<p><b>No statistics data found in the report.</b></p>"
+
+    return (
+        f'<h2>Test Statistics</h2>'
+        f'<div class="tbl-wrap">'
+        f'<table><tbody>{rows_html}</tbody></table>'
+        f'</div>'
+    )
+
+def extract_failed_tests(soup, source_filename=None):
+    """Extracts a high-level summary of failed test cases.
+
+    Only genuine numbered test-case rows are included (first cell must match
+    the step-number pattern, e.g. "2.1.1.2.1").  OverviewTable summary rows,
+    section-header rows, timestamp rows, and expand-button rows are all
+    excluded so the output is a clean three-column table:
+      Step Number | Test Case Name | Result
+
+    Nested sub-tables are never emitted — the output is always a flat table.
+    If *source_filename* is provided a note is appended inviting the reader
+    to open the original file for the full drill-down detail.
+    """
+    import re as _re
+    # Pattern for a genuine test-case step number: at least two dot-separated
+    # numeric segments, e.g. "2.1", "2.1.1.2.1".  Rejects plain integers ("2"),
+    # timestamps ("2608.730519"), and button labels ("[-]").
+    STEP_RE = _re.compile(r'^\d+(\.\d+){2,}$')
+
+    failed_rows = []
+    seen: set[tuple] = set()
 
     for table in soup.find_all("table"):
+        # Skip tables nested inside a table cell (sub-tables)
+        if table.find_parent("td") or table.find_parent("th"):
+            continue
+        # Skip the OverviewTable — it contains summary sentences, not test cases
+        if "OverviewTable" in (table.get("class") or []):
+            continue
+
         for row in table.find_all("tr"):
-            cells = row.find_all(["th", "td"])
-            for cell in cells:
-                if "fail" in cell.get_text(strip=True).lower():
-                    failed_tests.append(str(row))  # Keep row as-is without styling
-                    break  # Stop checking other cells in this row
+            # Only direct rows of *this* top-level table
+            if row.find_parent("table") is not table:
+                continue
+            # Skip header rows
+            if row.find("th", recursive=False):
+                continue
+            cells = row.find_all("td", recursive=False)
+            if not cells:
+                continue
 
-    return f"<h2>Failed Tests Summary</h2><table>{''.join(failed_tests)}</table>" if failed_tests else "<p><b>No failed tests found.</b></p>"
+            # First-cell text: must match the step-number pattern
+            first = _cell_plain_text(cells[0])
+            if not STEP_RE.match(first):
+                continue
 
-def extract_keyword_from_tables(soup, keyword):
-    """Extracts and formats table rows containing the given keyword from an HTML soup object."""
+            # Extract plain text for all direct cells (strip nested tables)
+            cell_texts = [_cell_plain_text(c) for c in cells]
+
+            # The row must contain "fail" somewhere in its cells
+            if not any("fail" in t.lower() for t in cell_texts):
+                continue
+
+            row_key = tuple(cell_texts[:3])
+            if row_key in seen:
+                continue
+            seen.add(row_key)
+
+            # Emit exactly 3 columns: step number | test case name | result
+            failed_rows.append(cell_texts[:3])
+
+    if not failed_rows:
+        return "<p><b>No failed tests found.</b></p>"
+
+    # Optional reference note pointing to the original source file
+    link_html = ""
+    if source_filename:
+        safe_name = html_escape_lib.escape(os.path.basename(source_filename))
+        link_html = (
+            f'<span class="report-link-note">'
+            f'&#x1F4C4; Full details: <strong>{safe_name}</strong>'
+            f' &mdash; see <em>Logs &amp; Info</em> section'
+            f'</span>'
+        )
+
+    rows_html = "".join(
+        "<tr>" + "".join(f"<td>{html_escape_lib.escape(t)}</td>" for t in row_cells) + "</tr>"
+        for row_cells in failed_rows
+    )
+
+    header_row = "<tr><th>Step</th><th>Test Case</th><th>Result</th></tr>"
+
+    return (
+        f'<h2>Failed Tests Summary{link_html}</h2>'
+        f'<div class="tbl-wrap">'
+        f'<table><thead>{header_row}</thead><tbody>{rows_html}</tbody></table>'
+        f'</div>'
+    )
+
+def extract_keyword_from_tables(soup, keyword, source_filename=None):
+    """Extracts a clean summary of table rows containing the given keyword.
+
+    Only rows that belong directly to top-level tables are searched; nested
+    sub-tables inside table cells and their rows are skipped to prevent
+    tables-within-tables in the output.  Cell content is rendered as plain
+    text with nested markup removed, and trimmed to at most four columns.
+
+    If *source_filename* is provided a note is appended inviting the reader
+    to open the original file for detailed drill-down information.
+    """
     keyword_lower = keyword.lower()
     extracted_rows = []
+    seen: set[tuple] = set()
 
-    # Iterate over all tables in the soup
     for table in soup.find_all("table"):
-        for row in table.find_all("tr"):
-            cells = row.find_all(["th", "td"])
-            # Check if any cell in the row contains the keyword
-            if any(keyword_lower in cell.get_text(strip=True).lower() for cell in cells):
-                extracted_rows.append(str(row))
+        # Skip tables nested inside a table cell (sub-tables)
+        if table.find_parent("td") or table.find_parent("th"):
+            continue
 
-    # Format the output neatly without table borders
-    if extracted_rows:
-        table_html = "<table>\n" + "\n".join(extracted_rows) + "\n</table>"
-        return f"<h2>Table Data Matching Keyword: '{keyword}'</h2>\n{table_html}"
-    else:
-        return f"<p><b>No table rows found containing keyword: '{keyword}'</b></p>"
+        for row in table.find_all("tr"):
+            # Only process rows that belong directly to *this* top-level table
+            if row.find_parent("table") is not table:
+                continue
+            # Only direct-child cells (recursive=False prevents picking up
+            # td/th elements that live inside nested sub-tables)
+            cells = row.find_all(["th", "td"], recursive=False)
+            if not cells:
+                continue
+            # Deepcopy each cell and strip nested tables before extracting text
+            cell_texts = [_cell_plain_text(c) for c in cells]
+            row_key = tuple(cell_texts[:3])
+            if row_key in seen:
+                continue
+            if any(keyword_lower in t.lower() for t in cell_texts):
+                seen.add(row_key)
+                extracted_rows.append(cell_texts[:4])
+
+    if not extracted_rows:
+        return f"<p><b>No table rows found containing keyword: '{html_escape_lib.escape(keyword)}'</b></p>"
+
+    rows_html = "".join(
+        "<tr>" + "".join(f"<td>{html_escape_lib.escape(t)}</td>" for t in row_cells) + "</tr>"
+        for row_cells in extracted_rows
+    )
+
+    link_note = ""
+    if source_filename:
+        safe_name = html_escape_lib.escape(os.path.basename(source_filename))
+        link_note = (
+            f'<p class="report-link-note">'
+            f'&#x1F4C4; Full details: <strong>{safe_name}</strong>'
+            f' &mdash; see <em>Logs &amp; Info</em> section'
+            f'</p>'
+        )
+
+    return (
+        f'<h2>Table Data Matching Keyword: \'{html_escape_lib.escape(keyword)}\'</h2>'
+        f'<div class="tbl-wrap">'
+        f'<table><tbody>{rows_html}</tbody></table>'
+        f'</div>'
+        f'{link_note}'
+    )
 
 def extract_overview_table(soup):
     """Extracts executed, pass, and fail count from the 'OverviewTable'."""
