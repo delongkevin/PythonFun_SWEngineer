@@ -1,4 +1,5 @@
 import os
+import copy
 import html as html_escape_lib
 import argparse
 import shutil
@@ -277,7 +278,7 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
                 )
 
                 # Consolidated failures panel content
-                failed_html = extract_failed_tests(soup)
+                failed_html = extract_failed_tests(soup, source_filename=html_file)
                 if failed > 0:
                     all_failures_html += (
                         f'<div class="failure-group">'
@@ -296,7 +297,7 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
                     sbadges += f'<span class="sec-badge sec-pass">{passed} Passed</span>'
 
                 stats_html = extract_statistics_table(soup)
-                kw_html = extract_keyword_from_tables(soup, keyword)
+                kw_html = extract_keyword_from_tables(soup, keyword, source_filename=html_file)
 
                 report_sections_html += (
                     f'<div class="report-card" id="{section_id}">'
@@ -649,12 +650,6 @@ table td.td-nowrap{{
   white-space:nowrap;word-break:normal;overflow-wrap:normal;
   width:1%;font-weight:700;text-align:center
 }}
-/* ── Nested sub-tables (e.g. "Check of expected values") ──────────────
-   Force every column to have a floor width so cells never collapse to
-   single-character vertical stacking (the "B y t e s" / "Re su lt" bug). */
-table td > table{{min-width:320px;width:auto}}
-table td > table th{{white-space:nowrap;min-width:80px}}
-table td > table td{{min-width:80px;white-space:nowrap;word-break:normal;overflow-wrap:normal}}
 table tr:last-child td{{border-bottom:none}}
 table tr:nth-child(even) td{{background:#fafbfc}}
 table tr:hover td{{background:#eef4fb !important;color:var(--txt) !important}}
@@ -759,6 +754,11 @@ pre{{
 }}
 .file-list li:last-child{{border-bottom:none}}
 .hidden{{display:none !important}}
+/* ── Report link note (filename reference under tables) ── */
+.report-link-note{{
+  font-size:11.5px;color:var(--muted);font-style:italic;
+  display:inline-flex;align-items:center;gap:4px
+}}
 
 /* ══════════════════════════════════════
    EMBEDDED HTML REPORT IFRAMES
@@ -1190,47 +1190,181 @@ def extract_keyword_table(soup, keyword):
     return keyword_tables
 
 
-def extract_statistics_table(soup):
-    # Locate the statistics table (modify class or ID if needed)
-    statistics_table = soup.find("table", class_="OverviewTable")  # Adjust class if necessary
+def _cell_plain_text(cell):
+    """Return plain text of a BeautifulSoup cell tag, stripping any nested
+    <table> elements so sub-table content doesn't bleed into the output column."""
+    clone = copy.deepcopy(cell)
+    for nested in clone.find_all("table"):
+        nested.decompose()
+    return clone.get_text(separator=" ", strip=True)
 
-    if statistics_table:
-        return f"<h2>Test Statistics</h2>{str(statistics_table)}"
-    else:
+
+def extract_statistics_table(soup):
+    """Extracts the OverviewTable and renders it as a clean, flat two-column table.
+
+    The raw source HTML is parsed and re-rendered so that any inline styles,
+    nested elements, or class names from the original test tool are stripped.
+    This prevents distorted column widths in the consolidated report.
+    """
+    statistics_table = soup.find("table", class_="OverviewTable")
+    if not statistics_table:
         return "<p><b>No statistics table found in the report.</b></p>"
 
-def extract_failed_tests(soup):
-    failed_tests = []
+    rows_html = ""
+    for row in statistics_table.find_all("tr"):
+        # Only process rows that belong directly to the OverviewTable itself
+        if row.find_parent("table") is not statistics_table:
+            continue
+        cells = row.find_all(["th", "td"])
+        if not cells:
+            continue
+        is_header = bool(row.find("th", recursive=False))
+        cell_texts = [html_escape_lib.escape(_cell_plain_text(c)) for c in cells]
+        if is_header:
+            rows_html += "<tr>" + "".join(f"<th>{t}</th>" for t in cell_texts) + "</tr>"
+        else:
+            rows_html += "<tr>" + "".join(f"<td>{t}</td>" for t in cell_texts) + "</tr>"
+
+    if not rows_html:
+        return "<p><b>No statistics data found in the report.</b></p>"
+
+    return (
+        f'<h2>Test Statistics</h2>'
+        f'<div class="tbl-wrap">'
+        f'<table><tbody>{rows_html}</tbody></table>'
+        f'</div>'
+    )
+
+def extract_failed_tests(soup, source_filename=None):
+    """Extracts a clean, high-level summary of failed tests.
+
+    Only rows that belong directly to top-level tables are examined; tables
+    nested inside a table cell and any of their rows are intentionally skipped
+    so that the output never contains tables-within-tables.  Cell content is
+    rendered as plain text with nested markup removed, and trimmed to at most
+    four columns to maintain a neat, uniform column structure.
+
+    If *source_filename* is provided a note is appended inviting the reader
+    to open the original file for the full drill-down detail.
+    """
+    failed_rows = []
+    seen: set[tuple] = set()
 
     for table in soup.find_all("table"):
+        # Skip tables that are children of a table cell (nested sub-tables)
+        if table.find_parent("td") or table.find_parent("th"):
+            continue
+
         for row in table.find_all("tr"):
-            cells = row.find_all(["th", "td"])
-            for cell in cells:
-                if "fail" in cell.get_text(strip=True).lower():
-                    failed_tests.append(str(row))  # Keep row as-is without styling
-                    break  # Stop checking other cells in this row
+            # Only process rows that belong directly to *this* top-level table
+            if row.find_parent("table") is not table:
+                continue
+            # Skip header rows (check only direct-child th, not nested ones)
+            if row.find("th", recursive=False):
+                continue
+            cells = row.find_all("td", recursive=False)
+            if not cells:
+                continue
+            # Extract plain text — deepcopy each cell then strip nested
+            # <table> elements so sub-table content doesn't bleed into columns.
+            cell_texts = [_cell_plain_text(c) for c in cells]
+            row_key = tuple(cell_texts[:3])
+            if row_key in seen:
+                continue
+            if any("fail" in t.lower() for t in cell_texts):
+                seen.add(row_key)
+                # Limit to 4 columns so the table stays manageable
+                failed_rows.append(cell_texts[:4])
 
-    return f"<h2>Failed Tests Summary</h2><table>{''.join(failed_tests)}</table>" if failed_tests else "<p><b>No failed tests found.</b></p>"
+    if not failed_rows:
+        return "<p><b>No failed tests found.</b></p>"
 
-def extract_keyword_from_tables(soup, keyword):
-    """Extracts and formats table rows containing the given keyword from an HTML soup object."""
+    # Optional reference link to the original source file
+    link_html = ""
+    if source_filename:
+        safe_name = html_escape_lib.escape(os.path.basename(source_filename))
+        link_html = (
+            f' &nbsp;<span class="report-link-note">'
+            f'&#x1F4C4; Full details: <strong>{safe_name}</strong>'
+            f' &mdash; see <em>Logs &amp; Info</em> section'
+            f'</span>'
+        )
+
+    rows_html = "".join(
+        "<tr>" + "".join(f"<td>{html_escape_lib.escape(t)}</td>" for t in row_cells) + "</tr>"
+        for row_cells in failed_rows
+    )
+
+    return (
+        f'<h2>Failed Tests Summary{link_html}</h2>'
+        f'<div class="tbl-wrap">'
+        f'<table><tbody>{rows_html}</tbody></table>'
+        f'</div>'
+    )
+
+def extract_keyword_from_tables(soup, keyword, source_filename=None):
+    """Extracts a clean summary of table rows containing the given keyword.
+
+    Only rows that belong directly to top-level tables are searched; nested
+    sub-tables inside table cells and their rows are skipped to prevent
+    tables-within-tables in the output.  Cell content is rendered as plain
+    text with nested markup removed, and trimmed to at most four columns.
+
+    If *source_filename* is provided a note is appended inviting the reader
+    to open the original file for detailed drill-down information.
+    """
     keyword_lower = keyword.lower()
     extracted_rows = []
+    seen: set[tuple] = set()
 
-    # Iterate over all tables in the soup
     for table in soup.find_all("table"):
-        for row in table.find_all("tr"):
-            cells = row.find_all(["th", "td"])
-            # Check if any cell in the row contains the keyword
-            if any(keyword_lower in cell.get_text(strip=True).lower() for cell in cells):
-                extracted_rows.append(str(row))
+        # Skip tables nested inside a table cell (sub-tables)
+        if table.find_parent("td") or table.find_parent("th"):
+            continue
 
-    # Format the output neatly without table borders
-    if extracted_rows:
-        table_html = "<table>\n" + "\n".join(extracted_rows) + "\n</table>"
-        return f"<h2>Table Data Matching Keyword: '{keyword}'</h2>\n{table_html}"
-    else:
-        return f"<p><b>No table rows found containing keyword: '{keyword}'</b></p>"
+        for row in table.find_all("tr"):
+            # Only process rows that belong directly to *this* top-level table
+            if row.find_parent("table") is not table:
+                continue
+            # Only direct-child cells (recursive=False prevents picking up
+            # td/th elements that live inside nested sub-tables)
+            cells = row.find_all(["th", "td"], recursive=False)
+            if not cells:
+                continue
+            # Deepcopy each cell and strip nested tables before extracting text
+            cell_texts = [_cell_plain_text(c) for c in cells]
+            row_key = tuple(cell_texts[:3])
+            if row_key in seen:
+                continue
+            if any(keyword_lower in t.lower() for t in cell_texts):
+                seen.add(row_key)
+                extracted_rows.append(cell_texts[:4])
+
+    if not extracted_rows:
+        return f"<p><b>No table rows found containing keyword: '{html_escape_lib.escape(keyword)}'</b></p>"
+
+    rows_html = "".join(
+        "<tr>" + "".join(f"<td>{html_escape_lib.escape(t)}</td>" for t in row_cells) + "</tr>"
+        for row_cells in extracted_rows
+    )
+
+    link_note = ""
+    if source_filename:
+        safe_name = html_escape_lib.escape(os.path.basename(source_filename))
+        link_note = (
+            f'<p class="report-link-note">'
+            f'&#x1F4C4; Full details: <strong>{safe_name}</strong>'
+            f' &mdash; see <em>Logs &amp; Info</em> section'
+            f'</p>'
+        )
+
+    return (
+        f'<h2>Table Data Matching Keyword: \'{html_escape_lib.escape(keyword)}\'</h2>'
+        f'<div class="tbl-wrap">'
+        f'<table><tbody>{rows_html}</tbody></table>'
+        f'</div>'
+        f'{link_note}'
+    )
 
 def extract_overview_table(soup):
     """Extracts executed, pass, and fail count from the 'OverviewTable'."""
