@@ -358,6 +358,8 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
         fail_arc = round(fail_frac * circ, 1)
         fail_arc_offset = round(-pass_arc, 1)   # negative offset shifts fail arc past the pass arc
 
+        pass_rate_icon = "&#x1F4AF;" if pass_rate == 100.0 else ""
+
         consolidated_failures = (
             all_failures_html
             if all_failures_html
@@ -983,7 +985,7 @@ window.addEventListener('DOMContentLoaded', function() {{
           <div class="sc-bar"><div class="sc-bar-fill fill-fail" style="width:{fail_rate}%"></div></div>
         </div>
         <div class="stat-card sc-rate">
-          <div class="sc-icon">&#x1F4AF;</div>
+          <div class="sc-icon">{pass_rate_icon}</div>
           <div class="sc-num">{pass_rate}%</div>
           <div class="sc-lbl">Pass Rate</div>
           <div class="sc-bar"><div class="sc-bar-fill fill-rate" style="width:{pass_rate}%"></div></div>
