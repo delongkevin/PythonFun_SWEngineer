@@ -7,7 +7,7 @@ def test_build_python_candidates_excludes_missing_paths(monkeypatch):
     monkeypatch.setattr(build.sys, "executable", "/tmp/current-python")
     monkeypatch.setattr(build.sys, "platform", "linux")
     monkeypatch.setattr(build.shutil, "which", lambda name: None)
-    monkeypatch.setattr(build.Path, "exists", lambda self: str(self) != "/usr/bin/python3")
+    monkeypatch.setattr(build.Path, "exists", lambda self: self.as_posix() != "/usr/bin/python3")
 
     candidates = build.build_python_candidates()
 
