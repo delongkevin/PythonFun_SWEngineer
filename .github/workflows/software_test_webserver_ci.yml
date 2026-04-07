@@ -1,0 +1,108 @@
+name: SoftwareTest Webserver CI/CD
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'SoftwareTest_Webserver/**'
+      - '.github/workflows/software_test_webserver_ci.yml'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'SoftwareTest_Webserver/**'
+      - '.github/workflows/software_test_webserver_ci.yml'
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint (flake8)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install flake8
+        run: python -m pip install --upgrade pip flake8
+
+      - name: Run flake8
+        run: |
+          flake8 SoftwareTest_Webserver \
+            --exclude=SoftwareTest_Webserver/data \
+            --max-line-length=120 \
+            --extend-ignore=E501,E127
+
+  test:
+    name: Unit Tests (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    needs: lint
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        python-version: ['3.10', '3.11', '3.12']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        working-directory: SoftwareTest_Webserver
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest
+
+      - name: Run unit tests
+        working-directory: SoftwareTest_Webserver
+        run: |
+          python -m pytest tests/ -v --tb=short --junitxml=test-results.xml
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: softwaretest-webserver-test-results-py${{ matrix.python-version }}
+          path: SoftwareTest_Webserver/test-results.xml
+
+  smoke:
+    name: Compile and Smoke Test
+    runs-on: ubuntu-latest
+    needs: test
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        working-directory: SoftwareTest_Webserver
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Compile Python sources
+        run: python -m compileall SoftwareTest_Webserver
+
+      - name: Smoke test Flask application
+        working-directory: SoftwareTest_Webserver
+        run: |
+          python -c "from monitor_server import create_app; app = create_app(); client = app.test_client(); response = client.get('/api/health'); assert response.status_code == 200"
+
+      - name: Smoke test CLI entry points
+        working-directory: SoftwareTest_Webserver
+        run: |
+          python server.py --help
+          python node_agent.py --help

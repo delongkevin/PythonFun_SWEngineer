@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ dashboard_title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="shell">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">Lab Operations</p>
+                <h1>{{ dashboard_title }}</h1>
+                <p class="hero-copy">
+                    Aggregate pass, fail, not-executed, application health, and serial port presence
+                    across test PCs on the local network.
+                </p>
+            </div>
+            <div class="hero-panel">
+                <div class="hero-metric">
+                    <span class="metric-label">Refresh</span>
+                    <strong>Every {{ refresh_seconds }}s</strong>
+                </div>
+                <div class="hero-metric">
+                    <span class="metric-label">Transport</span>
+                    <strong>HTTP Agent Heartbeats</strong>
+                </div>
+            </div>
+        </header>
+
+        <section class="summary-grid" id="summary-grid">
+            <article class="summary-card accent-blue">
+                <span class="summary-label">Nodes Online</span>
+                <strong id="online-nodes">0</strong>
+                <span id="total-nodes">0 total</span>
+            </article>
+            <article class="summary-card accent-green">
+                <span class="summary-label">Pass Rate</span>
+                <strong id="pass-rate">0%</strong>
+                <span id="report-total">0 reports</span>
+            </article>
+            <article class="summary-card accent-amber">
+                <span class="summary-label">Apps Running</span>
+                <strong id="apps-running">0 / 0</strong>
+                <span>CANoe, Tera Term, TRACE32</span>
+            </article>
+            <article class="summary-card accent-slate">
+                <span class="summary-label">Serial Ports</span>
+                <strong id="serial-total">0</strong>
+                <span>Connected across all nodes</span>
+            </article>
+        </section>
+
+        <section class="layout-grid">
+            <aside class="control-panel">
+                <div class="panel-card">
+                    <h2>Add Node</h2>
+                    <p>Register a remote-desktop-accessible PC before the agent is installed.</p>
+                    <form id="node-form">
+                        <label>
+                            <span>Display Name</span>
+                            <input name="display_name" placeholder="Bench PC 01" required>
+                        </label>
+                        <label>
+                            <span>Node ID</span>
+                            <input name="node_id" placeholder="bench-pc-01">
+                        </label>
+                        <label>
+                            <span>RDP Host / IP</span>
+                            <input name="rdp_host" placeholder="192.168.1.25">
+                        </label>
+                        <label>
+                            <span>Report Folders</span>
+                            <textarea name="report_roots" rows="3" placeholder="C:\\Reports\\Bench01&#10;D:\\Logs\\Nightly"></textarea>
+                        </label>
+                        <label>
+                            <span>Description</span>
+                            <textarea name="description" rows="3" placeholder="Powertrain bench node"></textarea>
+                        </label>
+                        <label>
+                            <span>Tags</span>
+                            <input name="tags" placeholder="Powertrain, Regression, Nightly">
+                        </label>
+                        <button type="submit">Register Node</button>
+                    </form>
+                    <p class="form-status" id="form-status"></p>
+                </div>
+
+                <div class="panel-card">
+                    <h2>Deployment Model</h2>
+                    <ul class="plain-list">
+                        <li>Run this dashboard on one machine reachable by all lab PCs.</li>
+                        <li>Install the node agent on each Windows node to publish process, USB, and report status.</li>
+                        <li>Use RDP host names or IP addresses for quick operator access.</li>
+                    </ul>
+                </div>
+            </aside>
+
+            <main>
+                <section class="board-header">
+                    <div>
+                        <p class="eyebrow">Network View</p>
+                        <h2>Test Nodes</h2>
+                    </div>
+                    <p id="generated-at">Waiting for first update...</p>
+                </section>
+                <section id="nodes-grid" class="nodes-grid"></section>
+            </main>
+        </section>
+    </div>
+
+    <template id="node-template">
+        <article class="node-card">
+            <header class="node-header">
+                <div>
+                    <div class="status-row">
+                        <span class="status-dot"></span>
+                        <span class="node-name"></span>
+                    </div>
+                    <p class="node-subtitle"></p>
+                </div>
+                <span class="status-pill"></span>
+            </header>
+
+            <section class="card-section">
+                <div class="mini-grid">
+                    <div>
+                        <span class="section-label">Host</span>
+                        <strong class="host-name"></strong>
+                    </div>
+                    <div>
+                        <span class="section-label">RDP</span>
+                        <strong class="rdp-host"></strong>
+                    </div>
+                    <div>
+                        <span class="section-label">Last Seen</span>
+                        <strong class="last-seen"></strong>
+                    </div>
+                    <div>
+                        <span class="section-label">Agent</span>
+                        <strong class="agent-version"></strong>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card-section">
+                <div class="section-title-row">
+                    <h3>Applications</h3>
+                    <span class="apps-summary"></span>
+                </div>
+                <div class="chips apps-chips"></div>
+            </section>
+
+            <section class="card-section">
+                <div class="section-title-row">
+                    <h3>Serial Ports</h3>
+                    <span class="serial-summary"></span>
+                </div>
+                <div class="chips serial-chips"></div>
+            </section>
+
+            <section class="card-section">
+                <div class="section-title-row">
+                    <h3>Reports</h3>
+                    <span class="report-rate"></span>
+                </div>
+                <div class="report-strip">
+                    <div class="bar pass-bar"></div>
+                    <div class="bar fail-bar"></div>
+                    <div class="bar skip-bar"></div>
+                    <div class="bar unknown-bar"></div>
+                </div>
+                <div class="report-counts"></div>
+                <ul class="recent-reports"></ul>
+            </section>
+        </article>
+    </template>
+
+    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
+</body>
+</html>

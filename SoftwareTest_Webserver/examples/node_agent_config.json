@@ -1,0 +1,27 @@
+{
+  "server_url": "http://127.0.0.1:5050",
+  "node_id": "bench-pc-01",
+  "display_name": "Bench PC 01",
+  "rdp_host": "192.168.1.25",
+  "description": "Powertrain nightly regression node",
+  "heartbeat_interval": 20,
+  "tags": ["Powertrain", "Nightly", "Regression"],
+  "report_roots": [
+    "C:/TestReports/Nightly",
+    "D:/Shared/Bench01/Results"
+  ],
+  "applications": [
+    {
+      "name": "Vector CANoe",
+      "process_names": ["canoe.exe", "canoe32.exe", "canoe64.exe"]
+    },
+    {
+      "name": "Tera Term",
+      "process_names": ["ttermpro.exe", "teraterm.exe"]
+    },
+    {
+      "name": "Lauterbach Trace32",
+      "process_names": ["t32start.exe", "trace32.exe", "t32marm.exe", "t32marm64.exe"]
+    }
+  ]
+}
