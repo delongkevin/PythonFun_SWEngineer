@@ -164,7 +164,9 @@ def test_node_agent_default_config_path_uses_executable_directory_when_frozen(mo
 
     config_path = node_agent.default_config_path()
 
-    assert config_path == Path("/tmp/node_agent_config.json")
+    expected_path = Path(node_agent.sys.executable).resolve().parent / "node_agent_config.json"
+
+    assert config_path == expected_path
 
 
 def test_node_agent_creates_default_config_when_missing(tmp_path):
@@ -183,4 +185,6 @@ def test_server_default_state_file_uses_executable_directory_when_frozen(monkeyp
 
     state_path = server.default_state_file()
 
-    assert state_path == Path("/tmp/server_data/state.json")
+    expected_path = Path(server.sys.executable).resolve().parent / "server_data" / "state.json"
+
+    assert state_path == expected_path
