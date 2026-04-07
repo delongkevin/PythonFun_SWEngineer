@@ -1,0 +1,95 @@
+name: SoftwareTest Webserver Windows Smoke
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - 'SoftwareTest_Webserver/**'
+      - '.github/workflows/software_test_webserver_ci.yml'
+      - '.github/workflows/software_test_webserver_windows_ci.yml'
+  pull_request:
+    branches: [main, master]
+    paths:
+      - 'SoftwareTest_Webserver/**'
+      - '.github/workflows/software_test_webserver_ci.yml'
+      - '.github/workflows/software_test_webserver_windows_ci.yml'
+  workflow_dispatch:
+
+jobs:
+  windows-smoke:
+    name: Windows Node-Agent Smoke (Python ${{ matrix.python-version }})
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install dependencies
+        working-directory: SoftwareTest_Webserver
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt pytest
+
+      - name: Run unit tests on Windows
+        working-directory: SoftwareTest_Webserver
+        run: |
+          python -m pytest tests/ -v --tb=short --junitxml=test-results-windows.xml
+
+      - name: Upload Windows test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: softwaretest-webserver-windows-test-results-py${{ matrix.python-version }}
+          path: SoftwareTest_Webserver/test-results-windows.xml
+
+      - name: Compile Python sources
+        run: python -m compileall SoftwareTest_Webserver
+
+      - name: Smoke test Flask application
+        working-directory: SoftwareTest_Webserver
+        run: |
+          python -c "from monitor_server import create_app; app = create_app(); client = app.test_client(); response = client.get('/api/health'); assert response.status_code == 200"
+
+      - name: Smoke test CLI entry points
+        working-directory: SoftwareTest_Webserver
+        run: |
+          python server.py --help
+          python node_agent.py --help
+
+      - name: Smoke test Windows node-agent helpers
+        working-directory: SoftwareTest_Webserver
+        shell: pwsh
+        run: |
+          @'
+          from node_agent import build_heartbeat_payload, build_registration_payload, collect_processes, collect_serial_ports
+
+          config = {
+              "server_url": "http://127.0.0.1:5050",
+              "node_id": "windows-ci-node",
+              "display_name": "Windows CI Node",
+              "rdp_host": "127.0.0.1",
+              "report_roots": [],
+          }
+
+          registration = build_registration_payload(config)
+          assert registration["node_id"] == "windows-ci-node"
+
+          processes = collect_processes()
+          ports = collect_serial_ports(processes)
+          heartbeat = build_heartbeat_payload(config)
+
+          assert isinstance(processes, list)
+          assert isinstance(ports, list)
+          assert isinstance(heartbeat["applications"], list)
+          assert isinstance(heartbeat["serial_ports"], list)
+          print("Windows node-agent smoke OK")
+          '@ | python

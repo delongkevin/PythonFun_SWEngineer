@@ -148,12 +148,20 @@ pytest tests
 ## CI/CD
 
 GitHub Actions validation is configured in
-`.github/workflows/software_test_webserver_ci.yml`.
+`.github/workflows/software_test_webserver_ci.yml` and
+`.github/workflows/software_test_webserver_windows_ci.yml`.
 
 For every push or pull request that touches `SoftwareTest_Webserver/`, the
-workflow will:
+Linux workflow will:
 
 - run `flake8`
 - run the test suite on Python 3.10, 3.11, and 3.12
 - compile all Python files with `compileall`
 - run smoke checks for the Flask app and both CLI entry points
+
+Windows workflow will:
+
+- run the test suite on Python 3.11 and 3.12
+- compile all Python files with `compileall`
+- run smoke checks for the Flask app and both CLI entry points
+- exercise Windows-specific node-agent helper paths for process and serial-port collection
