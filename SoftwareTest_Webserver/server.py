@@ -1,5 +1,6 @@
 import argparse
 from pathlib import Path
+import sys
 
 from runtime_bootstrap import ensure_runtime_dependencies
 
@@ -21,6 +22,16 @@ ensure_runtime_dependencies(
 from monitor_server import create_app
 
 
+def is_frozen_app() -> bool:
+    return bool(getattr(sys, "frozen", False))
+
+
+def default_state_file() -> Path:
+    if is_frozen_app():
+        return Path(sys.executable).resolve().parent / "server_data" / "state.json"
+    return PROJECT_DIR / "data" / "state.json"
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Software test network dashboard server"
@@ -29,7 +40,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--port", type=int, default=5050, help="Bind port")
     parser.add_argument(
         "--data-file",
-        default=str(Path("data") / "state.json"),
+        default=str(default_state_file()),
         help="Path to persisted node state JSON file",
     )
     parser.add_argument(

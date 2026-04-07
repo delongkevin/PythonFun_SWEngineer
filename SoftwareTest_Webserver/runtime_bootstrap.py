@@ -7,6 +7,10 @@ from pathlib import Path
 from typing import Dict, List, Sequence
 
 
+def is_frozen_app() -> bool:
+    return bool(getattr(sys, "frozen", False))
+
+
 def find_missing_runtime_packages(runtime_dependencies: Dict[str, str]) -> List[str]:
     missing_packages: List[str] = []
     for module_name, package_spec in runtime_dependencies.items():
@@ -46,6 +50,9 @@ def ensure_runtime_dependencies(
     entry_script: Path,
     argv: Sequence[str] | None = None,
 ) -> None:
+    if is_frozen_app():
+        return
+
     missing_packages = find_missing_runtime_packages(runtime_dependencies)
     if not missing_packages:
         return

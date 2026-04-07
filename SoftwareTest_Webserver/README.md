@@ -90,6 +90,60 @@ Open:
 - `http://localhost:5050` on the host machine
 - `http://<server-ip>:5050` from other PCs on the same local network
 
+## Single-File Deployment
+
+If you want to copy exactly one file to a server PC and one file to a node PC,
+use the generated deployables in `SoftwareTest_Webserver/deployables/`:
+
+- `server_standalone.py`
+- `node_agent_standalone.py`
+
+These wrappers contain the application files internally. On first run they will:
+
+- extract their bundled files into a hidden local folder next to the wrapper
+- create default local runtime files as needed
+- launch the real entry point from the extracted bundle
+- let the entry point bootstrap Python dependencies automatically
+
+For the node deployable:
+
+- if `node_agent_config.json` does not exist next to the wrapper, it is created automatically
+- that file becomes the default config path for future launches
+
+For the server deployable:
+
+- if no `--data-file` is provided, it stores server state in `server_data/state.json`
+
+To regenerate the single-file deployables after future code changes:
+
+```bash
+cd SoftwareTest_Webserver
+python tools/build_single_file_deployables.py
+```
+
+## PyInstaller EXE Packaging
+
+If you want a true single-file Windows executable instead of a Python script
+wrapper, use PyInstaller support in this folder.
+
+Build both executables:
+
+```bash
+cd SoftwareTest_Webserver
+python build.py --clean
+```
+
+Outputs:
+
+- `dist/SoftwareTestNodeAgent.exe`
+- `dist/SoftwareTestServer.exe`
+
+Frozen executable behavior:
+
+- `SoftwareTestNodeAgent.exe` creates `node_agent_config.json` next to the executable if it is missing
+- `SoftwareTestServer.exe` stores state in `server_data/state.json` next to the executable by default
+- runtime dependency bootstrap is skipped inside the frozen executables because dependencies are already bundled by PyInstaller
+
 ## Run A Node Agent
 
 1. Copy and edit `examples/node_agent_config.json` on the target PC.
@@ -186,3 +240,5 @@ Windows workflow will:
 - compile all Python files with `compileall`
 - run smoke checks for the Flask app and both CLI entry points
 - exercise Windows-specific node-agent helper paths for process and serial-port collection
+- build `SoftwareTestNodeAgent.exe` and `SoftwareTestServer.exe`
+- upload the Windows `.exe` files as GitHub Actions artifacts on each push and pull request

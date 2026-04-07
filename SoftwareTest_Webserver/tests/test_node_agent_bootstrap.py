@@ -2,7 +2,9 @@ from pathlib import Path
 
 import pytest
 
+import node_agent
 import runtime_bootstrap
+import server
 
 
 def test_find_missing_runtime_packages_returns_missing_specs(monkeypatch):
@@ -135,3 +137,50 @@ def test_ensure_runtime_dependencies_raises_after_failed_bootstrap(monkeypatch):
             bootstrap_venv_dir=Path("unused"),
             entry_script=Path("server.py"),
         )
+
+
+def test_bootstrap_is_skipped_for_frozen_apps(monkeypatch):
+    monkeypatch.setattr(runtime_bootstrap.sys, "frozen", True, raising=False)
+    called = {"pip": False}
+
+    def fake_run_pip_install(_python_executable, _packages):
+        called["pip"] = True
+
+    monkeypatch.setattr(runtime_bootstrap, "run_pip_install", fake_run_pip_install)
+
+    runtime_bootstrap.ensure_runtime_dependencies(
+        runtime_dependencies={"flask": "Flask>=3.0,<4.0"},
+        bootstrap_env_var="TEST_BOOTSTRAP_ENV",
+        bootstrap_venv_dir=Path("unused"),
+        entry_script=Path("server.py"),
+    )
+
+    assert called["pip"] is False
+
+
+def test_node_agent_default_config_path_uses_executable_directory_when_frozen(monkeypatch):
+    monkeypatch.setattr(node_agent.sys, "frozen", True, raising=False)
+    monkeypatch.setattr(node_agent.sys, "executable", "/tmp/NodeAgent.exe", raising=False)
+
+    config_path = node_agent.default_config_path()
+
+    assert config_path == Path("/tmp/node_agent_config.json")
+
+
+def test_node_agent_creates_default_config_when_missing(tmp_path):
+    config_path = tmp_path / "node_agent_config.json"
+
+    node_agent.ensure_config_exists(config_path)
+
+    assert config_path.exists()
+    payload = node_agent.json.loads(config_path.read_text(encoding="utf-8"))
+    assert payload["applications"][0]["process_names"] == ["CANoe64.exe"]
+
+
+def test_server_default_state_file_uses_executable_directory_when_frozen(monkeypatch):
+    monkeypatch.setattr(server.sys, "frozen", True, raising=False)
+    monkeypatch.setattr(server.sys, "executable", "/tmp/SoftwareTestServer.exe", raising=False)
+
+    state_path = server.default_state_file()
+
+    assert state_path == Path("/tmp/server_data/state.json")

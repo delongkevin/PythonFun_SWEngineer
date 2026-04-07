@@ -2,6 +2,7 @@ import argparse
 import logging
 import re
 import socket
+import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -47,6 +48,38 @@ DEFAULT_APPLICATIONS: List[Dict[str, Any]] = [
         "process_names": ["t32marm.exe", "t32marm64.exe"],
     },
 ]
+
+DEFAULT_NODE_AGENT_CONFIG: Dict[str, Any] = {
+    "server_url": "http://127.0.0.1:5050",
+    "node_id": "bench-pc-01",
+    "display_name": "Bench PC 01",
+    "rdp_host": "192.168.1.25",
+    "description": "Powertrain nightly regression node",
+    "heartbeat_interval": 20,
+    "tags": ["Powertrain", "Nightly", "Regression"],
+    "report_roots": [
+        "C:/TestReports/Nightly",
+        "D:/Shared/Bench01/Results",
+    ],
+    "applications": DEFAULT_APPLICATIONS,
+}
+
+
+def is_frozen_app() -> bool:
+    return bool(getattr(sys, "frozen", False))
+
+
+def default_config_path() -> Path:
+    if is_frozen_app():
+        return Path(sys.executable).resolve().parent / "node_agent_config.json"
+    return PROJECT_DIR / "examples" / "node_agent_config.json"
+
+
+def ensure_config_exists(config_path: Path) -> None:
+    if config_path.exists():
+        return
+    config_path.parent.mkdir(parents=True, exist_ok=True)
+    config_path.write_text(json.dumps(DEFAULT_NODE_AGENT_CONFIG, indent=2), encoding="utf-8")
 
 
 def configure_logging(verbose: bool) -> None:
@@ -245,7 +278,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Software test node monitoring agent")
     parser.add_argument(
         "--config",
-        default=str(Path("examples") / "node_agent_config.json"),
+        default=str(default_config_path()),
         help="Path to the node agent configuration JSON file",
     )
     parser.add_argument("--once", action="store_true", help="Send a single heartbeat")
@@ -256,7 +289,9 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     configure_logging(args.verbose)
-    config = load_config(Path(args.config))
+    config_path = Path(args.config)
+    ensure_config_exists(config_path)
+    config = load_config(config_path)
     run_agent(config, run_once=args.once)
 
 

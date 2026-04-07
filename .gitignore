@@ -18,3 +18,10 @@ Software_Test_Report.html
 report_images/
 SoftwareTest_Webserver/.server_venv/
 SoftwareTest_Webserver/.node_agent_venv/
+SoftwareTest_Webserver/build/
+SoftwareTest_Webserver/dist/
+SoftwareTest_Webserver/.build_venv/
+SoftwareTest_Webserver/deployables/.softwaretest_node_agent_bundle/
+SoftwareTest_Webserver/deployables/.softwaretest_server_bundle/
+SoftwareTest_Webserver/deployables/node_agent_config.json
+SoftwareTest_Webserver/deployables/server_data/

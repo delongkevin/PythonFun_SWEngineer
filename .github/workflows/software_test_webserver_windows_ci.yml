@@ -93,3 +93,59 @@ jobs:
           assert isinstance(heartbeat["serial_ports"], list)
           print("Windows node-agent smoke OK")
           '@ | python
+
+  windows-build-exe:
+    name: Build Windows EXEs
+    runs-on: windows-latest
+    needs: windows-smoke
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build executables
+        working-directory: SoftwareTest_Webserver
+        run: |
+          python build.py --clean
+
+      - name: Smoke test built executables
+        working-directory: SoftwareTest_Webserver
+        shell: pwsh
+        run: |
+          $nodeExe = "dist\SoftwareTestNodeAgent.exe"
+          $serverExe = "dist\SoftwareTestServer.exe"
+
+          if (-not (Test-Path $nodeExe)) {{
+            Write-Error "Missing node agent executable: $nodeExe"
+            exit 1
+          }}
+          if (-not (Test-Path $serverExe)) {{
+            Write-Error "Missing server executable: $serverExe"
+            exit 1
+          }}
+
+          & $nodeExe --help | Out-Null
+          if ($LASTEXITCODE -ne 0) {{
+            Write-Error "Node agent executable failed smoke test."
+            exit 1
+          }}
+
+          & $serverExe --help | Out-Null
+          if ($LASTEXITCODE -ne 0) {{
+            Write-Error "Server executable failed smoke test."
+            exit 1
+          }}
+
+      - name: Upload Windows executables
+        uses: actions/upload-artifact@v4
+        with:
+          name: softwaretest-webserver-windows-executables
+          path: |
+            SoftwareTest_Webserver/dist/SoftwareTestNodeAgent.exe
+            SoftwareTest_Webserver/dist/SoftwareTestServer.exe
+          retention-days: 30
