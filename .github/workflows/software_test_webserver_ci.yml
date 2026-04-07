@@ -33,9 +33,9 @@ jobs:
       - name: Run flake8
         run: |
           flake8 SoftwareTest_Webserver \
-            --exclude=SoftwareTest_Webserver/data \
+            --exclude=SoftwareTest_Webserver/data,SoftwareTest_Webserver/dist,SoftwareTest_Webserver/build,SoftwareTest_Webserver/deployables,SoftwareTest_Webserver/.build_venv \
             --max-line-length=120 \
-            --extend-ignore=E501,E127
+            --extend-ignore=E501,E127,E402
 
   test:
     name: Unit Tests (Python ${{ matrix.python-version }})

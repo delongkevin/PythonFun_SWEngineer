@@ -149,7 +149,7 @@ def main() -> None:
         content = build_script(output_name, bundle_config)
         output_path = DEPLOYABLES_DIR / output_name
         output_path.write_text(content, encoding="utf-8")
-        print(f"Generated {{output_path}}")
+        print(f"Generated {output_path}")
 
 
 if __name__ == "__main__":
