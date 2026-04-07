@@ -17,21 +17,15 @@ from monitor_server.report_parser import scan_report_roots
 DEFAULT_APPLICATIONS: List[Dict[str, Any]] = [
     {
         "name": "Vector CANoe",
-        "process_names": ["canoe.exe", "canoe32.exe", "canoe64.exe"],
+        "process_names": ["CANoe64.exe"],
     },
     {
         "name": "Tera Term",
-        "process_names": ["ttermpro.exe", "teraterm.exe"],
+        "process_names": ["ttermpro.exe"],
     },
     {
         "name": "Lauterbach Trace32",
-        "process_names": [
-            "t32start.exe",
-            "trace32.exe",
-            "t32marm.exe",
-            "t32marm64.exe",
-            "t32mtc.exe",
-        ],
+        "process_names": ["t32marm.exe", "t32marm64.exe"],
     },
 ]
 
