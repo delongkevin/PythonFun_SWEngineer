@@ -26,22 +26,41 @@ BUILD_DEPS = [
 ]
 
 
+def build_python_candidates() -> list[str]:
+    candidates = [sys.executable]
+    for candidate in (shutil.which("python3"), shutil.which("python")):
+        if candidate and candidate not in candidates:
+            candidates.append(candidate)
+
+    if sys.platform != "win32" and "/usr/bin/python3" not in candidates:
+        candidates.append("/usr/bin/python3")
+
+    return [candidate for candidate in candidates if Path(candidate).exists()]
+
+
 def python_has_shared_library(python_executable: str) -> bool:
-    result = subprocess.run(
-        [python_executable, "-c", "import sysconfig; print(sysconfig.get_config_var('Py_ENABLE_SHARED') or 0)"],
-        capture_output=True,
-        text=True,
-    )
+    try:
+        result = subprocess.run(
+            [python_executable, "-c", "import sysconfig; print(sysconfig.get_config_var('Py_ENABLE_SHARED') or 0)"],
+            capture_output=True,
+            text=True,
+        )
+    except OSError:
+        return False
+
     if result.returncode != 0:
         return False
     return result.stdout.strip() == "1"
 
 
 def select_build_python() -> str:
-    candidates = [sys.executable]
-    for candidate in (shutil.which("python3"), shutil.which("python"), "/usr/bin/python3"):
-        if candidate and candidate not in candidates:
-            candidates.append(candidate)
+    candidates = build_python_candidates()
+
+    if sys.platform == "win32":
+        if candidates:
+            return candidates[0]
+        print("[build.py] ERROR: no Python interpreter was found on Windows.")
+        sys.exit(1)
 
     for candidate in candidates:
         if python_has_shared_library(candidate):
