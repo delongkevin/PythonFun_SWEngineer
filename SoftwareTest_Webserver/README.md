@@ -78,6 +78,13 @@ cd SoftwareTest_Webserver
 python server.py --host 0.0.0.0 --port 5050
 ```
 
+On first launch, `server.py` now checks for its required runtime dependencies
+before importing Flask. If they are missing, it will:
+
+- try to install the missing packages into the current Python environment
+- fall back to creating a dedicated `.server_venv` virtual environment if direct installation fails
+- restart itself automatically inside that dedicated environment
+
 Open:
 
 - `http://localhost:5050` on the host machine
@@ -92,6 +99,16 @@ Open:
 ```powershell
 py node_agent.py --config examples\node_agent_config.json
 ```
+
+On first launch, `node_agent.py` now checks for its runtime dependencies
+(`psutil`, `requests`, and `pyserial`). If they are missing, it will:
+
+- try to install the missing packages into the current Python environment
+- fall back to creating a dedicated `.node_agent_venv` virtual environment if direct installation fails
+- restart itself automatically inside that dedicated environment
+
+This is designed to make first-time deployment on lab PCs smoother, so the
+operator can run the script without manually preparing Python packages first.
 
 To test a single publish cycle:
 
@@ -137,6 +154,10 @@ with project-specific parsing rules.
   serial, and report data only appear after the node agent starts reporting.
 - The current version does not include authentication. Keep it on a trusted lab
   network or add reverse-proxy authentication before broader exposure.
+- The agent still requires Python to be installed on the node, but it will now
+  bootstrap its own runtime packages automatically on first launch.
+- The server follows the same first-launch bootstrap pattern for Flask and
+  waitress on a fresh server PC.
 
 ## Tests
 

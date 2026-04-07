@@ -1,6 +1,23 @@
 import argparse
 from pathlib import Path
 
+from runtime_bootstrap import ensure_runtime_dependencies
+
+PROJECT_DIR = Path(__file__).resolve().parent
+BOOTSTRAP_VENV_DIR = PROJECT_DIR / ".server_venv"
+BOOTSTRAP_ENV_VAR = "SOFTWARETEST_SERVER_BOOTSTRAPPED"
+RUNTIME_DEPENDENCIES = {
+    "flask": "Flask>=3.0,<4.0",
+    "waitress": "waitress>=3.0,<4.0",
+}
+
+ensure_runtime_dependencies(
+    runtime_dependencies=RUNTIME_DEPENDENCIES,
+    bootstrap_env_var=BOOTSTRAP_ENV_VAR,
+    bootstrap_venv_dir=BOOTSTRAP_VENV_DIR,
+    entry_script=Path(__file__).resolve(),
+)
+
 from monitor_server import create_app
 
 

@@ -8,11 +8,30 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List
 
 import json
+
+from monitor_server.report_parser import scan_report_roots
+from runtime_bootstrap import ensure_runtime_dependencies
+
+PROJECT_DIR = Path(__file__).resolve().parent
+BOOTSTRAP_VENV_DIR = PROJECT_DIR / ".node_agent_venv"
+BOOTSTRAP_ENV_VAR = "SOFTWARETEST_NODE_AGENT_BOOTSTRAPPED"
+RUNTIME_DEPENDENCIES = {
+    "psutil": "psutil>=5.9,<8.0",
+    "requests": "requests>=2.31,<3.0",
+    "serial": "pyserial>=3.5,<4.0",
+}
+
+
+ensure_runtime_dependencies(
+    runtime_dependencies=RUNTIME_DEPENDENCIES,
+    bootstrap_env_var=BOOTSTRAP_ENV_VAR,
+    bootstrap_venv_dir=BOOTSTRAP_VENV_DIR,
+    entry_script=Path(__file__).resolve(),
+)
+
 import psutil
 import requests
 from serial.tools import list_ports
-
-from monitor_server.report_parser import scan_report_roots
 
 DEFAULT_APPLICATIONS: List[Dict[str, Any]] = [
     {

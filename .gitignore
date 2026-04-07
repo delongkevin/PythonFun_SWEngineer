@@ -16,3 +16,5 @@ Trace32_Test_Framework/build/
 Trace32_Test_Framework/dist/
 Software_Test_Report.html
 report_images/
+SoftwareTest_Webserver/.server_venv/
+SoftwareTest_Webserver/.node_agent_venv/
