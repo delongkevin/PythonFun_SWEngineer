@@ -282,9 +282,10 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
                     f'</a></li>'
                 )
 
-                # Consolidated failures panel content
-                failed_html = extract_failed_tests(soup, source_filename=html_file)
+                # Consolidated failures panel content — only parse/generate
+                # failed-test HTML when the report actually has failures.
                 if failed > 0:
+                    failed_html = extract_failed_tests(soup, source_filename=html_file)
                     all_failures_html += (
                         f'<div class="failure-group">'
                         f'<div class="fg-title">{file_title}'
