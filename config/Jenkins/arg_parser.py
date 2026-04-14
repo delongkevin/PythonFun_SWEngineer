@@ -282,9 +282,10 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
                     f'</a></li>'
                 )
 
-                # Consolidated failures panel content
-                failed_html = extract_failed_tests(soup, source_filename=html_file)
+                # Consolidated failures panel content — only parse/generate
+                # failed-test HTML when the report actually has failures.
                 if failed > 0:
+                    failed_html = extract_failed_tests(soup, source_filename=html_file)
                     all_failures_html += (
                         f'<div class="failure-group">'
                         f'<div class="fg-title">{file_title}'
@@ -315,13 +316,7 @@ def generate_html_report(html_files, source_paths, destination_path, keyword):
                     f'<span class="chevron" id="chv-{section_id}">&#9660;</span>'
                     f'</div>'
                     f'<div class="card-body" id="body-{section_id}">'
-                    f'<div class="mini-stats-row">'
-                    f'<span class="ms ms-exec">&#x25CF; Executed: <strong>{executed}</strong></span>'
-                    f'<span class="ms ms-pass">&#x25CF; Passed: <strong>{passed}</strong></span>'
-                    f'<span class="ms ms-fail">&#x25CF; Failed: <strong>{failed}</strong></span>'
-                    f'</div>'
                     f'{stats_html}'
-                    f'{failed_html}'
                     f'{kw_html}'
                     f'</div>'
                     f'</div>'
@@ -618,15 +613,6 @@ body{{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica 
 .chevron.open{{transform:rotate(180deg)}}
 .card-body{{padding:20px 24px;display:none}}
 .card-body.open{{display:block}}
-
-/* Mini stats inside card */
-.mini-stats-row{{
-  display:flex;gap:22px;margin-bottom:16px;
-  padding:10px 14px;background:#f6f8fb;
-  border-radius:6px;border:1px solid var(--bdr)
-}}
-.ms{{font-size:12.5px;font-weight:600}}
-.ms-exec{{color:var(--exec-dk)}} .ms-pass{{color:var(--pass-dk)}} .ms-fail{{color:var(--fail-dk)}}
 
 /* ══════════════════════════════════════
    TABLES  (apply to ALL tables in report)
